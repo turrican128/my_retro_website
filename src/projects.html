@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Projects — My Retro Website</title>
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Retro pixel font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-gradient-to-b from-purple-900 via-pink-700 to-black text-sky-100 antialiased">
+
+  <!-- top neon navigation (matches index.html style) -->
+  <header class="fixed inset-x-0 top-4 z-30 flex items-center justify-center">
+    <nav class="w-[min(1100px,96%)] flex items-center justify-between px-4 py-3 rounded-xl bg-black/30 backdrop-blur border border-white/5">
+      <div class="flex items-center gap-4">
+        <div class="w-16 h-12 flex items-center justify-center rounded-md bg-gradient-to-r from-pink-500/20 to-cyan-400/10 border border-white/5 shadow-[0_8px_32px_rgba(255,45,210,0.06)]">
+          <span class="[font-family:'Press Start 2P',monospace] text-pink-400 text-xs uppercase">RETRO</span>
+        </div>
+        <div class="[font-family:'Press Start 2P',monospace] text-cyan-200 text-sm">My Retro Website</div>
+      </div>
+
+      <ul class="flex items-center gap-3">
+        <li><a href="index.html" class="px-3 py-2 rounded-md text-xs text-cyan-200 hover:text-pink-300 transition transform hover:-translate-y-0.5 hover:scale-105">Home</a></li>
+        <li><a href="about.html" class="px-3 py-2 rounded-md text-xs text-cyan-200 hover:text-pink-300 transition transform hover:-translate-y-0.5 hover:scale-105">About</a></li>
+        <li><a href="projects.html" class="px-3 py-2 rounded-md text-xs text-pink-300 bg-black/10">Projects</a></li>
+        <li><a href="contact.html" class="px-3 py-2 rounded-md text-xs text-cyan-200 hover:text-pink-300 transition transform hover:-translate-y-0.5 hover:scale-105">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Page content -->
+  <main class="min-h-screen flex items-start justify-center pt-28 pb-12">
+    <div class="w-[min(1100px,96%)] space-y-6">
+
+      <!-- Intro / hero -->
+      <section class="rounded-xl p-6 bg-gradient-to-b from-black/50 to-white/2 border border-white/5 shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
+        <h1 class="[font-family:'Press Start 2P',monospace] text-2xl md:text-3xl text-cyan-300">Projects</h1>
+        <p class="mt-3 text-sm text-pink-200/80 max-w-prose">
+          A curated list of small demos and creative experiments — synthwave-styled and static. Click View to open a demo or Code to inspect source.
+        </p>
+      </section>
+
+      <!-- Responsive projects grid: 1 col mobile, 2 cols sm, 3 cols lg -->
+      <section class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <!-- Neon card 1 -->
+        <article class="group rounded-xl p-5 bg-black/60 border border-cyan-400/20 hover:border-pink-400/40 transition shadow-[0_8px_32px_rgba(0,255,243,0.04)] hover:shadow-[0_20px_60px_rgba(255,45,210,0.12)]">
+          <h3 class="text-cyan-200 text-sm font-semibold group-hover:text-pink-300">Neon Terminal</h3>
+          <p class="mt-2 text-[13px] text-sky-100/85">A lightweight JavaScript terminal emulator with commands and history — perfect for demos or portfolios.</p>
+          <div class="mt-4 flex gap-2">
+            <a href="index.html" class="px-3 py-2 rounded-md bg-gradient-to-r from-cyan-400 to-pink-400 text-black text-xs font-bold hover:scale-105 transition">View</a>
+            <a href="#" onclick="alert('Code placeholder');return false" class="px-3 py-2 rounded-md border border-white/6 text-xs text-cyan-200 hover:text-pink-300 transition">Code</a>
+          </div>
+        </article>
+
+        <!-- Neon card 2 -->
+        <article class="group rounded-xl p-5 bg-black/60 border border-cyan-400/20 hover:border-pink-400/40 transition shadow-[0_8px_32px_rgba(0,255,243,0.04)] hover:shadow-[0_20px_60px_rgba(255,45,210,0.12)]">
+          <h3 class="text-cyan-200 text-sm font-semibold group-hover:text-pink-300">Pixel Horizon</h3>
+          <p class="mt-2 text-[13px] text-sky-100/85">SVG pixel-art skyline with gradient horizon and animated glow — lightweight and configurable.</p>
+          <div class="mt-4 flex gap-2">
+            <a href="about.html" class="px-3 py-2 rounded-md bg-gradient-to-r from-cyan-400 to-pink-400 text-black text-xs font-bold hover:scale-105 transition">View</a>
+            <a href="#" onclick="alert('Code placeholder');return false" class="px-3 py-2 rounded-md border border-white/6 text-xs text-cyan-200 hover:text-pink-300 transition">Code</a>
+          </div>
+        </article>
+
+        <!-- Neon card 3 -->
+        <article class="group rounded-xl p-5 bg-black/60 border border-cyan-400/20 hover:border-pink-400/40 transition shadow-[0_8px_32px_rgba(0,255,243,0.04)] hover:shadow-[0_20px_60px_rgba(255,45,210,0.12)]">
+          <h3 class="text-cyan-200 text-sm font-semibold group-hover:text-pink-300">Synthwave Hero</h3>
+          <p class="mt-2 text-[13px] text-sky-100/85">Responsive hero section with neon typography, grid overlay, and call-to-action animations.</p>
+          <div class="mt-4 flex gap-2">
+            <a href="#" onclick="alert('View demo');return false" class="px-3 py-2 rounded-md bg-gradient-to-r from-cyan-400 to-pink-400 text-black text-xs font-bold hover:scale-105 transition">View</a>
+            <a href="#" onclick="alert('Code placeholder');return false" class="px-3 py-2 rounded-md border border-white/6 text-xs text-cyan-200 hover:text-pink-300 transition">Code</a>
+          </div>
+        </article>
+
+        <!-- Neon card 4 -->
+        <article class="group rounded-xl p-5 bg-black/60 border border-cyan-400/20 hover:border-pink-400/40 transition shadow-[0_8px_32px_rgba(0,255,243,0.04)] hover:shadow-[0_20px_60px_rgba(255,45,210,0.12)]">
+          <h3 class="text-cyan-200 text-sm font-semibold group-hover:text-pink-300">Retro Gallery</h3>
+          <p class="mt-2 text-[13px] text-sky-100/85">A minimal image gallery with pixel borders, hover glow, and keyboard navigation support.</p>
+          <div class="mt-4 flex gap-2">
+            <a href="#" onclick="alert('View demo');return false" class="px-3 py-2 rounded-md bg-gradient-to-r from-cyan-400 to-pink-400 text-black text-xs font-bold hover:scale-105 transition">View</a>
+            <a href="#" onclick="alert('Code placeholder');return false" class="px-3 py-2 rounded-md border border-white/6 text-xs text-cyan-200 hover:text-pink-300 transition">Code</a>
+          </div>
+        </article>
+
+        <!-- Additional cards may be added here following the same pattern -->
+      </section>
+
+      <!-- CTA / footer note -->
+      <section class="rounded-xl p-4 bg-black/40 border border-white/5 text-sm text-sky-100/75">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+          <div>Made with synthwave • project showcase</div>
+          <div class="flex gap-2">
+            <a href="#" class="px-3 py-2 rounded-md border border-white/6 text-xs text-cyan-200 hover:text-pink-300 transition" onclick="alert('See more placeholder');return false">See more</a>
+            <a href="#" class="px-3 py-2 rounded-md border border-white/6 text-xs text-cyan-200 hover:text-pink-300 transition" onclick="alert('Start a project placeholder');return false">Start a project</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- decorative pixel grid bottom -->
+  <div class="pointer-events-none fixed inset-x-0 bottom-0 h-36 opacity-60">
+    <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="g1" x1="0" x2="1">
+          <stop offset="0" stop-color="#ff2dd2" stop-opacity="0.06"/>
+          <stop offset="1" stop-color="#00fff3" stop-opacity="0.06"/>
+        </linearGradient>
+      </defs>
+      <rect width="1440" height="120" fill="url(#g1)" />
+      <g stroke="#00fff3" stroke-opacity="0.06" stroke-width="1"><path d="M0 90 C200 60 400 52 720 52 C1040 52 1240 60 1440 90" fill="none"/></g>
+    </svg>
+  </div>
+
+  <script>
+    // small interactive niceties (kept minimal)
+    document.querySelectorAll('a[onclick]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        // keep default for non-placeholder anchors
+        if (!a.getAttribute('onclick')) return;
+      });
+    });
+  </script>
+</body>
+</html>
