@@ -3,18 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Contact — My Retro Website</title>
+  <title>Contact – My Retro Website</title>
 
-  <!-- TailwindCSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Retro pixel font -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body class="min-h-screen bg-gradient-to-b from-purple-900 via-pink-700 to-black text-sky-100 antialiased">
 
-  <!-- top neon navigation (matches index.html) -->
   <header class="fixed inset-x-0 top-4 z-30 flex items-center justify-center">
     <nav class="w-[min(1100px,96%)] flex items-center justify-between px-4 py-3 rounded-xl bg-black/30 backdrop-blur border border-white/5">
       <div class="flex items-center gap-4">
@@ -28,87 +24,59 @@
         <li><a href="index.html" class="px-3 py-2 rounded-md text-xs text-cyan-200 hover:text-pink-300 transition transform hover:-translate-y-0.5 hover:scale-105">Home</a></li>
         <li><a href="about.html" class="px-3 py-2 rounded-md text-xs text-cyan-200 hover:text-pink-300 transition transform hover:-translate-y-0.5 hover:scale-105">About</a></li>
         <li><a href="projects.html" class="px-3 py-2 rounded-md text-xs text-cyan-200 hover:text-pink-300 transition transform hover:-translate-y-0.5 hover:scale-105">Projects</a></li>
-        <li><a href="contact.html" class="px-3 py-2 rounded-md text-xs text-pink-300 bg-black/10">Contact</a></li>
+        <li><a href="contact.html" class="px-3 py-2 rounded-md text-xs text-pink-300 bg-white/5">Contact</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- Page content -->
   <main class="min-h-screen flex items-center justify-center pt-28 pb-12">
-    <div class="w-[min(1100px,96%)] grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Contact info & form -->
-      <section class="rounded-xl p-8 bg-gradient-to-b from-black/50 to-white/2 border border-white/5 shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
-        <h1 class="[font-family:'Press Start 2P',monospace] text-2xl text-cyan-300">Say hello</h1>
-        <p class="mt-3 text-sm text-pink-200/80">
-          Whether it's feedback, a project idea, or just retro appreciations — drop a message below.
-          Expect a reply within a few business days.
+    <div class="w-[min(1000px,96%)] grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- contact info -->
+      <section class="rounded-xl p-8 bg-gradient-to-b from-black/60 to-white/5 border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.7)]">
+        <h1 class="[font-family:'Press Start 2P',monospace] text-2xl md:text-3xl text-cyan-300 mb-4 drop-shadow-[0_2px_20px_rgba(0,255,243,0.15)]">
+          Get in touch
+        </h1>
+
+        <p class="text-sm text-sky-100/80 mb-4">
+          Want to talk about C64, Amiga, synthwave music or retro projects?
+          Feel free to reach out through any of the channels below:
         </p>
 
-        <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <div class="text-xs text-cyan-200 font-semibold">Email</div>
-            <div class="mt-2 text-sm text-sky-100/85">hello@example.com</div>
-          </div>
-          <div>
-            <div class="text-xs text-cyan-200 font-semibold">Location</div>
-            <div class="mt-2 text-sm text-sky-100/85">Remote • Synthwave Realm</div>
-          </div>
-        </div>
-
-        <h2 class="mt-6 text-sm text-pink-300 font-semibold [font-family:'Press Start 2P',monospace]">Contact form</h2>
-        <form id="contact-form" class="mt-3 flex flex-col gap-3" aria-label="contact form">
-          <label class="text-[11px] text-pink-200/80">
-            Name
-            <input name="name" required class="mt-1 w-full bg-black/60 border border-white/6 rounded-md px-3 py-2 text-sm text-sky-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/30" placeholder="Your name" />
-          </label>
-
-          <label class="text-[11px] text-pink-200/80">
-            Email
-            <input name="email" type="email" required class="mt-1 w-full bg-black/60 border border-white/6 rounded-md px-3 py-2 text-sm text-sky-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-pink-400/30" placeholder="you@domain.com" />
-          </label>
-
-          <label class="text-[11px] text-pink-200/80">
-            Message
-            <textarea name="message" rows="5" required class="mt-1 w-full bg-black/60 border border-white/6 rounded-md px-3 py-2 text-sm text-sky-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/30" placeholder="Write your message..."></textarea>
-          </label>
-
-          <div class="flex items-center gap-3 mt-2">
-            <button type="submit" class="px-4 py-2 rounded-md bg-gradient-to-r from-cyan-400 to-pink-400 text-black text-xs font-bold hover:scale-105 transition shadow-[0_8px_30px_rgba(0,255,243,0.08)]">Send Message</button>
-            <button type="button" id="clear-btn" class="px-3 py-2 rounded-md border border-white/6 text-xs text-cyan-200" onclick="document.getElementById('contact-form').reset()">Clear</button>
-            <div id="form-status" class="text-[13px] text-sky-100/80"></div>
-          </div>
-
-          <p class="mt-2 text-[12px] text-sky-100/70">Note: This is a static demo. The form simulates sending and prints a copy to the terminal panel.</p>
-        </form>
+        <ul class="space-y-2 text-sm text-sky-100/90">
+          <li><span class="text-pink-300 font-semibold">Email:</span> alex@example.com</li>
+          <li><span class="text-pink-300 font-semibold">Facebook:</span> Retro 8-Bit Legends</li>
+          <li><span class="text-pink-300 font-semibold">Instagram:</span> @alex8bit</li>
+          <li><span class="text-pink-300 font-semibold">Mixcloud:</span> Kleiner'82 Retro Mixes</li>
+        </ul>
       </section>
 
-      <!-- Sidebar: social links + terminal -->
-      <aside class="flex flex-col rounded-xl p-4 bg-black/50 border border-white/5 shadow-[0_12px_40px_rgba(0,0,0,0.65)]">
-        <div class="flex items-center justify-between mb-3">
-          <strong class="[font-family:'Press Start 2P',monospace] text-cyan-200 text-xs">Contact Card</strong>
-          <span class="text-[11px] text-pink-300/80">reach out</span>
-        </div>
+      <!-- simple form (non-functional) -->
+      <section class="rounded-xl p-6 bg-black/65 border border-cyan-400/25 shadow-[0_16px_50px_rgba(0,0,0,0.75)]">
+        <h2 class="[font-family:'Press Start 2P',monospace] text-sm text-pink-300 mb-4">
+          Send a message
+        </h2>
 
-        <div class="flex flex-col gap-2 mb-4">
-          <a href="#" class="px-3 py-2 rounded-md bg-gradient-to-r from-pink-500/10 to-cyan-400/8 text-xs text-cyan-200 hover:text-pink-300 transition" onclick="alert('Twitter placeholder');return false">Twitter</a>
-          <a href="#" class="px-3 py-2 rounded-md bg-gradient-to-r from-pink-500/10 to-cyan-400/8 text-xs text-cyan-200 hover:text-pink-300 transition" onclick="alert('GitHub placeholder');return false">GitHub</a>
-          <a href="#" class="px-3 py-2 rounded-md bg-gradient-to-r from-pink-500/10 to-cyan-400/8 text-xs text-cyan-200 hover:text-pink-300 transition" onclick="alert('LinkedIn placeholder');return false">LinkedIn</a>
-        </div>
-
-        <div id="term" class="flex-1 overflow-auto rounded-md bg-gradient-to-b from-black/80 to-white/2 p-3 text-[13px] text-cyan-200 font-mono mb-3">
-          <pre id="output" class="whitespace-pre-wrap">> contact terminal
-Type "help" to see commands. Submitted messages will appear here.</pre>
-        </div>
-
-        <div class="flex gap-2">
-          <input id="cmd" type="text" placeholder='try: help / about / clear' class="flex-1 bg-black/70 text-sky-100 text-sm rounded-md px-3 py-2 placeholder:text-slate-400 border border-white/5 focus:outline-none focus:ring-2 focus:ring-cyan-400/30" />
-          <button id="run" class="px-3 py-2 rounded-md bg-gradient-to-r from-cyan-400 to-pink-400 text-black text-xs font-bold" onclick="run()">Run</button>
-        </div>
-      </aside>
+        <form class="space-y-3 text-sm">
+          <div>
+            <label class="block mb-1 text-sky-100/80">Name</label>
+            <input type="text" class="w-full rounded-md bg-black/70 border border-white/10 px-3 py-2 text-sky-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/40" placeholder="Your name" />
+          </div>
+          <div>
+            <label class="block mb-1 text-sky-100/80">Email</label>
+            <input type="email" class="w-full rounded-md bg-black/70 border border-white/10 px-3 py-2 text-sky-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/40" placeholder="you@example.com" />
+          </div>
+          <div>
+            <label class="block mb-1 text-sky-100/80">Message</label>
+            <textarea rows="4" class="w-full rounded-md bg-black/70 border border-white/10 px-3 py-2 text-sky-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/40" placeholder="Write something cool..."></textarea>
+          </div>
+          <button type="button" class="mt-2 px-4 py-2 rounded-md bg-gradient-to-r from-cyan-400 to-pink-400 text-black text-xs font-bold hover:scale-105 transition shadow-[0_8px_30px_rgba(0,255,243,0.1)]">
+            Send (visual only)
+          </button>
+        </form>
+      </section>
     </div>
   </main>
 
-  <!-- decorative pixel grid bottom -->
   <div class="pointer-events-none fixed inset-x-0 bottom-0 h-36 opacity-60">
     <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -118,78 +86,14 @@ Type "help" to see commands. Submitted messages will appear here.</pre>
         </linearGradient>
       </defs>
       <rect width="1440" height="120" fill="url(#g1)" />
-      <g stroke="#00fff3" stroke-opacity="0.06" stroke-width="1"><path d="M0 90 C200 60 400 52 720 52 C1040 52 1240 60 1440 90" fill="none"/></g>
+      <g stroke="#00fff3" stroke-opacity="0.06" stroke-width="1">
+        <path d="M0 90 C200 60 400 52 720 52 C1040 52 1240 60 1440 90" fill="none"/>
+      </g>
+      <g fill="#ff2dd2" fill-opacity="0.06">
+        <circle cx="360" cy="36" r="10" />
+        <circle cx="900" cy="24" r="8" />
+      </g>
     </svg>
   </div>
-
-  <script>
-    // terminal and form simulation
-    const output = document.getElementById('output');
-    const cmd = document.getElementById('cmd');
-    const form = document.getElementById('contact-form');
-    const status = document.getElementById('form-status');
-
-    function print(text = '') {
-      output.textContent += '\\n' + text;
-      output.parentElement.scrollTop = output.parentElement.scrollHeight;
-    }
-
-    function handle(input) {
-      if (!input) return;
-      if (input === 'help') {
-        print('help - show commands\\nabout - short info\\nclear - clear output');
-        return;
-      }
-      if (input === 'about') {
-        print('This is the contact terminal. Submit the contact form to simulate sending.');
-        return;
-      }
-      if (input === 'clear') {
-        output.textContent = '> cleared';
-        return;
-      }
-      print('Unknown command: ' + input + '\\nType \"help\" for a list of commands.');
-    }
-
-    function run() {
-      const v = (cmd.value || '').trim();
-      if (!v) return;
-      print('> ' + v);
-      handle(v.toLowerCase());
-      cmd.value = '';
-      cmd.focus();
-    }
-
-    cmd.addEventListener('keydown', function(e){
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        run();
-      }
-    });
-
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
-      const data = new FormData(form);
-      const payload = {
-        name: data.get('name'),
-        email: data.get('email'),
-        message: data.get('message'),
-        time: new Date().toLocaleString()
-      };
-
-      status.textContent = 'Sending...';
-      setTimeout(() => {
-        status.textContent = 'Message sent (simulated)';
-        print('> form submitted at ' + payload.time);
-        print('Name: ' + payload.name);
-        print('Email: ' + payload.email);
-        print('Message: ' + payload.message);
-        setTimeout(() => { status.textContent = ''; }, 2500);
-        form.reset();
-      }, 700);
-    });
-
-    window.addEventListener('load', () => cmd.focus());
-  </script>
 </body>
 </html>

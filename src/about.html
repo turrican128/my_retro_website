@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>About — My Retro Website</title>
+  <title>About – My Retro Website</title>
 
   <!-- TailwindCSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -14,7 +14,7 @@
 </head>
 <body class="min-h-screen bg-gradient-to-b from-purple-900 via-pink-700 to-black text-sky-100 antialiased">
 
-  <!-- top neon navigation (matches index.html style) -->
+  <!-- top neon navigation (same as index) -->
   <header class="fixed inset-x-0 top-4 z-30 flex items-center justify-center">
     <nav class="w-[min(1100px,96%)] flex items-center justify-between px-4 py-3 rounded-xl bg-black/30 backdrop-blur border border-white/5">
       <div class="flex items-center gap-4">
@@ -26,96 +26,40 @@
 
       <ul class="flex items-center gap-3">
         <li><a href="index.html" class="px-3 py-2 rounded-md text-xs text-cyan-200 hover:text-pink-300 transition transform hover:-translate-y-0.5 hover:scale-105">Home</a></li>
-        <li><a href="about.html" class="px-3 py-2 rounded-md text-xs text-cyan-200 hover:text-pink-300 transition transform hover:-translate-y-0.5 hover:scale-105">About</a></li>
+        <li><a href="about.html" class="px-3 py-2 rounded-md text-xs text-pink-300 bg-white/5">About</a></li>
         <li><a href="projects.html" class="px-3 py-2 rounded-md text-xs text-cyan-200 hover:text-pink-300 transition transform hover:-translate-y-0.5 hover:scale-105">Projects</a></li>
         <li><a href="contact.html" class="px-3 py-2 rounded-md text-xs text-cyan-200 hover:text-pink-300 transition transform hover:-translate-y-0.5 hover:scale-105">Contact</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- Page content -->
   <main class="min-h-screen flex items-center justify-center pt-28 pb-12">
-    <div class="w-[min(1100px,96%)] grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Main about content -->
-      <section class="flex flex-col justify-center gap-6 rounded-xl p-8 bg-gradient-to-b from-black/50 to-white/2 border border-white/5 shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
-        <div>
-          <h1 class="[font-family:'Press Start 2P',monospace] text-2xl md:text-3xl text-cyan-300 leading-tight drop-shadow-[0_2px_20px_rgba(0,255,243,0.12)]">About</h1>
-          <p class="mt-2 text-sm text-pink-200/80 max-w-prose">
-            This site is a compact, static demo created to capture the visual spirit of 80s synthwave:
-            neon gradients, pixel grids, and bold monospace typography. It was built as a simple,
-            easily-extensible template for personal pages, portfolios, and small projects.
-          </p>
-        </div>
+    <div class="w-[min(900px,96%)] grid grid-cols-1 gap-6">
+      <section class="rounded-xl p-8 bg-gradient-to-b from-black/60 to-white/5 border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.7)]">
+        <h1 class="[font-family:'Press Start 2P',monospace] text-2xl md:text-3xl text-cyan-300 mb-4 drop-shadow-[0_2px_20px_rgba(0,255,243,0.15)]">
+          About the Creator
+        </h1>
 
-        <div>
-          <h3 class="[font-family:'Press Start 2P',monospace] text-pink-300 text-sm">Design goals</h3>
-          <ul class="mt-3 list-disc list-inside text-[13px] text-sky-100/85 space-y-1">
-            <li>Fast and lightweight: minimal dependencies, static HTML/CSS/JS.</li>
-            <li>Retro aesthetic with modern accessibility and responsiveness.</li>
-            <li>Easy to customize: swap colors, content, or add pages.</li>
-          </ul>
-        </div>
+        <p class="text-sm text-sky-100/85 leading-relaxed mb-3">
+          Hi, I’m Alex – a synthwave addict, C64 / Amiga lover, and retro-coding enthusiast.
+          I enjoy building demos, writing music inspired by SID and Paula, and recreating the look & feel
+          of late–80s arcade culture.
+        </p>
 
-        <div>
-          <h3 class="[font-family:'Press Start 2P',monospace] text-pink-300 text-sm">Tech & structure</h3>
-          <p class="mt-2 text-[13px] text-sky-100/85">
-            Built with plain HTML and TailwindCSS, plus a tiny JS terminal demo. The page structure uses a centered card,
-            a two-column grid with a terminal sidebar, and consistent utility classes for predictable styling.
-          </p>
-        </div>
+        <p class="text-sm text-sky-100/80 leading-relaxed mb-3">
+          This website is an experiment: everything is driven by Markdown content, GitHub Copilot prompts,
+          and TailwindCSS – no heavy frameworks, no backend, just clean static files with neon flair.
+        </p>
 
-        <div>
-          <h3 class="[font-family:'Press Start 2P',monospace] text-pink-300 text-sm">License & usage</h3>
-          <p class="mt-2 text-[13px] text-sky-100/85">
-            Feel free to copy, adapt, and use this template for your personal projects. No special build tools required — just edit the HTML and deploy.
-          </p>
-        </div>
-
-        <div class="flex flex-wrap gap-3 mt-3">
-          <a href="index.html" class="px-4 py-2 rounded-md bg-gradient-to-r from-cyan-400/20 to-pink-400/10 text-cyan-200 text-xs font-semibold">Back to Home</a>
-          <button onclick="alert('Edit this page to update content')" class="px-4 py-2 rounded-md bg-gradient-to-r from-pink-400/10 to-cyan-400/10 text-pink-300 text-xs font-semibold">Edit content</button>
-        </div>
+        <p class="text-sm text-sky-100/80 leading-relaxed">
+          When I’m not pushing pixels, I’m usually exploring synthwave tracks, writing about retro hardware,
+          or playing classic games like <span class="text-pink-300 font-semibold">OutRun</span> for the millionth time.
+        </p>
       </section>
-
-      <!-- Sidebar: pixel frame + terminal (matches index layout) -->
-      <aside class="flex flex-col rounded-xl p-4 bg-black/50 border border-white/5 shadow-[0_12px_40px_rgba(0,0,0,0.65)]">
-        <div class="flex items-center justify-between mb-3">
-          <strong class="[font-family:'Press Start 2P',monospace] text-cyan-200 text-xs">About Card</strong>
-          <span class="text-[11px] text-pink-300/80">synthwave</span>
-        </div>
-
-        <div class="flex items-start gap-3 mb-3">
-          <div class="w-28 h-20 rounded-sm border-2 border-white/5 p-1 bg-gradient-to-b from-pink-500/8 to-cyan-400/6">
-            <!-- decorative pixel-art SVG -->
-            <svg class="w-full h-full" viewBox="0 0 120 84" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-              <rect width="120" height="84" fill="transparent"/>
-              <g stroke="#00fff3" stroke-opacity="0.12" stroke-width="1"><path d="M0 60 C20 48 40 44 60 44 C80 44 100 48 120 60" fill="none"/></g>
-              <circle cx="60" cy="34" r="14" fill="#ff2dd2" fill-opacity="0.12" stroke="#ff2dd2" stroke-opacity="0.18"/>
-              <rect x="16" y="50" width="6" height="6" fill="#00fff3" />
-              <rect x="26" y="46" width="6" height="6" fill="#ff2dd2" />
-            </svg>
-          </div>
-          <div>
-            <div class="text-[12px] text-pink-300 mb-1">Pixel frame</div>
-            <div class="text-[12px] text-sky-100/85">A small decorative pixel art frame to match the synthwave aesthetic. Replace with your image as needed.</div>
-          </div>
-        </div>
-
-        <div id="term" class="flex-1 overflow-auto rounded-md bg-gradient-to-b from-black/80 to-white/2 p-3 text-[13px] text-cyan-200 font-mono mb-3">
-          <pre id="output" class="whitespace-pre-wrap">> about — quick info
-This demo site is intentionally minimal and easy to edit.
-Type "help" for commands.</pre>
-        </div>
-
-        <div class="flex gap-2">
-          <input id="cmd" type="text" placeholder='try: help / about / time' class="flex-1 bg-black/70 text-sky-100 text-sm rounded-md px-3 py-2 placeholder:text-slate-400 border border-white/5 focus:outline-none focus:ring-2 focus:ring-cyan-400/30" />
-          <button id="run" class="px-3 py-2 rounded-md bg-gradient-to-r from-cyan-400 to-pink-400 text-black text-xs font-bold" onclick="run()">Run</button>
-        </div>
-      </aside>
     </div>
   </main>
 
-  <!-- decorative pixel grid bottom -->
+  <!-- same decorative SVG -->
   <div class="pointer-events-none fixed inset-x-0 bottom-0 h-36 opacity-60">
     <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -125,58 +69,14 @@ Type "help" for commands.</pre>
         </linearGradient>
       </defs>
       <rect width="1440" height="120" fill="url(#g1)" />
-      <g stroke="#00fff3" stroke-opacity="0.06" stroke-width="1"><path d="M0 90 C200 60 400 52 720 52 C1040 52 1240 60 1440 90" fill="none"/></g>
+      <g stroke="#00fff3" stroke-opacity="0.06" stroke-width="1">
+        <path d="M0 90 C200 60 400 52 720 52 C1040 52 1240 60 1440 90" fill="none"/>
+      </g>
+      <g fill="#ff2dd2" fill-opacity="0.06">
+        <circle cx="360" cy="36" r="10" />
+        <circle cx="900" cy="24" r="8" />
+      </g>
     </svg>
   </div>
-
-  <script>
-    // Terminal script (same behavior as index)
-    const output = document.getElementById('output');
-    const cmd = document.getElementById('cmd');
-
-    function print(text='') {
-      output.textContent += '\n' + text;
-      const term = output.parentElement;
-      term.scrollTop = term.scrollHeight;
-    }
-
-    function run() {
-      const v = (cmd.value || '').trim();
-      if (!v) return;
-      print('> ' + v);
-      handle(v.toLowerCase());
-      cmd.value = '';
-      cmd.focus();
-    }
-
-    function handle(input) {
-      if (input === 'help') {
-        print('help - show commands\\nabout - short info\\ntime - show local time\\nclear - clear output');
-        return;
-      }
-      if (input === 'about') {
-        print('This about page describes the demo site and design goals.');
-        return;
-      }
-      if (input === 'time') {
-        print('Local time: ' + new Date().toLocaleString());
-        return;
-      }
-      if (input === 'clear') {
-        output.textContent = '> cleared';
-        return;
-      }
-      print('Unknown command: ' + input + '\\nType \"help\" for a list of commands.');
-    }
-
-    cmd.addEventListener('keydown', function(e){
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        run();
-      }
-    });
-
-    window.addEventListener('load', () => cmd.focus());
-  </script>
 </body>
 </html>
