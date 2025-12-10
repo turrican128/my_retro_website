@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>8bitretro.tech – אתר הרטרו שלי</title>
+  <title>עליי – 8bitretro.tech</title>
 
   <!-- TailwindCSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
-  <!-- Tiny custom animations for background and scanlines -->
+  <!-- רקע אנימטיבי + סרגלי סריקה -->
   <style>
     @keyframes neonGradient {
       0%   { background-position: 0% 50%; }
@@ -61,12 +61,12 @@
 
       <ul class="flex items-center gap-3 text-xs flex-row-reverse">
         <li>
-          <a href="index.html" class="px-3 py-2 rounded-md text-cyan-200 bg-white/10 shadow-[0_0_20px_rgba(0,255,243,0.4)]">
+          <a href="index.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
             דף הבית
           </a>
         </li>
         <li>
-          <a href="about.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+          <a href="about.html" class="px-3 py-2 rounded-md text-cyan-200 bg-white/10 shadow-[0_0_20px_rgba(0,255,243,0.4)]">
             עליי
           </a>
         </li>
@@ -85,121 +85,170 @@
   </header>
 
   <!-- תוכן הדף -->
-  <main class="relative min-h-screen flex flex-col items-center justify-center pt-28 pb-16">
+  <main class="relative min-h-screen flex flex-col items-center pt-28 pb-16">
     <!-- עיגול זוהר ברקע -->
     <div class="pointer-events-none absolute -z-10 inset-0 flex justify-center">
       <div class="w-[30rem] h-[30rem] rounded-full bg-pink-500/20 blur-[120px] translate-y-10"></div>
     </div>
 
-    <div class="w-[min(1100px,96%)] grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- אזור הירו -->
-      <section class="flex flex-col justify-center gap-6 rounded-xl p-8 bg-black/60 border border-white/15 shadow-[0_24px_80px_rgba(0,0,0,0.8)] backdrop-blur">
-        <div>
-          <h1 class="[font-family:'Press Start 2P',monospace] text-3xl md:text-4xl text-cyan-300 leading-tight drop-shadow-[0_2px_25px_rgba(0,255,243,0.3)]">
-            ברוכים הבאים לעולם הרטרו והסינת׳ווייב
-          </h1>
-          <p class="mt-3 text-sm text-pink-100/85 max-w-prose ml-auto">
-            זהו הבית הדיגיטלי שלי לפרויקטים על קומודור 64, אמיגה, מוזיקת סינת׳ווייב ואווירת ארקייד של סוף שנות ה־80.
-            האתר נבנה בקבצי HTML סטטיים, TailwindCSS וקצת ג׳אווהסקריפט – בלי וורדפרס, בלי מסד נתונים, רק קוד נקי.
+    <div class="w-[min(1100px,96%)] flex flex-col gap-8">
+      <!-- טקסט כללי עליי -->
+      <section class="rounded-xl p-8 bg-black/60 border border-white/15 shadow-[0_24px_80px_rgba(0,0,0,0.8)] backdrop-blur">
+        <h1 class="[font-family:'Press Start 2P',monospace] text-3xl md:text-4xl text-cyan-300 leading-tight drop-shadow-[0_2px_25px_rgba(0,255,243,0.3)] mb-4">
+          קצת עליי
+        </h1>
+        <p class="text-sm text-pink-100/85 max-w-3xl ml-auto">
+          שלום, אני חובב רטרו, קומודור 64, אמיגה ומוזיקת סינת׳ווייב. מאז הילדות אני נמשך למסכים, לפיקסלים הגדולים ולצלילים של שבבי הסאונד הישנים.
+          האתר הזה הוא מקום מרוכז שבו אני מרכז פרויקטים, ניסויים ומחשבות מעולם ה־8bit וה־16bit, יחד עם אהבה גדולה לאסתטיקת סוף שנות ה־80.
+        </p>
+        <p class="text-sm text-sky-100/85 max-w-3xl ml-auto mt-3">
+          כאן תוכלו למצוא דמואים, קטעי מוזיקה, קישורים לפרויקטים וסקיצות – חלקם בתהליך, חלקם גמורים – כולם נולדו מתוך נוסטלגיה ורצון ליצור משהו חדש על בסיס ישן.
+        </p>
+      </section>
+
+      <!-- פרופיל + טקסט אישי -->
+      <section class="grid grid-cols-1 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-6 items-center">
+        <!-- תמונה שלך (אפשר להחליף ל-me-profile.jpg או כל מה שתרצה) -->
+        <div class="flex justify-center">
+          <div class="relative w-52 h-52 md:w-60 md:h-60 rounded-3xl overflow-hidden border border-cyan-300/40 bg-black/70 shadow-[0_18px_70px_rgba(0,0,0,0.9)]">
+            <!-- אם יש לך תמונה אישית, שנה כאן את הנתיב -->
+            <img
+              src="IMAGES/19946662-0-_lora_1860519_1_0__a.jpg"
+              alt="תמונה בסגנון רטרו"
+              class="w-full h-full object-cover"
+            />
+            <div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+            <div class="absolute bottom-2 right-3 left-3 flex flex-col items-end">
+              <span class="[font-family:'Press Start 2P',monospace] text-[11px] text-cyan-200 drop-shadow">
+                8bit • synthwave • arcade
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-xl p-6 bg-black/60 border border-white/10 shadow-[0_18px_70px_rgba(0,0,0,0.9)]">
+          <h2 class="[font-family:'Press Start 2P',monospace] text-xl text-pink-300 mb-3">
+            מי אני בעולם הרטרו
+          </h2>
+          <p class="text-sm text-sky-100/90">
+            אני אוהב לחקור את המגבלות של מערכות ישנות ולנסות להוציא מהן עוד קצת צבע, עוד קצת סאונד ועוד קצת קסם.
+            בין אם זה קוד אסמבלי על קומודור 64, משחקים על אמיגה 500, או הפקת קטעי סינת׳ווייב מודרניים – הכל מתחבר לאותה אהבה בסיסית:
+            מחשבים ישנים, ארקיידים, ומוזיקה שמרגישה כמו נסיעה לילית בעיר ניאונית.
           </p>
-        </div>
-
-        <div>
-          <h3 class="[font-family:'Press Start 2P',monospace] text-pink-300 text-sm">
-            מה תמצאו כאן
-          </h3>
-          <ul class="mt-3 list-disc list-inside text-[13px] text-sky-100/85 space-y-1 mr-4">
-            <li>דמואים ופרויקטים לקומודור 64 ואמיגה</li>
-            <li>עיצוב ניאון בסגנון סינת׳ווייב עם טיפוגרפיה רטרו</li>
-            <li>קישורים למיקסי מוזיקה ופלייליסטים באווירת SID ו־Paula</li>
-            <li>מידע עליי ועל הדרך שלי בעולם הרטרו</li>
-          </ul>
-        </div>
-
-        <div class="flex flex-wrap gap-3 mt-3 justify-end">
-          <a href="projects.html#c64-demos" class="px-4 py-2 rounded-md bg-gradient-to-r from-cyan-400/70 to-pink-400/70 text-black text-xs font-semibold hover:from-cyan-300 hover:to-pink-300 transition transform hover:-translate-y-0.5 hover:shadow-[0_0_35px_rgba(255,45,210,0.8)]">
-            פרויקטי C64 ואמיגה
-          </a>
-          <a href="projects.html#music" class="px-4 py-2 rounded-md bg-gradient-to-r from-pink-400/20 to-cyan-400/20 text-pink-200 text-xs font-semibold hover:bg-white/15 transition">
-            פינת המוזיקה והסינת׳ווייב
-          </a>
-          <a href="about.html" class="px-4 py-2 rounded-md border border-cyan-300/40 text-cyan-100 text-xs font-semibold hover:bg-cyan-500/10 transition">
-            קצת עליי
-          </a>
+          <p class="text-sm text-sky-100/80 mt-3">
+            אני נהנה לעקוב אחרי חדשות מהסצינות של C64 ואמיגה, לחפש פרויקטים עצמאיים חדשים, ולחלוק המלצות ותגליות עם חברים וקהילות אונליין.
+          </p>
         </div>
       </section>
 
-      <!-- טרמינל צד -->
-      <aside class="flex flex-col rounded-xl p-4 bg-black/70 border border-white/15 shadow-[0_18px_70px_rgba(0,0,0,0.9)] backdrop-blur">
-        <div class="flex items-center justify-between mb-3">
-          <strong class="[font-family:'Press Start 2P',monospace] text-cyan-200 text-xs">
-            Terminal
-          </strong>
-          <span class="text-[11px] text-pink-300/80">demo</span>
-        </div>
+      <!-- גלריית Grid בסגנון ארקייד -->
+      <section class="rounded-xl p-6 bg-black/60 border border-white/15 shadow-[0_24px_80px_rgba(0,0,0,0.8)] backdrop-blur">
+        <h2 class="[font-family:'Press Start 2P',monospace] text-xl md:text-2xl text-cyan-200 mb-4">
+          גלריית ארקייד / 16bit
+        </h2>
+        <p class="text-sm text-sky-100/85 mb-4">
+          כמה תמונות בסגנון ארקייד וסינת׳ווייב שמבטאות את האווירה של 8bitretro.tech – פיקסלים, צבעים חזקים, ניאון ונוסטלגיה.
+        </p>
 
-        <div id="term" class="flex-1 overflow-auto rounded-md bg-gradient-to-b from-black/80 to-slate-900/90 p-3 text-[13px] text-cyan-200 font-mono text-left">
-          <pre id="output" class="whitespace-pre-wrap">> ברוך הבא ל-8bitretro.tech
-הקלד "help" כדי לראות פקודות זמינות.
-</pre>
-        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <!-- תמונה 1 -->
+          <figure class="group relative overflow-hidden rounded-2xl border border-cyan-300/40 bg-black/70 shadow-[0_18px_60px_rgba(0,0,0,0.9)] hover:shadow-[0_0_40px_rgba(0,255,243,0.6)] transition transform hover:-translate-y-1 hover:scale-[1.03]">
+            <img src="IMAGES/19946662-0-_lora_1860519_1_0__a.jpg" alt="תמונת ארקייד 1" class="w-full h-44 object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition"></div>
+            <figcaption class="absolute bottom-2 right-3 left-3 flex flex-col items-end">
+              <span class="[font-family:'Press Start 2P',monospace] text-[10px] text-cyan-200">
+                Scene #1
+              </span>
+              <span class="text-[11px] text-pink-200/90">
+                ניאון ושקיעות
+              </span>
+            </figcaption>
+          </figure>
 
-        <div class="mt-3 flex gap-2">
-          <input id="cmd" type="text" placeholder='נסה: help / about / time' class="flex-1 bg-black/80 text-sky-100 text-sm rounded-md px-3 py-2 placeholder:text-slate-400 border border-white/10 focus:outline-none focus:ring-2 focus:ring-cyan-400/40 text-left" />
-          <button id="run" class="px-4 py-2 rounded-md bg-gradient-to-r from-cyan-400 to-pink-400 text-black text-xs font-bold hover:scale-105 transition shadow-[0_10px_35px_rgba(0,255,243,0.35)]" onclick="run()">
-            Run
-          </button>
-        </div>
+          <!-- תמונה 2 -->
+          <figure class="group relative overflow-hidden rounded-2xl border border-cyan-300/40 bg-black/70 shadow-[0_18px_60px_rgba(0,0,0,0.9)] hover:shadow-[0_0_40px_rgba(255,45,210,0.6)] transition transform hover:-translate-y-1 hover:scale-[1.03]">
+            <img src="IMAGES/19946664-0-_lora_1860519_1_0__d.jpg" alt="תמונת ארקייד 2" class="w-full h-44 object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition"></div>
+            <figcaption class="absolute bottom-2 right-3 left-3 flex flex-col items-end">
+              <span class="[font-family:'Press Start 2P',monospace] text-[10px] text-cyan-200">
+                Scene #2
+              </span>
+              <span class="text-[11px] text-pink-200/90">
+                כבישים אינסופיים
+              </span>
+            </figcaption>
+          </figure>
 
-        <footer class="mt-4 text-[12px] text-sky-100/70">
-          <small>נבנה מאהבה לרטרו, קומודור 64, אמיגה וסינת׳ווייב.</small>
-        </footer>
-      </aside>
+          <!-- תמונה 3 -->
+          <figure class="group relative overflow-hidden rounded-2xl border border-cyan-300/40 bg-black/70 shadow-[0_18px_60px_rgba(0,0,0,0.9)] hover:shadow-[0_0_40px_rgba(0,255,243,0.6)] transition transform hover:-translate-y-1 hover:scale-[1.03]">
+            <img src="IMAGES/19946668-0-_lora_1860519_1_0__i.jpg" alt="תמונת ארקייד 3" class="w-full h-44 object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition"></div>
+            <figcaption class="absolute bottom-2 right-3 left-3 flex flex-col items-end">
+              <span class="[font-family:'Press Start 2P',monospace] text-[10px] text-cyan-200">
+                Scene #3
+              </span>
+              <span class="text-[11px] text-pink-200/90">
+                עיר ניאון
+              </span>
+            </figcaption>
+          </figure>
+
+          <!-- תמונה 4 -->
+          <figure class="group relative overflow-hidden rounded-2xl border border-cyan-300/40 bg-black/70 shadow-[0_18px_60px_rgba(0,0,0,0.9)] hover:shadow-[0_0_40px_rgba(255,45,210,0.6)] transition transform hover:-translate-y-1 hover:scale-[1.03]">
+            <img src="IMAGES/19946670-0-_lora_1860519_1_0__a.jpg" alt="תמונת ארקייד 4" class="w-full h-44 object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition"></div>
+            <figcaption class="absolute bottom-2 right-3 left-3 flex flex-col items-end">
+              <span class="[font-family:'Press Start 2P',monospace] text-[10px] text-cyan-200">
+                Scene #4
+              </span>
+              <span class="text-[11px] text-pink-200/90">
+                וייב של ארקייד
+              </span>
+            </figcaption>
+          </figure>
+
+          <!-- תמונה 5 -->
+          <figure class="group relative overflow-hidden rounded-2xl border border-cyan-300/40 bg-black/70 shadow-[0_18px_60px_rgba(0,0,0,0.9)] hover:shadow-[0_0_40px_rgba(0,255,243,0.6)] transition transform hover:-translate-y-1 hover:scale-[1.03]">
+            <img src="IMAGES/19946672-0-_lora_1860519_1_0__d.jpg" alt="תמונת ארקייד 5" class="w-full h-44 object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition"></div>
+            <figcaption class="absolute bottom-2 right-3 left-3 flex flex-col items-end">
+              <span class="[font-family:'Press Start 2P',monospace] text-[10px] text-cyan-200">
+                Scene #5
+              </span>
+              <span class="text-[11px] text-pink-200/90">
+                פיקסלים וצבע
+              </span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- קטע על האתר -->
+      <section class="rounded-xl p-8 bg-black/60 border border-white/15 shadow-[0_24px_80px_rgba(0,0,0,0.8)] backdrop-blur">
+        <h2 class="[font-family:'Press Start 2P',monospace] text-xl md:text-2xl text-cyan-200 mb-4">
+          על האתר 8bitretro.tech
+        </h2>
+        <p class="text-sm text-sky-100/85 max-w-3xl ml-auto">
+          האתר נבנה כאתר סטטי המתעדכן דרך GitHub ו־GitHub Pages.
+          הרעיון הוא לעבוד עם קבצי HTML פשוטים, TailwindCSS לעיצוב וקוד נקי שקל לתחזק ולשנות.
+        </p>
+        <ul class="mt-3 list-disc list-inside text-[13px] text-sky-100/85 space-y-1 mr-4">
+          <li>כל שינוי בקוד נשמר בריפו ב־GitHub ויוצא ישר לפרודקשן.</li>
+          <li>אין מערכת ניהול כבדה, אין תוספים, אין מסד נתונים.</li>
+          <li>הכל בהשראת דפי בית אישיים קלאסיים – אבל עם טאץ׳ מודרני וניאון.</li>
+        </ul>
+      </section>
+
+      <!-- כפתורים למעבר -->
+      <section class="flex flex-wrap gap-3 justify-end">
+        <a href="projects.html" class="px-4 py-2 rounded-md bg-gradient-to-r from-cyan-400/70 to-pink-400/70 text-black text-xs font-semibold hover:from-cyan-300 hover:to-pink-300 transition transform hover:-translate-y-0.5 hover:shadow-[0_0_35px_rgba(255,45,210,0.8)]">
+          לעבור לפרויקטים
+        </a>
+        <a href="contact.html" class="px-4 py-2 rounded-md border border-cyan-300/40 text-cyan-100 text-xs font-semibold hover:bg-cyan-500/10 transition">
+          יצירת קשר
+        </a>
+      </section>
     </div>
-
-    <!-- קטע ה-highlight -->
-    <section class="w-[min(1100px,96%)] mt-10">
-      <h2 class="[font-family:'Press Start 2P',monospace] text-xl md:text-2xl text-cyan-200 mb-4 drop-shadow-[0_2px_18px_rgba(0,255,243,0.3)]">
-        נקודות שיא מהעולם של C64 ואמיגה
-      </h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-        <a href="projects.html#c64-demos" class="group rounded-xl p-4 bg-black/60 border border-cyan-400/30 hover:border-pink-400/50 shadow-[0_16px_50px_rgba(0,0,0,0.8)] hover:shadow-[0_0_40px_rgba(0,255,243,0.6)] transition block">
-          <h3 class="[font-family:'Press Start 2P',monospace] text-xs text-pink-300 mb-2">
-            דמואים ואינטרואים ל־C64
-          </h3>
-          <p class="text-sky-100/85">
-            חלקים בעבודה, ספרייטים, רסטרים ומוזיקת SID שנכתבים לאורך הזמן.
-          </p>
-          <p class="mt-2 text-[11px] text-cyan-200 group-hover:text-pink-200">
-            מעבר לחלק המתאים →
-          </p>
-        </a>
-
-        <a href="projects.html#amiga" class="group rounded-xl p-4 bg-black/60 border border-cyan-400/30 hover:border-pink-400/50 shadow-[0_16px_50px_rgba(0,0,0,0.8)] hover:shadow-[0_0_40px_rgba(255,45,210,0.6)] transition block">
-          <h3 class="[font-family:'Press Start 2P',monospace] text-xs text-pink-300 mb-2">
-            פרויקטים על אמיגה
-          </h3>
-          <p class="text-sky-100/85">
-            ניסויים על Amiga 500/1200, התקנות WHDLoad, גרפיקה וסאונדסקייפים.
-          </p>
-          <p class="mt-2 text-[11px] text-cyan-200 group-hover:text-pink-200">
-            מעבר לחלק המתאים →
-          </p>
-        </a>
-
-        <a href="projects.html#music" class="group rounded-xl p-4 bg-black/60 border border-cyan-400/30 hover:border-pink-400/50 shadow-[0_16px_50px_rgba(0,0,0,0.8)] hover:shadow-[0_0_40px_rgba(0,255,243,0.6)] transition block">
-          <h3 class="[font-family:'Press Start 2P',monospace] text-xs text-pink-300 mb-2">
-            סינת׳ווייב ומוזיקה בסגנון SID
-          </h3>
-          <p class="text-sky-100/85">
-            מיקסים, פלייליסטים וקטעים מקוריים בהשראת SID, Paula ופסקולי ארקייד.
-          </p>
-          <p class="mt-2 text-[11px] text-cyan-200 group-hover:text-pink-200">
-            מעבר לחלק המתאים →
-          </p>
-        </a>
-      </div>
-    </section>
   </main>
 
   <!-- גריד דקורטיבי בתחתית -->
@@ -217,55 +266,5 @@
       </g>
     </svg>
   </div>
-
-  <script>
-    // סימולציית טרמינל בסיסית
-    const output = document.getElementById('output');
-    const cmd = document.getElementById('cmd');
-
-    function print(text = '') {
-      output.textContent += '\\n' + text;
-      const term = output.parentElement;
-      term.scrollTop = term.scrollHeight;
-    }
-
-    function run() {
-      const v = (cmd.value || '').trim();
-      if (!v) return;
-      print('> ' + v);
-      handle(v.toLowerCase());
-      cmd.value = '';
-      cmd.focus();
-    }
-
-    function handle(input) {
-      if (input === 'help') {
-        print('help - רשימת פקודות זמינות\\nabout - מידע קצר על האתר\\ntime - הצגת השעה המקומית\\nclear - ניקוי המסך');
-        return;
-      }
-      if (input === 'about') {
-        print('זהו דף הבית של 8bitretro.tech – אתר סטטי בסגנון רטרו, אפשר לערוך אותו בקובץ docs/index.html');
-        return;
-      }
-      if (input === 'time') {
-        print('שעה מקומית: ' + new Date().toLocaleString('he-IL'));
-        return;
-      }
-      if (input === 'clear') {
-        output.textContent = '> המסך נוקה';
-        return;
-      }
-      print('פקודה לא מוכרת: ' + input + '\\nהקלד "help" כדי לראות את הפקודות הזמינות.');
-    }
-
-    cmd.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        run();
-      }
-    });
-
-    window.addEventListener('load', () => cmd.focus());
-  </script>
 </body>
 </html>
