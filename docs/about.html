@@ -1,270 +1,65 @@
-<!doctype html>
-<html lang="he" dir="rtl">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>עליי – 8bitretro.tech</title>
-
-  <!-- TailwindCSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Retro pixel font -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-
-  <!-- רקע אנימטיבי + סרגלי סריקה -->
-  <style>
-    @keyframes neonGradient {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .bg-animated {
-      background-size: 320% 320%;
-      animation: neonGradient 22s ease-in-out infinite;
-    }
-
-    .scanline-overlay::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image: repeating-linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.35),
-        rgba(0, 0, 0, 0.35) 1px,
-        transparent 1px,
-        transparent 3px
-      );
-      mix-blend-mode: soft-light;
-      opacity: 0.45;
-      z-index: 0;
-    }
-  </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Retro Home</title>
+    <meta name="description" content="Retro Home — an 80s-inspired web playground of neon colors, grid horizons, and retro-futuristic layouts.">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="min-h-screen text-sky-100 antialiased bg-animated bg-gradient-to-b from-purple-900 via-pink-700 to-black scanline-overlay text-right [direction:rtl]">
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- ניווט עליון ניאון -->
-  <header class="fixed inset-x-0 top-4 z-30 flex items-center justify-center">
-    <nav class="w-[min(1100px,96%)] flex items-center justify-between px-4 py-3 rounded-xl bg-black/40 backdrop-blur border border-white/10 shadow-[0_12px_50px_rgba(0,0,0,0.7)] flex-row-reverse">
-      <div class="flex items-center gap-4 flex-row-reverse">
-        <div class="w-16 h-12 flex items-center justify-center rounded-md bg-gradient-to-r from-pink-500/40 to-cyan-400/20 border border-white/30 shadow-[0_0_25px_rgba(255,45,210,0.6)]">
-          <span class="[font-family:'Press Start 2P',monospace] text-pink-300 text-[10px] uppercase tracking-[0.2em]">
-            RETRO
-          </span>
+    <div class="retro-grid-bg" aria-hidden="true"></div>
+
+    <header class="site-header" role="banner">
+        <div class="container header-inner">
+            <h1 class="site-title neon-text">Retro Home</h1>
+
+            <nav class="site-nav neon-nav" role="navigation" aria-label="Primary">
+                <ul class="nav-list">
+                    <li class="nav-item"><a class="nav-link" href="index.html" aria-current="page">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
         </div>
-        <div class="[font-family:'Press Start 2P',monospace] text-cyan-100 text-xs md:text-sm">
-          8bitretro.tech
-        </div>
-      </div>
+    </header>
 
-      <ul class="flex items-center gap-3 text-xs flex-row-reverse">
-        <li>
-          <a href="index.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
-            דף הבית
-          </a>
-        </li>
-        <li>
-          <a href="about.html" class="px-3 py-2 rounded-md text-cyan-200 bg-white/10 shadow-[0_0_20px_rgba(0,255,243,0.4)]">
-            עליי
-          </a>
-        </li>
-        <li>
-          <a href="projects.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
-            פרויקטים
-          </a>
-        </li>
-        <li>
-          <a href="contact.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
-            יצירת קשר
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </header>
+    <main id="main" class="site-main" role="main">
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="container hero-inner">
+                <h2 id="hero-title" class="hero-title neon-heading">Synthwave vibes, pixel-perfect design</h2>
+                <p class="hero-subtitle">Step into an 80s-inspired web playground of neon colors, grid horizons, and retro-futuristic layouts. Curated experiments, small projects, and visual riffs on classic aesthetics.</p>
 
-  <!-- תוכן הדף -->
-  <main class="relative min-h-screen flex flex-col items-center pt-28 pb-16">
-    <!-- עיגול זוהר ברקע -->
-    <div class="pointer-events-none absolute -z-10 inset-0 flex justify-center">
-      <div class="w-[30rem] h-[30rem] rounded-full bg-pink-500/20 blur-[120px] translate-y-10"></div>
-    </div>
-
-    <div class="w-[min(1100px,96%)] flex flex-col gap-8">
-      <!-- טקסט כללי עליי -->
-      <section class="rounded-xl p-8 bg-black/60 border border-white/15 shadow-[0_24px_80px_rgba(0,0,0,0.8)] backdrop-blur">
-        <h1 class="[font-family:'Press Start 2P',monospace] text-3xl md:text-4xl text-cyan-300 leading-tight drop-shadow-[0_2px_25px_rgba(0,255,243,0.3)] mb-4">
-          קצת עליי
-        </h1>
-        <p class="text-sm text-pink-100/85 max-w-3xl ml-auto">
-          שלום, אני חובב רטרו, קומודור 64, אמיגה ומוזיקת סינת׳ווייב. מאז הילדות אני נמשך למסכים, לפיקסלים הגדולים ולצלילים של שבבי הסאונד הישנים.
-          האתר הזה הוא מקום מרוכז שבו אני מרכז פרויקטים, ניסויים ומחשבות מעולם ה־8bit וה־16bit, יחד עם אהבה גדולה לאסתטיקת סוף שנות ה־80.
-        </p>
-        <p class="text-sm text-sky-100/85 max-w-3xl ml-auto mt-3">
-          כאן תוכלו למצוא דמואים, קטעי מוזיקה, קישורים לפרויקטים וסקיצות – חלקם בתהליך, חלקם גמורים – כולם נולדו מתוך נוסטלגיה ורצון ליצור משהו חדש על בסיס ישן.
-        </p>
-      </section>
-
-      <!-- פרופיל + טקסט אישי -->
-      <section class="grid grid-cols-1 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-6 items-center">
-        <!-- תמונה שלך (אפשר להחליף ל-me-profile.jpg או כל מה שתרצה) -->
-        <div class="flex justify-center">
-          <div class="relative w-52 h-52 md:w-60 md:h-60 rounded-3xl overflow-hidden border border-cyan-300/40 bg-black/70 shadow-[0_18px_70px_rgba(0,0,0,0.9)]">
-            <!-- אם יש לך תמונה אישית, שנה כאן את הנתיב -->
-            <img
-              src="IMAGES/19946662-0-_lora_1860519_1_0__a.jpg"
-              alt="תמונה בסגנון רטרו"
-              class="w-full h-full object-cover"
-            />
-            <div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-            <div class="absolute bottom-2 right-3 left-3 flex flex-col items-end">
-              <span class="[font-family:'Press Start 2P',monospace] text-[11px] text-cyan-200 drop-shadow">
-                8bit • synthwave • arcade
-              </span>
+                <div class="hero-cta">
+                    <a class="btn glow-btn" href="projects.html" role="button">Explore Projects</a>
+                    <a class="btn ghost-btn" href="contact.html" role="button">Get in Touch</a>
+                </div>
             </div>
-          </div>
+        </section>
+
+        <section class="home-content container" aria-labelledby="home-heading">
+            <h3 id="home-heading" class="section-title neon-accent">Welcome</h3>
+            <p>Welcome to Retro Home — a small corner of the internet celebrating the bold, electric aesthetics of the 1980s. Here you'll find design experiments, front-end projects, pixel art snippets, and notes on crafting neon UI and synthwave layouts. Whether you are browsing for inspiration or just passing through, enjoy the glow.</p>
+
+            <p>Use the navigation above to learn more about the creator, browse completed projects, or reach out for collaborations. All visuals and interactions are intentionally simple and ready for retro CSS treatment.</p>
+        </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="container footer-inner">
+            <p class="footer-text">© <span class="year" id="year">2025</span> Retro Home — made with neon and nostalgia.</p>
         </div>
+    </footer>
 
-        <div class="rounded-xl p-6 bg-black/60 border border-white/10 shadow-[0_18px_70px_rgba(0,0,0,0.9)]">
-          <h2 class="[font-family:'Press Start 2P',monospace] text-xl text-pink-300 mb-3">
-            מי אני בעולם הרטרו
-          </h2>
-          <p class="text-sm text-sky-100/90">
-            אני אוהב לחקור את המגבלות של מערכות ישנות ולנסות להוציא מהן עוד קצת צבע, עוד קצת סאונד ועוד קצת קסם.
-            בין אם זה קוד אסמבלי על קומודור 64, משחקים על אמיגה 500, או הפקת קטעי סינת׳ווייב מודרניים – הכל מתחבר לאותה אהבה בסיסית:
-            מחשבים ישנים, ארקיידים, ומוזיקה שמרגישה כמו נסיעה לילית בעיר ניאונית.
-          </p>
-          <p class="text-sm text-sky-100/80 mt-3">
-            אני נהנה לעקוב אחרי חדשות מהסצינות של C64 ואמיגה, לחפש פרויקטים עצמאיים חדשים, ולחלוק המלצות ותגליות עם חברים וקהילות אונליין.
-          </p>
-        </div>
-      </section>
-
-      <!-- גלריית Grid בסגנון ארקייד -->
-      <section class="rounded-xl p-6 bg-black/60 border border-white/15 shadow-[0_24px_80px_rgba(0,0,0,0.8)] backdrop-blur">
-        <h2 class="[font-family:'Press Start 2P',monospace] text-xl md:text-2xl text-cyan-200 mb-4">
-          גלריית ארקייד / 16bit
-        </h2>
-        <p class="text-sm text-sky-100/85 mb-4">
-          כמה תמונות בסגנון ארקייד וסינת׳ווייב שמבטאות את האווירה של 8bitretro.tech – פיקסלים, צבעים חזקים, ניאון ונוסטלגיה.
-        </p>
-
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-          <!-- תמונה 1 -->
-          <figure class="group relative overflow-hidden rounded-2xl border border-cyan-300/40 bg-black/70 shadow-[0_18px_60px_rgba(0,0,0,0.9)] hover:shadow-[0_0_40px_rgba(0,255,243,0.6)] transition transform hover:-translate-y-1 hover:scale-[1.03]">
-            <img src="IMAGES/19946662-0-_lora_1860519_1_0__a.jpg" alt="תמונת ארקייד 1" class="w-full h-44 object-cover" />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition"></div>
-            <figcaption class="absolute bottom-2 right-3 left-3 flex flex-col items-end">
-              <span class="[font-family:'Press Start 2P',monospace] text-[10px] text-cyan-200">
-                Scene #1
-              </span>
-              <span class="text-[11px] text-pink-200/90">
-                ניאון ושקיעות
-              </span>
-            </figcaption>
-          </figure>
-
-          <!-- תמונה 2 -->
-          <figure class="group relative overflow-hidden rounded-2xl border border-cyan-300/40 bg-black/70 shadow-[0_18px_60px_rgba(0,0,0,0.9)] hover:shadow-[0_0_40px_rgba(255,45,210,0.6)] transition transform hover:-translate-y-1 hover:scale-[1.03]">
-            <img src="IMAGES/19946664-0-_lora_1860519_1_0__d.jpg" alt="תמונת ארקייד 2" class="w-full h-44 object-cover" />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition"></div>
-            <figcaption class="absolute bottom-2 right-3 left-3 flex flex-col items-end">
-              <span class="[font-family:'Press Start 2P',monospace] text-[10px] text-cyan-200">
-                Scene #2
-              </span>
-              <span class="text-[11px] text-pink-200/90">
-                כבישים אינסופיים
-              </span>
-            </figcaption>
-          </figure>
-
-          <!-- תמונה 3 -->
-          <figure class="group relative overflow-hidden rounded-2xl border border-cyan-300/40 bg-black/70 shadow-[0_18px_60px_rgba(0,0,0,0.9)] hover:shadow-[0_0_40px_rgba(0,255,243,0.6)] transition transform hover:-translate-y-1 hover:scale-[1.03]">
-            <img src="IMAGES/19946668-0-_lora_1860519_1_0__i.jpg" alt="תמונת ארקייד 3" class="w-full h-44 object-cover" />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition"></div>
-            <figcaption class="absolute bottom-2 right-3 left-3 flex flex-col items-end">
-              <span class="[font-family:'Press Start 2P',monospace] text-[10px] text-cyan-200">
-                Scene #3
-              </span>
-              <span class="text-[11px] text-pink-200/90">
-                עיר ניאון
-              </span>
-            </figcaption>
-          </figure>
-
-          <!-- תמונה 4 -->
-          <figure class="group relative overflow-hidden rounded-2xl border border-cyan-300/40 bg-black/70 shadow-[0_18px_60px_rgba(0,0,0,0.9)] hover:shadow-[0_0_40px_rgba(255,45,210,0.6)] transition transform hover:-translate-y-1 hover:scale-[1.03]">
-            <img src="IMAGES/19946670-0-_lora_1860519_1_0__a.jpg" alt="תמונת ארקייד 4" class="w-full h-44 object-cover" />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition"></div>
-            <figcaption class="absolute bottom-2 right-3 left-3 flex flex-col items-end">
-              <span class="[font-family:'Press Start 2P',monospace] text-[10px] text-cyan-200">
-                Scene #4
-              </span>
-              <span class="text-[11px] text-pink-200/90">
-                וייב של ארקייד
-              </span>
-            </figcaption>
-          </figure>
-
-          <!-- תמונה 5 -->
-          <figure class="group relative overflow-hidden rounded-2xl border border-cyan-300/40 bg-black/70 shadow-[0_18px_60px_rgba(0,0,0,0.9)] hover:shadow-[0_0_40px_rgba(0,255,243,0.6)] transition transform hover:-translate-y-1 hover:scale-[1.03]">
-            <img src="IMAGES/19946672-0-_lora_1860519_1_0__d.jpg" alt="תמונת ארקייד 5" class="w-full h-44 object-cover" />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition"></div>
-            <figcaption class="absolute bottom-2 right-3 left-3 flex flex-col items-end">
-              <span class="[font-family:'Press Start 2P',monospace] text-[10px] text-cyan-200">
-                Scene #5
-              </span>
-              <span class="text-[11px] text-pink-200/90">
-                פיקסלים וצבע
-              </span>
-            </figcaption>
-          </figure>
-        </div>
-      </section>
-
-      <!-- קטע על האתר -->
-      <section class="rounded-xl p-8 bg-black/60 border border-white/15 shadow-[0_24px_80px_rgba(0,0,0,0.8)] backdrop-blur">
-        <h2 class="[font-family:'Press Start 2P',monospace] text-xl md:text-2xl text-cyan-200 mb-4">
-          על האתר 8bitretro.tech
-        </h2>
-        <p class="text-sm text-sky-100/85 max-w-3xl ml-auto">
-          האתר נבנה כאתר סטטי המתעדכן דרך GitHub ו־GitHub Pages.
-          הרעיון הוא לעבוד עם קבצי HTML פשוטים, TailwindCSS לעיצוב וקוד נקי שקל לתחזק ולשנות.
-        </p>
-        <ul class="mt-3 list-disc list-inside text-[13px] text-sky-100/85 space-y-1 mr-4">
-          <li>כל שינוי בקוד נשמר בריפו ב־GitHub ויוצא ישר לפרודקשן.</li>
-          <li>אין מערכת ניהול כבדה, אין תוספים, אין מסד נתונים.</li>
-          <li>הכל בהשראת דפי בית אישיים קלאסיים – אבל עם טאץ׳ מודרני וניאון.</li>
-        </ul>
-      </section>
-
-      <!-- כפתורים למעבר -->
-      <section class="flex flex-wrap gap-3 justify-end">
-        <a href="projects.html" class="px-4 py-2 rounded-md bg-gradient-to-r from-cyan-400/70 to-pink-400/70 text-black text-xs font-semibold hover:from-cyan-300 hover:to-pink-300 transition transform hover:-translate-y-0.5 hover:shadow-[0_0_35px_rgba(255,45,210,0.8)]">
-          לעבור לפרויקטים
-        </a>
-        <a href="contact.html" class="px-4 py-2 rounded-md border border-cyan-300/40 text-cyan-100 text-xs font-semibold hover:bg-cyan-500/10 transition">
-          יצירת קשר
-        </a>
-      </section>
-    </div>
-  </main>
-
-  <!-- גריד דקורטיבי בתחתית -->
-  <div class="pointer-events-none fixed inset-x-0 bottom-0 h-36 opacity-70">
-    <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="g1" x1="0" x2="1">
-          <stop offset="0" stop-color="#ff2dd2" stop-opacity="0.15"/>
-          <stop offset="1" stop-color="#00fff3" stop-opacity="0.15"/>
-        </linearGradient>
-      </defs>
-      <rect width="1440" height="120" fill="url(#g1)" />
-      <g stroke="#00fff3" stroke-opacity="0.25" stroke-width="1">
-        <path d="M0 90 C200 60 400 52 720 52 C1040 52 1240 60 1440 90" fill="none"/>
-      </g>
-    </svg>
-  </div>
+    <script>
+        (function() {
+            var y = new Date().getFullYear();
+            var el = document.getElementById('year');
+            if (el) el.textContent = y;
+        })();
+    </script>
 </body>
 </html>
