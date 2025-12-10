@@ -11,37 +11,72 @@
   <!-- Retro pixel font -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <!-- Tiny custom animations for background and scanlines -->
+  <style>
+    @keyframes neonGradient {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .bg-animated {
+      background-size: 320% 320%;
+      animation: neonGradient 22s ease-in-out infinite;
+    }
+
+    .scanline-overlay::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.35),
+        rgba(0, 0, 0, 0.35) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      mix-blend-mode: soft-light;
+      opacity: 0.45;
+      z-index: 0;
+    }
+  </style>
 </head>
-<body class="min-h-screen bg-gradient-to-b from-purple-900 via-pink-700 to-black text-sky-100 antialiased">
+<body class="min-h-screen text-sky-100 antialiased bg-animated bg-gradient-to-b from-purple-900 via-pink-700 to-black scanline-overlay">
 
   <!-- top neon navigation -->
   <header class="fixed inset-x-0 top-4 z-30 flex items-center justify-center">
-    <nav class="w-[min(1100px,96%)] flex items-center justify-between px-4 py-3 rounded-xl bg-black/30 backdrop-blur border border-white/5">
+    <nav class="w-[min(1100px,96%)] flex items-center justify-between px-4 py-3 rounded-xl bg-black/40 backdrop-blur border border-white/10 shadow-[0_12px_50px_rgba(0,0,0,0.7)]">
       <div class="flex items-center gap-4">
-        <div class="w-16 h-12 flex items-center justify-center rounded-md bg-gradient-to-r from-pink-500/20 to-cyan-400/10 border border-white/5 shadow-[0_8px_32px_rgba(255,45,210,0.06)]">
-          <span class="[font-family:'Press Start 2P',monospace] text-pink-400 text-xs uppercase">RETRO</span>
+        <div class="w-16 h-12 flex items-center justify-center rounded-md bg-gradient-to-r from-pink-500/40 to-cyan-400/20 border border-white/30 shadow-[0_0_25px_rgba(255,45,210,0.6)]">
+          <span class="[font-family:'Press Start 2P',monospace] text-pink-300 text-xs uppercase tracking-[0.2em]">
+            RETRO
+          </span>
         </div>
-        <div class="[font-family:'Press Start 2P',monospace] text-cyan-200 text-sm">My Retro Website</div>
+        <div class="[font-family:'Press Start 2P',monospace] text-cyan-100 text-sm">
+          My Retro Website
+        </div>
       </div>
 
-      <ul class="flex items-center gap-3">
+      <ul class="flex items-center gap-3 text-xs">
         <li>
-          <a href="index.html" class="px-3 py-2 rounded-md text-xs text-cyan-200 hover:text-pink-300 transition transform hover:-translate-y-0.5 hover:scale-105 shadow-[0_0_18px_rgba(0,255,243,0.06)]">
+          <a href="index.html" class="px-3 py-2 rounded-md text-cyan-200 bg-white/10 shadow-[0_0_20px_rgba(0,255,243,0.4)]">
             Home
           </a>
         </li>
         <li>
-          <a href="about.html" class="px-3 py-2 rounded-md text-xs text-cyan-200 hover:text-pink-300 transition transform hover:-translate-y-0.5 hover:scale-105 shadow-[0_0_18px_rgba(255,45,210,0.06)]">
+          <a href="about.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
             About
           </a>
         </li>
         <li>
-          <a href="projects.html" class="px-3 py-2 rounded-md text-xs text-cyan-200 hover:text-pink-300 transition transform hover:-translate-y-0.5 hover:scale-105 shadow-[0_0_18px_rgba(0,255,243,0.06)]">
+          <a href="projects.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
             Projects
           </a>
         </li>
         <li>
-          <a href="contact.html" class="px-3 py-2 rounded-md text-xs text-cyan-200 hover:text-pink-300 transition transform hover:-translate-y-0.5 hover:scale-105 shadow-[0_0_18px_rgba(255,45,210,0.06)]">
+          <a href="contact.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
             Contact
           </a>
         </li>
@@ -50,95 +85,144 @@
   </header>
 
   <!-- Page content -->
-  <main class="min-h-screen flex items-center justify-center pt-28 pb-12">
+  <main class="relative min-h-screen flex flex-col items-center justify-center pt-28 pb-16">
+    <!-- subtle glowing circle in background -->
+    <div class="pointer-events-none absolute -z-10 inset-0 flex justify-center">
+      <div class="w-[30rem] h-[30rem] rounded-full bg-pink-500/20 blur-[120px] translate-y-10"></div>
+    </div>
+
     <div class="w-[min(1100px,96%)] grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- Hero / main content -->
-      <section class="flex flex-col justify-center gap-6 rounded-xl p-8 bg-gradient-to-b from-black/50 to-white/2 border border-white/5 shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
+      <section class="flex flex-col justify-center gap-6 rounded-xl p-8 bg-black/60 border border-white/15 shadow-[0_24px_80px_rgba(0,0,0,0.8)] backdrop-blur">
         <div>
-          <h1 class="[font-family:'Press Start 2P',monospace] text-3xl md:text-4xl text-cyan-300 leading-tight drop-shadow-[0_2px_20px_rgba(0,255,243,0.12)]">
+          <h1 class="[font-family:'Press Start 2P',monospace] text-3xl md:text-4xl text-cyan-300 leading-tight drop-shadow-[0_2px_25px_rgba(0,255,243,0.3)]">
             Welcome to the Synthwave Era
           </h1>
-          <p class="mt-2 text-sm text-pink-200/80 max-w-prose">
-            This homepage is a tribute to the neon-lit nights and pixel dreams of the 1980s. Built with pure HTML, TailwindCSS, and a dash of JavaScript — it’s fast, responsive, and easy to extend.
+          <p class="mt-3 text-sm text-pink-100/85 max-w-prose">
+            This homepage is a tribute to neon nights and pixel dreams of the 1980s. Built with pure HTML, TailwindCSS, and a tiny bit of JavaScript. Fast, responsive, and ready for demos, music and retro experiments.
           </p>
         </div>
 
         <div>
-          <h3 class="[font-family:'Press Start 2P',monospace] text-pink-300 text-sm">Features</h3>
+          <h3 class="[font-family:'Press Start 2P',monospace] text-pink-300 text-sm">
+            What you will find here
+          </h3>
           <ul class="mt-3 list-disc list-inside text-[13px] text-sky-100/85 space-y-1">
-            <li>Neon synthwave theme with glowing buttons and pixel accents</li>
-            <li>Retro monospace typography and responsive layout</li>
-            <li>Terminal sidebar for interactive demo commands</li>
-            <li>Navigation to About, Projects, and Contact pages</li>
+            <li>C64 and Amiga projects, demos and experiments</li>
+            <li>Neon synthwave style with glowing buttons and pixel accents</li>
+            <li>Retro typography with fully responsive layout</li>
+            <li>Navigation to About, Projects and Contact pages</li>
           </ul>
         </div>
 
         <div class="flex flex-wrap gap-3 mt-3">
-          <a href="projects.html" class="px-4 py-2 rounded-md bg-gradient-to-r from-cyan-400/20 to-pink-400/10 text-cyan-200 text-xs font-semibold hover:from-cyan-400/40 hover:to-pink-400/20 transition shadow-[0_8px_40px_rgba(0,255,243,0.06)] hover:shadow-[0_12px_60px_rgba(255,45,210,0.08)]">
-            View Projects
+          <a href="projects.html#c64-demos" class="px-4 py-2 rounded-md bg-gradient-to-r from-cyan-400/70 to-pink-400/70 text-black text-xs font-semibold hover:from-cyan-300 hover:to-pink-300 transition transform hover:-translate-y-0.5 hover:shadow-[0_0_35px_rgba(255,45,210,0.8)]">
+            View C64 and Amiga projects
           </a>
-          <a href="about.html" class="px-4 py-2 rounded-md bg-gradient-to-r from-pink-400/10 to-cyan-400/10 text-pink-300 text-xs font-semibold hover:scale-105 transition shadow-[0_8px_40px_rgba(255,45,210,0.04)]">
-            Learn More
+          <a href="projects.html#music" class="px-4 py-2 rounded-md bg-gradient-to-r from-pink-400/20 to-cyan-400/20 text-pink-200 text-xs font-semibold hover:bg-white/15 transition">
+            Synthwave music corner
           </a>
-          <a href="contact.html" class="px-4 py-2 rounded-md border border-cyan-400/10 text-cyan-200 text-xs font-semibold hover:bg-cyan-500/5 transition">
-            Contact
+          <a href="about.html" class="px-4 py-2 rounded-md border border-cyan-300/40 text-cyan-100 text-xs font-semibold hover:bg-cyan-500/10 transition">
+            About the creator
           </a>
         </div>
       </section>
 
       <!-- Terminal sidebar -->
-      <aside class="flex flex-col rounded-xl p-4 bg-black/50 border border-white/5 shadow-[0_12px_40px_rgba(0,0,0,0.65)]">
+      <aside class="flex flex-col rounded-xl p-4 bg-black/70 border border-white/15 shadow-[0_18px_70px_rgba(0,0,0,0.9)] backdrop-blur">
         <div class="flex items-center justify-between mb-3">
-          <strong class="[font-family:'Press Start 2P',monospace] text-cyan-200 text-xs">Terminal</strong>
-          <span class="text-[11px] text-pink-300/80">demo</span>
+          <strong class="[font-family:'Press Start 2P',monospace] text-cyan-200 text-xs">
+            Terminal
+          </strong>
+          <span class="text-[11px] text-pink-300/80">static demo</span>
         </div>
 
-        <div id="term" class="flex-1 overflow-auto rounded-md bg-gradient-to-b from-black/80 to-white/2 p-3 text-[13px] text-cyan-200 font-mono">
+        <div id="term" class="flex-1 overflow-auto rounded-md bg-gradient-to-b from-black/80 to-slate-900/90 p-3 text-[13px] text-cyan-200 font-mono">
           <pre id="output" class="whitespace-pre-wrap">> welcome to my-retro-website
 Type "help" to see commands.
 </pre>
         </div>
 
         <div class="mt-3 flex gap-2">
-          <input id="cmd" type="text" placeholder='try: help / about / time' class="flex-1 bg-black/70 text-sky-100 text-sm rounded-md px-3 py-2 placeholder:text-slate-400 border border-white/5 focus:outline-none focus:ring-2 focus:ring-cyan-400/30" />
-          <button id="run" class="px-4 py-2 rounded-md bg-gradient-to-r from-cyan-400 to-pink-400 text-black text-xs font-bold hover:scale-105 transition shadow-[0_8px_30px_rgba(0,255,243,0.08)]" onclick="run()">
+          <input id="cmd" type="text" placeholder='try: help / about / time' class="flex-1 bg-black/80 text-sky-100 text-sm rounded-md px-3 py-2 placeholder:text-slate-400 border border-white/10 focus:outline-none focus:ring-2 focus:ring-cyan-400/40" />
+          <button id="run" class="px-4 py-2 rounded-md bg-gradient-to-r from-cyan-400 to-pink-400 text-black text-xs font-bold hover:scale-105 transition shadow-[0_10px_35px_rgba(0,255,243,0.35)]" onclick="run()">
             Run
           </button>
         </div>
 
         <footer class="mt-4 text-[12px] text-sky-100/70">
-          <small>Made with synthwave • static demo</small>
+          <small>Made with synthwave, C64 and Amiga love.</small>
         </footer>
       </aside>
     </div>
+
+    <!-- Featured projects section -->
+    <section class="w-[min(1100px,96%)] mt-10">
+      <h2 class="[font-family:'Press Start 2P',monospace] text-xl md:text-2xl text-cyan-200 mb-4 drop-shadow-[0_2px_18px_rgba(0,255,243,0.3)]">
+        Featured C64 and Amiga highlights
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+        <a href="projects.html#c64-demos" class="group rounded-xl p-4 bg-black/60 border border-cyan-400/30 hover:border-pink-400/50 shadow-[0_16px_50px_rgba(0,0,0,0.8)] hover:shadow-[0_0_40px_rgba(0,255,243,0.6)] transition">
+          <h3 class="[font-family:'Press Start 2P',monospace] text-xs text-pink-300 mb-2">
+            C64 Demos and Intros
+          </h3>
+          <p class="text-sky-100/85">
+            Work in progress demos, sprite tricks, rasterbars and SID driven parts for the Commodore 64.
+          </p>
+          <p class="mt-2 text-[11px] text-cyan-200 group-hover:text-pink-200">
+            Jump to section →
+          </p>
+        </a>
+
+        <a href="projects.html#amiga" class="group rounded-xl p-4 bg-black/60 border border-cyan-400/30 hover:border-pink-400/50 shadow-[0_16px_50px_rgba(0,0,0,0.8)] hover:shadow-[0_0_40px_rgba(255,45,210,0.6)] transition">
+          <h3 class="[font-family:'Press Start 2P',monospace] text-xs text-pink-300 mb-2">
+            Amiga Projects
+          </h3>
+          <p class="text-sky-100/85">
+            Amiga 500 and 1200 experiments, WHDLoad setups, graphics and soundscapes.
+          </p>
+          <p class="mt-2 text-[11px] text-cyan-200 group-hover:text-pink-200">
+            Jump to section →
+          </p>
+        </a>
+
+        <a href="projects.html#music" class="group rounded-xl p-4 bg-black/60 border border-cyan-400/30 hover:border-pink-400/50 shadow-[0_16px_50px_rgba(0,0,0,0.8)] hover:shadow-[0_0_40px_rgba(0,255,243,0.6)] transition">
+          <h3 class="[font-family:'Press Start 2P',monospace] text-xs text-pink-300 mb-2">
+            Synthwave and SID style music
+          </h3>
+          <p class="text-sky-100/85">
+            Mixes, playlists and original tunes inspired by SID, Paula and 80s arcade soundtracks.
+          </p>
+          <p class="mt-2 text-[11px] text-cyan-200 group-hover:text-pink-200">
+            Jump to section →
+          </p>
+        </a>
+      </div>
+    </section>
   </main>
 
-  <!-- decorative pixel grid SVG overlay bottom-right (tailwind-only placement) -->
-  <div class="pointer-events-none fixed inset-x-0 bottom-0 h-36 opacity-60">
+  <!-- decorative grid at the bottom -->
+  <div class="pointer-events-none fixed inset-x-0 bottom-0 h-36 opacity-70">
     <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="g1" x1="0" x2="1">
-          <stop offset="0" stop-color="#ff2dd2" stop-opacity="0.06"/>
-          <stop offset="1" stop-color="#00fff3" stop-opacity="0.06"/>
+          <stop offset="0" stop-color="#ff2dd2" stop-opacity="0.15"/>
+          <stop offset="1" stop-color="#00fff3" stop-opacity="0.15"/>
         </linearGradient>
       </defs>
       <rect width="1440" height="120" fill="url(#g1)" />
-      <g stroke="#00fff3" stroke-opacity="0.06" stroke-width="1">
+      <g stroke="#00fff3" stroke-opacity="0.25" stroke-width="1">
         <path d="M0 90 C200 60 400 52 720 52 C1040 52 1240 60 1440 90" fill="none"/>
-      </g>
-      <g fill="#ff2dd2" fill-opacity="0.06">
-        <circle cx="360" cy="36" r="10" />
-        <circle cx="900" cy="24" r="8" />
       </g>
     </svg>
   </div>
 
   <script>
-    // minimal terminal simulation (keeps original text & links)
+    // minimal terminal simulation
     const output = document.getElementById('output');
     const cmd = document.getElementById('cmd');
 
-    function print(text='') {
+    function print(text = '') {
       output.textContent += '\\n' + text;
       const term = output.parentElement;
       term.scrollTop = term.scrollHeight;
@@ -159,7 +243,7 @@ Type "help" to see commands.
         return;
       }
       if (input === 'about') {
-        print('This is a static retro synthwave homepage. Customize it in index.html');
+        print('This is a static retro synthwave homepage. Customize it in docs/index.html');
         return;
       }
       if (input === 'time') {
@@ -170,10 +254,10 @@ Type "help" to see commands.
         output.textContent = '> cleared';
         return;
       }
-      print('Unknown command: ' + input + '\\nType \"help\" for a list of commands.');
+      print('Unknown command: ' + input + '\\nType "help" for a list of commands.');
     }
 
-    cmd.addEventListener('keydown', function(e){
+    cmd.addEventListener('keydown', function (e) {
       if (e.key === 'Enter') {
         e.preventDefault();
         run();
