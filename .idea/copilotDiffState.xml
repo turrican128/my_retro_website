@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/src/index.html">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/index.html" />
+              <option name="updatedContent" value="...existing code...&#10;&lt;!-- add this near the end of the file, right before &lt;/body&gt; --&gt;&#10;&lt;script&gt;&#10;  (function(){&#10;    const imgs = document.querySelectorAll('img[src]');&#10;    imgs.forEach(img =&gt; {&#10;      try {&#10;        const src = img.getAttribute('src');&#10;        if (!src) return;&#10;        // skip data URIs and already-correct paths&#10;        if (src.startsWith('data:') || src.includes('assets/images/')) return;&#10;        // keep absolute urls (http/https) untouched&#10;        if (/^https?:\/\//i.test(src)) return;&#10;        // get filename and update to assets/images/&lt;filename&gt;&#10;        const filename = src.split('/').pop();&#10;        if (filename) img.src = 'assets/images/' + filename;&#10;      } catch (e) { /* noop */ }&#10;    });&#10;  })();&#10;&lt;/script&gt;&#10;...existing code...&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/projects.html">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/projects.html" />
+              <option name="updatedContent" value="...existing code...&#10;&lt;!-- add this near the end of the file, right before &lt;/body&gt; --&gt;&#10;&lt;script&gt;&#10;  (function(){&#10;    const imgs = document.querySelectorAll('img[src]');&#10;    imgs.forEach(img =&gt; {&#10;      try {&#10;        const src = img.getAttribute('src');&#10;        if (!src) return;&#10;        if (src.startsWith('data:') || src.includes('assets/images/')) return;&#10;        if (/^https?:\/\//i.test(src)) return;&#10;        const filename = src.split('/').pop();&#10;        if (filename) img.src = 'assets/images/' + filename;&#10;      } catch (e) { /* noop */ }&#10;    });&#10;  })();&#10;&lt;/script&gt;&#10;...existing code...&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
