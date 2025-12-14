@@ -20,48 +20,72 @@
         <div class="[font-family:'Press Start 2P',monospace] text-cyan-200 text-sm">My Retro Website</div>
       </div>
 
-      <ul class="flex items-center gap-3">
-        <li><a href="index.html" class="px-3 py-2 rounded-md text-xs text-cyan-200 hover:text-pink-300 transition transform hover:-translate-y-0.5 hover:scale-105">Home</a></li>
-        <li><a href="about.html" class="px-3 py-2 rounded-md text-xs text-cyan-200 hover:text-pink-300 transition transform hover:-translate-y-0.5 hover:scale-105">About</a></li>
-        <li><a href="projects.html" class="px-3 py-2 rounded-md text-xs text-pink-300 bg-white/5">Projects</a></li>
-        <li><a href="contact.html" class="px-3 py-2 rounded-md text-xs text-cyan-200 hover:text-pink-300 transition transform hover:-translate-y-0.5 hover:scale-105">Contact</a></li>
+      <ul class="flex items-center gap-3 flex-row-reverse">
+        <li>
+          <a href="index.html" class="px-3 py-2 rounded-md text-xs text-cyan-200 hover:text-pink-300 transition transform hover:-translate-y-0.5 hover:scale-105">
+            דף הבית
+          </a>
+        </li>
+        <li>
+          <a href="about.html" class="px-3 py-2 rounded-md text-xs text-cyan-200 hover:text-pink-300 transition transform hover:-translate-y-0.5 hover:scale-105">
+            אודות
+          </a>
+        </li>
+        <li>
+          <a href="projects.html" class="px-3 py-2 rounded-md text-xs text-pink-300 bg-white/5">
+            פרויקטים
+          </a>
+        </li>
+        <li>
+          <a href="contact.html" class="px-3 py-2 rounded-md text-xs text-cyan-200 hover:text-pink-300 transition transform hover:-translate-y-0.5 hover:scale-105">
+            צור קשר
+          </a>
+        </li>
       </ul>
     </nav>
   </header>
 
   <main class="min-h-screen flex items-center justify-center pt-28 pb-12">
     <div class="w-[min(1100px,96%)]">
-      <h1 class="[font-family:'Press Start 2P',monospace] text-2xl md:text-3xl text-cyan-300 mb-6 drop-shadow-[0_2px_20px_rgba(0,255,243,0.15)]">
-        Projects
-      </h1>
-
-      <p class="text-sm text-sky-100/80 mb-6 max-w-prose">
-        A selection of retro-inspired projects: demos, music, tools and experiments built around C64, Amiga and 80s aesthetics.
-        You can adapt this list to match your real projects.
-      </p>
+      <div class="rounded-2xl p-6 bg-black/60 border border-cyan-400/25 shadow-[0_20px_60px_rgba(0,0,0,0.9)] backdrop-blur transition duration-300 hover:shadow-[0_0_40px_rgba(0,255,243,0.18)] hover:border-cyan-300/40 mb-8 text-right" dir="rtl">
+        <h1 class="[font-family:'Press Start 2P',monospace] text-2xl md:text-3xl text-cyan-200 text-right">
+          פרויקטים
+        </h1>
+        <p class="mt-3 text-sm text-sky-100/85 leading-relaxed text-right">
+          אוסף של פרויקטים בהשראת עולם הרטרו: דמואים, מוזיקה, כלים וניסויים יצירתיים שנבנו סביב הקומודור 64, האמיגה ואסתטיקת שנות ה־80. ניתן להתאים ולעדכן את הרשימה כך שתשקף את הפרויקטים האמיתיים שלי.
+        </p>
+      </div>
 
       <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        <article class="rounded-xl p-4 bg-black/60 border border-cyan-400/20 shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:border-pink-400/40 hover:shadow-[0_18px_60px_rgba(255,45,210,0.25)] transition">
-          <h2 class="[font-family:'Press Start 2P',monospace] text-sm text-pink-300 mb-2">C64 Demo WIP</h2>
-          <p class="text-xs text-sky-100/85 leading-relaxed">
-            Multi-part demo for the Commodore 64 with custom rasterbars, sprites and a SID soundtrack.
+        <article class="flex flex-col rounded-xl p-4 bg-black/60 border border-cyan-400/20 shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:border-pink-400/40 hover:shadow-[0_18px_60px_rgba(255,45,210,0.25)] transition">
+          <h2 class="[font-family:'Press Start 2P',monospace] text-base text-pink-300 mb-2">דמו C64 – עבודה בתהליך</h2>
+          <p class="text-sm text-sky-100/85 leading-relaxed" dir="rtl">
+            פיתוח דמואים, אפקטים גרפיים וקוד ברמת ביט־פיקסל על הקומודור 64.
           </p>
+          <div class="mt-4 overflow-hidden rounded-xl border border-cyan-300/30 bg-black/30 shadow-[0_0_22px_rgba(0,255,243,0.18)] transition duration-300 hover:shadow-[0_0_28px_rgba(255,45,210,0.22)]">
+            <img src="assets/images/Outrun.gif" alt="C64 Demo WIP" class="w-full h-32 md:h-36 object-contain bg-black/60" />
+          </div>
         </article>
 
-        <article class="rounded-xl p-4 bg-black/60 border border-cyan-400/20 shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:border-pink-400/40 hover:shadow-[0_18px_60px_rgba(255,45,210,0.25)] transition">
-          <h2 class="[font-family:'Press Start 2P',monospace] text-sm text-pink-300 mb-2">Synthwave Tracks</h2>
-          <p class="text-xs text-sky-100/85 leading-relaxed">
-            Original synthwave compositions inspired by SID, Paula and 80s soundtracks – perfect for night drives.
+        <article class="flex flex-col rounded-xl p-4 bg-black/60 border border-cyan-400/20 shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:border-pink-400/40 hover:shadow-[0_18px_60px_rgba(255,45,210,0.25)] transition">
+          <h2 class="[font-family:'Press Start 2P',monospace] text-base text-pink-300 mb-2">קטע סינת׳ווייב</h2>
+          <p class="text-sm text-sky-100/85 leading-relaxed" dir="rtl">
+            מוזיקה מקורית בהשראת אייטיז, SID וסאונד רטרו מודרני.
           </p>
+          <div class="mt-4 overflow-hidden rounded-xl border border-cyan-300/30 bg-black/30 shadow-[0_0_22px_rgba(0,255,243,0.18)] transition duration-300 hover:shadow-[0_0_28px_rgba(255,45,210,0.22)]">
+            <img src="assets/images/synthwave.jpg" alt="Synthwave Tracks" class="w-full h-32 md:h-36 object-contain bg-black/60" />
+          </div>
         </article>
 
-        <article class="rounded-xl p-4 bg-black/60 border border-cyan-400/20 shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:border-pink-400/40 hover:shadow-[0_18px_60px_rgba(255,45,210,0.25)] transition">
-          <h2 class="[font-family:'Press Start 2P',monospace] text-sm text-pink-300 mb-2">8-Bit Magazine</h2>
-          <p class="text-xs text-sky-100/85 leading-relaxed">
-            A Hebrew retro magazine covering new C64/Amiga games, hardware mods, FPGA projects and nostalgic articles.
+        <article class="flex flex-col rounded-xl p-4 bg-black/60 border border-cyan-400/20 shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:border-pink-400/40 hover:shadow-[0_18px_60px_rgba(255,45,210,0.25)] transition">
+          <h2 class="[font-family:'Press Start 2P',monospace] text-base text-pink-300 mb-2">מגזין 8ביט</h2>
+          <p class="text-sm text-sky-100/85 leading-relaxed" dir="rtl">
+            תוכן רטרו, כתבות, סקירות וחדשות מעולם ה־8bit וה־16bit.
           </p>
+          <div class="mt-4 overflow-hidden rounded-xl border border-cyan-300/30 bg-black/30 shadow-[0_0_22px_rgba(0,255,243,0.18)] transition duration-300 hover:shadow-[0_0_28px_rgba(255,45,210,0.22)]">
+            <img src="assets/images/OutRun (Sega - Genesis - 1991).gif" alt="8-Bit Magazine" class="w-full h-32 md:h-36 object-contain bg-black/60" />
+          </div>
         </article>
-
         <!-- תוסיף עוד כרטיסים לפי הצורך -->
       </section>
     </div>
