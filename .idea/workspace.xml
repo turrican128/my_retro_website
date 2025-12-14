@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="25b754fb-daae-4eda-90f0-1a1aa7b86fa4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/images/19946662-0-_lora_1860519_1_0__a.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/19946662-0-_lora_1860519_1_0__a.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/images/19946664-0-_lora_1860519_1_0__d.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/19946664-0-_lora_1860519_1_0__d.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/images/19946668-0-_lora_1860519_1_0__i.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/19946668-0-_lora_1860519_1_0__i.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/images/19946670-0-_lora_1860519_1_0__a.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/19946670-0-_lora_1860519_1_0__a.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/images/19946672-0-_lora_1860519_1_0__d.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/19946672-0-_lora_1860519_1_0__d.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/about.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

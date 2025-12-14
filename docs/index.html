@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="he" dir="rtl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>My Retro Website</title>
+  <title>8bitretro.tech</title>
 
   <!-- TailwindCSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -14,6 +14,7 @@
 
   <!-- Tiny custom animations for background and scanlines -->
   <style>
+
     @keyframes neonGradient {
       0%   { background-position: 0% 50%; }
       50%  { background-position: 100% 50%; }
@@ -41,6 +42,20 @@
       opacity: 0.45;
       z-index: 0;
     }
+
+    /* Added: simple 16bit-style OutRun background animation */
+    .outrun-scene {
+      background-image: url('assets/images/outrun.jpg');
+      background-size: cover;
+      background-position: 0% 50%;
+      animation: outrunPan 18s linear infinite alternate;
+    }
+
+    @keyframes outrunPan {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
   </style>
 </head>
 <body class="min-h-screen text-sky-100 antialiased bg-animated bg-gradient-to-b from-purple-900 via-pink-700 to-black scanline-overlay">
@@ -48,6 +63,31 @@
   <!-- top neon navigation -->
   <header class="fixed inset-x-0 top-4 z-30 flex items-center justify-center">
     <nav class="w-[min(1100px,96%)] flex items-center justify-between px-4 py-3 rounded-xl bg-black/40 backdrop-blur border border-white/10 shadow-[0_12px_50px_rgba(0,0,0,0.7)]">
+      <!-- NAV LINKS FIRST (renders on the right in RTL with justify-between) -->
+      <ul class="flex items-center gap-3 text-xs">
+        <li>
+          <a href="index.html" class="px-3 py-2 rounded-md text-cyan-200 bg-white/10 shadow-[0_0_20px_rgba(0,255,243,0.4)]">
+            דף הבית
+          </a>
+        </li>
+        <li>
+          <a href="about.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            עליי
+          </a>
+        </li>
+        <li>
+          <a href="projects.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            פרויקטים
+          </a>
+        </li>
+        <li>
+          <a href="contacts.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            צור קשר
+          </a>
+        </li>
+      </ul>
+
+      <!-- LOGO BLOCK SECOND (renders on the left in RTL with justify-between) -->
       <div class="flex items-center gap-4">
         <div class="w-16 h-12 flex items-center justify-center rounded-md bg-gradient-to-r from-pink-500/40 to-cyan-400/20 border border-white/30 shadow-[0_0_25px_rgba(255,45,210,0.6)]">
           <span class="[font-family:'Press Start 2P',monospace] text-pink-300 text-xs uppercase tracking-[0.2em]">
@@ -55,32 +95,9 @@
           </span>
         </div>
         <div class="[font-family:'Press Start 2P',monospace] text-cyan-100 text-sm">
-          My Retro Website
+          8bitretro.tech
         </div>
       </div>
-
-      <ul class="flex items-center gap-3 text-xs">
-        <li>
-          <a href="index.html" class="px-3 py-2 rounded-md text-cyan-200 bg-white/10 shadow-[0_0_20px_rgba(0,255,243,0.4)]">
-            Home
-          </a>
-        </li>
-        <li>
-          <a href="about.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
-            About
-          </a>
-        </li>
-        <li>
-          <a href="projects.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
-            Projects
-          </a>
-        </li>
-        <li>
-          <a href="contact.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
-            Contact
-          </a>
-        </li>
-      </ul>
     </nav>
   </header>
 
@@ -92,111 +109,117 @@
     </div>
 
     <div class="w-[min(1100px,96%)] grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Hero / main content -->
+      <!-- Hero / main content (REPLACED: Hebrew heading + subtitle + 3-card section) -->
       <section class="flex flex-col justify-center gap-6 rounded-xl p-8 bg-black/60 border border-white/15 shadow-[0_24px_80px_rgba(0,0,0,0.8)] backdrop-blur">
         <div>
-          <h1 class="[font-family:'Press Start 2P',monospace] text-3xl md:text-4xl text-cyan-300 leading-tight drop-shadow-[0_2px_25px_rgba(0,255,243,0.3)]">
-            Welcome to the Synthwave Era
+          <h1 class="[font-family:'Press Start 2P',monospace] text-3xl md:text-4xl text-cyan-300 leading-tight drop-shadow-[0_2px_25px_rgba(0,255,243,0.3)] text-right">
+            אני אלכס גולדבלט, בן 51 מהרצליה — וזהו האתר הרטרו שלי וגם הבית האישי שלי ברשת.
           </h1>
-          <p class="mt-3 text-sm text-pink-100/85 max-w-prose">
-            This homepage is a tribute to neon nights and pixel dreams of the 1980s. Built with pure HTML, TailwindCSS, and a tiny bit of JavaScript. Fast, responsive, and ready for demos, music and retro experiments.
+          <p class="mt-3 text-sm text-pink-100/85 max-w-prose text-right">
+            מאז שאני זוכר את עצמי אני חי ונושם את עולם הרטרו: הקומודור 64 הוא המכונה הראשונה שהתאהבתי בה, ואני עדיין בונה עליה משחקים, דמואים וחוויות חדשות שמבוססות על קסם ה־8bit.
+            <br><br>
+            אני גם מוזיקאי, ויוצר כחלק מההרכב Kleiner’82 — מוזיקה בסגנון Synthwave עם נגיעות SID, פאולה, ותחושת אייטיז אמיתית. הוצאתי אלבום קאברים לשירים הכי אהובים עליי מהקומודור 64, וכאן באתר תוכל למצוא גם קטעים מקוריים וגם עיבודים מיוחדים.
+            <br><br>
+            אני אוהב את עולמות ה־8bit וגם את ה־16bit, ובעיקר את התרבות שמסביב — צבעים, סגנון, גרפיקה, מוזיקה ואווירה כמו פעם.
           </p>
+
+          <!-- OutRun-style animated scene (uses .outrun-scene defined in <style>) -->
+          <div class="mt-4 rounded-2xl bg-black/60 border border-cyan-400/40 shadow-[0_16px_50px_rgba(0,0,0,0.9)] overflow-hidden transition-transform duration-500 hover:scale-[1.02]">
+            <div class="h-48 md:h-56 outrun-scene"></div>
+            <div class="px-3 py-2 text-center text-[10px] text-pink-100/80 [font-family:'Press Start 2P',monospace]">
+              סצנת השראה בסגנון OutRun (1986) — אנימציה סטטית מבוססת תמונה.
+            </div>
+          </div>
         </div>
 
-        <div>
-          <h3 class="[font-family:'Press Start 2P',monospace] text-pink-300 text-sm">
-            What you will find here
-          </h3>
-          <ul class="mt-3 list-disc list-inside text-[13px] text-sky-100/85 space-y-1">
-            <li>C64 and Amiga projects, demos and experiments</li>
-            <li>Neon synthwave style with glowing buttons and pixel accents</li>
-            <li>Retro typography with fully responsive layout</li>
-            <li>Navigation to About, Projects and Contact pages</li>
-          </ul>
-        </div>
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Card 1 -->
+          <article class="rounded-xl p-4 bg-black/60 border border-cyan-400/20 shadow-[0_12px_40px_rgba(0,0,0,0.8)] text-right">
+            <h3 class="[font-family:'Press Start 2P',monospace] text-xs text-pink-300 mb-2">
+              עליי
+            </h3>
+            <p class="text-sky-100/85 text-sm">
+              טקסט תיאור קצר על הכותב או האתר — ישמש כמקום למידע כללי.
+            </p>
+            <a href="about.html" class="inline-block mt-3 px-3 py-2 rounded-md bg-gradient-to-r from-cyan-400/70 to-pink-400/70 text-black text-xs font-semibold hover:from-cyan-300 hover:to-pink-300 transition">
+              לפרטים
+            </a>
+          </article>
 
-        <div class="flex flex-wrap gap-3 mt-3">
-          <a href="projects.html#c64-demos" class="px-4 py-2 rounded-md bg-gradient-to-r from-cyan-400/70 to-pink-400/70 text-black text-xs font-semibold hover:from-cyan-300 hover:to-pink-300 transition transform hover:-translate-y-0.5 hover:shadow-[0_0_35px_rgba(255,45,210,0.8)]">
-            View C64 and Amiga projects
-          </a>
-          <a href="projects.html#music" class="px-4 py-2 rounded-md bg-gradient-to-r from-pink-400/20 to-cyan-400/20 text-pink-200 text-xs font-semibold hover:bg-white/15 transition">
-            Synthwave music corner
-          </a>
-          <a href="about.html" class="px-4 py-2 rounded-md border border-cyan-300/40 text-cyan-100 text-xs font-semibold hover:bg-cyan-500/10 transition">
-            About the creator
-          </a>
+          <!-- Card 2 -->
+          <article class="rounded-xl p-4 bg-black/60 border border-cyan-400/20 shadow-[0_12px_40px_rgba(0,0,0,0.8)] text-right">
+            <h3 class="[font-family:'Press Start 2P',monospace] text-xs text-pink-300 mb-2">
+              פרויקטים
+            </h3>
+            <p class="text-sky-100/85 text-sm">
+              תיאור קצר על הפרויקטים והדגמות C64/Amiga ומיזמים נוספים.
+            </p>
+            <a href="projects.html" class="inline-block mt-3 px-3 py-2 rounded-md bg-gradient-to-r from-cyan-400/70 to-pink-400/70 text-black text-xs font-semibold hover:from-cyan-300 hover:to-pink-300 transition">
+              לפרטים
+            </a>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="rounded-xl p-4 bg-black/60 border border-cyan-400/20 shadow-[0_12px_40px_rgba(0,0,0,0.8)] text-right">
+            <h3 class="[font-family:'Press Start 2P',monospace] text-xs text-pink-300 mb-2">
+              צור קשר
+            </h3>
+            <p class="text-sky-100/85 text-sm">
+              מידע כיצד לפנות — טופס יצירת קשר וקישורים לרשתות חברתיות.
+            </p>
+            <a href="contacts.html" class="inline-block mt-3 px-3 py-2 rounded-md bg-gradient-to-r from-cyan-400/70 to-pink-400/70 text-black text-xs font-semibold hover:from-cyan-300 hover:to-pink-300 transition">
+              לפרטים
+            </a>
+          </article>
         </div>
       </section>
 
-      <!-- Terminal sidebar -->
-      <aside class="flex flex-col rounded-xl p-4 bg-black/70 border border-white/15 shadow-[0_18px_70px_rgba(0,0,0,0.9)] backdrop-blur">
-        <div class="flex items-center justify-between mb-3">
-          <strong class="[font-family:'Press Start 2P',monospace] text-cyan-200 text-xs">
-            Terminal
-          </strong>
-          <span class="text-[11px] text-pink-300/80">static demo</span>
-        </div>
-
-        <div id="term" class="flex-1 overflow-auto rounded-md bg-gradient-to-b from-black/80 to-slate-900/90 p-3 text-[13px] text-cyan-200 font-mono">
-          <pre id="output" class="whitespace-pre-wrap">> welcome to my-retro-website
-Type "help" to see commands.
-</pre>
-        </div>
-
-        <div class="mt-3 flex gap-2">
-          <input id="cmd" type="text" placeholder='try: help / about / time' class="flex-1 bg-black/80 text-sky-100 text-sm rounded-md px-3 py-2 placeholder:text-slate-400 border border-white/10 focus:outline-none focus:ring-2 focus:ring-cyan-400/40" />
-          <button id="run" class="px-4 py-2 rounded-md bg-gradient-to-r from-cyan-400 to-pink-400 text-black text-xs font-bold hover:scale-105 transition shadow-[0_10px_35px_rgba(0,255,243,0.35)]" onclick="run()">
-            Run
-          </button>
-        </div>
-
-        <footer class="mt-4 text-[12px] text-sky-100/70">
-          <small>Made with synthwave, C64 and Amiga love.</small>
-        </footer>
-      </aside>
-    </div>
-
-    <!-- Featured projects section -->
-    <section class="w-[min(1100px,96%)] mt-10">
-      <h2 class="[font-family:'Press Start 2P',monospace] text-xl md:text-2xl text-cyan-200 mb-4 drop-shadow-[0_2px_18px_rgba(0,255,243,0.3)]">
-        Featured C64 and Amiga highlights
-      </h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-        <a href="projects.html#c64-demos" class="group rounded-xl p-4 bg-black/60 border border-cyan-400/30 hover:border-pink-400/50 shadow-[0_16px_50px_rgba(0,0,0,0.8)] hover:shadow-[0_0_40px_rgba(0,255,243,0.6)] transition">
-          <h3 class="[font-family:'Press Start 2P',monospace] text-xs text-pink-300 mb-2">
-            C64 Demos and Intros
-          </h3>
-          <p class="text-sky-100/85">
-            Work in progress demos, sprite tricks, rasterbars and SID driven parts for the Commodore 64.
-          </p>
-          <p class="mt-2 text-[11px] text-cyan-200 group-hover:text-pink-200">
-            Jump to section →
-          </p>
+      <!-- REPLACED: terminal sidebar removed and replaced with centered image card spanning full width -->
+      <section class="rounded-xl p-4 bg-black/60 border border-white/15 shadow-[0_24px_80px_rgba(0,0,0,0.8)] backdrop-blur flex items-center justify-center">
+        <a href="about.html" class="block w-full h-full overflow-hidden rounded-2xl shadow-2xl transition-transform transform hover:scale-105 hover:shadow-[0_0_40px_rgba(0,255,243,0.12)]">
+          <img src="assets/images/19946672-0-_lora_1860519_1_0__d.jpg" alt="Retro image" class="w-full h-full object-cover" />
         </a>
+      </section>
 
-        <a href="projects.html#amiga" class="group rounded-xl p-4 bg-black/60 border border-cyan-400/30 hover:border-pink-400/50 shadow-[0_16px_50px_rgba(0,0,0,0.8)] hover:shadow-[0_0_40px_rgba(255,45,210,0.6)] transition">
-          <h3 class="[font-family:'Press Start 2P',monospace] text-xs text-pink-300 mb-2">
-            Amiga Projects
-          </h3>
-          <p class="text-sky-100/85">
-            Amiga 500 and 1200 experiments, WHDLoad setups, graphics and soundscapes.
-          </p>
-          <p class="mt-2 text-[11px] text-cyan-200 group-hover:text-pink-200">
-            Jump to section →
-          </p>
-        </a>
+    </div> <!-- end of .w-[min(1100px,96%)] grid (hero + sidebar) -->
 
-        <a href="projects.html#music" class="group rounded-xl p-4 bg-black/60 border border-cyan-400/30 hover:border-pink-400/50 shadow-[0_16px_50px_rgba(0,0,0,0.8)] hover:shadow-[0_0_40px_rgba(0,255,243,0.6)] transition">
-          <h3 class="[font-family:'Press Start 2P',monospace] text-xs text-pink-300 mb-2">
-            Synthwave and SID style music
-          </h3>
-          <p class="text-sky-100/85">
-            Mixes, playlists and original tunes inspired by SID, Paula and 80s arcade soundtracks.
-          </p>
-          <p class="mt-2 text-[11px] text-cyan-200 group-hover:text-pink-200">
-            Jump to section →
-          </p>
-        </a>
+    <!-- New section: הדגשים נבחרים: C64 ו-Amiga -->
+    <section class="w-[min(1100px,96%)] mt-8">
+      <div class="mx-auto">
+        <h2 class="[font-family:'Press Start 2P',monospace] text-xl md:text-2xl text-cyan-200 mb-2 text-right">
+          תחומי העניין של אלכס גולדבלט
+        </h2>
+        <p class="text-sm text-pink-100/85 mb-4 text-right">
+          כאן תוכל להכיר את תחומי התוכן והעולמות שבהם אני יוצר ומתעסק: רטרו, C64, Amiga, אמנות דיגיטלית ומוזיקה.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Card 1 -->
+          <article class="rounded-2xl p-4 bg-black/60 border border-cyan-400/30 shadow-[0_16px_50px_rgba(0,0,0,0.8)] text-right">
+            <h3 class="[font-family:'Press Start 2P',monospace] text-sm text-pink-300 mb-2">
+              אומנות דיגיטלית רטרו בקומודור 64
+            </h3>
+            <p class="text-sky-100/85 text-sm">
+              ספרייטים, ביטמאפים ו-PETSCII בהשראת דמוסצנה, משחקים קלאסיים וצבעי ניאון של האייטיז.
+            </p>
+            <p class="mt-2 text-[11px] text-cyan-200/80">
+              דוגמאות וגלריות יתעדכנו בהמשך.
+            </p>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="rounded-2xl p-4 bg-black/60 border border-cyan-400/30 shadow-[0_16px_50px_rgba(0,0,0,0.8)] text-right">
+            <h3 class="[font-family:'Press Start 2P',monospace] text-sm text-pink-300 mb-2">
+              Synthwave ומוזיקת SID
+            </h3>
+            <p class="text-sky-100/85 text-sm">
+              טרקים חדשים, קאברים מהאייטיז וסאונדים מהצ’יפ המיתולוגי של ה-C64, בין Retrowave ל-Chiptune.
+            </p>
+            <p class="mt-2 text-[11px] text-cyan-200/80">
+              פלייליסטים, קטעי וידאו וקבצי SID יתווספו בהמשך.
+            </p>
+          </article>
+        </div>
       </div>
     </section>
   </main>
@@ -218,12 +241,10 @@ Type "help" to see commands.
   </div>
 
   <script>
-    // minimal terminal simulation
-    const output = document.getElementById('output');
-    const cmd = document.getElementById('cmd');
+
 
     function print(text = '') {
-      output.textContent += '\\n' + text;
+      output.textContent += '\n' + text;
       const term = output.parentElement;
       term.scrollTop = term.scrollHeight;
     }
@@ -239,7 +260,7 @@ Type "help" to see commands.
 
     function handle(input) {
       if (input === 'help') {
-        print('help - show commands\\nabout - short info\\ntime - show local time\\nclear - clear output');
+        print('help - show commands\nabout - short info\ntime - show local time\nclear - clear output');
         return;
       }
       if (input === 'about') {
@@ -254,7 +275,7 @@ Type "help" to see commands.
         output.textContent = '> cleared';
         return;
       }
-      print('Unknown command: ' + input + '\\nType "help" for a list of commands.');
+      print('Unknown command: ' + input + '\nType "help" for a list of commands.');
     }
 
     cmd.addEventListener('keydown', function (e) {
