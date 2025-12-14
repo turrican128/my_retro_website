@@ -53,26 +53,16 @@
 
   <!-- ניווט עליון ניאון -->
   <header class="fixed inset-x-0 top-4 z-30 flex items-center justify-center">
-    <nav class="w-[min(1100px,96%)] flex items-center justify-between px-4 py-3 rounded-xl bg-black/40 backdrop-blur border border-white/10 shadow-[0_12px_50px_rgba(0,0,0,0.7)] flex-row-reverse">
-      <div class="flex items-center gap-4 flex-row-reverse">
-        <div class="w-16 h-12 flex items-center justify-center rounded-md bg-gradient-to-r from-pink-500/40 to-cyan-400/20 border border-white/30 shadow-[0_0_25px_rgba(255,45,210,0.6)]">
-          <span class="[font-family:'Press Start 2P',monospace] text-pink-300 text-[10px] uppercase tracking-[0.2em]">
-            RETRO
-          </span>
-        </div>
-        <div class="[font-family:'Press Start 2P',monospace] text-cyan-100 text-xs md:text-sm">
-          8bitretro.tech
-        </div>
-      </div>
-
-      <ul class="flex items-center gap-3 text-xs flex-row-reverse">
+    <nav class="w-[min(1100px,96%)] flex items-center justify-between px-4 py-3 rounded-xl bg-black/40 backdrop-blur border border-white/10 shadow-[0_12px_50px_rgba(0,0,0,0.7)]">
+      <!-- NAV LINKS FIRST (renders on the right in RTL with justify-between) -->
+      <ul class="flex items-center gap-3 text-xs">
         <li>
-          <a href="index.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+          <a href="index.html" class="px-3 py-2 rounded-md text-cyan-200 bg-white/10 shadow-[0_0_20px_rgba(0,255,243,0.4)]">
             דף הבית
           </a>
         </li>
         <li>
-          <a href="about.html" class="px-3 py-2 rounded-md text-cyan-200 bg-white/10 shadow-[0_0_20px_rgba(0,255,243,0.4)]">
+          <a href="about.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
             עליי
           </a>
         </li>
@@ -82,11 +72,23 @@
           </a>
         </li>
         <li>
-          <a href="contact.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
-            יצירת קשר
+          <a href="contacts.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            צור קשר
           </a>
         </li>
       </ul>
+
+      <!-- LOGO BLOCK SECOND (renders on the left in RTL with justify-between) -->
+      <div class="flex items-center gap-4">
+        <div class="w-16 h-12 flex items-center justify-center rounded-md bg-gradient-to-r from-pink-500/40 to-cyan-400/20 border border-white/30 shadow-[0_0_25px_rgba(255,45,210,0.6)]">
+          <span class="[font-family:'Press Start 2P',monospace] text-pink-300 text-xs uppercase tracking-[0.2em]">
+            RETRO
+          </span>
+        </div>
+        <div class="[font-family:'Press Start 2P',monospace] text-cyan-100 text-sm">
+          8bitretro.tech
+        </div>
+      </div>
     </nav>
   </header>
 
@@ -119,7 +121,7 @@
           <div class="relative w-52 h-52 md:w-60 md:h-60 rounded-3xl overflow-hidden border border-cyan-300/40 bg-black/70 shadow-[0_18px_70px_rgba(0,0,0,0.9)]">
             <!-- אם יש לך תמונה אישית, שנה כאן את הנתיב -->
             <img
-              src="../assets/images/19946662-0-_lora_1860519_1_0__a.jpg"
+              src="assets/images/19946662-0-_lora_1860519_1_0__a.jpg"
               alt="תמונה בסגנון רטרו"
               class="w-full h-full object-cover"
             />
@@ -159,7 +161,7 @@
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
           <!-- תמונה 1 -->
           <figure class="group relative overflow-hidden rounded-2xl border border-cyan-300/40 bg-black/70 shadow-[0_18px_60px_rgba(0,0,0,0.9)] hover:shadow-[0_0_40px_rgba(0,255,243,0.6)] transition transform hover:-translate-y-1 hover:scale-[1.03]">
-            <img src="../assets/images/19946662-0-_lora_1860519_1_0__a.jpg" alt="תמונת ארקייד 1" class="w-full max-h-56 object-contain mx-auto bg-black/80" />
+            <img src="assets/images/19946662-0-_lora_1860519_1_0__a.jpg" alt="תמונת ארקייד 1" class="w-full max-h-56 object-contain mx-auto bg-black/80" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition"></div>
             <figcaption class="absolute bottom-2 right-3 left-3 flex flex-col items-end">
               <span class="[font-family:'Press Start 2P',monospace] text-[10px] text-cyan-200">
@@ -173,7 +175,7 @@
 
           <!-- תמונה 2 -->
           <figure class="group relative overflow-hidden rounded-2xl border border-cyan-300/40 bg-black/70 shadow-[0_18px_60px_rgba(0,0,0,0.9)] hover:shadow-[0_0_40px_rgba(255,45,210,0.6)] transition transform hover:-translate-y-1 hover:scale-[1.03]">
-            <img src="../assets/images/19946664-0-_lora_1860519_1_0__d.jpg" alt="תמונת ארקייד 2" class="w-full max-h-56 object-contain mx-auto bg-black/80" />
+            <img src="assets/images/19946664-0-_lora_1860519_1_0__d.jpg" alt="תמונת ארקייד 2" class="w-full max-h-56 object-contain mx-auto bg-black/80" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition"></div>
             <figcaption class="absolute bottom-2 right-3 left-3 flex flex-col items-end">
               <span class="[font-family:'Press Start 2P',monospace] text-[10px] text-cyan-200">
@@ -187,7 +189,7 @@
 
           <!-- תמונה 3 -->
           <figure class="group relative overflow-hidden rounded-2xl border border-cyan-300/40 bg-black/70 shadow-[0_18px_60px_rgba(0,0,0,0.9)] hover:shadow-[0_0_40px_rgba(0,255,243,0.6)] transition transform hover:-translate-y-1 hover:scale-[1.03]">
-            <img src="../assets/images/19946668-0-_lora_1860519_1_0__i.jpg" alt="תמונת ארקייד 3" class="w-full max-h-56 object-contain mx-auto bg-black/80" />
+            <img src="assets/images/19946668-0-_lora_1860519_1_0__i.jpg" alt="תמונת ארקייד 3" class="w-full max-h-56 object-contain mx-auto bg-black/80" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition"></div>
             <figcaption class="absolute bottom-2 right-3 left-3 flex flex-col items-end">
               <span class="[font-family:'Press Start 2P',monospace] text-[10px] text-cyan-200">
@@ -201,7 +203,7 @@
 
           <!-- תמונה 4 -->
           <figure class="group relative overflow-hidden rounded-2xl border border-cyan-300/40 bg-black/70 shadow-[0_18px_60px_rgba(0,0,0,0.9)] hover:shadow-[0_0_40px_rgba(255,45,210,0.6)] transition transform hover:-translate-y-1 hover:scale-[1.03]">
-            <img src="../assets/images/19946670-0-_lora_1860519_1_0__a.jpg" alt="תמונת ארקייד 4" class="w-full max-h-56 object-contain mx-auto bg-black/80" />
+            <img src="assets/images/19946670-0-_lora_1860519_1_0__a.jpg" alt="תמונת ארקייד 4" class="w-full max-h-56 object-contain mx-auto bg-black/80" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition"></div>
             <figcaption class="absolute bottom-2 right-3 left-3 flex flex-col items-end">
               <span class="[font-family:'Press Start 2P',monospace] text-[10px] text-cyan-200">
@@ -215,7 +217,7 @@
 
           <!-- תמונה 5 -->
           <figure class="group relative overflow-hidden rounded-2xl border border-cyan-300/40 bg-black/70 shadow-[0_18px_60px_rgba(0,0,0,0.9)] hover:shadow-[0_0_40px_rgba(0,255,243,0.6)] transition transform hover:-translate-y-1 hover:scale-[1.03]">
-            <img src="../assets/images/19946672-0-_lora_1860519_1_0__d.jpg" alt="תמונת ארקייד 5" class="w-full max-h-56 object-contain mx-auto bg-black/80" />
+            <img src="assets/images/19946672-0-_lora_1860519_1_0__d.jpg" alt="תמונת ארקייד 5" class="w-full max-h-56 object-contain mx-auto bg-black/80" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition"></div>
             <figcaption class="absolute bottom-2 right-3 left-3 flex flex-col items-end">
               <span class="[font-family:'Press Start 2P',monospace] text-[10px] text-cyan-200">
