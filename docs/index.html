@@ -56,6 +56,24 @@
       100% { background-position: 100% 50%; }
     }
 
+    /* Added: small 16bit-style OutRun drift animation */
+    .outrun-animate {
+      animation: outrunDrift 14s ease-in-out infinite alternate;
+      transform-origin: center;
+    }
+
+    @keyframes outrunDrift {
+      0% {
+        transform: scale(1) translateX(0);
+      }
+      50% {
+        transform: scale(1.03) translateX(-6px);
+      }
+      100% {
+        transform: scale(1.03) translateX(6px);
+      }
+    }
+
   </style>
 </head>
 <body class="min-h-screen text-sky-100 antialiased bg-animated bg-gradient-to-b from-purple-900 via-pink-700 to-black scanline-overlay">
@@ -123,9 +141,12 @@
             אני אוהב את עולמות ה־8bit וגם את ה־16bit, ובעיקר את התרבות שמסביב — צבעים, סגנון, גרפיקה, מוזיקה ואווירה כמו פעם.
           </p>
 
-          <!-- OutRun-style animated scene (uses .outrun-scene defined in <style>) -->
+          <!-- OutRun-style animated scene (uses centered image to show full picture) -->
           <div class="mt-4 rounded-2xl bg-black/60 border border-cyan-400/40 shadow-[0_16px_50px_rgba(0,0,0,0.9)] overflow-hidden transition-transform duration-500 hover:scale-[1.02]">
-            <div class="h-48 md:h-56 outrun-scene"></div>
+            <div class="flex items-center justify-center bg-black/70 h-56 md:h-64">
+              <img src="assets/images/outrun.jpg" alt="Outrun style scene" class="max-h-full max-w-full object-contain outrun-animate" />
+            </div>
+
             <div class="px-3 py-2 text-center text-[10px] text-pink-100/80 [font-family:'Press Start 2P',monospace]">
               סצנת השראה בסגנון OutRun (1986) — אנימציה סטטית מבוססת תמונה.
             </div>
