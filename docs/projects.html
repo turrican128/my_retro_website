@@ -8,6 +8,61 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <!-- Added CRT effect CSS for card media -->
+  <style>
+    /* CRT effect for card media */
+    .crt-frame {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .crt-frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.28),
+        rgba(0,0,0,0.28) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      mix-blend-mode: soft-light;
+      opacity: 0.35;
+      z-index: 2;
+    }
+
+    .crt-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at center,
+        rgba(0,255,243,0.08),
+        transparent 60%
+      );
+      opacity: 0.7;
+      z-index: 2;
+    }
+
+    @keyframes crtFlicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.96; }
+    }
+
+    .crt-flicker {
+      animation: crtFlicker 4.5s ease-in-out infinite;
+    }
+
+    /* Ensure the overlay layers do not cover the image's own rendering stacking */
+    .crt-frame > img {
+      position: relative;
+      z-index: 1;
+      display: block;
+    }
+  </style>
 </head>
 <body class="min-h-screen bg-gradient-to-b from-purple-900 via-pink-700 to-black text-sky-100 antialiased">
 
@@ -62,8 +117,9 @@
           <p class="text-sm text-sky-100/85 leading-relaxed text-right">
             פיתוח דמואים, אפקטים גרפיים וקוד ברמת ביט־פיקסל על הקומודור 64.
           </p>
-          <div class="mt-4 w-full h-36 flex items-center justify-center bg-black/70 rounded-xl border border-cyan-300/30 shadow-[0_0_22px_rgba(0,255,243,0.18)] transition duration-300 hover:shadow-[0_0_28px_rgba(255,45,210,0.22)]">
-            <img src="assets/images/Outrun.gif" alt="C64 Demo WIP" class="w-full h-full object-contain" />
+          <!-- added crt classes, kept all existing classes -->
+          <div class="mt-4 w-full h-36 flex items-center justify-center bg-black/70 rounded-xl border border-cyan-300/30 shadow-[0_0_22px_rgba(0,255,243,0.18)] transition duration-300 hover:shadow-[0_0_28px_rgba(255,45,210,0.22)] crt-frame crt-flicker">
+            <img src="assets/images/Outrun.gif" alt="C64 Demo WIP" class="w-full h-full object-contain crt-flicker" />
           </div>
         </article>
 
@@ -72,8 +128,9 @@
           <p class="text-sm text-sky-100/85 leading-relaxed text-right">
             מוזיקה מקורית בהשראת אייטיז, SID וסאונד רטרו מודרני.
           </p>
-          <div class="mt-4 w-full h-36 flex items-center justify-center bg-black/60 rounded-xl border border-cyan-300/30 shadow-[0_0_22px_rgba(0,255,243,0.18)] transition duration-300 hover:shadow-[0_0_28px_rgba(255,45,210,0.22)]">
-            <img src="assets/images/mysynthwave_animaition.gif" alt="Synthwave Tracks" class="w-full h-full object-cover" />
+          <!-- synthwave card uses object-cover and kept unchanged except added crt classes -->
+          <div class="mt-4 w-full h-36 flex items-center justify-center bg-black/60 rounded-xl border border-cyan-300/30 shadow-[0_0_22px_rgba(0,255,243,0.18)] transition duration-300 hover:shadow-[0_0_28px_rgba(255,45,210,0.22)] crt-frame crt-flicker">
+            <img src="assets/images/mysynthwave_animaition.gif" alt="Synthwave Tracks" class="w-full h-full object-cover crt-flicker" />
           </div>
         </article>
 
@@ -82,14 +139,74 @@
           <p class="text-sm text-sky-100/85 leading-relaxed text-right">
             תוכן רטרו, כתבות, סקירות וחדשות מעולם ה־8bit וה־16bit.
           </p>
-          <div class="mt-4 w-full h-36 flex items-center justify-center bg-black/70 rounded-xl border border-cyan-300/30 shadow-[0_0_22px_rgba(0,255,243,0.18)] transition duration-300 hover:shadow-[0_0_28px_rgba(255,45,210,0.22)]">
-            <img src="assets/images/OutRun (Sega - Genesis - 1991).gif" alt="8-Bit Magazine" class="w-full h-full object-contain" />
+
+          <!-- Added: magazine details button (neon style) -->
+          <div class="mt-3">
+            <button id="magazine-open-btn" type="button"
+              class="inline-flex items-center justify-center rounded-md px-3 py-2 text-sm font-medium text-cyan-100 border border-cyan-300/30
+                     bg-gradient-to-r from-cyan-700/10 via-pink-700/8 to-pink-500/10
+                     hover:from-cyan-400/30 hover:to-pink-400/30
+                     shadow-[0_8px_30px_rgba(255,45,210,0.06)] hover:shadow-[0_0_28px_rgba(255,45,210,0.16)] transition">
+              לצפייה בפרטי הגיליון
+            </button>
+          </div>
+
+          <!-- existing media wrapper (unchanged sizing/behaviour), kept crt-frame/crt-flicker classes -->
+          <div class="mt-4 w-full h-36 flex items-center justify-center bg-black/70 rounded-xl border border-cyan-300/30 shadow-[0_0_22px_rgba(0,255,243,0.18)] transition duration-300 hover:shadow-[0_0_28px_rgba(255,45,210,0.22)] crt-frame crt-flicker">
+            <img src="assets/images/OutRun (Sega - Genesis - 1991).gif" alt="8-Bit Magazine" class="w-full h-full object-contain crt-flicker" />
           </div>
         </article>
         <!-- תוסיף עוד כרטיסים לפי הצורך -->
       </section>
     </div>
   </main>
+
+  <!-- Modal: Magazine details (hidden by default) -->
+  <div id="magazine-modal" class="fixed inset-0 z-50 hidden" aria-hidden="true">
+    <!-- overlay -->
+    <div id="magazine-overlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm"></div>
+
+    <!-- centered modal -->
+    <div class="fixed inset-0 flex items-center justify-center p-4">
+      <div role="dialog" aria-modal="true" aria-labelledby="magazine-modal-title"
+           class="relative w-full max-w-2xl rounded-2xl bg-black/70 border border-cyan-300/30 shadow-[0_20px_60px_rgba(0,255,243,0.15)] backdrop-blur-md p-6 text-right"
+           dir="rtl">
+        <!-- Close (top-left for RTL) -->
+        <button id="magazine-close-btn" aria-label="Close"
+          class="absolute left-4 top-4 w-9 h-9 rounded-full bg-black/30 hover:bg-white/5 text-sky-100 flex items-center justify-center text-lg">
+          ✕
+        </button>
+
+        <!-- Modal content -->
+        <h3 id="magazine-modal-title" class="[font-family:'Press Start 2P',monospace] text-xl text-pink-300 mb-2">מגזין 8ביט ישראל</h3>
+        <div class="text-sm text-sky-100/85 mb-4">
+          <div class="font-medium text-sky-100/90">גיליון #1 (דוגמה)</div>
+          <div class="text-xs text-sky-200/70 mt-1">תאריך שחרור: 2025-01-01</div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="md:col-span-1">
+            <img src="assets/images/magazine-cover.jpg" alt="Magazine Cover" class="w-full h-40 md:h-48 object-cover rounded-md border border-white/5 bg-black/30" />
+          </div>
+
+          <div class="md:col-span-2 text-sm text-sky-100/85 leading-relaxed">
+            <p class="mb-3">
+              תקציר קצר של המגזין — זהו טקסט דמה לתיאור התוכן: כתבות רטרו, סקירות על משחקים, ראיונות וטיפים לחובבי ה־8ביט.
+            </p>
+            <p class="mb-4">
+              כאן תוכלו להוריד את גיליון ה־PDF או לעיין בתוכן המקוון.
+            </p>
+
+            <a href="#" class="inline-flex items-center rounded-md px-4 py-2 text-sm font-medium text-cyan-100 border border-cyan-300/30
+                                 bg-gradient-to-r from-cyan-700/10 to-pink-500/10 hover:from-cyan-400/30 hover:to-pink-400/30
+                                 shadow-[0_8px_30px_rgba(255,45,210,0.06)] hover:shadow-[0_0_28px_rgba(255,45,210,0.16)] transition">
+              הורדת PDF
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="pointer-events-none fixed inset-x-0 bottom-0 h-36 opacity-60">
     <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
@@ -109,5 +226,35 @@
       </g>
     </svg>
   </div>
+
+  <!-- Modal open/close script -->
+  <script>
+    (function () {
+      const openBtn = document.getElementById('magazine-open-btn');
+      const modal = document.getElementById('magazine-modal');
+      const overlay = document.getElementById('magazine-overlay');
+      const closeBtn = document.getElementById('magazine-close-btn');
+
+      function openModal() {
+        if (!modal) return;
+        modal.classList.remove('hidden');
+        modal.setAttribute('aria-hidden', 'false');
+      }
+
+      function closeModal() {
+        if (!modal) return;
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+
+      if (openBtn) openBtn.addEventListener('click', openModal);
+      if (overlay) overlay.addEventListener('click', closeModal);
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' || e.key === 'Esc') closeModal();
+      });
+    })();
+  </script>
 </body>
 </html>
