@@ -261,52 +261,5 @@
     </svg>
   </div>
 
-  <script>
-
-
-    function print(text = '') {
-      output.textContent += '\n' + text;
-      const term = output.parentElement;
-      term.scrollTop = term.scrollHeight;
-    }
-
-    function run() {
-      const v = (cmd.value || '').trim();
-      if (!v) return;
-      print('> ' + v);
-      handle(v.toLowerCase());
-      cmd.value = '';
-      cmd.focus();
-    }
-
-    function handle(input) {
-      if (input === 'help') {
-        print('help - show commands\nabout - short info\ntime - show local time\nclear - clear output');
-        return;
-      }
-      if (input === 'about') {
-        print('This is a static retro synthwave homepage. Customize it in docs/index.html');
-        return;
-      }
-      if (input === 'time') {
-        print('Local time: ' + new Date().toLocaleString());
-        return;
-      }
-      if (input === 'clear') {
-        output.textContent = '> cleared';
-        return;
-      }
-      print('Unknown command: ' + input + '\nType "help" for a list of commands.');
-    }
-
-    cmd.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        run();
-      }
-    });
-
-    window.addEventListener('load', () => cmd.focus());
-  </script>
 </body>
 </html>
