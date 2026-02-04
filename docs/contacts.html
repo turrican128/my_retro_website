@@ -3,18 +3,46 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>צור קשר – My Retro Website</title>
+  <title>צור קשר – 8bitretro.tech</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
   <style>
+    @keyframes neonGradient {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .bg-animated {
+      background-size: 320% 320%;
+      animation: neonGradient 22s ease-in-out infinite;
+    }
+
+    .scanline-overlay::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.35),
+        rgba(0, 0, 0, 0.35) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      mix-blend-mode: soft-light;
+      opacity: 0.45;
+      z-index: 0;
+    }
+
     /* small helper to ensure Press Start headings keep spacing */
     .ps2p { font-family: 'Press Start 2P', monospace; }
   </style>
 </head>
-<body class="min-h-screen bg-gradient-to-b from-purple-900 via-pink-700 to-black text-sky-100 antialiased">
+<body class="min-h-screen text-sky-100 antialiased bg-animated bg-gradient-to-b from-purple-900 via-pink-700 to-black scanline-overlay text-right">
 
   <!-- header/navigation (copied from index.html, active = 'צור קשר') -->
   <header class="fixed inset-x-0 top-4 z-30 flex items-center justify-center">
