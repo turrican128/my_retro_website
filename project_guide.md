@@ -33,19 +33,21 @@
 ```
 retro-site/
   content/
-    site-content.md
-  src/
+    site_content.md
+  docs/
     index.html
     about.html
     projects.html
-    contact.html
+    contacts.html
+    assets/
+      images/
+  src/
     style.css
     scripts.js
-  assets/
-    images/
   PROJECT_GUIDE.md
   README.md
 ```
+Note: HTML files are in `docs/` for GitHub Pages deployment. Assets are within `docs/assets/`.
 
 ---
 
