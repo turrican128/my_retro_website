@@ -130,7 +130,7 @@
       <!-- Hero / main content (REPLACED: Hebrew heading + subtitle + 3-card section) -->
       <section class="flex flex-col justify-center gap-6 rounded-xl p-8 bg-black/60 border border-white/15 shadow-[0_24px_80px_rgba(0,0,0,0.8)] backdrop-blur">
         <div>
-          <h1 class="[font-family:'Press Start 2P',monospace] text-3xl md:text-4xl text-cyan-300 leading-tight drop-shadow-[0_2px_25px_rgba(0,255,243,0.3)] text-right">
+          <h1 id="hero-heading" class="[font-family:'Press Start 2P',monospace] text-3xl md:text-4xl text-cyan-300 leading-tight drop-shadow-[0_2px_25px_rgba(0,255,243,0.3)] text-right">
             אני אלכס גולדבלט, בן 51 מהרצליה — וזהו האתר הרטרו שלי וגם הבית האישי שלי ברשת.
           </h1>
           <p class="mt-3 text-sm text-pink-100/85 max-w-prose text-right">
@@ -260,6 +260,96 @@
       </g>
     </svg>
   </div>
+
+
+  <script>
+    // ── Boot popup (first visit only) ───────────────────────────────────────
+    (function () {
+      if (localStorage.getItem('retro_booted')) return;
+      localStorage.setItem('retro_booted', '1');
+
+      var lines = [
+        'SYSTEM INITIALIZING...',
+        'LOADING RETRO MODULES...',
+        'SID CHIP: OK',
+        'SCANLINES: ENABLED',
+        '8BITRETRO.TECH v1.0',
+        '',
+        '[ לחץ כל מקש או המתן ]'
+      ];
+
+      var overlay = document.createElement('div');
+      overlay.style.cssText = [
+        'position:fixed', 'inset:0', 'z-index:9999',
+        'background:#000', 'display:flex', 'align-items:center',
+        'justify-content:center', 'transition:opacity 0.5s'
+      ].join(';');
+
+      var box = document.createElement('div');
+      box.style.cssText = [
+        'font-family:"Press Start 2P",monospace', 'font-size:13px',
+        'color:#00fff3', 'text-align:left', 'line-height:2.2',
+        'padding:2.5rem 3rem',
+        'border:2px solid #00fff3',
+        'box-shadow:0 0 40px rgba(0,255,243,0.4)',
+        'max-width:480px', 'width:90%',
+        'background:#050a0a'
+      ].join(';');
+
+      overlay.appendChild(box);
+      document.body.appendChild(overlay);
+
+      var i = 0;
+      function showNext() {
+        if (i >= lines.length) return;
+        var p = document.createElement('p');
+        p.style.margin = '0';
+        p.textContent = lines[i++];
+        if (p.textContent === '') { p.innerHTML = '&nbsp;'; }
+        box.appendChild(p);
+        if (i < lines.length) setTimeout(showNext, 320);
+      }
+      showNext();
+
+      function dismiss() {
+        overlay.style.opacity = '0';
+        setTimeout(function () { overlay.remove(); }, 500);
+      }
+      overlay.addEventListener('click', dismiss);
+      document.addEventListener('keydown', dismiss, { once: true });
+      setTimeout(dismiss, 5000);
+    })();
+
+    // ── Typewriter effect on hero heading ───────────────────────────────────
+    (function () {
+      var el = document.getElementById('hero-heading');
+      if (!el) return;
+      var fullText = el.textContent.trim();
+      el.textContent = '';
+
+      // blinking cursor element
+      var cursor = document.createElement('span');
+      cursor.textContent = '█';
+      cursor.style.cssText = 'animation:blink 0.8s step-end infinite;font-size:0.7em;opacity:0.8';
+      el.appendChild(cursor);
+
+      var style = document.createElement('style');
+      style.textContent = '@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}';
+      document.head.appendChild(style);
+
+      var i = 0;
+      // slight delay so the boot popup is visible first
+      setTimeout(function type() {
+        if (i < fullText.length) {
+          el.insertBefore(document.createTextNode(fullText[i++]), cursor);
+          setTimeout(type, 55);
+        } else {
+          // remove cursor after typing finishes
+          setTimeout(function () { cursor.remove(); }, 1200);
+        }
+      }, 800);
+    })();
+  </script>
 
 </body>
 </html>
