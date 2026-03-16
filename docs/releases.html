@@ -317,6 +317,97 @@
   </main>
 
   <!-- גריד דקורטיבי בתחתית -->
+  <div id="c64-boot" style="position:fixed;inset:0;z-index:9999;background:#3333aa;display:flex;align-items:center;justify-content:center;padding:2rem;font-family:monospace;font-size:clamp(12px,1.8vw,18px);color:#fff;white-space:pre;line-height:1.6;direction:ltr;text-align:left;"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var overlay = document.getElementById('c64-boot');
+
+      var introLines = [
+        'LOAD "$",8',
+        '',
+        'SEARCHING FOR $',
+        'LOADING',
+        'READY.',
+        'LIST',
+        '',
+        '0 "ALEX\'S RELEASES" DELYSID AV',
+        '',
+      ];
+
+      var dirEntries = [
+        '   8  "JOHANNES TRIBUTE"      PRG',
+        '  12  "MEMORY LANE"           PRG',
+        '   6  "HOTSHOT 1990 REMAKE"   PRG',
+        '   9  "TAKE ONE"              PRG',
+        '   8  "IRATA BDAY TUNE"       PRG',
+        '   7  "PERSIAN PRINCESS"      PRG',
+        '   6  "DELYSID TREASURE"      PRG',
+        '   5  "XMAS 2012 LOGO"        PRG',
+      ];
+
+      var outroLines = [
+        '',
+        ' 61 BLOCKS FREE.',
+        '',
+        'READY.',
+      ];
+
+      var content = '';
+
+      function showCursorAndFade() {
+        overlay.innerHTML = content + '<span style="display:inline-block;width:0.6em;height:1.1em;background:#fff;vertical-align:text-bottom;animation:c64blink 0.8s step-start infinite;"></span>';
+        var style = document.createElement('style');
+        style.textContent = '@keyframes c64blink{50%{opacity:0}}';
+        document.head.appendChild(style);
+        setTimeout(function () {
+          overlay.style.transition = 'opacity 0.5s';
+          overlay.style.opacity = '0';
+          overlay.addEventListener('transitionend', function () {
+            overlay.remove();
+          }, { once: true });
+        }, 600);
+      }
+
+      function typeLines(lines, index, done) {
+        if (index >= lines.length) { done(); return; }
+        var line = lines[index];
+        if (line === '') {
+          content += '\n';
+          overlay.textContent = content;
+          setTimeout(function () { typeLines(lines, index + 1, done); }, 80);
+          return;
+        }
+        var charIndex = 0;
+        function typeChar() {
+          if (charIndex < line.length) {
+            content += line[charIndex++];
+            overlay.textContent = content;
+            setTimeout(typeChar, 15 + Math.random() * 15);
+          } else {
+            content += '\n';
+            overlay.textContent = content;
+            setTimeout(function () { typeLines(lines, index + 1, done); }, 120);
+          }
+        }
+        typeChar();
+      }
+
+      function snapEntries(index, done) {
+        if (index >= dirEntries.length) { done(); return; }
+        content += dirEntries[index] + '\n';
+        overlay.textContent = content;
+        setTimeout(function () { snapEntries(index + 1, done); }, 60);
+      }
+
+      typeLines(introLines, 0, function () {
+        snapEntries(0, function () {
+          typeLines(outroLines, 0, showCursorAndFade);
+        });
+      });
+    });
+  </script>
+
   <div class="pointer-events-none fixed inset-x-0 bottom-0 h-36 opacity-70">
     <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
       <defs>
