@@ -47,9 +47,19 @@
       opacity: 0.45;
       z-index: 0;
     }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+    .c64-cursor {
+      animation: blink 0.8s step-start infinite;
+    }
   </style>
 </head>
 <body class="min-h-screen text-sky-100 antialiased bg-animated bg-gradient-to-b from-purple-900 via-pink-700 to-black scanline-overlay text-right">
+
+  <div id="c64-boot" style="position:fixed;inset:0;z-index:9999;background:#3333aa;display:flex;align-items:center;justify-content:center;padding:2rem;font-family:monospace;font-size:clamp(12px,1.8vw,18px);color:#fff;white-space:pre;line-height:1.6;direction:ltr;text-align:left;"></div>
 
   <!-- ניווט עליון ניאון -->
   <header class="fixed inset-x-0 top-4 z-30 flex items-center justify-center">
@@ -318,6 +328,71 @@
       </section>
     </div>
   </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var overlay = document.getElementById('c64-boot');
+      var lines = [
+        '    **** COMMODORE 64 BASIC V2 ****',
+        '',
+        ' 64K RAM SYSTEM  38911 BASIC BYTES FREE',
+        '',
+        'READY.',
+        'LOAD "ABOUT ALEX",8,1',
+        'SEARCHING FOR ABOUT ALEX',
+        'LOADING...',
+        '',
+        'READY.',
+      ];
+
+      var content = '';
+      var lineIndex = 0;
+      var charIndex = 0;
+
+      function typeChar() {
+        if (lineIndex >= lines.length) {
+          // Show blinking cursor then fade out
+          overlay.innerHTML = content + '<span class="c64-cursor">\u2588</span>';
+          setTimeout(function () {
+            overlay.style.transition = 'opacity 0.5s';
+            overlay.style.opacity = '0';
+            overlay.addEventListener('transitionend', function () {
+              overlay.remove();
+            }, { once: true });
+          }, 600);
+          return;
+        }
+
+        var line = lines[lineIndex];
+
+        if (line === '') {
+          // Blank line: add instantly with short pause
+          content += '\n';
+          overlay.textContent = content;
+          lineIndex++;
+          charIndex = 0;
+          setTimeout(typeChar, 80);
+          return;
+        }
+
+        if (charIndex < line.length) {
+          content += line[charIndex];
+          overlay.textContent = content;
+          charIndex++;
+          var delay = 15 + Math.random() * 15;
+          setTimeout(typeChar, delay);
+        } else {
+          content += '\n';
+          overlay.textContent = content;
+          lineIndex++;
+          charIndex = 0;
+          setTimeout(typeChar, 120);
+        }
+      }
+
+      typeChar();
+    });
+  </script>
 
   <!-- גריד דקורטיבי בתחתית -->
   <div class="pointer-events-none fixed inset-x-0 bottom-0 h-36 opacity-70">
