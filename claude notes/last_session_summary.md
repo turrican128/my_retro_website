@@ -3,7 +3,12 @@
 **Date:** 2026-03-16
 
 ## What happened
-- Cloned repo fresh into `c:/Claude Workspace/my_retro_website`
-- Created `CLAUDE.md` with architecture notes, page inventory, and conventions
-- Discussed project structure — 5 pages, all Hebrew/RTL, animations duplicated per-page
-- This session: set up `claude notes/` folder with ideas, tasks, tech stack, and session summary files
+- Merged PR #8 — `claude/outrun-intro-contacts` → `main`
+- Feature: Outrun arcade-style entrance animation on contacts page (grid floor perspective effect)
+- Only `docs/contacts.html` changed (+124/-2 lines)
+- Both remote and local branch deleted after merge
+
+## Workflow preferences established
+- Use `gh` CLI for all GitHub operations (PRs, merges, branch status, branch deletion)
+- Bash commands run without permission prompts
+- Session notes to be written in `claude notes/` after every feature branch merge
