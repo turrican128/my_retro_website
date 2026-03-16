@@ -44,6 +44,49 @@
 </head>
 <body class="min-h-screen text-sky-100 antialiased bg-animated bg-gradient-to-b from-purple-900 via-pink-700 to-black scanline-overlay text-right">
 
+<div id="outrun-boot">
+  <style>
+    #outrun-boot {
+      position: fixed; inset: 0; z-index: 9999; overflow: hidden;
+      background: linear-gradient(to bottom,
+        #1a0033 0%, #5c0070 18%, #c2006e 42%,
+        #ff4500 58%, #ff8c00 65%, #ffd700 70%);
+    }
+    #outrun-canvas {
+      position: absolute; bottom: 0; left: 0; width: 100%; height: 55%;
+    }
+    #outrun-ui {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: flex-start;
+      padding-top: 18vh; pointer-events: none;
+      direction: ltr; text-align: center;
+    }
+    #outrun-title {
+      font-family: 'Press Start 2P', monospace;
+      font-style: italic; font-size: clamp(24px, 5.5vw, 68px);
+      font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em;
+      background: linear-gradient(to bottom, #fff700 0%, #ffb300 50%, #ff6600 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(2px 2px 0 #000) drop-shadow(-2px -2px 0 #000)
+              drop-shadow(2px -2px 0 #000) drop-shadow(-2px 2px 0 #000);
+    }
+    #outrun-press-start {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(11px, 1.8vw, 20px); color: #fff;
+      letter-spacing: 0.15em; margin-top: 2.5vh;
+      animation: outrun-blink 0.7s step-start infinite;
+      text-shadow: 0 0 15px #ff2dd2, 0 0 30px #ff2dd2;
+    }
+    @keyframes outrun-blink { 0%,49%{opacity:1} 50%,100%{opacity:0} }
+  </style>
+  <canvas id="outrun-canvas"></canvas>
+  <div id="outrun-ui">
+    <div id="outrun-title">8BITRETRO.TECH</div>
+    <div id="outrun-press-start">PRESS START</div>
+  </div>
+</div>
+
   <!-- header/navigation (copied from index.html, active = 'צור קשר') -->
   <header class="fixed inset-x-0 top-4 z-30 flex items-center justify-center">
     <nav class="w-[min(1100px,96%)] flex items-center justify-between px-4 py-3 rounded-xl bg-black/40 backdrop-blur border border-white/10 shadow-[0_12px_50px_rgba(0,0,0,0.7)]">
@@ -69,7 +112,7 @@
           </a>
         </li>
       </ul>
-      <div class="flex items-center gap-4">
+      <a href="index.html" class="flex items-center gap-4 no-underline cursor-pointer">
         <div class="w-16 h-12 flex items-center justify-center rounded-md bg-gradient-to-r from-pink-500/40 to-cyan-400/20 border border-white/30 shadow-[0_0_25px_rgba(255,45,210,0.6)]">
           <span class="[font-family:'Press Start 2P',monospace] text-pink-300 text-xs uppercase tracking-[0.2em]">
             RETRO
@@ -78,7 +121,7 @@
         <div class="[font-family:'Press Start 2P',monospace] text-cyan-100 text-sm">
           8bitretro.tech
         </div>
-      </div>
+      </a>
     </nav>
   </header>
 
@@ -307,6 +350,85 @@
         }
       });
     })();
+  </script>
+
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var overlay   = document.getElementById('outrun-boot');
+    var canvas    = document.getElementById('outrun-canvas');
+    var ctx       = canvas.getContext('2d');
+    var W, H, offset = 0, lastFrame = 0, startTime = null;
+    var DURATION  = 3000;  // ms before fade
+
+    function resize() {
+      W = canvas.width  = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function drawFrame(ts) {
+      if (!startTime) startTime = ts;
+      var dt = ts - (lastFrame || ts);
+      lastFrame = ts;
+      offset = (offset + 0.7 * dt / 1000) % 1.0;
+
+      ctx.clearRect(0, 0, W, H);
+
+      var VX = W / 2;
+      var RW_BOT = W * 0.42, RW_TOP = W * 0.045;
+      var NUM = 16;
+
+      // Shoulders
+      ctx.fillStyle = '#111';
+      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(VX-RW_TOP,0);
+      ctx.lineTo(VX-RW_BOT,H); ctx.lineTo(0,H); ctx.closePath(); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(W,0); ctx.lineTo(VX+RW_TOP,0);
+      ctx.lineTo(VX+RW_BOT,H); ctx.lineTo(W,H); ctx.closePath(); ctx.fill();
+
+      // Base road
+      ctx.fillStyle = '#333';
+      ctx.beginPath(); ctx.moveTo(VX-RW_TOP,0); ctx.lineTo(VX+RW_TOP,0);
+      ctx.lineTo(VX+RW_BOT,H); ctx.lineTo(VX-RW_BOT,H); ctx.closePath(); ctx.fill();
+
+      // Perspective stripes
+      for (var i = -1; i < NUM + 1; i++) {
+        var t0 = Math.min(1, Math.pow((i + offset) / NUM, 2));
+        var t1 = Math.min(1, Math.pow((i + 1 + offset) / NUM, 2));
+        if (t1 <= 0) continue;
+        var lt = VX - (RW_TOP + (RW_BOT - RW_TOP) * t0);
+        var rt = VX + (RW_TOP + (RW_BOT - RW_TOP) * t0);
+        var lb = VX - (RW_TOP + (RW_BOT - RW_TOP) * t1);
+        var rb = VX + (RW_TOP + (RW_BOT - RW_TOP) * t1);
+        ctx.fillStyle = (Math.floor(i + offset) % 2 === 0) ? '#2a2a2a' : '#484848';
+        ctx.beginPath(); ctx.moveTo(lt,t0*H); ctx.lineTo(rt,t0*H);
+        ctx.lineTo(rb,t1*H); ctx.lineTo(lb,t1*H); ctx.closePath(); ctx.fill();
+      }
+
+      // Road edge markings
+      ctx.fillStyle = '#ffee88';
+      var ew_t = RW_TOP * 0.06, ew_b = RW_BOT * 0.06;
+      ctx.beginPath(); ctx.moveTo(VX-RW_TOP,0); ctx.lineTo(VX-RW_TOP+ew_t,0);
+      ctx.lineTo(VX-RW_BOT+ew_b,H); ctx.lineTo(VX-RW_BOT,H); ctx.closePath(); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(VX+RW_TOP,0); ctx.lineTo(VX+RW_TOP-ew_t,0);
+      ctx.lineTo(VX+RW_BOT-ew_b,H); ctx.lineTo(VX+RW_BOT,H); ctx.closePath(); ctx.fill();
+
+      // Horizon accent line
+      ctx.fillStyle = '#ff2dd2';
+      ctx.fillRect(0, 0, W, 3);
+
+      if (ts - startTime < DURATION) {
+        requestAnimationFrame(drawFrame);
+      } else {
+        overlay.style.transition = 'opacity 0.6s';
+        overlay.style.opacity = '0';
+        overlay.addEventListener('transitionend', function () { overlay.remove(); }, { once: true });
+      }
+    }
+
+    requestAnimationFrame(drawFrame);
+  });
   </script>
 
  </body>
