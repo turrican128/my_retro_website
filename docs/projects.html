@@ -79,6 +79,14 @@
       50% { opacity: 0.96; }
     }
 
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+    .c64-cursor {
+      animation: blink 0.8s step-start infinite;
+    }
+
     .crt-flicker {
       animation: crtFlicker 4.5s ease-in-out infinite;
     }
@@ -92,6 +100,8 @@
   </style>
 </head>
 <body class="min-h-screen text-sky-100 antialiased bg-animated bg-gradient-to-b from-purple-900 via-pink-700 to-black scanline-overlay text-right">
+
+  <div id="c64-boot" style="position:fixed;inset:0;z-index:9999;background:#3333aa;display:flex;align-items:center;justify-content:center;padding:2rem;font-family:monospace;font-size:clamp(12px,1.8vw,18px);color:#fff;white-space:pre;line-height:1.6;direction:ltr;text-align:left;"></div>
 
   <header class="fixed inset-x-0 top-4 z-30 flex items-center justify-center">
     <nav class="w-[min(1100px,96%)] flex items-center justify-between px-4 py-3 rounded-xl bg-black/40 backdrop-blur border border-white/10 shadow-[0_12px_50px_rgba(0,0,0,0.7)]">
@@ -120,7 +130,7 @@
       </ul>
 
       <!-- LOGO BLOCK SECOND (renders on the left in RTL with justify-between) -->
-      <div class="flex items-center gap-4">
+      <a href="index.html" class="flex items-center gap-4 no-underline cursor-pointer">
         <div class="w-16 h-12 flex items-center justify-center rounded-md bg-gradient-to-r from-pink-500/40 to-cyan-400/20 border border-white/30 shadow-[0_0_25px_rgba(255,45,210,0.6)]">
           <span class="[font-family:'Press Start 2P',monospace] text-pink-300 text-xs uppercase tracking-[0.2em]">
             RETRO
@@ -129,7 +139,7 @@
         <div class="[font-family:'Press Start 2P',monospace] text-cyan-100 text-sm">
           8bitretro.tech
         </div>
-      </div>
+      </a>
     </nav>
   </header>
 
@@ -284,6 +294,71 @@
         if (e.key === 'Escape' || e.key === 'Esc') closeModal();
       });
     })();
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var overlay = document.getElementById('c64-boot');
+      var lines = [
+        '    **** COMMODORE 64 BASIC V2 ****',
+        '',
+        ' 64K RAM SYSTEM  38911 BASIC BYTES FREE',
+        '',
+        'READY.',
+        'LOAD "PROJECTS",8,1',
+        'SEARCHING FOR PROJECTS',
+        'LOADING...',
+        '',
+        'READY.',
+      ];
+
+      var content = '';
+      var lineIndex = 0;
+      var charIndex = 0;
+
+      function typeChar() {
+        if (lineIndex >= lines.length) {
+          // Show blinking cursor then fade out
+          overlay.innerHTML = content + '<span class="c64-cursor">\u2588</span>';
+          setTimeout(function () {
+            overlay.style.transition = 'opacity 0.5s';
+            overlay.style.opacity = '0';
+            overlay.addEventListener('transitionend', function () {
+              overlay.remove();
+            }, { once: true });
+          }, 600);
+          return;
+        }
+
+        var line = lines[lineIndex];
+
+        if (line === '') {
+          // Blank line: add instantly with short pause
+          content += '\n';
+          overlay.textContent = content;
+          lineIndex++;
+          charIndex = 0;
+          setTimeout(typeChar, 80);
+          return;
+        }
+
+        if (charIndex < line.length) {
+          content += line[charIndex];
+          overlay.textContent = content;
+          charIndex++;
+          var delay = 15 + Math.random() * 15;
+          setTimeout(typeChar, delay);
+        } else {
+          content += '\n';
+          overlay.textContent = content;
+          lineIndex++;
+          charIndex = 0;
+          setTimeout(typeChar, 120);
+        }
+      }
+
+      typeChar();
+    });
   </script>
 </body>
 </html>
