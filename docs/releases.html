@@ -96,6 +96,42 @@
   </header>
 
   <main class="min-h-screen flex flex-col items-center pt-28 pb-16">
+    <!-- PETSCII art fragments background -->
+    <div class="pointer-events-none fixed inset-0 overflow-hidden" style="z-index: -5;">
+      <!-- Fragment 1: LOAD command (top-left) -->
+      <pre style="position:absolute; top:8%; left:5%; opacity:0.05; font-family:'Courier New',monospace; font-size:10px; color:#00fff3; line-height:1.15; transform:rotate(-2deg);">READY.
+LOAD "*",8,1
+
+SEARCHING FOR *
+LOADING
+READY.
+RUN</pre>
+      <!-- Fragment 2: PETSCII symbols box (right, mid-page) -->
+      <pre style="position:absolute; top:38%; right:3%; opacity:0.045; font-family:'Courier New',monospace; font-size:10px; color:#ff2dd2; line-height:1.15; transform:rotate(1deg);">&#x2554;&#x2550;&#x2550;&#x2550;&#x2550;&#x2550;&#x2550;&#x2550;&#x2550;&#x2550;&#x2550;&#x2550;&#x2550;&#x2557;
+&#x2551; &#x2660;&#x2663;&#x2665;&#x2666;&#x25B2;&#x25BC;&#x25C4;&#x25BA; &#x2551;
+&#x2551; &#x2588;&#x2584;&#x2580;&#x258C;&#x2590;&#x2591;&#x2592;&#x2593;  &#x2551;
+&#x2551; &#x250C;&#x2500;&#x252C;&#x2500;&#x252C;&#x2500;&#x2510;   &#x2551;
+&#x2551; &#x2502;&#x25A0;&#x2502;&#x25A1;&#x2502;&#x25CF;&#x2502;   &#x2551;
+&#x2551; &#x2514;&#x2500;&#x2534;&#x2500;&#x2534;&#x2500;&#x2518;   &#x2551;
+&#x255A;&#x2550;&#x2550;&#x2550;&#x2550;&#x2550;&#x2550;&#x2550;&#x2550;&#x2550;&#x2550;&#x2550;&#x2550;&#x255D;</pre>
+      <!-- Fragment 3: DR.J/DELYSID badge (bottom-left) -->
+      <pre style="position:absolute; bottom:12%; left:6%; opacity:0.04; font-family:'Courier New',monospace; font-size:10px; color:#00fff3; line-height:1.15; transform:rotate(2deg);">SYS 49152
+
+  &#x256D;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x256E;
+  &#x2502;  DR.J/DELYSID &#x2502;
+  &#x2502;   &#x2500;&#x2500; 2025 &#x2500;&#x2500;  &#x2502;
+  &#x2570;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x256F;</pre>
+      <!-- Fragment 4: Floppy disk directory (top-right) -->
+      <pre style="position:absolute; top:12%; right:8%; opacity:0.04; font-family:'Courier New',monospace; font-size:10px; color:#00fff3; line-height:1.15; transform:rotate(-1deg);">0 "DR.J RELEASES " AV 2A
+16 "FIFTY YEARS"     PRG
+ 8 "JOHANNES"        PRG
+664 BLOCKS FREE.</pre>
+      <!-- Fragment 5: BASIC code (bottom-right) -->
+      <pre style="position:absolute; bottom:20%; right:12%; opacity:0.035; font-family:'Courier New',monospace; font-size:10px; color:#ff2dd2; line-height:1.15; transform:rotate(1.5deg);">10 PRINT "HELLO SCENE!"
+20 GOTO 10
+RUN</pre>
+    </div>
+
     <!-- עיגול זוהר ברקע -->
     <div class="pointer-events-none absolute -z-10 inset-0 flex justify-center">
       <div class="w-[30rem] h-[30rem] rounded-full bg-pink-500/20 blur-[120px] translate-y-10"></div>
@@ -113,6 +149,106 @@
       <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         <!-- Card template: dir and text-right ensure RTL -->
         <!-- 1 -->
+        <article dir="rtl" class="text-right rounded-2xl p-5 bg-black/60 border border-cyan-400/20 shadow-[0_0_20px_rgba(0,255,243,0.06)] hover:shadow-[0_0_30px_rgba(255,45,210,0.12)] transition">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex flex-col">
+              <h3 class="text-lg text-cyan-100">Happy Birthday Mythus</h3>
+              <p class="mt-2 text-xs text-cyan-200/80">דמו יום הולדת למיתוס, קוד וגרפיקה</p>
+            </div>
+            <div class="flex flex-col items-start">
+              <span class="text-xs px-2 py-1 rounded-full bg-black/30 border border-pink-400/10 text-pink-200">2025</span>
+              <span class="mt-2 text-xs px-2 py-1 rounded-full bg-black/30 border border-cyan-400/10 text-cyan-200">C64 One-File Demo</span>
+            </div>
+          </div>
+
+          <img src="https://csdb.dk/gfx/releases/257000/257673.png" alt="Happy Birthday Mythus screenshot" class="mt-4 w-full rounded-lg border border-cyan-400/20" loading="lazy" />
+
+          <p class="mt-3 text-xs text-cyan-200/80">דמו יום הולדת עם סקרולר, מוזיקה וגרפיקה — מחווה למיתוס מקבוצת Delysid.</p>
+
+          <div class="mt-4 flex items-center gap-3 justify-end">
+            <a href="https://csdb.dk/release/?id=257673" target="_blank" rel="noopener noreferrer"
+               class="text-xs px-3 py-2 rounded-lg neon-btn text-cyan-300 hover:text-pink-300 transition">צפייה ב־CSDb</a>
+            <a href="https://csdb.dk/getinternalfile.php/275221/Happy_bday_mythus.prg" target="_blank" rel="noopener noreferrer"
+               class="text-xs px-3 py-2 rounded-lg neon-btn text-cyan-300 hover:text-pink-300 transition">הורדה</a>
+          </div>
+        </article>
+
+        <!-- 2 -->
+        <article dir="rtl" class="text-right rounded-2xl p-5 bg-black/60 border border-cyan-400/20 shadow-[0_0_20px_rgba(0,255,243,0.06)] hover:shadow-[0_0_30px_rgba(255,45,210,0.12)] transition">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex flex-col">
+              <h3 class="text-lg text-cyan-100">50 Years of Serato</h3>
+              <p class="mt-2 text-xs text-cyan-200/80">דמו יום הולדת לסראטו, Finnish Gold</p>
+            </div>
+            <div class="flex flex-col items-start">
+              <span class="text-xs px-2 py-1 rounded-full bg-black/30 border border-pink-400/10 text-pink-200">2025</span>
+              <span class="mt-2 text-xs px-2 py-1 rounded-full bg-black/30 border border-cyan-400/10 text-cyan-200">C64 One-File Demo</span>
+            </div>
+          </div>
+
+          <img src="https://csdb.dk/gfx/releases/256000/256573.png" alt="50 Years of Serato screenshot" class="mt-4 w-full rounded-lg border border-cyan-400/20" loading="lazy" />
+
+          <p class="mt-3 text-xs text-cyan-200/80">דמו חגיגי ליום ההולדת ה-50 של סראטו עם גרפיקה, מוזיקה וברכות מחברי הסצנה.</p>
+
+          <div class="mt-4 flex items-center gap-3 justify-end">
+            <a href="https://csdb.dk/release/?id=256573" target="_blank" rel="noopener noreferrer"
+               class="text-xs px-3 py-2 rounded-lg neon-btn text-cyan-300 hover:text-pink-300 transition">צפייה ב־CSDb</a>
+            <a href="https://csdb.dk/getinternalfile.php/273725/Happy_Bday_Sertato.prg" target="_blank" rel="noopener noreferrer"
+               class="text-xs px-3 py-2 rounded-lg neon-btn text-cyan-300 hover:text-pink-300 transition">הורדה</a>
+          </div>
+        </article>
+
+        <!-- 3 -->
+        <article dir="rtl" class="text-right rounded-2xl p-5 bg-black/60 border border-cyan-400/20 shadow-[0_0_20px_rgba(0,255,243,0.06)] hover:shadow-[0_0_30px_rgba(255,45,210,0.12)] transition">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex flex-col">
+              <h3 class="text-lg text-cyan-100">Fifty Years</h3>
+              <p class="mt-2 text-xs text-cyan-200/80">דמו יום הולדת ל-Ryk, קבוצת Delysid</p>
+            </div>
+            <div class="flex flex-col items-start">
+              <span class="text-xs px-2 py-1 rounded-full bg-black/30 border border-pink-400/10 text-pink-200">2025</span>
+              <span class="mt-2 text-xs px-2 py-1 rounded-full bg-black/30 border border-cyan-400/10 text-cyan-200">C64 Demo</span>
+            </div>
+          </div>
+
+          <img src="https://csdb.dk/gfx/releases/255000/255271.gif" alt="Fifty Years screenshot" class="mt-4 w-full rounded-lg border border-cyan-400/20" loading="lazy" />
+
+          <p class="mt-3 text-xs text-cyan-200/80">דמו מרשים ליום ההולדת ה-50 של The Ryk עם מוזיקה ממספר יוצרים וגרפיקה של Mythus.</p>
+
+          <div class="mt-4 flex items-center gap-3 justify-end">
+            <a href="https://csdb.dk/release/?id=255271" target="_blank" rel="noopener noreferrer"
+               class="text-xs px-3 py-2 rounded-lg neon-btn text-cyan-300 hover:text-pink-300 transition">צפייה ב־CSDb</a>
+            <a href="https://csdb.dk/getinternalfile.php/272101/fifty_years.d64" target="_blank" rel="noopener noreferrer"
+               class="text-xs px-3 py-2 rounded-lg neon-btn text-cyan-300 hover:text-pink-300 transition">הורדה</a>
+          </div>
+        </article>
+
+        <!-- 4 -->
+        <article dir="rtl" class="text-right rounded-2xl p-5 bg-black/60 border border-cyan-400/20 shadow-[0_0_20px_rgba(0,255,243,0.06)] hover:shadow-[0_0_30px_rgba(255,45,210,0.12)] transition">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex flex-col">
+              <h3 class="text-lg text-cyan-100">Happy Birthday JLD</h3>
+              <p class="mt-2 text-xs text-cyan-200/80">דמו יום הולדת ל-JLD, Finnish Gold</p>
+            </div>
+            <div class="flex flex-col items-start">
+              <span class="text-xs px-2 py-1 rounded-full bg-black/30 border border-pink-400/10 text-pink-200">2025</span>
+              <span class="mt-2 text-xs px-2 py-1 rounded-full bg-black/30 border border-cyan-400/10 text-cyan-200">C64 One-File Demo</span>
+            </div>
+          </div>
+
+          <img src="https://csdb.dk/gfx/releases/254000/254075.png" alt="Happy Birthday JLD screenshot" class="mt-4 w-full rounded-lg border border-cyan-400/20" loading="lazy" />
+
+          <p class="mt-3 text-xs text-cyan-200/80">דמו הפתעה ליום ההולדת של JLD עם מוזיקה של Rock וגרפיקה של Pal.</p>
+
+          <div class="mt-4 flex items-center gap-3 justify-end">
+            <a href="https://csdb.dk/release/?id=254075" target="_blank" rel="noopener noreferrer"
+               class="text-xs px-3 py-2 rounded-lg neon-btn text-cyan-300 hover:text-pink-300 transition">צפייה ב־CSDb</a>
+            <a href="https://csdb.dk/getinternalfile.php/270606/Happy Birthday JLD.prg" target="_blank" rel="noopener noreferrer"
+               class="text-xs px-3 py-2 rounded-lg neon-btn text-cyan-300 hover:text-pink-300 transition">הורדה</a>
+          </div>
+        </article>
+
+        <!-- 5 -->
         <article dir="rtl" class="text-right rounded-2xl p-5 bg-black/60 border border-cyan-400/20 shadow-[0_0_20px_rgba(0,255,243,0.06)] hover:shadow-[0_0_30px_rgba(255,45,210,0.12)] transition">
           <div class="flex items-start justify-between gap-3">
             <div class="flex flex-col">
@@ -336,19 +472,23 @@
       ];
 
       var dirEntries = [
-        '   8  "JOHANNES TRIBUTE"      PRG',
-        '  12  "MEMORY LANE"           PRG',
-        '   6  "HOTSHOT 1990 REMAKE"   PRG',
-        '   9  "TAKE ONE"              PRG',
-        '   8  "IRATA BDAY TUNE"       PRG',
-        '   7  "PERSIAN PRINCESS"      PRG',
-        '   6  "DELYSID TREASURE"      PRG',
-        '   5  "XMAS 2012 LOGO"        PRG',
+        '   4  "HAPPY BDAY MYTHUS"    PRG',
+        '   5  "50 YRS OF SERATO"     PRG',
+        '  16  "FIFTY YEARS"          PRG',
+        '   4  "HAPPY BDAY JLD"       PRG',
+        '   8  "JOHANNES TRIBUTE"     PRG',
+        '  12  "MEMORY LANE"          PRG',
+        '   6  "HOTSHOT 1990 REMAKE"  PRG',
+        '   9  "TAKE ONE"             PRG',
+        '   8  "IRATA BDAY TUNE"      PRG',
+        '   7  "PERSIAN PRINCESS"     PRG',
+        '   6  "DELYSID TREASURE"     PRG',
+        '   5  "XMAS 2012 LOGO"       PRG',
       ];
 
       var outroLines = [
         '',
-        ' 61 BLOCKS FREE.',
+        ' 32 BLOCKS FREE.',
         '',
         'READY.',
       ];
