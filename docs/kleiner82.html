@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kleiner'82 – 8bitretro.tech</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <style>
+    @keyframes neonGradient {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .bg-animated {
+      background-size: 320% 320%;
+      animation: neonGradient 22s ease-in-out infinite;
+    }
+
+    .scanline-overlay::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.35),
+        rgba(0, 0, 0, 0.35) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      mix-blend-mode: soft-light;
+      opacity: 0.45;
+      z-index: 0;
+    }
+
+    .crt-frame {
+      position: relative;
+      overflow: hidden;
+    }
+    .crt-frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.28),
+        rgba(0,0,0,0.28) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      mix-blend-mode: soft-light;
+      opacity: 0.35;
+      z-index: 2;
+    }
+    .crt-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at center,
+        rgba(0,255,243,0.08),
+        transparent 60%
+      );
+      opacity: 0.7;
+      z-index: 2;
+    }
+    .crt-frame > img {
+      position: relative;
+      z-index: 1;
+      display: block;
+    }
+
+    @keyframes crtFlicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.96; }
+    }
+    .crt-flicker {
+      animation: crtFlicker 4.5s ease-in-out infinite;
+    }
+
+    .neon-btn {
+      background: linear-gradient(135deg, rgba(0,255,243,0.04), rgba(255,45,210,0.06));
+      border: 1px solid rgba(0,255,243,0.12);
+      box-shadow: 0 0 18px rgba(0,255,243,0.06);
+    }
+    .neon-btn:hover {
+      box-shadow: 0 0 26px rgba(255,45,210,0.12);
+      border-color: rgba(255,45,210,0.25);
+    }
+
+    /* Album card active state */
+    .album-card { cursor: pointer; }
+    .album-card.active {
+      border-color: rgba(0,255,243,0.5) !important;
+      box-shadow: 0 0 30px rgba(0,255,243,0.15) !important;
+    }
+
+    /* Track item states */
+    .track-item.playing {
+      background: rgba(0,255,243,0.08);
+    }
+    .track-item.highlight:hover {
+      background: rgba(0,255,243,0.05);
+    }
+    .track-item.highlight .track-play-btn {
+      display: inline-flex;
+    }
+    .track-play-btn {
+      display: none;
+    }
+
+    @keyframes c64blink { 50% { opacity: 0; } }
+
+    /* Now playing bar */
+    .now-playing {
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+    .now-playing.visible {
+      transform: translateY(0);
+    }
+
+    /* Progress bar */
+    .progress-bar {
+      cursor: pointer;
+    }
+    .progress-fill {
+      background: linear-gradient(90deg, #00fff3, #ff2dd2);
+      transition: width 0.1s linear;
+    }
+  </style>
+</head>
+<body class="min-h-screen text-sky-100 antialiased bg-animated bg-gradient-to-b from-purple-900 via-pink-700 to-black scanline-overlay text-right">
+
+  <!-- C64 Boot Overlay -->
+  <div id="c64-boot" style="position:fixed;inset:0;z-index:9999;background:#3333aa;display:flex;align-items:center;justify-content:center;padding:2rem;font-family:monospace;font-size:clamp(12px,1.8vw,18px);color:#fff;white-space:pre;line-height:1.6;direction:ltr;text-align:left;"></div>
+
+  <header class="fixed inset-x-0 top-4 z-30 flex items-center justify-center">
+    <nav class="w-[min(1100px,96%)] flex items-center justify-between px-4 py-3 rounded-xl bg-black/40 backdrop-blur border border-white/10 shadow-[0_12px_50px_rgba(0,0,0,0.7)]">
+      <ul class="flex items-center gap-3 text-xs">
+        <li>
+          <a href="index.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            דף הבית
+          </a>
+        </li>
+        <li>
+          <a href="about.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            עליי
+          </a>
+        </li>
+        <li>
+          <a href="projects.html" class="px-3 py-2 rounded-md text-cyan-200 bg-white/10 shadow-[0_0_20px_rgba(0,255,243,0.4)]">
+            פרויקטים
+          </a>
+        </li>
+        <li>
+          <a href="contacts.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            צור קשר
+          </a>
+        </li>
+      </ul>
+
+      <a href="https://8bitretro.tech" class="flex items-center gap-4 no-underline cursor-pointer">
+        <div class="w-16 h-12 flex items-center justify-center rounded-md bg-gradient-to-r from-pink-500/40 to-cyan-400/20 border border-white/30 shadow-[0_0_25px_rgba(255,45,210,0.6)]">
+          <span class="[font-family:'Press Start 2P',monospace] text-pink-300 text-xs uppercase tracking-[0.2em]">
+            RETRO
+          </span>
+        </div>
+        <div class="[font-family:'Press Start 2P',monospace] text-cyan-100 text-sm">
+          8bitretro.tech
+        </div>
+      </a>
+    </nav>
+  </header>
+
+  <main class="min-h-screen flex flex-col items-center pt-28 pb-20">
+    <!-- Glow blob -->
+    <div class="pointer-events-none absolute -z-10 inset-0 flex justify-center">
+      <div class="w-[30rem] h-[30rem] rounded-full bg-pink-500/20 blur-[120px] translate-y-10"></div>
+    </div>
+
+    <section class="w-[min(1100px,96%)]">
+      <!-- Hero -->
+      <div class="rounded-2xl p-6 bg-black/60 border border-cyan-400/25 shadow-[0_20px_60px_rgba(0,0,0,0.9)] backdrop-blur mb-8 text-center" dir="rtl">
+        <h1 class="[font-family:'Press Start 2P',monospace] text-2xl md:text-3xl text-cyan-200">
+          Kleiner'82
+        </h1>
+        <p class="mt-3 text-sm text-sky-100/85 leading-relaxed max-w-2xl mx-auto">
+          מוזיקה מקורית בהשראת אייטיז, SID וסאונד רטרו מודרני.
+          <br>5 אלבומים, עשרות קטעים — Synthwave, Darksynth ו-Retrowave.
+        </p>
+        <a href="https://kleiner82.bandcamp.com/" target="_blank" rel="noopener noreferrer"
+           class="inline-block mt-4 text-xs px-4 py-2 rounded-lg neon-btn text-cyan-300 hover:text-pink-300 transition">
+          Bandcamp ←
+        </a>
+      </div>
+
+      <!-- Expanded Album Player (hidden by default) -->
+      <div id="album-expanded" class="hidden rounded-2xl p-6 sm:p-8 bg-black/70 border border-cyan-400/20 shadow-[0_0_40px_rgba(0,255,243,0.1)] mb-6 transition-all">
+        <!-- Centered album art -->
+        <div class="flex flex-col items-center text-center">
+          <div class="crt-frame rounded-xl w-[280px] h-[280px] sm:w-[320px] sm:h-[320px] shadow-[0_0_50px_rgba(0,255,243,0.15)] border-2 border-cyan-400/25">
+            <img id="expanded-art" src="" alt="" class="w-full h-full object-cover rounded-xl crt-flicker" />
+          </div>
+          <h2 id="expanded-title" class="[font-family:'Press Start 2P',monospace] text-lg sm:text-xl text-cyan-200 leading-relaxed mt-5"></h2>
+          <p id="expanded-desc" class="mt-2 text-sm text-cyan-200/70 leading-relaxed max-w-xl"></p>
+          <div class="mt-3 flex gap-2 justify-center flex-wrap">
+            <span id="expanded-year" class="text-xs px-2 py-1 rounded-full bg-black/30 border border-pink-400/10 text-pink-200"></span>
+            <span id="expanded-tracks-count" class="text-xs px-2 py-1 rounded-full bg-black/30 border border-cyan-400/10 text-cyan-200"></span>
+          </div>
+          <a id="expanded-bandcamp" href="#" target="_blank" rel="noopener noreferrer"
+             class="inline-block mt-3 text-xs px-3 py-2 rounded-lg neon-btn text-cyan-300 hover:text-pink-300 transition">
+            האלבום ב-Bandcamp ←
+          </a>
+        </div>
+        <!-- Track list -->
+        <ul id="track-list" class="mt-6 space-y-0.5 max-w-2xl mx-auto" dir="ltr"></ul>
+      </div>
+
+      <!-- Album Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4" id="albums-grid">
+      </div>
+    </section>
+  </main>
+
+  <!-- Hidden audio element -->
+  <audio id="audio-player" preload="none"></audio>
+
+  <!-- Now Playing Bar -->
+  <div id="now-playing" class="now-playing fixed bottom-0 inset-x-0 z-40 bg-black/90 border-t border-cyan-400/20 backdrop-blur px-4 py-3">
+    <div class="w-[min(1100px,96%)] mx-auto flex items-center gap-3" dir="ltr">
+      <!-- Controls -->
+      <div class="flex items-center gap-2">
+        <button id="np-prev" class="w-7 h-7 flex items-center justify-center text-cyan-300 hover:text-pink-300 transition">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="19,20 9,12 19,4"/><line x1="5" y1="4" x2="5" y2="20"/></svg>
+        </button>
+        <button id="np-play" class="w-9 h-9 flex items-center justify-center rounded-full border border-cyan-400/30 text-cyan-300 hover:text-pink-300 hover:border-pink-400/40 transition">
+          <svg id="np-play-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+          <svg id="np-pause-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="hidden"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        </button>
+        <button id="np-next" class="w-7 h-7 flex items-center justify-center text-cyan-300 hover:text-pink-300 transition">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5,4 15,12 5,20"/><line x1="19" y1="4" x2="19" y2="20"/></svg>
+        </button>
+      </div>
+      <!-- Art + info -->
+      <img id="np-art" src="" alt="" class="w-10 h-10 rounded object-cover hidden" />
+      <div class="flex-1 min-w-0">
+        <div id="np-title" class="text-xs text-cyan-100 truncate"></div>
+        <div id="np-album" class="text-[10px] text-cyan-400/50 truncate"></div>
+      </div>
+      <!-- Time + progress -->
+      <span id="np-time-current" class="text-[10px] text-cyan-400/50 font-mono w-10 text-right">0:00</span>
+      <div class="progress-bar flex-1 max-w-[200px] h-1 bg-white/10 rounded-full overflow-hidden" id="np-progress">
+        <div class="progress-fill h-full rounded-full" id="np-progress-fill" style="width:0%"></div>
+      </div>
+      <span id="np-time-total" class="text-[10px] text-cyan-400/50 font-mono w-10">0:00</span>
+    </div>
+  </div>
+
+  <!-- Footer SVG -->
+  <div class="pointer-events-none fixed inset-x-0 bottom-0 h-36 opacity-60">
+    <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="g1" x1="0" x2="1">
+          <stop offset="0" stop-color="#ff2dd2" stop-opacity="0.06"/>
+          <stop offset="1" stop-color="#00fff3" stop-opacity="0.06"/>
+        </linearGradient>
+      </defs>
+      <rect width="1440" height="120" fill="url(#g1)" />
+      <g stroke="#00fff3" stroke-opacity="0.06" stroke-width="1">
+        <path d="M0 90 C200 60 400 52 720 52 C1040 52 1240 60 1440 90" fill="none"/>
+      </g>
+      <g fill="#ff2dd2" fill-opacity="0.06">
+        <circle cx="360" cy="36" r="10" />
+        <circle cx="900" cy="24" r="8" />
+      </g>
+    </svg>
+  </div>
+
+  <!-- ======================== -->
+  <!--  ALBUM DATA + PLAYER JS -->
+  <!-- ======================== -->
+  <script>
+  (function () {
+    // ── Album data ──
+    var albums = [
+      {
+        id: 'c64-amiga-remixes',
+        title: 'C64 & Amiga Remixes',
+        year: 2024,
+        art: 'https://f4.bcbits.com/img/a3371400722_10.jpg',
+        bandcamp: 'https://kleiner82.bandcamp.com/album/c64-amiga-remixes',
+        desc: 'מסע יצירתי של שנתיים וחצי — טרנספורמציה של קלאסיקות C64 ו-Amiga לסגנון Synthwave ו-Outrun.',
+        tracks: [
+          { name: 'Desert Dreams', duration: '3:08', highlight: true, file: 'assets/music/c64-amiga-remixes/desert-dreams.mp3' },
+          { name: 'The Human Race', duration: '4:00', highlight: true, file: 'assets/music/c64-amiga-remixes/the-human-race.mp3' },
+          { name: 'Timezone', duration: '3:09' },
+          { name: 'Kaos', duration: '3:11' },
+          { name: 'The Cat', duration: '2:56' },
+          { name: 'Contest Demo part1', duration: '3:04' },
+          { name: 'Checker Flag', duration: '2:06' },
+          { name: 'Robocop', duration: '2:36' },
+          { name: 'Afterburner Final Takeoff', duration: '3:53' },
+          { name: 'Double Dragon', duration: '3:00' },
+          { name: "Flimbo's Quest intro", duration: '2:10' },
+          { name: 'Outrun Splash Wave', duration: '3:08', highlight: true, file: 'assets/music/c64-amiga-remixes/outrun-splash-wave.mp3' },
+          { name: 'Ode to C64 cracktro', duration: '11:15' },
+          { name: 'Harden Your Horns', duration: '3:10' }
+        ]
+      },
+      {
+        id: 'arcadia-dreams',
+        title: 'Arcadia Dreams',
+        year: 2024,
+        art: 'https://f4.bcbits.com/img/a1439444747_10.jpg',
+        bandcamp: 'https://kleiner82.bandcamp.com/album/arcadia-dreams',
+        desc: 'שיתוף פעולה עם Synth Fellow Hawk — ביטים פועמים וסינתיסייזרים חולמניים, מושלם לנסיעות לילה.',
+        tracks: [
+          { name: 'Exordium', duration: '3:04' },
+          { name: 'Dreamlanders', duration: '3:25', highlight: true, file: 'assets/music/arcadia-dreams/dreamlanders.mp3' },
+          { name: 'Neon Rush', duration: '3:16', highlight: true, file: 'assets/music/arcadia-dreams/neon-rush.mp3' },
+          { name: 'Drifting Away', duration: '3:04' },
+          { name: 'Around Arcadia', duration: '3:31' },
+          { name: 'Stratosphere', duration: '3:27' },
+          { name: 'Funkwave Hall', duration: '3:33' },
+          { name: 'Black Cassette', duration: '3:44' },
+          { name: 'Synth Over Fireflies', duration: '3:12', highlight: true, file: 'assets/music/arcadia-dreams/synth-over-fireflies.mp3' },
+          { name: 'Enforcer', duration: '3:21' },
+          { name: 'Flames At Night', duration: '3:44' },
+          { name: 'Electro Aftermath', duration: '2:22' }
+        ]
+      },
+      {
+        id: 'electro-chromosphere',
+        title: 'Electro Chromosphere',
+        year: 2021,
+        art: 'https://f4.bcbits.com/img/a0466455324_10.jpg',
+        bandcamp: 'https://kleiner82.bandcamp.com/album/electro-chromosphere',
+        desc: 'האלבום השלישי — מיקס של סינת-פופ 80s, פיוצ\'ר-פופ ותשוקה רטרו-אלקטרונית.',
+        tracks: [
+          { name: 'Conqueror', duration: '3:09', highlight: true, file: 'assets/music/electro-chromosphere/conqueror.mp3' },
+          { name: 'Dandy Attraction', duration: '2:39' },
+          { name: 'Double Love Whooper', duration: '2:10' },
+          { name: 'Flip The Bit', duration: '2:54', highlight: true, file: 'assets/music/electro-chromosphere/flip-the-bit.mp3' },
+          { name: 'Last Wave', duration: '2:26' },
+          { name: 'Life In A Day', duration: '2:38' },
+          { name: 'Polysix Noise', duration: '3:14' },
+          { name: 'European Enigma', duration: '3:16' },
+          { name: 'Set Point', duration: '2:33' },
+          { name: "It's So Alive", duration: '2:30', highlight: true, file: 'assets/music/electro-chromosphere/its-so-alive.mp3' },
+          { name: 'Teletracer', duration: '2:35' },
+          { name: 'Xmas On Fire', duration: '3:03' },
+          { name: 'Diving loneliness', duration: '2:14' }
+        ]
+      },
+      {
+        id: 'lost-in-space',
+        title: 'Lost In Space',
+        year: 2020,
+        art: 'https://f4.bcbits.com/img/a1762045205_10.jpg',
+        bandcamp: 'https://kleiner82.bandcamp.com/album/lost-in-space',
+        desc: 'האלבום השני — סינת-פופ 80s, פיוצ\'ר-פופ ורוח של שנות ה-80 אמיתית.',
+        tracks: [
+          { name: 'STS-107', duration: '3:30', highlight: true, file: 'assets/music/lost-in-space/sts-107.mp3' },
+          { name: 'Starion', duration: '3:15' },
+          { name: 'Lost In Space', duration: '3:45', highlight: true, file: 'assets/music/lost-in-space/lost-in-space.mp3' },
+          { name: 'Ronna', duration: '3:20' },
+          { name: 'Revolution', duration: '3:10' },
+          { name: 'Druid', duration: '3:05' },
+          { name: 'Kenya ft. Charlotte', duration: '3:40' },
+          { name: 'Fragments ft. Charlotte', duration: '3:25' },
+          { name: 'Wandering Away ft. Charlotte', duration: '3:50', highlight: true, file: 'assets/music/lost-in-space/wandering-away.mp3' },
+          { name: 'Darkness ft. Charlotte', duration: '3:35' },
+          { name: 'Cacao ft. Charlotte', duration: '3:00' },
+          { name: 'Spacestation (by Alpha Prime)', duration: '4:00' }
+        ]
+      },
+      {
+        id: 'miami-gateway',
+        title: 'Miami Gateway',
+        year: 2017,
+        art: 'https://f4.bcbits.com/img/a0315597562_10.jpg',
+        bandcamp: 'https://kleiner82.bandcamp.com/album/miami-gateway',
+        desc: 'האלבום הראשון — נוצר באהבה מאוגוסט 2016 עד אפריל 2017.',
+        tracks: [
+          { name: 'Time', duration: '3:28', highlight: true, file: 'assets/music/miami-gateway/time.mp3' },
+          { name: 'The Western Story', duration: '3:27' },
+          { name: 'Miami Dreams', duration: '2:16', highlight: true, file: 'assets/music/miami-gateway/miami-dreams.mp3' },
+          { name: 'In The Woods', duration: '2:34' },
+          { name: 'C64 Dreams', duration: '2:38', highlight: true, file: 'assets/music/miami-gateway/c64-dreams.mp3' },
+          { name: 'Miami Rain', duration: '3:23' },
+          { name: 'Farewell', duration: '2:26' }
+        ]
+      }
+    ];
+
+    // ── State ──
+    var currentAlbumIndex = -1;
+    var currentTrackIndex = -1;
+    var isPlaying = false;
+    var audio = document.getElementById('audio-player');
+
+    // ── DOM refs ──
+    var grid = document.getElementById('albums-grid');
+    var expanded = document.getElementById('album-expanded');
+    var trackListEl = document.getElementById('track-list');
+    var nowPlaying = document.getElementById('now-playing');
+
+    // ── Build album grid ──
+    albums.forEach(function (album, i) {
+      var card = document.createElement('div');
+      card.className = 'album-card rounded-xl bg-black/60 border border-cyan-400/20 shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:border-pink-400/40 hover:shadow-[0_18px_60px_rgba(255,45,210,0.25)] transition overflow-hidden';
+      card.setAttribute('data-index', i);
+      card.innerHTML =
+        '<div class="crt-frame w-full aspect-square crt-flicker">' +
+          '<img src="' + album.art + '" alt="' + album.title + '" class="w-full h-full object-cover" loading="lazy" />' +
+        '</div>' +
+        '<div class="p-3 text-right">' +
+          '<h3 class="[font-family:\'Press Start 2P\',monospace] text-[0.6rem] sm:text-xs text-cyan-100 leading-relaxed">' + album.title + '</h3>' +
+          '<div class="mt-2 flex gap-1.5 justify-end flex-wrap">' +
+            '<span class="text-[0.6rem] px-1.5 py-0.5 rounded-full bg-black/30 border border-pink-400/10 text-pink-200">' + album.year + '</span>' +
+            '<span class="text-[0.6rem] px-1.5 py-0.5 rounded-full bg-black/30 border border-cyan-400/10 text-cyan-200">' + album.tracks.length + ' tracks</span>' +
+          '</div>' +
+        '</div>';
+      card.addEventListener('click', function () { openAlbum(i); });
+      grid.appendChild(card);
+    });
+
+    // ── Open album ──
+    function openAlbum(index) {
+      currentAlbumIndex = index;
+      var album = albums[index];
+
+      // Highlight active card
+      var cards = grid.querySelectorAll('.album-card');
+      cards.forEach(function (c, i) {
+        c.classList.toggle('active', i === index);
+      });
+
+      // Fill expanded section
+      document.getElementById('expanded-art').src = album.art;
+      document.getElementById('expanded-art').alt = album.title;
+      document.getElementById('expanded-title').textContent = album.title;
+      document.getElementById('expanded-desc').textContent = album.desc;
+      document.getElementById('expanded-year').textContent = album.year;
+      document.getElementById('expanded-tracks-count').textContent = album.tracks.length + ' tracks';
+      document.getElementById('expanded-bandcamp').href = album.bandcamp;
+
+      // Build track list
+      trackListEl.innerHTML = '';
+      album.tracks.forEach(function (track, ti) {
+        var li = document.createElement('li');
+        var classes = 'track-item flex items-center gap-2 px-3 py-2.5 rounded-lg transition';
+        if (track.highlight) classes += ' highlight cursor-pointer';
+        if (currentAlbumIndex === index && currentTrackIndex === ti && isPlaying) classes += ' playing';
+        li.className = classes;
+        li.setAttribute('data-track', ti);
+
+        // Number + name + play icon all together
+        var numAndName = '<span class="flex items-center gap-2 flex-1 min-w-0">' +
+          '<span class="text-xs font-mono text-cyan-400/40 flex-shrink-0 w-6">' + (ti + 1) + '.</span>' +
+          '<span class="text-sm ' + (track.highlight ? 'text-sky-100' : 'text-sky-100/60') + ' truncate">' + track.name + '</span>';
+
+        if (track.highlight) {
+          numAndName += '<button class="track-play-btn inline-flex items-center justify-center flex-shrink-0 text-cyan-300 hover:text-pink-300 transition ml-1" data-track="' + ti + '">' +
+            '<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>' +
+          '</button>' +
+          '<span class="text-[0.55rem] px-1.5 py-0.5 rounded bg-pink-500/15 border border-pink-400/20 text-pink-200 flex-shrink-0 ml-1">\u2605</span>';
+        }
+        numAndName += '</span>';
+
+        var durSpan = '<span class="text-xs font-mono text-cyan-400/40 flex-shrink-0 ml-3">' + track.duration + '</span>';
+
+        li.innerHTML = numAndName + durSpan;
+        trackListEl.appendChild(li);
+      });
+
+      // Bind play buttons and clickable highlight rows
+      trackListEl.querySelectorAll('.track-play-btn').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var ti = parseInt(btn.getAttribute('data-track'));
+          playTrack(index, ti);
+        });
+      });
+      trackListEl.querySelectorAll('.track-item.highlight').forEach(function (row) {
+        row.addEventListener('click', function () {
+          var ti = parseInt(row.getAttribute('data-track'));
+          playTrack(index, ti);
+        });
+      });
+
+      // Show expanded
+      expanded.classList.remove('hidden');
+
+      // Scroll to expanded
+      expanded.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ── Play track ──
+    function playTrack(albumIndex, trackIndex) {
+      var album = albums[albumIndex];
+      var track = album.tracks[trackIndex];
+      if (!track.highlight || !track.file) return;
+
+      currentAlbumIndex = albumIndex;
+      currentTrackIndex = trackIndex;
+
+      audio.src = track.file;
+      audio.play().catch(function () {});
+      isPlaying = true;
+
+      updateNowPlaying();
+      updateTrackHighlight();
+    }
+
+    // ── Update now playing bar ──
+    function updateNowPlaying() {
+      var album = albums[currentAlbumIndex];
+      var track = album.tracks[currentTrackIndex];
+
+      document.getElementById('np-art').src = album.art;
+      document.getElementById('np-art').classList.remove('hidden');
+      document.getElementById('np-title').textContent = track.name;
+      document.getElementById('np-album').textContent = album.title;
+
+      nowPlaying.classList.add('visible');
+      updatePlayPauseIcon();
+    }
+
+    function updatePlayPauseIcon() {
+      document.getElementById('np-play-icon').classList.toggle('hidden', isPlaying);
+      document.getElementById('np-pause-icon').classList.toggle('hidden', !isPlaying);
+    }
+
+    function updateTrackHighlight() {
+      trackListEl.querySelectorAll('.track-item').forEach(function (li) {
+        var ti = parseInt(li.getAttribute('data-track'));
+        li.classList.toggle('playing', ti === currentTrackIndex && isPlaying);
+      });
+    }
+
+    // ── Audio events ──
+    audio.addEventListener('timeupdate', function () {
+      if (!audio.duration) return;
+      var pct = (audio.currentTime / audio.duration) * 100;
+      document.getElementById('np-progress-fill').style.width = pct + '%';
+      document.getElementById('np-time-current').textContent = formatTime(audio.currentTime);
+      document.getElementById('np-time-total').textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener('ended', function () {
+      playNextHighlight();
+    });
+
+    audio.addEventListener('play', function () {
+      isPlaying = true;
+      updatePlayPauseIcon();
+      updateTrackHighlight();
+    });
+
+    audio.addEventListener('pause', function () {
+      isPlaying = false;
+      updatePlayPauseIcon();
+      updateTrackHighlight();
+    });
+
+    // ── Controls ──
+    document.getElementById('np-play').addEventListener('click', function () {
+      if (currentTrackIndex === -1) return;
+      if (isPlaying) { audio.pause(); } else { audio.play().catch(function () {}); }
+    });
+
+    document.getElementById('np-prev').addEventListener('click', function () {
+      playPrevHighlight();
+    });
+
+    document.getElementById('np-next').addEventListener('click', function () {
+      playNextHighlight();
+    });
+
+    // Progress bar seek
+    document.getElementById('np-progress').addEventListener('click', function (e) {
+      if (!audio.duration) return;
+      var rect = this.getBoundingClientRect();
+      var pct = (e.clientX - rect.left) / rect.width;
+      audio.currentTime = pct * audio.duration;
+    });
+
+    // ── Navigate highlights ──
+    function getHighlightIndices(albumIndex) {
+      var indices = [];
+      albums[albumIndex].tracks.forEach(function (t, i) {
+        if (t.highlight) indices.push(i);
+      });
+      return indices;
+    }
+
+    function playNextHighlight() {
+      var highlights = getHighlightIndices(currentAlbumIndex);
+      var pos = highlights.indexOf(currentTrackIndex);
+      if (pos < highlights.length - 1) {
+        playTrack(currentAlbumIndex, highlights[pos + 1]);
+      } else {
+        // Move to next album's first highlight
+        for (var a = currentAlbumIndex + 1; a < albums.length; a++) {
+          var h = getHighlightIndices(a);
+          if (h.length > 0) { openAlbum(a); playTrack(a, h[0]); return; }
+        }
+        audio.pause();
+        isPlaying = false;
+        updatePlayPauseIcon();
+      }
+    }
+
+    function playPrevHighlight() {
+      var highlights = getHighlightIndices(currentAlbumIndex);
+      var pos = highlights.indexOf(currentTrackIndex);
+      if (pos > 0) {
+        playTrack(currentAlbumIndex, highlights[pos - 1]);
+      } else {
+        // Move to prev album's last highlight
+        for (var a = currentAlbumIndex - 1; a >= 0; a--) {
+          var h = getHighlightIndices(a);
+          if (h.length > 0) { openAlbum(a); playTrack(a, h[h.length - 1]); return; }
+        }
+      }
+    }
+
+    function formatTime(s) {
+      var m = Math.floor(s / 60);
+      var sec = Math.floor(s % 60);
+      return m + ':' + (sec < 10 ? '0' : '') + sec;
+    }
+
+    // ── Auto-open first album ──
+    openAlbum(0);
+  })();
+  </script>
+
+  <!-- C64 Boot Animation -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var overlay = document.getElementById('c64-boot');
+
+    var introLines = [
+      'LOAD "$",8',
+      '',
+      'SEARCHING FOR $',
+      'LOADING',
+      'READY.',
+      'LIST',
+      '',
+      '0 "KLEINER 82 MUSIC" DR.J AV',
+      '',
+    ];
+
+    var dirEntries = [
+      '  14  "C64 AMIGA REMIXES"  PRG',
+      '  12  "ARCADIA DREAMS"     PRG',
+      '  13  "ELECTRO CHROMO"     PRG',
+      '  12  "LOST IN SPACE"      PRG',
+      '   7  "MIAMI GATEWAY"      PRG',
+    ];
+
+    var outroLines = [
+      '',
+      '578 BLOCKS FREE.',
+      '',
+      'READY.',
+    ];
+
+    var content = '';
+
+    function showCursorAndFade() {
+      overlay.innerHTML = content + '<span style="display:inline-block;width:0.6em;height:1.1em;background:#fff;vertical-align:text-bottom;animation:c64blink 0.8s step-start infinite;"></span>';
+      setTimeout(function () {
+        overlay.style.transition = 'opacity 0.5s';
+        overlay.style.opacity = '0';
+        overlay.addEventListener('transitionend', function () {
+          overlay.remove();
+        }, { once: true });
+      }, 600);
+    }
+
+    function typeLines(lines, index, done) {
+      if (index >= lines.length) { done(); return; }
+      var line = lines[index];
+      if (line === '') {
+        content += '\n';
+        overlay.textContent = content;
+        setTimeout(function () { typeLines(lines, index + 1, done); }, 80);
+        return;
+      }
+      var charIndex = 0;
+      function typeChar() {
+        if (charIndex < line.length) {
+          content += line[charIndex++];
+          overlay.textContent = content;
+          setTimeout(typeChar, 15 + Math.random() * 15);
+        } else {
+          content += '\n';
+          overlay.textContent = content;
+          setTimeout(function () { typeLines(lines, index + 1, done); }, 120);
+        }
+      }
+      typeChar();
+    }
+
+    function snapEntries(index, done) {
+      if (index >= dirEntries.length) { done(); return; }
+      content += dirEntries[index] + '\n';
+      overlay.textContent = content;
+      setTimeout(function () { snapEntries(index + 1, done); }, 60);
+    }
+
+    typeLines(introLines, 0, function () {
+      snapEntries(0, function () {
+        typeLines(outroLines, 0, showCursorAndFade);
+      });
+    });
+  });
+  </script>
+
+</body>
+</html>
