@@ -115,6 +115,8 @@
       display: none;
     }
 
+    @keyframes c64blink { 50% { opacity: 0; } }
+
     /* Now playing bar */
     .now-playing {
       transform: translateY(100%);
@@ -571,7 +573,7 @@
 
     // ── Controls ──
     document.getElementById('np-play').addEventListener('click', function () {
-      if (!audio.src) return;
+      if (currentTrackIndex === -1) return;
       if (isPlaying) { audio.pause(); } else { audio.play().catch(function () {}); }
     });
 
@@ -678,9 +680,6 @@
 
     function showCursorAndFade() {
       overlay.innerHTML = content + '<span style="display:inline-block;width:0.6em;height:1.1em;background:#fff;vertical-align:text-bottom;animation:c64blink 0.8s step-start infinite;"></span>';
-      var style = document.createElement('style');
-      style.textContent = '@keyframes c64blink{50%{opacity:0}}';
-      document.head.appendChild(style);
       setTimeout(function () {
         overlay.style.transition = 'opacity 0.5s';
         overlay.style.opacity = '0';
