@@ -97,6 +97,18 @@
       z-index: 1;
       display: block;
     }
+
+    @keyframes crtPowerOn {
+      0%   { transform: scaleY(0.02) scaleX(1.05); opacity: 0.9; filter: brightness(4); }
+      25%  { transform: scaleY(0.08) scaleX(1.03); opacity: 1;   filter: brightness(2); }
+      60%  { transform: scaleY(1.02) scaleX(1.01); opacity: 1;   filter: brightness(1.15); }
+      80%  { transform: scaleY(0.99) scaleX(1);    opacity: 1;   filter: brightness(1); }
+      100% { transform: scaleY(1)    scaleX(1);    opacity: 1;   filter: brightness(1); }
+    }
+    .modal-crt-open {
+      animation: crtPowerOn 280ms ease-out forwards;
+      transform-origin: center center;
+    }
   </style>
 </head>
 <body class="min-h-screen text-sky-100 antialiased bg-animated bg-gradient-to-b from-purple-900 via-pink-700 to-black scanline-overlay text-right">
@@ -216,34 +228,71 @@
         </button>
 
         <!-- Modal content -->
-        <h3 id="magazine-modal-title" class="[font-family:'Press Start 2P',monospace] text-xl text-pink-300 mb-2">מגזין 8ביט ישראל</h3>
-        <div class="text-sm text-sky-100/85 mb-4">
-          <div class="font-medium text-sky-100/90">גיליון #1 (דוגמה)</div>
-          <div class="text-xs text-sky-200/70 mt-1">תאריך שחרור: 2025-01-01</div>
-        </div>
+        <h3 id="magazine-modal-title" class="[font-family:'Press Start 2P',monospace] text-xl text-pink-300 mb-1">מגזין 8ביט ישראל</h3>
+        <p class="text-xs text-sky-200/60 mb-5">כתבות רטרו, סקירות וחדשות מעולם ה־8ביט — הורד את הגיליון שלך</p>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="md:col-span-1">
-            <!-- TODO: Add magazine-cover.jpg image -->
-            <div class="w-full h-40 md:h-48 rounded-md border border-white/5 bg-black/50 flex items-center justify-center">
-              <span class="[font-family:'Press Start 2P',monospace] text-pink-300/60 text-xs">תמונת שער</span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-h-[70vh] overflow-y-auto pb-1">
+
+          <!-- גיליון 1 — אפריל 2025 -->
+          <div class="flex flex-col rounded-xl overflow-hidden border border-cyan-400/20 bg-black/50 hover:border-cyan-400/50 hover:shadow-[0_0_20px_rgba(0,255,243,0.15)] transition">
+            <div class="h-28 bg-gradient-to-br from-cyan-950 via-cyan-800 to-cyan-500 flex items-center justify-center">
+              <span class="[font-family:'Press Start 2P',monospace] text-cyan-200 text-lg">#1</span>
+            </div>
+            <div class="flex flex-col flex-1 p-3 gap-2">
+              <span class="text-xs text-sky-100/90 leading-snug">אפריל 2025</span>
+              <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%A0%D7%99%D7%95%D7%96%D7%9C%D7%98%D7%A8%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%90%D7%A4%D7%A8%D7%99%D7%9C%202025.pdf"
+                 download class="mt-auto text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition text-center">הורד PDF</a>
             </div>
           </div>
 
-          <div class="md:col-span-2 text-sm text-sky-100/85 leading-relaxed">
-            <p class="mb-3">
-              תקציר קצר של המגזין — זהו טקסט דמה לתיאור התוכן: כתבות רטרו, סקירות על משחקים, ראיונות וטיפים לחובבי ה־8ביט.
-            </p>
-            <p class="mb-4">
-              כאן תוכלו להוריד את גיליון ה־PDF או לעיין בתוכן המקוון.
-            </p>
-
-            <a href="#" class="inline-flex items-center rounded-md px-4 py-2 text-sm font-medium text-cyan-100 border border-cyan-300/30
-                                 bg-gradient-to-r from-cyan-700/10 to-pink-500/10 hover:from-cyan-400/30 hover:to-pink-400/30
-                                 shadow-[0_8px_30px_rgba(255,45,210,0.06)] hover:shadow-[0_0_28px_rgba(255,45,210,0.16)] transition">
-              הורדת PDF
-            </a>
+          <!-- גיליון 2 — מאי 2025 -->
+          <div class="flex flex-col rounded-xl overflow-hidden border border-pink-400/20 bg-black/50 hover:border-pink-400/50 hover:shadow-[0_0_20px_rgba(255,45,210,0.15)] transition">
+            <div class="h-28 bg-gradient-to-br from-pink-950 via-pink-800 to-pink-500 flex items-center justify-center">
+              <span class="[font-family:'Press Start 2P',monospace] text-pink-200 text-lg">#2</span>
+            </div>
+            <div class="flex flex-col flex-1 p-3 gap-2">
+              <span class="text-xs text-sky-100/90 leading-snug">מאי 2025</span>
+              <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%A0%D7%99%D7%95%D7%96%D7%9C%D7%98%D7%A8%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%9E%D7%90%D7%99%202025.pdf"
+                 download class="mt-auto text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition text-center">הורד PDF</a>
+            </div>
           </div>
+
+          <!-- גיליון 3 — אמצע מאי 2025 -->
+          <div class="flex flex-col rounded-xl overflow-hidden border border-purple-400/20 bg-black/50 hover:border-purple-400/50 hover:shadow-[0_0_20px_rgba(168,85,247,0.15)] transition">
+            <div class="h-28 bg-gradient-to-br from-purple-950 via-purple-800 to-purple-500 flex items-center justify-center">
+              <span class="[font-family:'Press Start 2P',monospace] text-purple-200 text-lg">#3</span>
+            </div>
+            <div class="flex flex-col flex-1 p-3 gap-2">
+              <span class="text-xs text-sky-100/90 leading-snug">אמצע מאי 2025</span>
+              <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%A0%D7%99%D7%95%D7%96%D7%9C%D7%98%D7%A8%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%90%D7%9E%D7%A6%D7%A2%20%D7%9E%D7%90%D7%99%202025.pdf"
+                 download class="mt-auto text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition text-center">הורד PDF</a>
+            </div>
+          </div>
+
+          <!-- גיליון 4 — יוני 2025 -->
+          <div class="flex flex-col rounded-xl overflow-hidden border border-teal-400/20 bg-black/50 hover:border-teal-400/50 hover:shadow-[0_0_20px_rgba(20,184,166,0.15)] transition">
+            <div class="h-28 bg-gradient-to-br from-teal-950 via-teal-800 to-teal-500 flex items-center justify-center">
+              <span class="[font-family:'Press Start 2P',monospace] text-teal-200 text-lg">#4</span>
+            </div>
+            <div class="flex flex-col flex-1 p-3 gap-2">
+              <span class="text-xs text-sky-100/90 leading-snug">יוני 2025</span>
+              <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%9C%D7%99%D7%95%D7%A0%D7%99%202025.pdf"
+                 download class="mt-auto text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition text-center">הורד PDF</a>
+            </div>
+          </div>
+
+          <!-- גיליון 5 — אמצע יוני 2025 -->
+          <div class="flex flex-col rounded-xl overflow-hidden border border-violet-400/20 bg-black/50 hover:border-violet-400/50 hover:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition">
+            <div class="h-28 bg-gradient-to-br from-violet-950 via-violet-800 to-violet-500 flex items-center justify-center">
+              <span class="[font-family:'Press Start 2P',monospace] text-violet-200 text-lg">#5</span>
+            </div>
+            <div class="flex flex-col flex-1 p-3 gap-2">
+              <span class="text-xs text-sky-100/90 leading-snug">אמצע יוני 2025</span>
+              <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%9C%D7%90%D7%9E%D7%A6%D7%A2%20%D7%99%D7%95%D7%A0%D7%99%2020252.pdf"
+                 download class="mt-auto text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition text-center">הורד PDF</a>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -275,17 +324,24 @@
       const modal = document.getElementById('magazine-modal');
       const overlay = document.getElementById('magazine-overlay');
       const closeBtn = document.getElementById('magazine-close-btn');
+      const dialog = modal ? modal.querySelector('[role="dialog"]') : null;
 
       function openModal() {
         if (!modal) return;
         modal.classList.remove('hidden');
         modal.setAttribute('aria-hidden', 'false');
+        if (dialog) {
+          dialog.classList.remove('modal-crt-open');
+          void dialog.offsetWidth; // force reflow to re-trigger animation
+          dialog.classList.add('modal-crt-open');
+        }
       }
 
       function closeModal() {
         if (!modal) return;
         modal.classList.add('hidden');
         modal.setAttribute('aria-hidden', 'true');
+        if (dialog) dialog.classList.remove('modal-crt-open');
       }
 
       if (openBtn) openBtn.addEventListener('click', openModal);
