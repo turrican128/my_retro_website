@@ -116,14 +116,19 @@
     }
 
     @keyframes crtPowerOn {
-      0%   { transform: scaleY(0.02) scaleX(1.05); opacity: 0.9; filter: brightness(4); }
-      25%  { transform: scaleY(0.08) scaleX(1.03); opacity: 1;   filter: brightness(2); }
-      60%  { transform: scaleY(1.02) scaleX(1.01); opacity: 1;   filter: brightness(1.15); }
-      80%  { transform: scaleY(0.99) scaleX(1);    opacity: 1;   filter: brightness(1); }
+      0%   { transform: scaleY(0.005) scaleX(0.6); opacity: 0;   filter: brightness(6) saturate(0); }
+      8%   { transform: scaleY(0.005) scaleX(1.1);  opacity: 1;   filter: brightness(5) saturate(0); }
+      15%  { transform: scaleY(0.02) scaleX(1.08); opacity: 1;   filter: brightness(4) saturate(0.2); }
+      25%  { transform: scaleY(0.06) scaleX(1.04); opacity: 1;   filter: brightness(2.5) saturate(0.5); }
+      40%  { transform: scaleY(0.85) scaleX(1.02); opacity: 1;   filter: brightness(1.8) saturate(0.7); }
+      55%  { transform: scaleY(1.04) scaleX(1.01); opacity: 1;   filter: brightness(1.3) saturate(0.9); }
+      65%  { transform: scaleY(0.97) scaleX(1);    opacity: 1;   filter: brightness(1.5) saturate(1); }
+      75%  { transform: scaleY(1.02) scaleX(1);    opacity: 1;   filter: brightness(1.1) saturate(1); }
+      85%  { transform: scaleY(0.99) scaleX(1);    opacity: 1;   filter: brightness(1); }
       100% { transform: scaleY(1)    scaleX(1);    opacity: 1;   filter: brightness(1); }
     }
     .modal-crt-open {
-      animation: crtPowerOn 280ms ease-out forwards;
+      animation: crtPowerOn 700ms cubic-bezier(0.22, 0.68, 0.35, 1.0) forwards;
       transform-origin: center center;
     }
   </style>
@@ -252,16 +257,9 @@
 
           <!-- גיליון 1 — אפריל 2025 — Joystick -->
           <div class="flex flex-col rounded-xl overflow-hidden border border-cyan-400/20 bg-black/50 hover:border-cyan-400/50 hover:shadow-[0_0_20px_rgba(0,255,243,0.15)] transition">
-            <div class="h-28 bg-gradient-to-br from-cyan-950 via-cyan-800 to-cyan-500 flex items-center justify-center relative overflow-hidden thumb-stamp">
-              <svg class="absolute w-20 h-20 opacity-25" viewBox="0 0 64 64" fill="white" xmlns="http://www.w3.org/2000/svg">
-                <rect x="6" y="44" width="52" height="14" rx="7"/>
-                <rect x="27" y="18" width="10" height="28" rx="5"/>
-                <circle cx="32" cy="14" r="9"/>
-                <circle cx="15" cy="51" r="5"/>
-                <circle cx="49" cy="51" r="5"/>
-                <rect x="28" y="47" width="8" height="4" rx="2"/>
-              </svg>
-              <span class="relative z-10 [font-family:'Press Start 2P',monospace] text-cyan-100 text-base drop-shadow-[0_0_8px_rgba(0,255,243,0.8)]">#1</span>
+            <div class="h-28 relative overflow-hidden thumb-stamp">
+              <img src="assets/images/magazine/issue-1.png" alt="" class="w-full h-full object-cover" style="image-rendering: pixelated;">
+              <span class="absolute inset-0 flex items-center justify-center z-10 [font-family:'Press Start 2P',monospace] text-cyan-100 text-base drop-shadow-[0_0_8px_rgba(0,255,243,0.8)]">#1</span>
             </div>
             <div class="flex flex-col flex-1 p-3 gap-2">
               <span class="text-xs text-sky-100/90 leading-snug">אפריל 2025</span>
@@ -272,16 +270,9 @@
 
           <!-- גיליון 2 — מאי 2025 — Floppy Disk -->
           <div class="flex flex-col rounded-xl overflow-hidden border border-pink-400/20 bg-black/50 hover:border-pink-400/50 hover:shadow-[0_0_20px_rgba(255,45,210,0.15)] transition">
-            <div class="h-28 bg-gradient-to-br from-pink-950 via-pink-800 to-pink-500 flex items-center justify-center relative overflow-hidden thumb-stamp">
-              <svg class="absolute w-20 h-20 opacity-25" viewBox="0 0 64 64" fill="white" xmlns="http://www.w3.org/2000/svg">
-                <rect x="8" y="6" width="48" height="52" rx="4"/>
-                <rect x="14" y="6" width="28" height="18" rx="2" fill="black" opacity="0.5"/>
-                <rect x="22" y="8" width="8" height="14" rx="2" fill="black" opacity="0.7"/>
-                <rect x="12" y="30" width="40" height="22" rx="2" fill="black" opacity="0.35"/>
-                <rect x="16" y="35" width="28" height="2" rx="1" fill="black" opacity="0.4"/>
-                <rect x="16" y="41" width="20" height="2" rx="1" fill="black" opacity="0.4"/>
-              </svg>
-              <span class="relative z-10 [font-family:'Press Start 2P',monospace] text-pink-100 text-base drop-shadow-[0_0_8px_rgba(255,45,210,0.8)]">#2</span>
+            <div class="h-28 relative overflow-hidden thumb-stamp">
+              <img src="assets/images/magazine/issue-2.png" alt="" class="w-full h-full object-cover" style="image-rendering: pixelated;">
+              <span class="absolute inset-0 flex items-center justify-center z-10 [font-family:'Press Start 2P',monospace] text-pink-100 text-base drop-shadow-[0_0_8px_rgba(255,45,210,0.8)]">#2</span>
             </div>
             <div class="flex flex-col flex-1 p-3 gap-2">
               <span class="text-xs text-sky-100/90 leading-snug">מאי 2025</span>
@@ -292,16 +283,9 @@
 
           <!-- גיליון 3 — אמצע מאי 2025 — CRT Monitor -->
           <div class="flex flex-col rounded-xl overflow-hidden border border-purple-400/20 bg-black/50 hover:border-purple-400/50 hover:shadow-[0_0_20px_rgba(168,85,247,0.15)] transition">
-            <div class="h-28 bg-gradient-to-br from-purple-950 via-purple-800 to-purple-500 flex items-center justify-center relative overflow-hidden thumb-stamp">
-              <svg class="absolute w-20 h-20 opacity-25" viewBox="0 0 64 64" fill="white" xmlns="http://www.w3.org/2000/svg">
-                <rect x="4" y="6" width="56" height="38" rx="5"/>
-                <rect x="9" y="11" width="46" height="28" rx="3" fill="black" opacity="0.45"/>
-                <circle cx="32" cy="25" r="6" fill="white" opacity="0.3"/>
-                <rect x="27" y="44" width="10" height="8" rx="2"/>
-                <rect x="18" y="52" width="28" height="6" rx="3"/>
-                <circle cx="52" cy="39" r="2"/>
-              </svg>
-              <span class="relative z-10 [font-family:'Press Start 2P',monospace] text-purple-100 text-base drop-shadow-[0_0_8px_rgba(168,85,247,0.8)]">#3</span>
+            <div class="h-28 relative overflow-hidden thumb-stamp">
+              <img src="assets/images/magazine/issue-3.png" alt="" class="w-full h-full object-cover" style="image-rendering: pixelated;">
+              <span class="absolute inset-0 flex items-center justify-center z-10 [font-family:'Press Start 2P',monospace] text-purple-100 text-base drop-shadow-[0_0_8px_rgba(168,85,247,0.8)]">#3</span>
             </div>
             <div class="flex flex-col flex-1 p-3 gap-2">
               <span class="text-xs text-sky-100/90 leading-snug">אמצע מאי 2025</span>
@@ -312,19 +296,9 @@
 
           <!-- גיליון 4 — יוני 2025 — Cassette Tape -->
           <div class="flex flex-col rounded-xl overflow-hidden border border-teal-400/20 bg-black/50 hover:border-teal-400/50 hover:shadow-[0_0_20px_rgba(20,184,166,0.15)] transition">
-            <div class="h-28 bg-gradient-to-br from-teal-950 via-teal-800 to-teal-500 flex items-center justify-center relative overflow-hidden thumb-stamp">
-              <svg class="absolute w-20 h-20 opacity-25" viewBox="0 0 64 64" fill="white" xmlns="http://www.w3.org/2000/svg">
-                <rect x="4" y="14" width="56" height="36" rx="4"/>
-                <rect x="12" y="20" width="40" height="20" rx="3" fill="black" opacity="0.5"/>
-                <circle cx="22" cy="30" r="7" fill="black" opacity="0.5"/>
-                <circle cx="22" cy="30" r="3"/>
-                <circle cx="42" cy="30" r="7" fill="black" opacity="0.5"/>
-                <circle cx="42" cy="30" r="3"/>
-                <path d="M25 33 Q32 37 39 33" stroke="white" stroke-width="2" fill="none" opacity="0.6"/>
-                <rect x="14" y="44" width="6" height="4" rx="1" fill="black" opacity="0.4"/>
-                <rect x="44" y="44" width="6" height="4" rx="1" fill="black" opacity="0.4"/>
-              </svg>
-              <span class="relative z-10 [font-family:'Press Start 2P',monospace] text-teal-100 text-base drop-shadow-[0_0_8px_rgba(20,184,166,0.8)]">#4</span>
+            <div class="h-28 relative overflow-hidden thumb-stamp">
+              <img src="assets/images/magazine/issue-4.png" alt="" class="w-full h-full object-cover" style="image-rendering: pixelated;">
+              <span class="absolute inset-0 flex items-center justify-center z-10 [font-family:'Press Start 2P',monospace] text-teal-100 text-base drop-shadow-[0_0_8px_rgba(20,184,166,0.8)]">#4</span>
             </div>
             <div class="flex flex-col flex-1 p-3 gap-2">
               <span class="text-xs text-sky-100/90 leading-snug">יוני 2025</span>
@@ -335,19 +309,9 @@
 
           <!-- גיליון 5 — אמצע יוני 2025 — Gamepad -->
           <div class="flex flex-col rounded-xl overflow-hidden border border-violet-400/20 bg-black/50 hover:border-violet-400/50 hover:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition">
-            <div class="h-28 bg-gradient-to-br from-violet-950 via-violet-800 to-violet-500 flex items-center justify-center relative overflow-hidden thumb-stamp">
-              <svg class="absolute w-20 h-20 opacity-25" viewBox="0 0 64 64" fill="white" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8 24 Q6 18 12 16 L24 16 L26 22 L38 22 L40 16 L52 16 Q58 18 56 24 L52 46 Q50 52 44 50 L38 42 L26 42 L20 50 Q14 52 12 46 Z"/>
-                <rect x="16" y="28" width="6" height="14" rx="1" fill="black" opacity="0.5"/>
-                <rect x="13" y="31" width="12" height="6" rx="1" fill="black" opacity="0.5"/>
-                <circle cx="44" cy="30" r="3" fill="black" opacity="0.5"/>
-                <circle cx="50" cy="34" r="3" fill="black" opacity="0.5"/>
-                <circle cx="44" cy="38" r="3" fill="black" opacity="0.5"/>
-                <circle cx="38" cy="34" r="3" fill="black" opacity="0.5"/>
-                <rect x="27" y="26" width="4" height="2" rx="1" fill="black" opacity="0.5"/>
-                <rect x="33" y="26" width="4" height="2" rx="1" fill="black" opacity="0.5"/>
-              </svg>
-              <span class="relative z-10 [font-family:'Press Start 2P',monospace] text-violet-100 text-base drop-shadow-[0_0_8px_rgba(139,92,246,0.8)]">#5</span>
+            <div class="h-28 relative overflow-hidden thumb-stamp">
+              <img src="assets/images/magazine/issue-5.png" alt="" class="w-full h-full object-cover" style="image-rendering: pixelated;">
+              <span class="absolute inset-0 flex items-center justify-center z-10 [font-family:'Press Start 2P',monospace] text-violet-100 text-base drop-shadow-[0_0_8px_rgba(139,92,246,0.8)]">#5</span>
             </div>
             <div class="flex flex-col flex-1 p-3 gap-2">
               <span class="text-xs text-sky-100/90 leading-snug">אמצע יוני 2025</span>
@@ -358,31 +322,9 @@
 
           <!-- גיליון 6 — יולי 2025 — Pixel Star -->
           <div class="flex flex-col rounded-xl overflow-hidden border border-orange-400/20 bg-black/50 hover:border-orange-400/50 hover:shadow-[0_0_20px_rgba(251,146,60,0.15)] transition">
-            <div class="h-28 bg-gradient-to-br from-orange-950 via-orange-800 to-orange-500 flex items-center justify-center relative overflow-hidden thumb-stamp">
-              <svg class="absolute w-20 h-20 opacity-25" viewBox="0 0 64 64" fill="white" xmlns="http://www.w3.org/2000/svg">
-                <!-- retro pixel/chip -->
-                <rect x="16" y="16" width="32" height="32" rx="3"/>
-                <rect x="22" y="22" width="20" height="20" rx="2" fill="black" opacity="0.45"/>
-                <!-- chip pins top -->
-                <rect x="22" y="10" width="4" height="7" rx="1"/>
-                <rect x="30" y="10" width="4" height="7" rx="1"/>
-                <rect x="38" y="10" width="4" height="7" rx="1"/>
-                <!-- chip pins bottom -->
-                <rect x="22" y="47" width="4" height="7" rx="1"/>
-                <rect x="30" y="47" width="4" height="7" rx="1"/>
-                <rect x="38" y="47" width="4" height="7" rx="1"/>
-                <!-- chip pins left -->
-                <rect x="10" y="22" width="7" height="4" rx="1"/>
-                <rect x="10" y="30" width="7" height="4" rx="1"/>
-                <rect x="10" y="38" width="7" height="4" rx="1"/>
-                <!-- chip pins right -->
-                <rect x="47" y="22" width="7" height="4" rx="1"/>
-                <rect x="47" y="30" width="7" height="4" rx="1"/>
-                <rect x="47" y="38" width="7" height="4" rx="1"/>
-                <!-- center dot -->
-                <circle cx="32" cy="32" r="4" fill="white" opacity="0.6"/>
-              </svg>
-              <span class="relative z-10 [font-family:'Press Start 2P',monospace] text-orange-100 text-base drop-shadow-[0_0_8px_rgba(251,146,60,0.8)]">#6</span>
+            <div class="h-28 relative overflow-hidden thumb-stamp">
+              <img src="assets/images/magazine/issue-6.png" alt="" class="w-full h-full object-cover" style="image-rendering: pixelated;">
+              <span class="absolute inset-0 flex items-center justify-center z-10 [font-family:'Press Start 2P',monospace] text-orange-100 text-base drop-shadow-[0_0_8px_rgba(251,146,60,0.8)]">#6</span>
             </div>
             <div class="flex flex-col flex-1 p-3 gap-2">
               <span class="text-xs text-sky-100/90 leading-snug">יולי 2025</span>
