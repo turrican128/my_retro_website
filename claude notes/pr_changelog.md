@@ -47,3 +47,8 @@ Ongoing log of all pull requests merged into this project.
 - **Feature:** Replace 6 gradient+SVG magazine card thumbnails with custom retro pixel art PNGs (arcade cabinet, space invaders, pac-man, retro computer, joystick, spaceship)
 - **Feature:** Slow CRT power-on modal animation from 280ms to 700ms with cinematic phosphor warmup effect and more keyframe steps
 - **Files changed:** `docs/projects.html`, `docs/assets/images/magazine/issue-1.png` through `issue-6.png` (new)
+
+### PR #18 — `claude/contacts-pixel-art-icons-bandcamp` — *Merged 2026-03-25*
+- **Feature:** Replace emoji icons with retro pixel art thumbnails on contacts page social links (email, Facebook, YouTube, Mixcloud)
+- **Feature:** Add Kleiner'82 Bandcamp link (`https://kleiner82.bandcamp.com/`) with vinyl record pixel art icon
+- **Files changed:** `docs/contacts.html`, `docs/assets/images/contacts/` (5 new PNGs)
