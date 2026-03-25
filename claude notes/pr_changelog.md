@@ -27,6 +27,24 @@ Ongoing log of all pull requests merged into this project.
 
 ## 2026-03-25
 
+### PR #14 — `claude/music-files-and-player-links`
+- **Feature:** Add 14 highlight-track MP3 files across all 5 Kleiner'82 albums
+- **Feature:** Create 5 album subfolders under `docs/assets/music/` with `.gitkeep` placeholders
+- **Feature:** Add `claude notes/music_files_needed.md` documenting required music files per folder
+- **Fix:** Fix all track `file:` references in kleiner82.html to match actual uploaded filenames
+- **Files changed:** `docs/kleiner82.html`, `claude notes/music_files_needed.md` (new), `docs/assets/music/` (14 MP3s + 5 .gitkeep)
+
+### PR #15 — `claude/magazine-modal-pdf-list`
+- **Feature:** Add CRT power-on animation to magazine modal (scaleY flash like old TV turning on)
+- **Feature:** Replace plain list with responsive 3-column grid of colored issue cards with neon gradient thumbnails
+- **Feature:** PDF download links connected to actual files in assets folder
+- **Files changed:** `docs/projects.html`
+
+### PR #16 — `claude/add-newsletter-pdfs`
+- **Feature:** Add 6 newsletter PDF issues (April–July 2025) to `docs/assets/PDF download for 8bit newsletter/`
+- **Feature:** Add issue #6 (July 2025) card to magazine modal
+- **Files changed:** `docs/projects.html`, `docs/assets/PDF download for 8bit newsletter/` (6 PDFs)
+
 ### PR #17 — `claude/magazine-modal-pixel-art-thumbnails`
 - **Feature:** Replace 6 gradient+SVG magazine card thumbnails with custom retro pixel art PNGs (arcade cabinet, space invaders, pac-man, retro computer, joystick, spaceship)
 - **Feature:** Slow CRT power-on modal animation from 280ms to 700ms with cinematic phosphor warmup effect and more keyframe steps
