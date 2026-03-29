@@ -52,3 +52,17 @@ Ongoing log of all pull requests merged into this project.
 - **Feature:** Replace emoji icons with retro pixel art thumbnails on contacts page social links (email, Facebook, YouTube, Mixcloud)
 - **Feature:** Add Kleiner'82 Bandcamp link (`https://kleiner82.bandcamp.com/`) with vinyl record pixel art icon
 - **Files changed:** `docs/contacts.html`, `docs/assets/images/contacts/` (5 new PNGs)
+
+## 2026-03-29
+
+### PR #19 — `claude/webhook-secret-key-filter` — *Merged 2026-03-29*
+- **Feature:** Add secret key to webhook payload for form submission security
+- **Files changed:** `docs/contacts.html`
+
+### PR #20 — `claude/magazine-modal-list-redesign` — *Merged 2026-03-29*
+- **Feature:** Redesign magazine modal from card grid to scrollable list (latest issue first, #16→#1)
+- **Feature:** Add 10 new newsletter PDFs (August 2025 – March 2026) to repo
+- **Fix:** Rename 3 old `ניוזלטר` PDFs to `מגזין` to match actual filenames, fixing broken download links
+- **Feature:** Each list row: neon issue number · date + tiny book icon · unique 16-bit SVG icon · download button
+- **Feature:** 16 unique pixel-art SVG icons per issue (star, gem, lightning, mushroom, heart, flame, sword, shield, crown, bomb, music note, moon, trophy, floppy disk, 4-point star, gamepad)
+- **Files changed:** `docs/projects.html`, `docs/assets/PDF download for 8bit newsletter/` (10 new PDFs + 3 renames)
