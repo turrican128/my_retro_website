@@ -253,87 +253,153 @@
         <h3 id="magazine-modal-title" class="[font-family:'Press Start 2P',monospace] text-xl text-pink-300 mb-1">מגזין 8ביט ישראל</h3>
         <p class="text-xs text-sky-200/60 mb-5">כתבות רטרו, סקירות וחדשות מעולם ה־8ביט — הורד את הגיליון שלך</p>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-h-[70vh] overflow-y-auto pb-1">
+        <ul class="divide-y divide-white/10 max-h-[65vh] overflow-y-auto">
 
-          <!-- גיליון 1 — אפריל 2025 — Joystick -->
-          <div class="flex flex-col rounded-xl overflow-hidden border border-cyan-400/20 bg-black/50 hover:border-cyan-400/50 hover:shadow-[0_0_20px_rgba(0,255,243,0.15)] transition">
-            <div class="h-28 relative overflow-hidden thumb-stamp">
-              <img src="assets/images/magazine/issue-1.png" alt="" class="w-full h-full object-cover" style="image-rendering: pixelated;">
-              <span class="absolute inset-0 flex items-center justify-center z-10 [font-family:'Press Start 2P',monospace] text-cyan-100 text-base drop-shadow-[0_0_8px_rgba(0,255,243,0.8)]">#1</span>
-            </div>
-            <div class="flex flex-col flex-1 p-3 gap-2">
-              <span class="text-xs text-sky-100/90 leading-snug">אפריל 2025</span>
-              <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%A0%D7%99%D7%95%D7%96%D7%9C%D7%98%D7%A8%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%90%D7%A4%D7%A8%D7%99%D7%9C%202025.pdf"
-                 download class="mt-auto text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition text-center">הורד PDF</a>
-            </div>
-          </div>
+          <!-- #16 מרץ 2026 — gamepad -->
+          <li class="flex items-center py-3 px-1 hover:bg-white/5 transition rounded">
+            <span class="[font-family:'Press Start 2P',monospace] text-teal-300 text-xs w-8 shrink-0">#16</span>
+            <div class="flex-1"></div>
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">מרץ 2026 <svg class="w-3 h-3 opacity-35 text-teal-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <svg class="w-8 h-8 mx-3 shrink-0 text-teal-300 opacity-85" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="8" width="18" height="9" rx="4"/><rect x="7" y="10" width="2" height="5"/><rect x="5" y="12" width="6" height="2"/><circle cx="15" cy="11.5" r="1.5"/><circle cx="18" cy="11.5" r="1.5"/><circle cx="16.5" cy="14" r="1.5"/></svg>
+            <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%9E%D7%A8%D7%A5%202026.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">הורד PDF ↓</a>
+          </li>
 
-          <!-- גיליון 2 — מאי 2025 — Floppy Disk -->
-          <div class="flex flex-col rounded-xl overflow-hidden border border-pink-400/20 bg-black/50 hover:border-pink-400/50 hover:shadow-[0_0_20px_rgba(255,45,210,0.15)] transition">
-            <div class="h-28 relative overflow-hidden thumb-stamp">
-              <img src="assets/images/magazine/issue-2.png" alt="" class="w-full h-full object-cover" style="image-rendering: pixelated;">
-              <span class="absolute inset-0 flex items-center justify-center z-10 [font-family:'Press Start 2P',monospace] text-pink-100 text-base drop-shadow-[0_0_8px_rgba(255,45,210,0.8)]">#2</span>
-            </div>
-            <div class="flex flex-col flex-1 p-3 gap-2">
-              <span class="text-xs text-sky-100/90 leading-snug">מאי 2025</span>
-              <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%A0%D7%99%D7%95%D7%96%D7%9C%D7%98%D7%A8%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%9E%D7%90%D7%99%202025.pdf"
-                 download class="mt-auto text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition text-center">הורד PDF</a>
-            </div>
-          </div>
+          <!-- #15 פברואר 2026 — 4-point star -->
+          <li class="flex items-center py-3 px-1 hover:bg-white/5 transition rounded">
+            <span class="[font-family:'Press Start 2P',monospace] text-purple-300 text-xs w-8 shrink-0">#15</span>
+            <div class="flex-1"></div>
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">פברואר 2026 <svg class="w-3 h-3 opacity-35 text-purple-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <svg class="w-8 h-8 mx-3 shrink-0 text-purple-300 opacity-85" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 14,10 22,12 14,14 12,22 10,14 2,12 10,10"/></svg>
+            <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">הורד PDF ↓</a>
+          </li>
 
-          <!-- גיליון 3 — אמצע מאי 2025 — CRT Monitor -->
-          <div class="flex flex-col rounded-xl overflow-hidden border border-purple-400/20 bg-black/50 hover:border-purple-400/50 hover:shadow-[0_0_20px_rgba(168,85,247,0.15)] transition">
-            <div class="h-28 relative overflow-hidden thumb-stamp">
-              <img src="assets/images/magazine/issue-3.png" alt="" class="w-full h-full object-cover" style="image-rendering: pixelated;">
-              <span class="absolute inset-0 flex items-center justify-center z-10 [font-family:'Press Start 2P',monospace] text-purple-100 text-base drop-shadow-[0_0_8px_rgba(168,85,247,0.8)]">#3</span>
-            </div>
-            <div class="flex flex-col flex-1 p-3 gap-2">
-              <span class="text-xs text-sky-100/90 leading-snug">אמצע מאי 2025</span>
-              <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%A0%D7%99%D7%95%D7%96%D7%9C%D7%98%D7%A8%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%90%D7%9E%D7%A6%D7%A2%20%D7%9E%D7%90%D7%99%202025.pdf"
-                 download class="mt-auto text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition text-center">הורד PDF</a>
-            </div>
-          </div>
+          <!-- #14 ינואר 2026 — floppy disk -->
+          <li class="flex items-center py-3 px-1 hover:bg-white/5 transition rounded">
+            <span class="[font-family:'Press Start 2P',monospace] text-pink-300 text-xs w-8 shrink-0">#14</span>
+            <div class="flex-1"></div>
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">ינואר 2026 <svg class="w-3 h-3 opacity-35 text-pink-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <svg class="w-8 h-8 mx-3 shrink-0 text-pink-300 opacity-85" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="6" y="3" width="10" height="8"/><rect x="14" y="4" width="3" height="6" fill="rgba(0,0,0,0.3)"/><rect x="5" y="14" width="14" height="6" rx="1"/></svg>
+            <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">הורד PDF ↓</a>
+          </li>
 
-          <!-- גיליון 4 — יוני 2025 — Cassette Tape -->
-          <div class="flex flex-col rounded-xl overflow-hidden border border-teal-400/20 bg-black/50 hover:border-teal-400/50 hover:shadow-[0_0_20px_rgba(20,184,166,0.15)] transition">
-            <div class="h-28 relative overflow-hidden thumb-stamp">
-              <img src="assets/images/magazine/issue-4.png" alt="" class="w-full h-full object-cover" style="image-rendering: pixelated;">
-              <span class="absolute inset-0 flex items-center justify-center z-10 [font-family:'Press Start 2P',monospace] text-teal-100 text-base drop-shadow-[0_0_8px_rgba(20,184,166,0.8)]">#4</span>
-            </div>
-            <div class="flex flex-col flex-1 p-3 gap-2">
-              <span class="text-xs text-sky-100/90 leading-snug">יוני 2025</span>
-              <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%9C%D7%99%D7%95%D7%A0%D7%99%202025.pdf"
-                 download class="mt-auto text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition text-center">הורד PDF</a>
-            </div>
-          </div>
+          <!-- #13 דצמבר 2025 — trophy -->
+          <li class="flex items-center py-3 px-1 hover:bg-white/5 transition rounded">
+            <span class="[font-family:'Press Start 2P',monospace] text-cyan-300 text-xs w-8 shrink-0">#13</span>
+            <div class="flex-1"></div>
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">דצמבר 2025 <svg class="w-3 h-3 opacity-35 text-cyan-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <svg class="w-8 h-8 mx-3 shrink-0 text-cyan-300 opacity-85" viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="2" width="10" height="11" rx="2"/><path d="M7,7 C4,7 3,10 3,11 C3,14 6,15 7,13"/><path d="M17,7 C20,7 21,10 21,11 C21,14 18,15 17,13"/><rect x="9" y="13" width="6" height="4"/><rect x="6" y="17" width="12" height="3" rx="1"/></svg>
+            <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%93%D7%A6%D7%9E%D7%91%D7%A8%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">הורד PDF ↓</a>
+          </li>
 
-          <!-- גיליון 5 — אמצע יוני 2025 — Gamepad -->
-          <div class="flex flex-col rounded-xl overflow-hidden border border-violet-400/20 bg-black/50 hover:border-violet-400/50 hover:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition">
-            <div class="h-28 relative overflow-hidden thumb-stamp">
-              <img src="assets/images/magazine/issue-5.png" alt="" class="w-full h-full object-cover" style="image-rendering: pixelated;">
-              <span class="absolute inset-0 flex items-center justify-center z-10 [font-family:'Press Start 2P',monospace] text-violet-100 text-base drop-shadow-[0_0_8px_rgba(139,92,246,0.8)]">#5</span>
-            </div>
-            <div class="flex flex-col flex-1 p-3 gap-2">
-              <span class="text-xs text-sky-100/90 leading-snug">אמצע יוני 2025</span>
-              <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%9C%D7%90%D7%9E%D7%A6%D7%A2%20%D7%99%D7%95%D7%A0%D7%99%2020252.pdf"
-                 download class="mt-auto text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition text-center">הורד PDF</a>
-            </div>
-          </div>
+          <!-- #12 נובמבר 2025 — moon -->
+          <li class="flex items-center py-3 px-1 hover:bg-white/5 transition rounded">
+            <span class="[font-family:'Press Start 2P',monospace] text-orange-300 text-xs w-8 shrink-0">#12</span>
+            <div class="flex-1"></div>
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">נובמבר 2025 <svg class="w-3 h-3 opacity-35 text-orange-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <svg class="w-8 h-8 mx-3 shrink-0 text-orange-300 opacity-85" viewBox="0 0 24 24" fill="currentColor"><path d="M18,12 C18,16 15,20 10,20 C7,20 4,18 3,15 C6,17 9,17 12,14 C15,11 15,8 14,5 C17,6 18,9 18,12Z"/></svg>
+            <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%A0%D7%95%D7%91%D7%9E%D7%91%D7%A8%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">הורד PDF ↓</a>
+          </li>
 
-          <!-- גיליון 6 — יולי 2025 — Pixel Star -->
-          <div class="flex flex-col rounded-xl overflow-hidden border border-orange-400/20 bg-black/50 hover:border-orange-400/50 hover:shadow-[0_0_20px_rgba(251,146,60,0.15)] transition">
-            <div class="h-28 relative overflow-hidden thumb-stamp">
-              <img src="assets/images/magazine/issue-6.png" alt="" class="w-full h-full object-cover" style="image-rendering: pixelated;">
-              <span class="absolute inset-0 flex items-center justify-center z-10 [font-family:'Press Start 2P',monospace] text-orange-100 text-base drop-shadow-[0_0_8px_rgba(251,146,60,0.8)]">#6</span>
-            </div>
-            <div class="flex flex-col flex-1 p-3 gap-2">
-              <span class="text-xs text-sky-100/90 leading-snug">יולי 2025</span>
-              <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%9C%D7%97%D7%95%D7%93%D7%A9%20%D7%99%D7%95%D7%9C%D7%99%202025.pdf"
-                 download class="mt-auto text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition text-center">הורד PDF</a>
-            </div>
-          </div>
+          <!-- #11 אוקטובר 2025 — music note -->
+          <li class="flex items-center py-3 px-1 hover:bg-white/5 transition rounded">
+            <span class="[font-family:'Press Start 2P',monospace] text-violet-300 text-xs w-8 shrink-0">#11</span>
+            <div class="flex-1"></div>
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">אוקטובר 2025 <svg class="w-3 h-3 opacity-35 text-violet-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <svg class="w-8 h-8 mx-3 shrink-0 text-violet-300 opacity-85" viewBox="0 0 24 24" fill="currentColor"><rect x="14" y="3" width="3" height="13"/><rect x="14" y="5" width="7" height="4"/><ellipse cx="11" cy="17" rx="4" ry="3"/></svg>
+            <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%90%D7%95%D7%A7%D7%98%D7%95%D7%91%D7%A8%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">הורד PDF ↓</a>
+          </li>
 
-        </div>
+          <!-- #10 אמצע ספטמבר 2025 — bomb -->
+          <li class="flex items-center py-3 px-1 hover:bg-white/5 transition rounded">
+            <span class="[font-family:'Press Start 2P',monospace] text-teal-300 text-xs w-8 shrink-0">#10</span>
+            <div class="flex-1"></div>
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">אמצע ספטמבר 2025 <svg class="w-3 h-3 opacity-35 text-teal-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <svg class="w-8 h-8 mx-3 shrink-0 text-teal-300 opacity-85" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="15" r="7"/><rect x="12" y="5" width="3" height="7" rx="1" transform="rotate(-25,13.5,8.5)"/><circle cx="17" cy="5" r="2.5"/></svg>
+            <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%20%D7%91%D7%99%D7%98%20%D7%90%D7%9E%D7%A6%D7%A2%20%D7%A1%D7%A4%D7%98%D7%9E%D7%91%D7%A8%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">הורד PDF ↓</a>
+          </li>
+
+          <!-- #9 ספטמבר 2025 — crown -->
+          <li class="flex items-center py-3 px-1 hover:bg-white/5 transition rounded">
+            <span class="[font-family:'Press Start 2P',monospace] text-purple-300 text-xs w-8 shrink-0">#9</span>
+            <div class="flex-1"></div>
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">ספטמבר 2025 <svg class="w-3 h-3 opacity-35 text-purple-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <svg class="w-8 h-8 mx-3 shrink-0 text-purple-300 opacity-85" viewBox="0 0 24 24" fill="currentColor"><path d="M2,19 L2,10 L6,14 L12,4 L18,14 L22,10 L22,19Z"/></svg>
+            <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%A1%D7%A4%D7%98%D7%9E%D7%91%D7%A8%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">הורד PDF ↓</a>
+          </li>
+
+          <!-- #8 אמצע אוגוסט 2025 — shield -->
+          <li class="flex items-center py-3 px-1 hover:bg-white/5 transition rounded">
+            <span class="[font-family:'Press Start 2P',monospace] text-pink-300 text-xs w-8 shrink-0">#8</span>
+            <div class="flex-1"></div>
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">אמצע אוגוסט 2025 <svg class="w-3 h-3 opacity-35 text-pink-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <svg class="w-8 h-8 mx-3 shrink-0 text-pink-300 opacity-85" viewBox="0 0 24 24" fill="currentColor"><path d="M12,2 L20,6 L20,13 C20,17 16,20 12,22 C8,20 4,17 4,13 L4,6Z"/></svg>
+            <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%90%D7%9E%D7%A6%D7%A2%20%D7%90%D7%95%D7%92%D7%95%D7%A1%D7%98%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">הורד PDF ↓</a>
+          </li>
+
+          <!-- #7 אוגוסט 2025 — sword -->
+          <li class="flex items-center py-3 px-1 hover:bg-white/5 transition rounded">
+            <span class="[font-family:'Press Start 2P',monospace] text-cyan-300 text-xs w-8 shrink-0">#7</span>
+            <div class="flex-1"></div>
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">אוגוסט 2025 <svg class="w-3 h-3 opacity-35 text-cyan-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <svg class="w-8 h-8 mx-3 shrink-0 text-cyan-300 opacity-85" viewBox="0 0 24 24" fill="currentColor"><rect x="11" y="2" width="3" height="14"/><rect x="6" y="10" width="13" height="3"/><polygon points="11,16 14,16 12.5,22"/><rect x="10" y="2" width="5" height="3" rx="1"/></svg>
+            <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%20%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%90%D7%95%D7%92%D7%95%D7%A1%D7%98%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">הורד PDF ↓</a>
+          </li>
+
+          <!-- #6 יולי 2025 — flame -->
+          <li class="flex items-center py-3 px-1 hover:bg-white/5 transition rounded">
+            <span class="[font-family:'Press Start 2P',monospace] text-orange-300 text-xs w-8 shrink-0">#6</span>
+            <div class="flex-1"></div>
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">יולי 2025 <svg class="w-3 h-3 opacity-35 text-orange-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <svg class="w-8 h-8 mx-3 shrink-0 text-orange-300 opacity-85" viewBox="0 0 24 24" fill="currentColor"><path d="M12,3 C12,3 7,8 7,12 C7,15 9,17 10,15 C9,18 8,21 12,21 C16,21 16,17 15,14 C16,16 18,16 18,13 C18,9 14,5 12,3Z"/></svg>
+            <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%9C%D7%97%D7%95%D7%93%D7%A9%20%D7%99%D7%95%D7%9C%D7%99%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">הורד PDF ↓</a>
+          </li>
+
+          <!-- #5 אמצע יוני 2025 — heart -->
+          <li class="flex items-center py-3 px-1 hover:bg-white/5 transition rounded">
+            <span class="[font-family:'Press Start 2P',monospace] text-violet-300 text-xs w-8 shrink-0">#5</span>
+            <div class="flex-1"></div>
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">אמצע יוני 2025 <svg class="w-3 h-3 opacity-35 text-violet-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <svg class="w-8 h-8 mx-3 shrink-0 text-violet-300 opacity-85" viewBox="0 0 24 24" fill="currentColor"><path d="M12,20 L4,12 C2,10 2,7 5,5 C8,3 10,6 12,8 C14,6 16,3 19,5 C22,7 22,10 20,12Z"/></svg>
+            <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%9C%D7%90%D7%9E%D7%A6%D7%A2%20%D7%99%D7%95%D7%A0%D7%99%2020252.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">הורד PDF ↓</a>
+          </li>
+
+          <!-- #4 יוני 2025 — mushroom -->
+          <li class="flex items-center py-3 px-1 hover:bg-white/5 transition rounded">
+            <span class="[font-family:'Press Start 2P',monospace] text-teal-300 text-xs w-8 shrink-0">#4</span>
+            <div class="flex-1"></div>
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">יוני 2025 <svg class="w-3 h-3 opacity-35 text-teal-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <svg class="w-8 h-8 mx-3 shrink-0 text-teal-300 opacity-85" viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="10" rx="9" ry="7"/><rect x="8" y="10" width="8" height="8" rx="2"/><circle cx="8" cy="8" r="2" fill="rgba(255,255,255,0.25)"/><circle cx="14" cy="7" r="1.5" fill="rgba(255,255,255,0.25)"/></svg>
+            <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%9C%D7%99%D7%95%D7%A0%D7%99%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">הורד PDF ↓</a>
+          </li>
+
+          <!-- #3 אמצע מאי 2025 — lightning -->
+          <li class="flex items-center py-3 px-1 hover:bg-white/5 transition rounded">
+            <span class="[font-family:'Press Start 2P',monospace] text-purple-300 text-xs w-8 shrink-0">#3</span>
+            <div class="flex-1"></div>
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">אמצע מאי 2025 <svg class="w-3 h-3 opacity-35 text-purple-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <svg class="w-8 h-8 mx-3 shrink-0 text-purple-300 opacity-85" viewBox="0 0 24 24" fill="currentColor"><polygon points="15,2 6,13 11,13 9,22 18,11 13,11"/></svg>
+            <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%90%D7%9E%D7%A6%D7%A2%20%D7%9E%D7%90%D7%99%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">הורד PDF ↓</a>
+          </li>
+
+          <!-- #2 מאי 2025 — gem -->
+          <li class="flex items-center py-3 px-1 hover:bg-white/5 transition rounded">
+            <span class="[font-family:'Press Start 2P',monospace] text-pink-300 text-xs w-8 shrink-0">#2</span>
+            <div class="flex-1"></div>
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">מאי 2025 <svg class="w-3 h-3 opacity-35 text-pink-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <svg class="w-8 h-8 mx-3 shrink-0 text-pink-300 opacity-85" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 21,9 12,22 3,9"/><polygon points="8,9 12,2 16,9" fill="rgba(255,255,255,0.2)"/></svg>
+            <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%9E%D7%90%D7%99%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">הורד PDF ↓</a>
+          </li>
+
+          <!-- #1 אפריל 2025 — star -->
+          <li class="flex items-center py-3 px-1 hover:bg-white/5 transition rounded">
+            <span class="[font-family:'Press Start 2P',monospace] text-cyan-300 text-xs w-8 shrink-0">#1</span>
+            <div class="flex-1"></div>
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">אפריל 2025 <svg class="w-3 h-3 opacity-35 text-cyan-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <svg class="w-8 h-8 mx-3 shrink-0 text-cyan-300 opacity-85" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 14.5,9.5 22,9.5 16,14 18.5,21 12,17 5.5,21 8,14 2,9.5 9.5,9.5"/></svg>
+            <a href="assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%90%D7%A4%D7%A8%D7%99%D7%9C%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">הורד PDF ↓</a>
+          </li>
+
+        </ul>
       </div>
     </div>
   </div>
