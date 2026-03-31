@@ -4,13 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="25b754fb-daae-4eda-90f0-1a1aa7b86fa4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/docs/contacts.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/contacts.html" afterDir="false" />
+    <list default="true" id="25b754fb-daae-4eda-90f0-1a1aa7b86fa4" name="Changes" comment="update projects with &quot;me&quot;">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/claude notes/last_session_summary.md" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/ClaudeSandbox/my_retro_website" value="36cU9WnZov76oxW9ewUYegyyaEI" />
+    </persistenceIdMap>
+  </component>
+  <component name="CopilotUserSelectedModel">
+    <selectedModels>
+      <entry key="chat-panel" value="GPT-5 mini" />
+      <entry key="agent-panel" value="GPT-5 mini" />
+      <entry key="edit-panel" value="GPT-5 mini" />
+    </selectedModels>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -36,6 +49,10 @@
     &quot;accountId&quot;: &quot;4e13383e-d022-4537-9443-50408efd2401&quot;
   }
 }</component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -48,6 +65,7 @@
   &quot;keyToString&quot;: {
     &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
@@ -55,7 +73,7 @@
     &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/USER/PycharmProjects/my_retro_website/docs/assets/images&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/ClaudeSandbox/my_retro_website&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -80,7 +98,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-4e2b1448bda8-9a97661f3031-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.27397.106" />
+        <option value="bundled-python-sdk-f2b7a9f6281b-6e1f45a539f7-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.29346.142" />
       </set>
     </attachedChunks>
   </component>
@@ -97,10 +115,58 @@
       <workItem from="1765394578851" duration="5175000" />
       <workItem from="1766662612237" duration="9000" />
     </task>
+    <task id="LOCAL‎-00001" summary="update contacts.html">
+      <option name="closed" value="true" />
+      <created>1769021376645</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL‎-00001" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1769021376645</updated>
+    </task>
+    <task id="LOCAL‎-00002" summary="update contacts.html with normal width">
+      <option name="closed" value="true" />
+      <created>1769022903539</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL‎-00002" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1769022903539</updated>
+    </task>
+    <task id="LOCAL‎-00003" summary="update contacts.html with normal width and forms">
+      <option name="closed" value="true" />
+      <created>1769027168345</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL‎-00003" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1769027168345</updated>
+    </task>
+    <task id="LOCAL‎-00004" summary="update contacts.html with normal width and forms">
+      <option name="closed" value="true" />
+      <created>1769031890269</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL‎-00004" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1769031890269</updated>
+    </task>
+    <task id="LOCAL‎-00005" summary="update projects with &quot;me&quot;">
+      <option name="closed" value="true" />
+      <created>1769119440944</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL‎-00005" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1769119440944</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update contacts.html" />
+    <MESSAGE value="update contacts.html with normal width" />
+    <MESSAGE value="update contacts.html with normal width and forms" />
+    <MESSAGE value="update projects with &quot;me&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="update projects with &quot;me&quot;" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
