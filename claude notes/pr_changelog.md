@@ -61,6 +61,12 @@ Ongoing log of all pull requests merged into this project.
 
 ## 2026-04-05
 
+### PR #24 — `claude/fix-magazine-modal-scroll` — *Merged 2026-04-05*
+- **Fix:** Remove horizontal scrollbar from magazine modal popup
+- **Fix:** Widen modal from `max-w-lg` (512px) to `max-w-xl` (576px)
+- **Fix:** Add `overflow-x-hidden` to issues list to clip grid overflow caused by vertical scrollbar
+- **Files changed:** `docs/projects.html`
+
 ### PR #21 — `claude/neon-dreams-album` — *Merged 2026-04-05*
 - **Feature:** Add Neon Dreams (2026) as 6th album to Kleiner'82 page
 - **Feature:** 14 tracks listed, 8 playable MP3 highlights uploaded to `docs/assets/music/neon-dreams/`
