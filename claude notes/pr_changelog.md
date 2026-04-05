@@ -61,6 +61,11 @@ Ongoing log of all pull requests merged into this project.
 
 ## 2026-04-05
 
+### PR #30 — `claude/fix-em-dashes-index` — *Merged 2026-04-05*
+- **Fix:** Replace em dash (—) with single dash (-) after `Kleiner'82` in index hero text
+- **Fix:** Replace em dash (—) with single dash (-) after `שמסביב` in index hero text
+- **Files changed:** `docs/index.html`
+
 ### PR #29 — `claude/about-images-index-text` — *Merged 2026-04-05*
 - **Feature:** Replace second image in קצת עליי section with personal WhatsApp photo + CRT effects
 - **Feature:** Replace gallery Scene #3 with same photo (same gallery card size/CRT styling)
