@@ -59,6 +59,28 @@ Ongoing log of all pull requests merged into this project.
 - **Feature:** Add secret key to webhook payload for form submission security
 - **Files changed:** `docs/contacts.html`
 
+## 2026-04-05
+
+### PR #21 — `claude/neon-dreams-album` — *Merged 2026-04-05*
+- **Feature:** Add Neon Dreams (2026) as 6th album to Kleiner'82 page
+- **Feature:** 14 tracks listed, 8 playable MP3 highlights uploaded to `docs/assets/music/neon-dreams/`
+- **Fix:** Update album count from 5 → 6 in page header
+- **Files changed:** `docs/kleiner82.html`, `docs/assets/music/neon-dreams/` (8 MP3s)
+
+### PR #22 — `claude/newsletter-fixes` — *Merged 2026-04-05*
+- **Fix:** Remove em dash (—) from newsletter modal subtitle between ה8ביט and הורד
+- **Fix:** Mark issue #17 (אפריל 2026) comment as released (removed "upcoming" label)
+- **Files changed:** `docs/projects.html`
+
+### PR #23 — `claude/gallery-crt-effects` — *Merged 2026-04-05*
+- **Feature:** Add CRT scanlines (`::before`) to each arcade gallery card
+- **Feature:** Add CRT vignette (`::after`) — radial gradient simulating curved screen dark corners
+- **Feature:** Subtle screen flicker animation (`crtFlicker`) every ~9s
+- **Feature:** Phosphor color filter on images (brightness/contrast/saturation boost)
+- **Feature:** Hover RGB shift effect (`hue-rotate(6deg)`) for color-bleed CRT look
+- **Fix:** Set `z-[5]` on figcaptions to keep text above CRT overlay pseudo-elements
+- **Files changed:** `docs/about.html`
+
 ### PR #20 — `claude/magazine-modal-list-redesign` — *Merged 2026-03-29*
 - **Feature:** Redesign magazine modal from card grid to scrollable list (latest issue first, #16→#1)
 - **Feature:** Add 10 new newsletter PDFs (August 2025 – March 2026) to repo
