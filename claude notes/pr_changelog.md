@@ -105,6 +105,10 @@ Ongoing log of all pull requests merged into this project.
 - **Fix:** Set `z-[5]` on figcaptions to keep text above CRT overlay pseudo-elements
 - **Files changed:** `docs/about.html`
 
+### PR #31 — `claude/newsletter-webhook-url` — *Merged 2026-04-05*
+- **Fix:** Replace placeholder webhook URL with live Make webhook URL for newsletter signup form
+- **Files changed:** `docs/projects.html`
+
 ### PR #20 — `claude/magazine-modal-list-redesign` — *Merged 2026-03-29*
 - **Feature:** Redesign magazine modal from card grid to scrollable list (latest issue first, #16→#1)
 - **Feature:** Add 10 new newsletter PDFs (August 2025 – March 2026) to repo
