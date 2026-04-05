@@ -489,9 +489,13 @@
         modal.classList.remove('hidden');
         modal.setAttribute('aria-hidden', 'false');
         if (dialog) {
+          dialog.style.opacity = '0';
           dialog.classList.remove('modal-crt-open');
-          void dialog.offsetWidth; // force reflow to re-trigger animation
-          dialog.classList.add('modal-crt-open');
+          setTimeout(function () {
+            dialog.style.opacity = '';
+            void dialog.offsetWidth;
+            dialog.classList.add('modal-crt-open');
+          }, 800);
         }
       }
 
