@@ -280,6 +280,23 @@
         <h3 id="magazine-modal-title" class="[font-family:'Press Start 2P',monospace] text-xl text-pink-300 mb-1">מגזין 8ביט ישראל</h3>
         <p class="text-xs text-sky-200/60 mb-5">כתבות רטרו, סקירות וחדשות מעולם ה־8ביט הורד את הגיליון שלך</p>
 
+        <!-- Newsletter signup -->
+        <div class="mb-5 p-4 rounded-xl bg-black/40 border border-pink-400/20">
+          <p class="text-xs text-pink-200/80 mb-3 font-medium">📨 רוצה לקבל את הגיליון הבא ישירות למייל?</p>
+          <form id="newsletter-signup-form" class="flex gap-2" dir="rtl" novalidate>
+            <input id="newsletter-email" type="email" placeholder="האימייל שלך"
+              class="flex-1 rounded-md px-3 py-2 text-sm bg-black/40 border border-white/10 text-sky-100
+                     placeholder:text-sky-400/40 focus:outline-none focus:ring-2 focus:ring-pink-300/30" />
+            <button id="newsletter-submit" type="submit"
+              class="shrink-0 px-4 py-2 text-xs rounded-md text-cyan-100 border border-cyan-300/30
+                     bg-gradient-to-r from-cyan-700/10 to-pink-700/10
+                     hover:from-cyan-400/30 hover:to-pink-400/30 transition">
+              הרשם
+            </button>
+          </form>
+          <p id="newsletter-feedback" class="hidden mt-2 text-xs text-cyan-300">✓ נרשמת בהצלחה!</p>
+        </div>
+
         <ul class="divide-y divide-white/10 max-h-[65vh] overflow-y-auto overflow-x-hidden">
 
           <!-- #17 אפריל 2026 -->
@@ -491,6 +508,51 @@
 
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' || e.key === 'Esc') closeModal();
+      });
+    })();
+
+    // Newsletter signup form
+    (function () {
+      const NEWSLETTER_WEBHOOK = 'PLACEHOLDER_WEBHOOK_URL'; // replace with real Make webhook when ready
+      const form     = document.getElementById('newsletter-signup-form');
+      const btn      = document.getElementById('newsletter-submit');
+      const feedback = document.getElementById('newsletter-feedback');
+
+      if (!form) return;
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const email = document.getElementById('newsletter-email').value.trim();
+        if (!email) return;
+
+        btn.disabled = true;
+        btn.textContent = '...';
+
+        const payload = {
+          email,
+          source: '8bitretro.tech/newsletter-modal',
+          sentAt: new Date().toISOString(),
+          secret_key: 'R3tr0W4v3_8bit_2026!'
+        };
+
+        try {
+          await fetch(NEWSLETTER_WEBHOOK, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        } catch (_) {
+          await fetch(NEWSLETTER_WEBHOOK, {
+            method: 'POST', mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        }
+
+        form.reset();
+        if (feedback) feedback.classList.remove('hidden');
+        btn.textContent = 'הרשם';
+        btn.disabled = false;
       });
     })();
   </script>
