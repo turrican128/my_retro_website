@@ -61,6 +61,19 @@ Ongoing log of all pull requests merged into this project.
 
 ## 2026-04-05
 
+### PR #29 — `claude/about-images-index-text` — *Merged 2026-04-05*
+- **Feature:** Replace second image in קצת עליי section with personal WhatsApp photo + CRT effects
+- **Feature:** Replace gallery Scene #3 with same photo (same gallery card size/CRT styling)
+- **Fix:** Remove em dash (—) after מהרצליה in index hero text
+- **Fix:** Change האתר → אתר in index hero text
+- **Files changed:** `docs/about.html`, `docs/index.html`, `docs/assets/images/WhatsApp Image 2026-04-05 at 14.25.02.jpeg` (new)
+
+### PR #28 — `claude/newsletter-signup-modal` — *Merged 2026-04-05*
+- **Feature:** Add email-only newsletter signup form above issues list in magazine modal
+- **Feature:** POSTs to Make webhook (placeholder) → Airtable record → Smoove mailing list sync
+- **Feature:** Inline success message, no-cors fallback, same secret_key pattern as contact form
+- **Files changed:** `docs/projects.html`
+
 ### PR #24 — `claude/fix-magazine-modal-scroll` — *Merged 2026-04-05*
 - **Fix:** Remove horizontal scrollbar from magazine modal popup
 - **Fix:** Widen modal from `max-w-lg` (512px) to `max-w-xl` (576px)
