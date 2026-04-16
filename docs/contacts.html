@@ -56,7 +56,7 @@
         #ff4500 58%, #ff8c00 65%, #ffd700 70%);
     }
     #outrun-canvas {
-      position: absolute; bottom: 0; left: 0; width: 100%; height: 55%;
+      position: absolute; bottom: 0; left: 0; width: 100%; height: 62%;
     }
     #outrun-ui {
       position: absolute; inset: 0; display: flex; flex-direction: column;
@@ -369,7 +369,7 @@
     var canvas    = document.getElementById('outrun-canvas');
     var ctx       = canvas.getContext('2d');
     var W, H, offset = 0, lastFrame = 0, startTime = null;
-    var DURATION  = 3000;  // ms before fade
+    var DURATION  = 3000;
 
     function resize() {
       W = canvas.width  = canvas.offsetWidth;
@@ -378,55 +378,191 @@
     window.addEventListener('resize', resize);
     resize();
 
+    // Palm trees: fixed distribution along the road, scrolled via offset
+    var PALMS = [];
+    for (var p = 0; p < 18; p++) {
+      PALMS.push({ z: p / 18, side: p % 2 === 0 ? -1 : 1, phase: (p * 17) % 100 / 100 });
+    }
+    // Oncoming cars: staggered z positions, cycle through
+    var CARS = [
+      { z: 0.05, lane: -0.35, color: '#ff2dd2' },
+      { z: 0.45, lane: 0.40,  color: '#00fff3' },
+      { z: 0.85, lane: -0.15, color: '#ffee00' }
+    ];
+
+    function drawMountains(scrollX) {
+      // Far range
+      var horizonY = H * 0.15;
+      ctx.fillStyle = '#3b1457';
+      ctx.beginPath();
+      ctx.moveTo(0, horizonY);
+      for (var x = 0; x <= W + 40; x += 40) {
+        var sx = ((x + scrollX * 0.15) % (W + 160)) - 80;
+        var h = 60 + Math.sin(x * 0.013) * 28 + Math.cos(x * 0.007) * 18;
+        ctx.lineTo(sx, horizonY - h * 0.5);
+      }
+      ctx.lineTo(W, horizonY); ctx.lineTo(0, horizonY); ctx.closePath(); ctx.fill();
+
+      // Near range
+      ctx.fillStyle = '#1a0733';
+      ctx.beginPath();
+      ctx.moveTo(0, horizonY);
+      for (var x2 = 0; x2 <= W + 60; x2 += 60) {
+        var sx2 = ((x2 + scrollX * 0.35) % (W + 240)) - 120;
+        var h2 = 85 + Math.sin(x2 * 0.009 + 1) * 35 + Math.cos(x2 * 0.019) * 22;
+        ctx.lineTo(sx2, horizonY - h2 * 0.45);
+      }
+      ctx.lineTo(W, horizonY); ctx.lineTo(0, horizonY); ctx.closePath(); ctx.fill();
+    }
+
+    // t in [0,1] — 0 = far (tiny), 1 = near camera (huge)
+    function drawPalm(cx, groundY, scale) {
+      var trunkW = Math.max(1, 3 * scale);
+      var trunkH = 22 * scale;
+      ctx.fillStyle = '#0a0015';
+      ctx.fillRect(cx - trunkW / 2, groundY - trunkH, trunkW, trunkH);
+      // Fronds
+      ctx.beginPath();
+      var fy = groundY - trunkH;
+      for (var a = 0; a < 7; a++) {
+        var ang = (a - 3) * 0.45;
+        var r = 14 * scale;
+        ctx.moveTo(cx, fy);
+        ctx.quadraticCurveTo(
+          cx + Math.cos(ang) * r * 0.6,
+          fy + Math.sin(ang) * r * 0.5 - 4 * scale,
+          cx + Math.cos(ang) * r,
+          fy + Math.sin(ang) * r * 0.5 + 2 * scale
+        );
+      }
+      ctx.lineWidth = Math.max(1, 2 * scale);
+      ctx.strokeStyle = '#0a0015';
+      ctx.stroke();
+    }
+
+    function drawCar(cx, baseY, scale, color) {
+      var w = 36 * scale, h = 18 * scale;
+      // Body
+      ctx.fillStyle = color;
+      ctx.fillRect(cx - w / 2, baseY - h, w, h * 0.65);
+      // Cabin
+      ctx.fillStyle = '#000';
+      ctx.fillRect(cx - w / 2 + w * 0.18, baseY - h, w * 0.64, h * 0.4);
+      // Headlights (we're looking at the front)
+      ctx.fillStyle = '#ffffcc';
+      ctx.fillRect(cx - w / 2, baseY - h * 0.35, w * 0.18, h * 0.18);
+      ctx.fillRect(cx + w / 2 - w * 0.18, baseY - h * 0.35, w * 0.18, h * 0.18);
+      // Glow
+      ctx.save();
+      ctx.globalAlpha = 0.5;
+      ctx.fillStyle = '#ffff99';
+      ctx.fillRect(cx - w / 2 - 2 * scale, baseY - h * 0.3, w + 4 * scale, h * 0.08);
+      ctx.restore();
+      // Wheels / shadow
+      ctx.fillStyle = '#000';
+      ctx.fillRect(cx - w / 2, baseY - h * 0.35, w, h * 0.35);
+    }
+
     function drawFrame(ts) {
       if (!startTime) startTime = ts;
       var dt = ts - (lastFrame || ts);
       lastFrame = ts;
-      offset = (offset + 0.7 * dt / 1000) % 1.0;
+      var dtSec = Math.min(0.05, dt / 1000);
+      offset = (offset + 0.7 * dtSec) % 1.0;
 
       ctx.clearRect(0, 0, W, H);
 
       var VX = W / 2;
       var RW_BOT = W * 0.42, RW_TOP = W * 0.045;
+      var HORIZON = H * 0.15;
       var NUM = 16;
 
+      // Mountains (behind everything)
+      drawMountains(ts * 0.04);
+
+      // Ground strip (below horizon, above road)
+      ctx.fillStyle = '#110019';
+      ctx.fillRect(0, HORIZON, W, H - HORIZON);
+
+      // Road perspective helpers — map segment t in [0..1] to screen y
+      function segY(t) { return HORIZON + (H - HORIZON) * t; }
+      function roadHalfWidth(t) { return RW_TOP + (RW_BOT - RW_TOP) * t; }
+
       // Shoulders
-      ctx.fillStyle = '#111';
-      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(VX-RW_TOP,0);
-      ctx.lineTo(VX-RW_BOT,H); ctx.lineTo(0,H); ctx.closePath(); ctx.fill();
-      ctx.beginPath(); ctx.moveTo(W,0); ctx.lineTo(VX+RW_TOP,0);
-      ctx.lineTo(VX+RW_BOT,H); ctx.lineTo(W,H); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = '#050510';
+      ctx.beginPath();
+      ctx.moveTo(0, HORIZON); ctx.lineTo(VX - RW_TOP, HORIZON);
+      ctx.lineTo(VX - RW_BOT, H); ctx.lineTo(0, H); ctx.closePath(); ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(W, HORIZON); ctx.lineTo(VX + RW_TOP, HORIZON);
+      ctx.lineTo(VX + RW_BOT, H); ctx.lineTo(W, H); ctx.closePath(); ctx.fill();
 
       // Base road
       ctx.fillStyle = '#333';
-      ctx.beginPath(); ctx.moveTo(VX-RW_TOP,0); ctx.lineTo(VX+RW_TOP,0);
-      ctx.lineTo(VX+RW_BOT,H); ctx.lineTo(VX-RW_BOT,H); ctx.closePath(); ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(VX - RW_TOP, HORIZON); ctx.lineTo(VX + RW_TOP, HORIZON);
+      ctx.lineTo(VX + RW_BOT, H); ctx.lineTo(VX - RW_BOT, H); ctx.closePath(); ctx.fill();
 
       // Perspective stripes
       for (var i = -1; i < NUM + 1; i++) {
         var t0 = Math.min(1, Math.pow((i + offset) / NUM, 2));
         var t1 = Math.min(1, Math.pow((i + 1 + offset) / NUM, 2));
         if (t1 <= 0) continue;
-        var lt = VX - (RW_TOP + (RW_BOT - RW_TOP) * t0);
-        var rt = VX + (RW_TOP + (RW_BOT - RW_TOP) * t0);
-        var lb = VX - (RW_TOP + (RW_BOT - RW_TOP) * t1);
-        var rb = VX + (RW_TOP + (RW_BOT - RW_TOP) * t1);
-        ctx.fillStyle = (Math.floor(i + offset) % 2 === 0) ? '#2a2a2a' : '#484848';
-        ctx.beginPath(); ctx.moveTo(lt,t0*H); ctx.lineTo(rt,t0*H);
-        ctx.lineTo(rb,t1*H); ctx.lineTo(lb,t1*H); ctx.closePath(); ctx.fill();
+        var y0 = segY(t0), y1 = segY(t1);
+        var lt = VX - roadHalfWidth(t0), rt = VX + roadHalfWidth(t0);
+        var lb = VX - roadHalfWidth(t1), rb = VX + roadHalfWidth(t1);
+        var isDark = Math.floor(i + offset) % 2 === 0;
+        ctx.fillStyle = isDark ? '#2a2a2a' : '#484848';
+        ctx.beginPath(); ctx.moveTo(lt, y0); ctx.lineTo(rt, y0);
+        ctx.lineTo(rb, y1); ctx.lineTo(lb, y1); ctx.closePath(); ctx.fill();
+        // Grass stripes (pink/purple)
+        ctx.fillStyle = isDark ? '#2d0a3d' : '#3d1055';
+        ctx.fillRect(0, y0, lt, y1 - y0);
+        ctx.fillRect(rt, y0, W - rt, y1 - y0);
       }
 
       // Road edge markings
       ctx.fillStyle = '#ffee88';
       var ew_t = RW_TOP * 0.06, ew_b = RW_BOT * 0.06;
-      ctx.beginPath(); ctx.moveTo(VX-RW_TOP,0); ctx.lineTo(VX-RW_TOP+ew_t,0);
-      ctx.lineTo(VX-RW_BOT+ew_b,H); ctx.lineTo(VX-RW_BOT,H); ctx.closePath(); ctx.fill();
-      ctx.beginPath(); ctx.moveTo(VX+RW_TOP,0); ctx.lineTo(VX+RW_TOP-ew_t,0);
-      ctx.lineTo(VX+RW_BOT-ew_b,H); ctx.lineTo(VX+RW_BOT,H); ctx.closePath(); ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(VX - RW_TOP, HORIZON); ctx.lineTo(VX - RW_TOP + ew_t, HORIZON);
+      ctx.lineTo(VX - RW_BOT + ew_b, H); ctx.lineTo(VX - RW_BOT, H); ctx.closePath(); ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(VX + RW_TOP, HORIZON); ctx.lineTo(VX + RW_TOP - ew_t, HORIZON);
+      ctx.lineTo(VX + RW_BOT - ew_b, H); ctx.lineTo(VX + RW_BOT, H); ctx.closePath(); ctx.fill();
+
+      // Palm trees along roadside — scale with distance
+      for (var pi = 0; pi < PALMS.length; pi++) {
+        var palm = PALMS[pi];
+        var palmT = (palm.z + offset * 0.6 + palm.phase) % 1.0;
+        var tNorm = Math.pow(palmT, 2);
+        if (tNorm < 0.02) continue;
+        var pcx = VX + palm.side * (roadHalfWidth(tNorm) + 30 * (0.2 + tNorm * 3.5));
+        var py  = segY(tNorm);
+        var pscale = 0.15 + tNorm * 2.3;
+        drawPalm(pcx, py, pscale);
+      }
+
+      // Oncoming cars — move from horizon toward camera
+      for (var ci = 0; ci < CARS.length; ci++) {
+        var car = CARS[ci];
+        car.z += dtSec * 0.45;
+        if (car.z > 1.1) {
+          car.z = -0.1;
+          car.lane = (Math.random() - 0.5) * 0.7;
+          car.color = ['#ff2dd2', '#00fff3', '#ffee00', '#ff6600'][Math.floor(Math.random() * 4)];
+        }
+        if (car.z < 0.02) continue;
+        var cT = Math.pow(car.z, 2);
+        var ccx = VX + car.lane * roadHalfWidth(cT) * 1.6;
+        var cy = segY(cT);
+        var cscale = 0.1 + cT * 1.8;
+        drawCar(ccx, cy, cscale, car.color);
+      }
 
       // Horizon accent line
       ctx.fillStyle = '#ff2dd2';
-      ctx.fillRect(0, 0, W, 3);
+      ctx.fillRect(0, HORIZON - 1, W, 2);
 
       if (ts - startTime < DURATION) {
         requestAnimationFrame(drawFrame);
