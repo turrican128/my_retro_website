@@ -47,7 +47,8 @@
   function injectStyles() {
     if (document.getElementById('gp-styles')) return;
     var css = ''
-      + '#gp-root{position:fixed;top:1rem;right:1rem;z-index:50;direction:ltr;font-family:"Press Start 2P",monospace;color:#cffafe;}'
+      + '#gp-root{direction:ltr;font-family:"Press Start 2P",monospace;color:#cffafe;flex-shrink:0;}'
+      + '#gp-root.gp-fallback{position:fixed;top:1rem;right:1rem;z-index:50;}'
       + '#gp-root *{box-sizing:border-box;}'
       + '#gp-pill{display:flex;align-items:center;gap:.5rem;background:rgba(0,0,0,.7);border:1px solid rgba(0,255,243,.45);border-radius:14px;padding:.45rem .55rem;box-shadow:0 0 18px rgba(0,255,243,.25),0 8px 30px rgba(0,0,0,.7);backdrop-filter:blur(6px);position:relative;overflow:hidden;}'
       + '#gp-pill::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(to bottom,rgba(0,0,0,.35),rgba(0,0,0,.35) 1px,transparent 1px,transparent 3px);opacity:.35;mix-blend-mode:soft-light;border-radius:14px;}'
@@ -76,7 +77,7 @@
       + '#gp-eq span:nth-child(4){animation-delay:.45s;background:#ff2dd2;box-shadow:0 0 4px rgba(255,45,210,.8);}'
       + '@keyframes gpEq{0%,100%{height:30%;}50%{height:100%;}}'
       + '#gp-root:not(.gp-playing) #gp-eq span{animation-play-state:paused;height:30%;}'
-      + '@media (max-width:520px){#gp-root{top:.5rem;right:.5rem;}#gp-info{max-width:110px;}#gp-vol{width:46px;}}';
+      + '@media (max-width:520px){#gp-info{max-width:110px;}#gp-vol{width:46px;}}';
     var el = document.createElement('style');
     el.id = 'gp-styles';
     el.textContent = css;
@@ -105,7 +106,14 @@
       +     '<input id="gp-vol" type="range" min="0" max="0.7" step="0.01" value="0.7" title="Volume (max 70%)" />'
       +   '</div>'
       + '</div>';
-    document.body.appendChild(root);
+    var nav = document.querySelector('header > nav');
+    var logo = nav ? nav.querySelector(':scope > a') : null;
+    if (nav && logo) {
+      nav.insertBefore(root, logo);
+    } else {
+      root.classList.add('gp-fallback');
+      document.body.appendChild(root);
+    }
     return root;
   }
 
@@ -122,7 +130,7 @@
     var vol = clampVol(state.volume);
     var startPos = (typeof state.position === 'number' && state.position >= 0) ? state.position : 0;
     var wantPlay = state.isPlaying === true;
-    var collapsed = state.collapsed === true;
+    var collapsed = (typeof state.collapsed === 'boolean') ? state.collapsed : (window.innerWidth < 900);
 
     audio.volume = vol;
     audio.src = PLAYLIST[trackIndex].src;
