@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="he" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -45,7 +45,7 @@
 
     /* Added: simple 16bit-style OutRun background animation */
     .outrun-scene {
-      background-image: url('assets/images/outrun.jpg');
+      background-image: url('../assets/images/outrun.jpg');
       background-size: cover;
       background-position: 0% 50%;
       animation: outrunPan 18s linear infinite alternate;
@@ -76,44 +76,44 @@
 
   </style>
 
-  <script src="assets/js/global-player.js" defer></script>
-  <script src="assets/js/social-strip.js" defer></script>
+  <script src="../assets/js/global-player.js" defer></script>
+  <script src="../assets/js/social-strip.js" defer></script>
 </head>
 <body class="min-h-screen text-sky-100 antialiased bg-animated bg-gradient-to-b from-purple-900 via-pink-700 to-black scanline-overlay">
 
   <!-- top neon navigation -->
   <header class="fixed inset-x-0 top-4 z-30 flex items-center justify-center">
     <nav class="w-[min(1100px,96%)] flex items-center justify-between px-4 py-3 rounded-xl bg-black/40 backdrop-blur border border-white/10 shadow-[0_12px_50px_rgba(0,0,0,0.7)]">
-      <!-- NAV LINKS FIRST (renders on the right in RTL with justify-between) -->
+      <!-- NAV LINKS FIRST (renders on the left in LTR with justify-between) -->
       <ul class="flex items-center gap-3 text-xs">
         <li>
           <a href="index.html" class="px-3 py-2 rounded-md text-cyan-200 bg-white/10 shadow-[0_0_20px_rgba(0,255,243,0.4)]">
-            דף הבית
+            Home
           </a>
         </li>
         <li>
           <a href="about.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
-            עליי
+            About
           </a>
         </li>
         <li>
           <a href="projects.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
-            פרויקטים
+            Projects
           </a>
         </li>
         <li>
           <a href="contacts.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
-            צור קשר
+            Contact
           </a>
         </li>
         <li>
-          <a href="en/index.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
-            EN
+          <a href="../index.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            HE
           </a>
         </li>
       </ul>
 
-      <!-- LOGO BLOCK SECOND (renders on the left in RTL with justify-between) -->
+      <!-- LOGO BLOCK SECOND (renders on the right in LTR with justify-between) -->
       <a href="https://8bitretro.tech" class="flex items-center gap-4 no-underline cursor-pointer">
         <div class="w-16 h-12 flex items-center justify-center rounded-md bg-gradient-to-r from-pink-500/40 to-cyan-400/20 border border-white/30 shadow-[0_0_25px_rgba(255,45,210,0.6)]">
           <span class="[font-family:'Press Start 2P',monospace] text-pink-300 text-xs uppercase tracking-[0.2em]">
@@ -135,23 +135,23 @@
     </div>
 
     <div class="w-[min(1100px,96%)] grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Hero / main content (REPLACED: Hebrew heading + subtitle + 3-card section) -->
+      <!-- Hero / main content -->
       <section class="flex flex-col justify-center gap-6 rounded-xl p-8 bg-black/60 border border-white/15 shadow-[0_24px_80px_rgba(0,0,0,0.8)] backdrop-blur">
         <div>
-          <h1 id="hero-heading" class="[font-family:'Press Start 2P',monospace] text-3xl md:text-4xl text-cyan-300 leading-tight drop-shadow-[0_2px_25px_rgba(0,255,243,0.3)] text-right">
-            אני אלכס גולדבלט, בן 51 מהרצליה וזהו אתר הרטרו שלי וגם הבית האישי שלי ברשת.
+          <h1 id="hero-heading" class="[font-family:'Press Start 2P',monospace] text-3xl md:text-4xl text-cyan-300 leading-tight drop-shadow-[0_2px_25px_rgba(0,255,243,0.3)] text-left">
+            I'm Alex Goldblat, 51, from Herzliya — this is my retro home and personal corner of the web.
           </h1>
-          <p class="mt-3 text-sm text-pink-100/85 max-w-prose text-right">
-            מאז שאני זוכר את עצמי אני חי ונושם את עולם הרטרו: הקומודור 64 הוא המכונה הראשונה שהתאהבתי בה, ואני עדיין בונה עליה משחקים, דמואים וחוויות חדשות שמבוססות על קסם ה־8bit.
+          <p class="mt-3 text-sm text-pink-100/85 max-w-prose text-left">
+            For as long as I can remember, I've lived and breathed the retro world: the Commodore 64 was the first machine I fell in love with, and I still build games, demos, and new experiences on it, powered by the magic of 8-bit.
             <br><br>
-            אני גם מוזיקאי, ויוצר כחלק מההרכב Kleiner’82 - מוזיקה בסגנון Synthwave עם נגיעות SID, פאולה, ותחושת אייטיז אמיתית. הוצאתי אלבום קאברים לשירים הכי אהובים עליי מהקומודור 64, וכאן באתר תוכל למצוא גם קטעים מקוריים וגם עיבודים מיוחדים.
+            I'm also a musician, creating as part of the project Kleiner'82 — synthwave music with SID touches, Paula vibes, and a true '80s feel. I released a cover album of my favorite Commodore 64 tunes, and here on the site you'll find both original tracks and special arrangements.
             <br><br>
-            אני אוהב את עולמות ה־8bit וגם את ה־16bit, ובעיקר את התרבות שמסביב - צבעים, סגנון, גרפיקה, מוזיקה ואווירה כמו פעם.
+            I love the 8-bit and 16-bit worlds, and especially the culture around them — colors, style, graphics, music, and atmosphere just like back then.
           </p>
 
-          <!-- Neon Breakout arcade game (replaces OutRun image) -->
+          <!-- Neon Breakout arcade game -->
           <div class="mt-4 rounded-2xl bg-black/60 border border-cyan-400/40 shadow-[0_16px_50px_rgba(0,0,0,0.9)] overflow-hidden">
-            <!-- CRT screen area (same size as old OutRun block: h-56 md:h-64) -->
+            <!-- CRT screen area -->
             <div class="relative bg-black/70 h-56 md:h-64">
               <canvas id="breakout-canvas" class="absolute inset-0 w-full h-full" style="image-rendering:pixelated;"></canvas>
               <!-- CRT scanlines -->
@@ -168,98 +168,98 @@
                 <span id="arcade-lives" class="text-pink-400">&#9829;&#9829;&#9829;</span>
               </div>
             </div>
-            <!-- Caption bar (same style as OutRun caption) -->
+            <!-- Caption bar -->
             <div class="px-3 py-2 text-center text-[10px] text-pink-100/80 [font-family:'Press Start 2P',monospace]">
-              NEON BREAKOUT — ← → / עכבר &nbsp;|&nbsp; SPACE = התחל/השהה
+              NEON BREAKOUT — &#8592; &#8594; / Mouse &nbsp;|&nbsp; SPACE = Start/Pause
             </div>
           </div>
         </div>
 
         <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
           <!-- Card 1 -->
-          <article class="rounded-xl p-4 bg-black/60 border border-cyan-400/20 shadow-[0_12px_40px_rgba(0,0,0,0.8)] text-right">
+          <article class="rounded-xl p-4 bg-black/60 border border-cyan-400/20 shadow-[0_12px_40px_rgba(0,0,0,0.8)] text-left">
             <h3 class="[font-family:'Press Start 2P',monospace] text-xs text-pink-300 mb-2">
-              עליי
+              About
             </h3>
             <p class="text-sky-100/85 text-sm">
-              מוזיקאי ויוצר רטרו מהרצליה, בן 51. מאחורי ה-C64, ה-Amiga והסינת'וויב, סיפור אישי של תשוקה לתרבות האייטיז.
+              A retro musician and creator from Herzliya, 51. Behind the C64, the Amiga, and the synthwave — a personal story of passion for '80s culture.
             </p>
             <a href="about.html" class="inline-block mt-3 px-3 py-2 rounded-md bg-gradient-to-r from-cyan-400/70 to-pink-400/70 text-black text-xs font-semibold hover:from-cyan-300 hover:to-pink-300 transition">
-              לפרטים
+              Details
             </a>
           </article>
 
           <!-- Card 2 -->
-          <article class="rounded-xl p-4 bg-black/60 border border-cyan-400/20 shadow-[0_12px_40px_rgba(0,0,0,0.8)] text-right">
+          <article class="rounded-xl p-4 bg-black/60 border border-cyan-400/20 shadow-[0_12px_40px_rgba(0,0,0,0.8)] text-left">
             <h3 class="[font-family:'Press Start 2P',monospace] text-xs text-pink-300 mb-2">
-              פרויקטים
+              Projects
             </h3>
             <p class="text-sky-100/85 text-sm">
-              תיאור קצר על הפרויקטים והדגמות C64/Amiga ומיזמים נוספים.
+              A brief look at C64/Amiga demos, projects, and other ventures.
             </p>
             <a href="projects.html" class="inline-block mt-3 px-3 py-2 rounded-md bg-gradient-to-r from-cyan-400/70 to-pink-400/70 text-black text-xs font-semibold hover:from-cyan-300 hover:to-pink-300 transition">
-              לפרטים
+              Details
             </a>
           </article>
 
           <!-- Card 3 -->
-          <article class="rounded-xl p-4 bg-black/60 border border-cyan-400/20 shadow-[0_12px_40px_rgba(0,0,0,0.8)] text-right">
+          <article class="rounded-xl p-4 bg-black/60 border border-cyan-400/20 shadow-[0_12px_40px_rgba(0,0,0,0.8)] text-left">
             <h3 class="[font-family:'Press Start 2P',monospace] text-xs text-pink-300 mb-2">
-              צור קשר
+              Contact
             </h3>
             <p class="text-sky-100/85 text-sm">
-              מידע כיצד לפנות, טופס יצירת קשר וקישורים לרשתות חברתיות.
+              Info on how to reach out, contact form, and social media links.
             </p>
             <a href="contacts.html" class="inline-block mt-3 px-3 py-2 rounded-md bg-gradient-to-r from-cyan-400/70 to-pink-400/70 text-black text-xs font-semibold hover:from-cyan-300 hover:to-pink-300 transition">
-              לפרטים
+              Details
             </a>
           </article>
         </div>
       </section>
 
-      <!-- REPLACED: terminal sidebar removed and replaced with centered image card spanning full width -->
+      <!-- Image card -->
       <section class="rounded-xl p-4 bg-black/60 border border-white/15 shadow-[0_24px_80px_rgba(0,0,0,0.8)] backdrop-blur flex items-center justify-center">
         <a href="about.html" class="block w-full h-full overflow-hidden rounded-2xl shadow-2xl transition-transform transform hover:scale-105 hover:shadow-[0_0_40px_rgba(0,255,243,0.12)]">
-          <img src="assets/images/19946672-0-_lora_1860519_1_0__d.jpg" alt="Retro image" class="w-full h-full object-cover" />
+          <img src="../assets/images/19946672-0-_lora_1860519_1_0__d.jpg" alt="Retro image" class="w-full h-full object-cover" />
         </a>
       </section>
 
     </div> <!-- end of .w-[min(1100px,96%)] grid (hero + sidebar) -->
 
-    <!-- New section: הדגשים נבחרים: C64 ו-Amiga -->
+    <!-- New section: Selected highlights: C64 and Amiga -->
     <section class="w-[min(1100px,96%)] mt-8">
       <div class="mx-auto">
-        <h2 class="[font-family:'Press Start 2P',monospace] text-xl md:text-2xl text-cyan-200 mb-2 text-right">
-          תחומי העניין של אלכס גולדבלט
+        <h2 class="[font-family:'Press Start 2P',monospace] text-xl md:text-2xl text-cyan-200 mb-2 text-left">
+          Alex Goldblat's Interests
         </h2>
-        <p class="text-sm text-pink-100/85 mb-4 text-right">
-          כאן תוכל להכיר את תחומי התוכן והעולמות שבהם אני יוצר ומתעסק: רטרו, C64, Amiga, אמנות דיגיטלית ומוזיקה.
+        <p class="text-sm text-pink-100/85 mb-4 text-left">
+          Here you can explore the content areas and worlds I create in: retro, C64, Amiga, digital art, and music.
         </p>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <!-- Card 1 -->
-          <article class="rounded-2xl p-4 bg-black/60 border border-cyan-400/30 shadow-[0_16px_50px_rgba(0,0,0,0.8)] text-right">
+          <article class="rounded-2xl p-4 bg-black/60 border border-cyan-400/30 shadow-[0_16px_50px_rgba(0,0,0,0.8)] text-left">
             <h3 class="[font-family:'Press Start 2P',monospace] text-sm text-pink-300 mb-2">
-              אומנות דיגיטלית רטרו בקומודור 64
+              Retro Digital Art on Commodore 64
             </h3>
             <p class="text-sky-100/85 text-sm">
-              ספרייטים, ביטמאפים ו-PETSCII בהשראת דמוסצנה, משחקים קלאסיים וצבעי ניאון של האייטיז.
+              Sprites, bitmaps, and PETSCII inspired by the demoscene, classic games, and neon colors of the '80s.
             </p>
             <p class="mt-2 text-[11px] text-cyan-200/80">
-              דוגמאות וגלריות יתעדכנו בהמשך.
+              Examples and galleries will be updated soon.
             </p>
           </article>
 
           <!-- Card 2 -->
-          <article class="rounded-2xl p-4 bg-black/60 border border-cyan-400/30 shadow-[0_16px_50px_rgba(0,0,0,0.8)] text-right">
+          <article class="rounded-2xl p-4 bg-black/60 border border-cyan-400/30 shadow-[0_16px_50px_rgba(0,0,0,0.8)] text-left">
             <h3 class="[font-family:'Press Start 2P',monospace] text-sm text-pink-300 mb-2">
-              Synthwave ומוזיקת SID
+              Synthwave & SID Music
             </h3>
             <p class="text-sky-100/85 text-sm">
-              טרקים חדשים, קאברים מהאייטיז וסאונדים מהצ’יפ המיתולוגי של ה-C64, בין Retrowave ל-Chiptune.
+              New tracks, '80s covers, and sounds from the legendary C64 chip — from Retrowave to Chiptune.
             </p>
             <p class="mt-2 text-[11px] text-cyan-200/80">
-              פלייליסטים, קטעי וידאו וקבצי SID יתווספו בהמשך.
+              Playlists, video clips, and SID files will be added soon.
             </p>
           </article>
         </div>
@@ -297,7 +297,7 @@
         'SCANLINES: ENABLED',
         '8BITRETRO.TECH v1.0',
         '',
-        '[ לחץ כל מקש או המתן ]'
+        '[ Press any key or wait ]'
       ];
 
       var overlay = document.createElement('div');
@@ -413,8 +413,8 @@
       if (levelEl) levelEl.textContent = 'LEVEL ' + level;
       if (livesEl) {
         var h = '';
-        for (var i = 0; i < lives; i++) h += '\u2665';
-        livesEl.textContent = h || '\u2013';
+        for (var i = 0; i < lives; i++) h += '♥';
+        livesEl.textContent = h || '–';
         livesEl.style.color = lives > 0 ? '#fb7185' : '#666';
       }
     }
