@@ -126,3 +126,10 @@ Ongoing log of all pull requests merged into this project.
 - **Feature:** Wire `<link rel="icon">`, `apple-touch-icon`, `manifest`, and `theme-color` (`#0b0014`) into the `<head>` of all 12 pages — 6 Hebrew (`docs/`) and 6 English (`docs/en/`, with `../` prefixed paths)
 - **Fix:** Correct `site.webmanifest` — set `name` / `short_name` to `8bitretro.tech` / `8bitretro`, fix icon paths from broken root-relative `/android-chrome-*.png` → `/assets/favicon/...`, switch theme/background colors from white → `#0b0014` to match the synthwave palette
 - **Files changed:** `docs/assets/favicon/` (7 new files), all 6 Hebrew HTML pages + all 6 English HTML pages
+
+### PR #44 — `claude/lang-toggle-flags` — *Merged 2026-04-26*
+- **Feature:** Replace plain `EN` / `HE` text in the language toggle with inline pixel-art flag SVGs
+- **Feature:** Hebrew pages get a Union Jack (UK flag) linking to the English version; English pages get an Israel flag (blue stripes + Star of David outline) linking back to Hebrew
+- **Feature:** Pure inline SVG, no extra asset files, ~26×16px display, `image-rendering: pixelated` + neon cyan drop-shadow to match the existing pixel-art icon style
+- **A11y:** `title` attribute for hover tooltip (`English` / `עברית`), `aria-label` for screen readers, `aria-hidden="true"` on the decorative SVG
+- **Files changed:** all 6 Hebrew HTML pages + all 6 English HTML pages (12 files, +112 / −20)
