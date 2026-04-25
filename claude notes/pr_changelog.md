@@ -116,3 +116,13 @@ Ongoing log of all pull requests merged into this project.
 - **Feature:** Each list row: neon issue number · date + tiny book icon · unique 16-bit SVG icon · download button
 - **Feature:** 16 unique pixel-art SVG icons per issue (star, gem, lightning, mushroom, heart, flame, sword, shield, crown, bomb, music note, moon, trophy, floppy disk, 4-point star, gamepad)
 - **Files changed:** `docs/projects.html`, `docs/assets/PDF download for 8bit newsletter/` (10 new PDFs + 3 renames)
+
+> **Note:** Entries for PR #32–#42 were drafted in prior sessions but never committed to main. The next entry below picks up from PR #43.
+
+## 2026-04-26
+
+### PR #43 — `claude/favicon-wiring` — *Merged 2026-04-26*
+- **Feature:** Add full favicon set under `docs/assets/favicon/` — `favicon.ico`, 16/32 PNGs, `apple-touch-icon.png`, `android-chrome-192x192.png` / `512x512.png`, `site.webmanifest`
+- **Feature:** Wire `<link rel="icon">`, `apple-touch-icon`, `manifest`, and `theme-color` (`#0b0014`) into the `<head>` of all 12 pages — 6 Hebrew (`docs/`) and 6 English (`docs/en/`, with `../` prefixed paths)
+- **Fix:** Correct `site.webmanifest` — set `name` / `short_name` to `8bitretro.tech` / `8bitretro`, fix icon paths from broken root-relative `/android-chrome-*.png` → `/assets/favicon/...`, switch theme/background colors from white → `#0b0014` to match the synthwave palette
+- **Files changed:** `docs/assets/favicon/` (7 new files), all 6 Hebrew HTML pages + all 6 English HTML pages
