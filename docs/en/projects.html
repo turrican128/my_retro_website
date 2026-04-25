@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Projects – 8bitretro.tech</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <style>
+    @keyframes neonGradient {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .bg-animated {
+      background-size: 320% 320%;
+      animation: neonGradient 22s ease-in-out infinite;
+    }
+
+    .scanline-overlay::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.35),
+        rgba(0, 0, 0, 0.35) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      mix-blend-mode: soft-light;
+      opacity: 0.45;
+      z-index: 0;
+    }
+
+    /* CRT effect for card media */
+    .crt-frame {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .crt-frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.28),
+        rgba(0,0,0,0.28) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      mix-blend-mode: soft-light;
+      opacity: 0.35;
+      z-index: 2;
+    }
+
+    .crt-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at center,
+        rgba(0,255,243,0.08),
+        transparent 60%
+      );
+      opacity: 0.7;
+      z-index: 2;
+    }
+
+    @keyframes crtFlicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.96; }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+    .c64-cursor {
+      animation: blink 0.8s step-start infinite;
+    }
+
+    .crt-flicker {
+      animation: crtFlicker 4.5s ease-in-out infinite;
+    }
+
+    /* Ensure the overlay layers do not cover the image's own rendering stacking */
+    .crt-frame > img {
+      position: relative;
+      z-index: 1;
+      display: block;
+    }
+
+    .thumb-stamp::after {
+      content: "8BIT RETRO NEWSLETTER";
+      font-family: 'Press Start 2P', monospace;
+      position: absolute;
+      font-size: 0.5rem;
+      color: white;
+      opacity: 0.13;
+      transform: rotate(-45deg);
+      white-space: nowrap;
+      letter-spacing: 0.12em;
+      pointer-events: none;
+      bottom: 14px;
+      left: -10px;
+      right: -10px;
+      text-align: center;
+    }
+
+    @keyframes crtPowerOn {
+      0%   { transform: scaleY(0.005) scaleX(0.6); opacity: 0;   filter: brightness(6) saturate(0); }
+      8%   { transform: scaleY(0.005) scaleX(1.1);  opacity: 1;   filter: brightness(5) saturate(0); }
+      15%  { transform: scaleY(0.02) scaleX(1.08); opacity: 1;   filter: brightness(4) saturate(0.2); }
+      25%  { transform: scaleY(0.06) scaleX(1.04); opacity: 1;   filter: brightness(2.5) saturate(0.5); }
+      40%  { transform: scaleY(0.85) scaleX(1.02); opacity: 1;   filter: brightness(1.8) saturate(0.7); }
+      55%  { transform: scaleY(1.04) scaleX(1.01); opacity: 1;   filter: brightness(1.3) saturate(0.9); }
+      65%  { transform: scaleY(0.97) scaleX(1);    opacity: 1;   filter: brightness(1.5) saturate(1); }
+      75%  { transform: scaleY(1.02) scaleX(1);    opacity: 1;   filter: brightness(1.1) saturate(1); }
+      85%  { transform: scaleY(0.99) scaleX(1);    opacity: 1;   filter: brightness(1); }
+      100% { transform: scaleY(1)    scaleX(1);    opacity: 1;   filter: brightness(1); }
+    }
+    .modal-crt-open {
+      animation: crtPowerOn 700ms cubic-bezier(0.22, 0.68, 0.35, 1.0) forwards;
+      transform-origin: center center;
+    }
+
+    /* Magazine icon — pulsing neon glow border */
+    .mag-icon {
+      border-radius: 6px;
+      box-shadow:
+        0 0 0 2px #00fff3,
+        0 0 8px  rgba(0, 255, 243, 0.9),
+        0 0 20px rgba(0, 255, 243, 0.5),
+        0 0 45px rgba(0, 255, 243, 0.2);
+      animation: magIconPulse 3s ease-in-out infinite;
+    }
+    @keyframes magIconPulse {
+      0%, 100% {
+        box-shadow:
+          0 0 0 2px #00fff3,
+          0 0 8px  rgba(0, 255, 243, 0.9),
+          0 0 20px rgba(0, 255, 243, 0.5),
+          0 0 45px rgba(0, 255, 243, 0.2);
+      }
+      50% {
+        box-shadow:
+          0 0 0 2px #ff2dd2,
+          0 0 8px  rgba(255, 45, 210, 0.9),
+          0 0 20px rgba(255, 45, 210, 0.5),
+          0 0 45px rgba(255, 45, 210, 0.2);
+      }
+    }
+  </style>
+
+  <script src="../assets/js/global-player.js" defer></script>
+  <script src="../assets/js/social-strip.js" defer></script>
+</head>
+<body class="min-h-screen text-sky-100 antialiased bg-animated bg-gradient-to-b from-purple-900 via-pink-700 to-black scanline-overlay text-left">
+
+  <div id="c64-boot" style="position:fixed;inset:0;z-index:9999;background:#3333aa;display:flex;align-items:center;justify-content:center;padding:2rem;font-family:monospace;font-size:clamp(12px,1.8vw,18px);color:#fff;white-space:pre;line-height:1.6;direction:ltr;text-align:left;"></div>
+
+  <header class="fixed inset-x-0 top-4 z-30 flex items-center justify-center">
+    <nav class="w-[min(1100px,96%)] flex items-center justify-between px-4 py-3 rounded-xl bg-black/40 backdrop-blur border border-white/10 shadow-[0_12px_50px_rgba(0,0,0,0.7)]">
+      <!-- NAV LINKS FIRST (renders on the left in LTR with justify-between) -->
+      <ul class="flex items-center gap-3 text-xs">
+        <li>
+          <a href="index.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            Home
+          </a>
+        </li>
+        <li>
+          <a href="about.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            About
+          </a>
+        </li>
+        <li>
+          <a href="projects.html" class="px-3 py-2 rounded-md text-cyan-200 bg-white/10 shadow-[0_0_20px_rgba(0,255,243,0.4)]">
+            Projects
+          </a>
+        </li>
+        <li>
+          <a href="contacts.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            Contact
+          </a>
+        </li>
+        <li>
+          <a href="../projects.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">HE</a>
+        </li>
+      </ul>
+
+      <!-- LOGO BLOCK SECOND (renders on the right in LTR with justify-between) -->
+      <a href="https://8bitretro.tech" class="flex items-center gap-4 no-underline cursor-pointer">
+        <div class="w-16 h-12 flex items-center justify-center rounded-md bg-gradient-to-r from-pink-500/40 to-cyan-400/20 border border-white/30 shadow-[0_0_25px_rgba(255,45,210,0.6)]">
+          <span class="[font-family:'Press Start 2P',monospace] text-pink-300 text-xs uppercase tracking-[0.2em]">
+            RETRO
+          </span>
+        </div>
+        <div class="[font-family:'Press Start 2P',monospace] text-cyan-100 text-sm">
+          8bitretro.tech
+        </div>
+      </a>
+    </nav>
+  </header>
+
+  <main class="min-h-screen flex items-center justify-center pt-28 pb-12">
+    <div class="w-[min(1100px,96%)]">
+      <div class="rounded-2xl p-6 bg-black/60 border border-cyan-400/25 shadow-[0_20px_60px_rgba(0,0,0,0.9)] backdrop-blur transition duration-300 hover:shadow-[0_0_40px_rgba(0,255,243,0.18)] hover:border-cyan-300/40 mb-8 text-left">
+        <h1 class="[font-family:'Press Start 2P',monospace] text-2xl md:text-3xl text-cyan-200 text-left">
+          Projects
+        </h1>
+        <p class="mt-3 text-sm text-sky-100/85 leading-relaxed text-left">
+          A collection of retro-inspired projects: demos, music, tools, and creative experiments built around the Commodore 64, the Amiga, and '80s aesthetics.
+        </p>
+      </div>
+
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <a href="releases.html" class="block">
+        <article class="flex flex-col rounded-xl p-4 bg-black/60 border border-cyan-400/20 shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:border-pink-400/40 hover:shadow-[0_18px_60px_rgba(255,45,210,0.25)] transition text-left cursor-pointer">
+          <h2 class="[font-family:'Press Start 2P',monospace] text-base text-pink-300 mb-2 text-left">Digital Art on the Commodore 64</h2>
+          <p class="text-sm text-sky-100/85 leading-relaxed text-left">
+            Developing demos, graphic effects, and bit-level pixel code on the Commodore 64.
+          </p>
+          <!-- added crt classes, kept all existing classes -->
+          <div class="mt-4 w-full h-36 flex items-center justify-center bg-black/70 rounded-xl border border-cyan-300/30 shadow-[0_0_22px_rgba(0,255,243,0.18)] transition duration-300 hover:shadow-[0_0_28px_rgba(255,45,210,0.22)] crt-frame crt-flicker">
+            <img src="../assets/images/Outrun.gif" alt="C64 Demo WIP" class="w-full h-full object-contain crt-flicker" />
+          </div>
+        </article>
+        </a>
+
+        <a href="kleiner82.html" class="block">
+        <article class="flex flex-col rounded-xl p-4 bg-black/60 border border-cyan-400/20 shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:border-pink-400/40 hover:shadow-[0_18px_60px_rgba(255,45,210,0.25)] transition text-left cursor-pointer">
+          <h2 class="[font-family:'Press Start 2P',monospace] text-base text-pink-300 mb-2 text-left">Kleiner'82 Band</h2>
+          <p class="text-sm text-sky-100/85 leading-relaxed text-left">
+            Original music inspired by the '80s, SID chips, and modern retro sound.
+          </p>
+          <!-- synthwave card uses object-cover and kept unchanged except added crt classes -->
+          <div class="mt-4 w-full h-36 flex items-center justify-center bg-black/60 rounded-xl border border-cyan-300/30 shadow-[0_0_22px_rgba(0,255,243,0.18)] transition duration-300 hover:shadow-[0_0_28px_rgba(255,45,210,0.22)] crt-frame crt-flicker">
+            <img src="../assets/images/mysynthwave_animaition.gif" alt="Synthwave Tracks" class="w-full h-full object-cover crt-flicker" />
+          </div>
+        </article>
+        </a>
+
+        <article class="flex flex-col rounded-xl p-4 bg-black/60 border border-cyan-400/20 shadow-[0_12px_40px_rgba(0,0,0,0.7)] hover:border-pink-400/40 hover:shadow-[0_18px_60px_rgba(255,45,210,0.25)] transition text-left">
+          <h2 class="[font-family:'Press Start 2P',monospace] text-base text-pink-300 mb-2 text-left">8-Bit Israel Magazine</h2>
+          <p class="text-sm text-sky-100/85 leading-relaxed text-left">
+            Retro content, articles, reviews, and news from the 8-bit and 16-bit world.
+            <button id="magazine-open-btn" type="button" class="inline text-cyan-300 hover:text-pink-300 underline transition mr-1">
+              View issue details
+            </button>
+          </p>
+          <!-- existing media wrapper (unchanged sizing/behaviour), kept crt-frame/crt-flicker classes -->
+          <div class="mt-4 w-full h-36 flex items-center justify-center bg-black/70 rounded-xl border border-cyan-300/30 shadow-[0_0_22px_rgba(0,255,243,0.18)] transition duration-300 hover:shadow-[0_0_28px_rgba(255,45,210,0.22)] crt-frame crt-flicker">
+            <img src="../assets/images/OutRun (Sega - Genesis - 1991).gif" alt="8-Bit Magazine" class="w-full h-full object-contain crt-flicker" />
+          </div>
+        </article>
+        <!-- Add more cards as needed -->
+      </section>
+    </div>
+  </main>
+
+  <!-- Modal: Magazine details (hidden by default) -->
+  <div id="magazine-modal" class="fixed inset-0 z-50 hidden" aria-hidden="true">
+    <!-- overlay -->
+    <div id="magazine-overlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm"></div>
+
+    <!-- centered modal -->
+    <div class="fixed inset-0 flex items-center justify-center p-4">
+      <div role="dialog" aria-modal="true" aria-labelledby="magazine-modal-title"
+           class="relative w-full max-w-xl rounded-2xl bg-black/70 border border-cyan-300/30 shadow-[0_20px_60px_rgba(0,255,243,0.15)] backdrop-blur-md p-6 text-left">
+        <!-- Close (top-right for LTR) -->
+        <button id="magazine-close-btn" aria-label="Close"
+          class="absolute right-4 top-4 w-9 h-9 rounded-full bg-black/30 hover:bg-white/5 text-sky-100 flex items-center justify-center text-lg">
+          ✕
+        </button>
+
+        <!-- Modal content -->
+        <h3 id="magazine-modal-title" class="[font-family:'Press Start 2P',monospace] text-xl text-pink-300 mb-1">8-Bit Israel Magazine</h3>
+        <p class="text-xs text-sky-200/60 mb-5">Retro articles, reviews, and news from the 8-bit world. Download your issue.</p>
+
+        <!-- Newsletter signup -->
+        <div class="mb-5 p-4 rounded-xl bg-black/40 border border-pink-400/20">
+          <p class="text-xs text-pink-200/80 mb-3 font-medium">📨 Want to get the next issue straight to your email?</p>
+          <form id="newsletter-signup-form" class="flex gap-2" novalidate>
+            <input id="newsletter-email" type="email" placeholder="Your email"
+              class="flex-1 rounded-md px-3 py-2 text-sm bg-black/40 border border-yellow-400/40 text-sky-100
+                     placeholder:text-sky-400/40 focus:outline-none focus:ring-2 focus:ring-yellow-300/50" />
+            <button id="newsletter-submit" type="submit"
+              class="shrink-0 px-4 py-2 text-xs rounded-md text-cyan-100 border border-cyan-300/30
+                     bg-gradient-to-r from-cyan-700/10 to-pink-700/10
+                     hover:from-cyan-400/30 hover:to-pink-400/30 transition">
+              Subscribe
+            </button>
+          </form>
+          <p id="newsletter-feedback" class="hidden mt-2 text-xs text-cyan-300">✓ Subscribed successfully!</p>
+        </div>
+
+        <ul class="divide-y divide-white/10 max-h-[65vh] overflow-y-auto overflow-x-hidden">
+
+          <!-- #17 April 2026 -->
+          <li class="grid items-center gap-3 py-3 px-1 hover:bg-white/5 transition rounded" style="grid-template-columns: 2rem 8.5rem 10rem auto">
+            <span class="[font-family:'Press Start 2P',monospace] text-purple-300 text-xs w-8 shrink-0">#17</span>
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">April 2026 <svg class="w-3 h-3 opacity-35 text-purple-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <img src="../assets/images/magazine/icons/icon-17.jpeg" alt="" class="w-40 h-40 object-contain mag-icon">
+            <a href="../assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%97%D7%95%D7%93%D7%A9%20%D7%90%D7%A4%D7%A8%D7%99%D7%9C%202026.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">Download PDF ↓</a>
+          </li>
+
+          <!-- #16 March 2026 — gamepad -->
+          <li class="grid items-center gap-3 py-3 px-1 hover:bg-white/5 transition rounded" style="grid-template-columns: 2rem 8.5rem 10rem auto">
+            <span class="[font-family:'Press Start 2P',monospace] text-teal-300 text-xs w-8 shrink-0">#16</span>
+
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">March 2026 <svg class="w-3 h-3 opacity-35 text-teal-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <img src="../assets/images/magazine/icons/icon-16.jpeg" alt="" class="w-40 h-40 object-contain mag-icon">
+            <a href="../assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%9E%D7%A8%D7%A5%202026.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">Download PDF ↓</a>
+          </li>
+
+          <!-- #15 February 2026 — 4-point star -->
+          <li class="grid items-center gap-3 py-3 px-1 hover:bg-white/5 transition rounded" style="grid-template-columns: 2rem 8.5rem 10rem auto">
+            <span class="[font-family:'Press Start 2P',monospace] text-purple-300 text-xs w-8 shrink-0">#15</span>
+
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">February 2026 <svg class="w-3 h-3 opacity-35 text-purple-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <img src="../assets/images/magazine/icons/icon-15.jpeg" alt="" class="w-40 h-40 object-contain mag-icon">
+            <a href="../assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%A4%D7%91%D7%A8%D7%95%D7%90%D7%A8%202026.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">Download PDF ↓</a>
+          </li>
+
+          <!-- #14 January 2026 — floppy disk -->
+          <li class="grid items-center gap-3 py-3 px-1 hover:bg-white/5 transition rounded" style="grid-template-columns: 2rem 8.5rem 10rem auto">
+            <span class="[font-family:'Press Start 2P',monospace] text-pink-300 text-xs w-8 shrink-0">#14</span>
+
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">January 2026 <svg class="w-3 h-3 opacity-35 text-pink-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <img src="../assets/images/magazine/icons/icon-14.jpeg" alt="" class="w-40 h-40 object-contain mag-icon">
+            <a href="../assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A0%D7%95%D7%90%D7%A8%202026.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">Download PDF ↓</a>
+          </li>
+
+          <!-- #13 December 2025 — trophy -->
+          <li class="grid items-center gap-3 py-3 px-1 hover:bg-white/5 transition rounded" style="grid-template-columns: 2rem 8.5rem 10rem auto">
+            <span class="[font-family:'Press Start 2P',monospace] text-cyan-300 text-xs w-8 shrink-0">#13</span>
+
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">December 2025 <svg class="w-3 h-3 opacity-35 text-cyan-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <img src="../assets/images/magazine/icons/icon-13.jpeg" alt="" class="w-40 h-40 object-contain mag-icon">
+            <a href="../assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%93%D7%A6%D7%9E%D7%91%D7%A8%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">Download PDF ↓</a>
+          </li>
+
+          <!-- #12 November 2025 — moon -->
+          <li class="grid items-center gap-3 py-3 px-1 hover:bg-white/5 transition rounded" style="grid-template-columns: 2rem 8.5rem 10rem auto">
+            <span class="[font-family:'Press Start 2P',monospace] text-orange-300 text-xs w-8 shrink-0">#12</span>
+
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">November 2025 <svg class="w-3 h-3 opacity-35 text-orange-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <img src="../assets/images/magazine/icons/icon-12.jpeg" alt="" class="w-40 h-40 object-contain mag-icon">
+            <a href="../assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%A0%D7%95%D7%91%D7%9E%D7%91%D7%A8%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">Download PDF ↓</a>
+          </li>
+
+          <!-- #11 October 2025 — music note -->
+          <li class="grid items-center gap-3 py-3 px-1 hover:bg-white/5 transition rounded" style="grid-template-columns: 2rem 8.5rem 10rem auto">
+            <span class="[font-family:'Press Start 2P',monospace] text-violet-300 text-xs w-8 shrink-0">#11</span>
+
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">October 2025 <svg class="w-3 h-3 opacity-35 text-violet-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <img src="../assets/images/magazine/icons/icon-11.jpeg" alt="" class="w-40 h-40 object-contain mag-icon">
+            <a href="../assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%90%D7%95%D7%A7%D7%98%D7%95%D7%91%D7%A8%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">Download PDF ↓</a>
+          </li>
+
+          <!-- #10 Mid-September 2025 — bomb -->
+          <li class="grid items-center gap-3 py-3 px-1 hover:bg-white/5 transition rounded" style="grid-template-columns: 2rem 8.5rem 10rem auto">
+            <span class="[font-family:'Press Start 2P',monospace] text-teal-300 text-xs w-8 shrink-0">#10</span>
+
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">Mid-September 2025 <svg class="w-3 h-3 opacity-35 text-teal-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <img src="../assets/images/magazine/icons/icon-10.jpeg" alt="" class="w-40 h-40 object-contain mag-icon">
+            <a href="../assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%20%D7%91%D7%99%D7%98%20%D7%90%D7%9E%D7%A6%D7%A2%20%D7%A1%D7%A4%D7%98%D7%9E%D7%91%D7%A8%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">Download PDF ↓</a>
+          </li>
+
+          <!-- #9 September 2025 — crown -->
+          <li class="grid items-center gap-3 py-3 px-1 hover:bg-white/5 transition rounded" style="grid-template-columns: 2rem 8.5rem 10rem auto">
+            <span class="[font-family:'Press Start 2P',monospace] text-purple-300 text-xs w-8 shrink-0">#9</span>
+
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">September 2025 <svg class="w-3 h-3 opacity-35 text-purple-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <img src="../assets/images/magazine/icons/icon-9.jpeg" alt="" class="w-40 h-40 object-contain mag-icon">
+            <a href="../assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%A1%D7%A4%D7%98%D7%9E%D7%91%D7%A8%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">Download PDF ↓</a>
+          </li>
+
+          <!-- #8 Mid-August 2025 — shield -->
+          <li class="grid items-center gap-3 py-3 px-1 hover:bg-white/5 transition rounded" style="grid-template-columns: 2rem 8.5rem 10rem auto">
+            <span class="[font-family:'Press Start 2P',monospace] text-pink-300 text-xs w-8 shrink-0">#8</span>
+
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">Mid-August 2025 <svg class="w-3 h-3 opacity-35 text-pink-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <img src="../assets/images/magazine/icons/icon-8.jpeg" alt="" class="w-40 h-40 object-contain mag-icon">
+            <a href="../assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%90%D7%9E%D7%A6%D7%A2%20%D7%90%D7%95%D7%92%D7%95%D7%A1%D7%98%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">Download PDF ↓</a>
+          </li>
+
+          <!-- #7 August 2025 — sword -->
+          <li class="grid items-center gap-3 py-3 px-1 hover:bg-white/5 transition rounded" style="grid-template-columns: 2rem 8.5rem 10rem auto">
+            <span class="[font-family:'Press Start 2P',monospace] text-cyan-300 text-xs w-8 shrink-0">#7</span>
+
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">August 2025 <svg class="w-3 h-3 opacity-35 text-cyan-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <img src="../assets/images/magazine/icons/icon-7.jpeg" alt="" class="w-40 h-40 object-contain mag-icon">
+            <a href="../assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%20%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%90%D7%95%D7%92%D7%95%D7%A1%D7%98%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">Download PDF ↓</a>
+          </li>
+
+          <!-- #6 July 2025 — flame -->
+          <li class="grid items-center gap-3 py-3 px-1 hover:bg-white/5 transition rounded" style="grid-template-columns: 2rem 8.5rem 10rem auto">
+            <span class="[font-family:'Press Start 2P',monospace] text-orange-300 text-xs w-8 shrink-0">#6</span>
+
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">July 2025 <svg class="w-3 h-3 opacity-35 text-orange-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <img src="../assets/images/magazine/icons/icon-6.jpeg" alt="" class="w-40 h-40 object-contain mag-icon">
+            <a href="../assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%9C%D7%97%D7%95%D7%93%D7%A9%20%D7%99%D7%95%D7%9C%D7%99%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">Download PDF ↓</a>
+          </li>
+
+          <!-- #5 Mid-June 2025 — heart -->
+          <li class="grid items-center gap-3 py-3 px-1 hover:bg-white/5 transition rounded" style="grid-template-columns: 2rem 8.5rem 10rem auto">
+            <span class="[font-family:'Press Start 2P',monospace] text-violet-300 text-xs w-8 shrink-0">#5</span>
+
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">Mid-June 2025 <svg class="w-3 h-3 opacity-35 text-violet-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <img src="../assets/images/magazine/icons/icon-5.jpeg" alt="" class="w-40 h-40 object-contain mag-icon">
+            <a href="../assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%9C%D7%90%D7%9E%D7%A6%D7%A2%20%D7%99%D7%95%D7%A0%D7%99%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">Download PDF ↓</a>
+          </li>
+
+          <!-- #4 June 2025 — mushroom -->
+          <li class="grid items-center gap-3 py-3 px-1 hover:bg-white/5 transition rounded" style="grid-template-columns: 2rem 8.5rem 10rem auto">
+            <span class="[font-family:'Press Start 2P',monospace] text-teal-300 text-xs w-8 shrink-0">#4</span>
+
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">June 2025 <svg class="w-3 h-3 opacity-35 text-teal-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <img src="../assets/images/magazine/icons/icon-4.jpeg" alt="" class="w-40 h-40 object-contain mag-icon">
+            <a href="../assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%9C%D7%99%D7%95%D7%A0%D7%99%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">Download PDF ↓</a>
+          </li>
+
+          <!-- #3 Mid-May 2025 — lightning -->
+          <li class="grid items-center gap-3 py-3 px-1 hover:bg-white/5 transition rounded" style="grid-template-columns: 2rem 8.5rem 10rem auto">
+            <span class="[font-family:'Press Start 2P',monospace] text-purple-300 text-xs w-8 shrink-0">#3</span>
+
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">Mid-May 2025 <svg class="w-3 h-3 opacity-35 text-purple-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <img src="../assets/images/magazine/icons/icon-3.jpeg" alt="" class="w-40 h-40 object-contain mag-icon">
+            <a href="../assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%90%D7%9E%D7%A6%D7%A2%20%D7%9E%D7%90%D7%99%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">Download PDF ↓</a>
+          </li>
+
+          <!-- #2 May 2025 — gem -->
+          <li class="grid items-center gap-3 py-3 px-1 hover:bg-white/5 transition rounded" style="grid-template-columns: 2rem 8.5rem 10rem auto">
+            <span class="[font-family:'Press Start 2P',monospace] text-pink-300 text-xs w-8 shrink-0">#2</span>
+
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">May 2025 <svg class="w-3 h-3 opacity-35 text-pink-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <img src="../assets/images/magazine/icons/icon-2.jpeg" alt="" class="w-40 h-40 object-contain mag-icon">
+            <a href="../assets/PDF%20download%20for%208bit%20newsletter/%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%9E%D7%90%D7%99%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">Download PDF ↓</a>
+          </li>
+
+          <!-- #1 April 2025 — star -->
+          <li class="grid items-center gap-3 py-3 px-1 hover:bg-white/5 transition rounded" style="grid-template-columns: 2rem 8.5rem 10rem auto">
+            <span class="[font-family:'Press Start 2P',monospace] text-cyan-300 text-xs w-8 shrink-0">#1</span>
+
+            <span class="text-sky-100/80 text-xs shrink-0 flex items-center gap-1">April 2025 <svg class="w-3 h-3 opacity-35 text-cyan-300" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="1" width="10" height="14" rx="1"/><rect x="3" y="1" width="2" height="14" fill="black" opacity="0.25"/><rect x="6" y="4" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="7" width="5" height="1" fill="black" opacity="0.35"/><rect x="6" y="10" width="3" height="1" fill="black" opacity="0.35"/></svg></span>
+            <img src="../assets/images/magazine/icons/icon-1.jpeg" alt="" class="w-40 h-40 object-contain mag-icon">
+            <a href="../assets/PDF%20download%20for%208bit%20newsletter/%20%D7%9E%D7%92%D7%96%D7%99%D7%9F%20%D7%A8%D7%98%D7%A8%D7%95%208%D7%91%D7%99%D7%98%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%20%D7%90%D7%A4%D7%A8%D7%99%D7%9C%202025.pdf" download class="text-xs px-3 py-1.5 rounded-md neon-btn text-cyan-300 hover:text-pink-300 transition whitespace-nowrap shrink-0">Download PDF ↓</a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="pointer-events-none fixed inset-x-0 bottom-0 h-36 opacity-60">
+    <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="g1" x1="0" x2="1">
+          <stop offset="0" stop-color="#ff2dd2" stop-opacity="0.06"/>
+          <stop offset="1" stop-color="#00fff3" stop-opacity="0.06"/>
+        </linearGradient>
+      </defs>
+      <rect width="1440" height="120" fill="url(#g1)" />
+      <g stroke="#00fff3" stroke-opacity="0.06" stroke-width="1">
+        <path d="M0 90 C200 60 400 52 720 52 C1040 52 1240 60 1440 90" fill="none"/>
+      </g>
+      <g fill="#ff2dd2" fill-opacity="0.06">
+        <circle cx="360" cy="36" r="10" />
+        <circle cx="900" cy="24" r="8" />
+      </g>
+    </svg>
+  </div>
+
+  <!-- Modal open/close script -->
+  <script>
+    (function () {
+      const openBtn = document.getElementById('magazine-open-btn');
+      const modal = document.getElementById('magazine-modal');
+      const overlay = document.getElementById('magazine-overlay');
+      const closeBtn = document.getElementById('magazine-close-btn');
+      const dialog = modal ? modal.querySelector('[role="dialog"]') : null;
+
+      function openModal() {
+        if (!modal) return;
+        modal.classList.remove('hidden');
+        modal.setAttribute('aria-hidden', 'false');
+        if (dialog) {
+          dialog.style.opacity = '0';
+          dialog.classList.remove('modal-crt-open');
+          setTimeout(function () {
+            dialog.style.opacity = '';
+            void dialog.offsetWidth;
+            dialog.classList.add('modal-crt-open');
+          }, 800);
+        }
+      }
+
+      function closeModal() {
+        if (!modal) return;
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
+        if (dialog) dialog.classList.remove('modal-crt-open');
+      }
+
+      if (openBtn) openBtn.addEventListener('click', openModal);
+      if (overlay) overlay.addEventListener('click', closeModal);
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' || e.key === 'Esc') closeModal();
+      });
+    })();
+
+    // Newsletter signup form
+    (function () {
+      const NEWSLETTER_WEBHOOK = 'https://hook.eu2.make.com/3wu44fa6vss84xmyv2woi8tpzbzkqw8v';
+      const form     = document.getElementById('newsletter-signup-form');
+      const btn      = document.getElementById('newsletter-submit');
+      const feedback = document.getElementById('newsletter-feedback');
+
+      if (!form) return;
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const email = document.getElementById('newsletter-email').value.trim();
+        if (!email) return;
+
+        btn.disabled = true;
+        btn.textContent = '...';
+
+        const payload = {
+          email,
+          source: '8bitretro.tech/newsletter-modal',
+          sentAt: new Date().toISOString(),
+          secret_key: 'R3tr0W4v3_8bit_2026!'
+        };
+
+        try {
+          await fetch(NEWSLETTER_WEBHOOK, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        } catch (_) {
+          await fetch(NEWSLETTER_WEBHOOK, {
+            method: 'POST', mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        }
+
+        form.reset();
+        if (feedback) feedback.classList.remove('hidden');
+        btn.textContent = 'Subscribe';
+        btn.disabled = false;
+      });
+    })();
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var overlay = document.getElementById('c64-boot');
+      var lines = [
+        '    **** COMMODORE 64 BASIC V2 ****',
+        '',
+        ' 64K RAM SYSTEM  38911 BASIC BYTES FREE',
+        '',
+        'READY.',
+        'LOAD "PROJECTS",8,1',
+        'SEARCHING FOR PROJECTS',
+        'LOADING...',
+        '',
+        'READY.',
+      ];
+
+      var content = '';
+      var lineIndex = 0;
+      var charIndex = 0;
+
+      function typeChar() {
+        if (lineIndex >= lines.length) {
+          // Show blinking cursor then fade out
+          overlay.innerHTML = content + '<span class="c64-cursor">█</span>';
+          setTimeout(function () {
+            overlay.style.transition = 'opacity 0.5s';
+            overlay.style.opacity = '0';
+            overlay.addEventListener('transitionend', function () {
+              overlay.remove();
+            }, { once: true });
+          }, 600);
+          return;
+        }
+
+        var line = lines[lineIndex];
+
+        if (line === '') {
+          // Blank line: add instantly with short pause
+          content += '\n';
+          overlay.textContent = content;
+          lineIndex++;
+          charIndex = 0;
+          setTimeout(typeChar, 80);
+          return;
+        }
+
+        if (charIndex < line.length) {
+          content += line[charIndex];
+          overlay.textContent = content;
+          charIndex++;
+          var delay = 15 + Math.random() * 15;
+          setTimeout(typeChar, delay);
+        } else {
+          content += '\n';
+          overlay.textContent = content;
+          lineIndex++;
+          charIndex = 0;
+          setTimeout(typeChar, 120);
+        }
+      }
+
+      typeChar();
+    });
+  </script>
+</body>
+</html>

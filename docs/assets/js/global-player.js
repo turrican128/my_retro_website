@@ -85,6 +85,7 @@
   }
 
   function buildDom() {
+    var isHebrew = document.documentElement.lang === 'he';
     var root = document.createElement('div');
     root.id = 'gp-root';
     root.className = 'gp-needs-click gp-collapsed';
@@ -95,7 +96,7 @@
       +   '</button>'
       +   '<div id="gp-info">'
       +     '<div id="gp-title">8bitretro radio</div>'
-      +     '<div id="gp-artist">לחץ כדי להתחיל</div>'
+      +     '<div id="gp-artist">' + (isHebrew ? 'לחץ כדי להתחיל' : 'Click to start') + '</div>'
       +   '</div>'
       +   '<div id="gp-controls">'
       +     '<button class="gp-btn" id="gp-prev" type="button" title="Previous" aria-label="Previous">⏮</button>'
@@ -246,7 +247,8 @@
     audio.addEventListener('error', function () {
       var err = audio.error;
       console.warn('[GlobalPlayer] audio error', err && err.code, 'src=', audio.currentSrc || audio.src);
-      elArtist.textContent = 'שגיאה בטעינת הקובץ';
+      var isHebrew = document.documentElement.lang === 'he';
+      elArtist.textContent = isHebrew ? 'שגיאה בטעינת הקובץ' : 'Error loading file';
     });
 
     // Persist on navigation
