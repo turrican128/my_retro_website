@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="he" dir="rtl">
 <head>
   <meta charset="utf-8" />
@@ -577,8 +577,8 @@
           var oL = (ball.x + BALL_SIZE/2) - b.x, oR = (b.x+b.w) - (ball.x-BALL_SIZE/2);
           var oT = (ball.y + BALL_SIZE/2) - b.y, oB = (b.y+b.h) - (ball.y-BALL_SIZE/2);
           var m = Math.min(oL,oR,oT,oB);
-          if (m === oT || m === oB) ball.dy = -ball.dy; else ball.dx = -ball.dx;
-          break;
+                    if (m === oT || m === oB) { ball.dy = -ball.dy; ball.y += (m === oT ? -1 : 1) * (BALL_SIZE/2); } else { ball.dx = -ball.dx; ball.x += (m === oL ? -1 : 1) * (BALL_SIZE/2); }
+                    break;
         }
       }
       if (left === 0) { if (level < 5) nextLevel(); else state = S_WIN; }
@@ -719,6 +719,17 @@
 
     // ── Loop ──────────────────────────────────────────────────────────
     var running = true;
+    var wasPausedByVisibility = false;
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden && state === S_PLAY) {
+        state = S_PAUSE;
+        wasPausedByVisibility = true;
+      } else if (!document.hidden && wasPausedByVisibility && state === S_PAUSE) {
+        state = S_PLAY;
+        wasPausedByVisibility = false;
+        if (!running) { running = true; loop(); }
+      }
+    });
     function loop() {
       update();
       // Stop loop on game over or win — draw static end screen once
