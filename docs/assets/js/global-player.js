@@ -1,6 +1,11 @@
 (function () {
   'use strict';
 
+  // Pages under docs/en/ sit one directory deeper than docs/, so relative
+  // asset paths need a hop up to resolve. Without this, every asset request
+  // from an English page 404s against docs/en/assets/.
+  var ASSET_BASE = /\/en\//.test(location.pathname) ? '../' : '';
+
   var MAX_VOL = 0.7;
   var STORAGE_KEY = '8bit_player_state';
 
@@ -134,7 +139,7 @@
     var collapsed = (typeof state.collapsed === 'boolean') ? state.collapsed : (window.innerWidth < 900);
 
     audio.volume = vol;
-    audio.src = PLAYLIST[trackIndex].src;
+    audio.src = ASSET_BASE + PLAYLIST[trackIndex].src;
 
     var elTitle = root.querySelector('#gp-title');
     var elArtist = root.querySelector('#gp-artist');
@@ -207,7 +212,7 @@
     }
     function loadTrack(idx, autoPlay) {
       trackIndex = ((idx % PLAYLIST.length) + PLAYLIST.length) % PLAYLIST.length;
-      audio.src = PLAYLIST[trackIndex].src;
+      audio.src = ASSET_BASE + PLAYLIST[trackIndex].src;
       audio.currentTime = 0;
       renderTrack();
       saveState({ trackIndex: trackIndex, position: 0 });
