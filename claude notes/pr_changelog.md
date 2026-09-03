@@ -155,3 +155,11 @@ Ongoing log of all pull requests merged into this project.
 - **Note:** `'../'` rather than root-absolute `/assets/...` so the site survives being served from a subpath and local previews match production
 - **Verified:** English page 5 console errors → 0, social icons 0/4 → 4/4, audio resolves to `/assets/music/` instead of `/en/assets/music/`; Hebrew page unchanged at 0 errors with unprefixed paths
 - **Files changed:** `docs/assets/js/global-player.js`, `docs/assets/js/social-strip.js`
+
+### PR #47 — `claude/remove-em-dashes` — *Merged 2026-09-03*
+- **Fix:** Replace every user-visible em dash (`—`) with a plain hyphen across the site, per standing preference (see earlier `fix: replace em dashes with single dashes in index hero text`)
+- **Scope:** 49 replacements in 11 files — 10 HTML pages (Hebrew + English) and `global-player.js` (13 artist names that render in the player pill). Diff is 47 insertions / 47 deletions, a pure 1:1 character swap with no prose rewritten
+- **Left alone:** 47 em dashes inside JS/HTML comments (invisible to visitors; rewriting them would have doubled the diff for no user-facing change)
+- **Left alone:** en dashes (`–`), a different character, used mainly as the page-title separator (`About – 8bitretro.tech`) and in a few headings — flagged for a possible follow-up
+- **Verified:** `document.body.innerText` contains 0 em dashes on both index pages; no regressions (8 video cards, 8 thumbnails, 4 social icons, 0 console errors)
+- **Files changed:** `docs/{about,index,kleiner82,projects,releases}.html`, `docs/en/{about,index,kleiner82,projects,releases}.html`, `docs/assets/js/global-player.js`
