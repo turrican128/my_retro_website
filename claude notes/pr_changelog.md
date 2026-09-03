@@ -163,3 +163,14 @@ Ongoing log of all pull requests merged into this project.
 - **Left alone:** en dashes (`–`), a different character, used mainly as the page-title separator (`About – 8bitretro.tech`) and in a few headings — flagged for a possible follow-up
 - **Verified:** `document.body.innerText` contains 0 em dashes on both index pages; no regressions (8 video cards, 8 thumbnails, 4 social icons, 0 console errors)
 - **Files changed:** `docs/{about,index,kleiner82,projects,releases}.html`, `docs/en/{about,index,kleiner82,projects,releases}.html`, `docs/assets/js/global-player.js`
+
+### PR #48 — `claude/newsletter-issues-18-22` — *Merged 2026-09-03*
+- **Feature:** Add newsletter issues #18–#22 (מאי–ספטמבר 2026) to the magazine archive, which had stopped at אפריל 2026 (#17). The five newer issues only ever existed as email and were recovered from the mail archive
+- **Feature:** 5 PDFs generated from the newsletter content, laid out in the site's own retro style (Hebrew RTL, neon/CRT palette) and rendered via headless Chrome — rather than printed from the raw email, so issues 18–22 stay visually coherent with the 17 magazine PDFs already in the list
+- **Feature:** 5 generated synthwave cover thumbnails (`icon-18`…`icon-22`) — sun, perspective grid, neon frame — in the same 736×1076 portrait format as the existing icons, one per issue so no two rows share artwork
+- **Feature:** 5 rows added to `docs/projects.html` and `docs/en/projects.html`, continuing the existing alternating purple/teal numbering
+- **Note:** Rows are labelled by month, not by the issue numbers in the email subjects — those are inconsistent (June *and* July both say "גיליון 21", August 22, September 23), while the site's rows have always been month-based
+- **Note:** July's original newsletter was no longer in the mailbox; recovered from a forward. August's was sitting in Trash
+- **Note:** Item #05 of the August issue contains apparent accidental text (`dfsdfsdf` and a stray personal line mid-article); omitted from the archived PDF
+- **Verified:** 5 rows render in the archive modal on both pages newest-first, all 5 covers load, every PDF/icon reference resolves against disk (0 broken), 0 console errors
+- **Files changed:** `docs/projects.html`, `docs/en/projects.html`, 5 new PDFs, 5 new icons (12 files, +80 lines)
