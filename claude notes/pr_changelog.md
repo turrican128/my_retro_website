@@ -181,3 +181,11 @@ Ongoing log of all pull requests merged into this project.
 - **Scope:** Images only — same `736×1104` portrait format and same filenames, so no markup changes
 - **Reviewed:** Checked in the running archive modal on both language pages and approved before merge
 - **Files changed:** `docs/assets/images/magazine/icons/icon-18..22.jpeg`
+
+### PR #50 — `claude/nav-releases-kleiner` — *Merged 2026-09-03*
+- **Feature:** Add `ריליסים` / `Releases` and `Kleiner'82` to the nav on all 12 pages, between Projects and Contact. Both pages existed but nothing linked to them, so the CSDb release list and the Kleiner'82 album player were reachable only by typing the URL
+- **Fix:** Rebuild every nav link's classes so exactly one is active per page — this also corrects two pre-existing oddities: `kleiner82.html` highlighted *Projects* rather than itself, and `releases.html` highlighted nothing at all
+- **Copy:** Front-page video-series heading now ends with `דיגיטלית`; English reads "From a C64 Analog Cassette to a Digital Crack"
+- **Verified:** At 1280px on both languages — no nav overflow, no link off-screen, exactly one active link per page (all 12 checked), both new links navigate and self-highlight, 0 console errors
+- **Known limitation (pre-existing, worsened):** at ~390px the nav already overflowed because the in-nav music player (`#gp-root`) is 323px of a 360px bar with `flex-shrink:0`, squeezing the link strip to 0px. With two more links, Contact and the language toggle now fall off the left edge. Three mitigations were tried and rejected: nav wrapping (grew the bar to 180px and hid the page `h1` by 59px), a scrollable strip (strip still resolved to 0px because the player won't yield space), and shrinking the player below 768px (unverifiable — the browser kept serving a cached `global-player.js`). Real fix belongs in its own change against `global-player.js`
+- **Files changed:** all 6 Hebrew + all 6 English HTML pages (12 files, +130 / −10)
