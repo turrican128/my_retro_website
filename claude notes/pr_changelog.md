@@ -174,3 +174,10 @@ Ongoing log of all pull requests merged into this project.
 - **Note:** Item #05 of the August issue contains apparent accidental text (`dfsdfsdf` and a stray personal line mid-article); omitted from the archived PDF
 - **Verified:** 5 rows render in the archive modal on both pages newest-first, all 5 covers load, every PDF/icon reference resolves against disk (0 broken), 0 console errors
 - **Files changed:** `docs/projects.html`, `docs/en/projects.html`, 5 new PDFs, 5 new icons (12 files, +80 lines)
+
+### PR #49 — `claude/newsletter-covers-artwork` — *Merged 2026-09-03*
+- **Fix:** Replace the generated template covers for issues #18–#22 shipped in #48. Those were drawn from a single programmatic template (synthwave sun + grid, number and month swapped in), so at thumbnail size all five read as the same image and none matched the archive's established look — warm, detailed retro-computing scenes and period advertising, a different subject per issue
+- **Fix:** Five distinct scenes instead — #18 bedroom desk at night, #19 sunlit morning study, #20 arcade corridor at night, #21 datasette close-up with hand-written label, #22 living room at sunset with CRT television. Original scenes, not recreations of real advertisements
+- **Scope:** Images only — same `736×1104` portrait format and same filenames, so no markup changes
+- **Reviewed:** Checked in the running archive modal on both language pages and approved before merge
+- **Files changed:** `docs/assets/images/magazine/icons/icon-18..22.jpeg`
