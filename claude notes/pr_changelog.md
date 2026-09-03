@@ -148,3 +148,10 @@ Ongoing log of all pull requests merged into this project.
 - **Revert point:** tag `baseline-before-video-series` at `c9372cd`
 
 > **Known issue, not from this PR:** `global-player.js` and `social-strip.js` hardcode page-relative `assets/...` paths, which resolve to `docs/en/assets/...` on the English pages. Result: the global music player has no audio and the social icons 404 on all 6 English pages. Needs a separate fix.
+
+### PR #46 — `claude/fix-en-asset-paths` — *Merged 2026-09-03*
+- **Fix:** `global-player.js` and `social-strip.js` built asset URLs as page-relative strings (`'assets/...'`), which resolve to `docs/en/assets/` from English pages and 404. Live impact: the global music player had no audio and all 4 social icons were missing on all 6 English pages (5 console 404s per page), from the moment the English version shipped
+- **Fix:** Both files now derive `var ASSET_BASE = /\/en\//.test(location.pathname) ? '../' : ''` once and apply it where the URL is consumed (`audio.src` ×2, `img.src` ×1) — the 13-track playlist and 4-link social table are left untouched
+- **Note:** `'../'` rather than root-absolute `/assets/...` so the site survives being served from a subpath and local previews match production
+- **Verified:** English page 5 console errors → 0, social icons 0/4 → 4/4, audio resolves to `/assets/music/` instead of `/en/assets/music/`; Hebrew page unchanged at 0 errors with unprefixed paths
+- **Files changed:** `docs/assets/js/global-player.js`, `docs/assets/js/social-strip.js`

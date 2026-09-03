@@ -1,6 +1,11 @@
 (function () {
   'use strict';
 
+  // Pages under docs/en/ sit one directory deeper than docs/, so relative
+  // asset paths need a hop up to resolve. Without this, every asset request
+  // from an English page 404s against docs/en/assets/.
+  var ASSET_BASE = /\/en\//.test(location.pathname) ? '../' : '';
+
   var LINKS = [
     { label: 'Facebook',  href: 'https://www.facebook.com/alex.goldblat',   img: 'assets/images/contacts/facebook.png' },
     { label: 'YouTube',   href: 'https://www.youtube.com/@Kleiner82-tf8bz', img: 'assets/images/contacts/youtube.png' },
@@ -39,7 +44,7 @@
       a.setAttribute('aria-label', item.label);
       if (item.img) {
         var img = document.createElement('img');
-        img.src = item.img;
+        img.src = ASSET_BASE + item.img;
         img.alt = item.label;
         img.loading = 'lazy';
         a.appendChild(img);
