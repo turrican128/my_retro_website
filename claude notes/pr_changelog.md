@@ -133,3 +133,18 @@ Ongoing log of all pull requests merged into this project.
 - **Feature:** Pure inline SVG, no extra asset files, ~26×16px display, `image-rendering: pixelated` + neon cyan drop-shadow to match the existing pixel-art icon style
 - **A11y:** `title` attribute for hover tooltip (`English` / `עברית`), `aria-label` for screen readers, `aria-hidden="true"` on the decorative SVG
 - **Files changed:** all 6 Hebrew HTML pages + all 6 English HTML pages (12 files, +112 / −20)
+
+## 2026-09-03
+
+### PR #45 — `claude/human-race-video-series` — *Draft, open*
+- **Feature:** New `#video-series` section at the bottom of the home page — an 8-episode grid for the YouTube series on cracking the Human Race cassette with modern tools (shared title: `מקסטה אנלוגית של קומודור 64 לפריצה האקינג בכלים מודרניים`)
+- **Feature:** Lazy YouTube facades — each card renders `img.youtube.com/vi/<ID>/hqdefault.jpg` and only swaps in a real iframe on click, avoiding 8 third-party players loading on every home-page visit
+- **Feature:** Cards reuse the CRT scanline + vignette treatment from the Breakout canvas; episode badge (`פרק 1…8` / `EP 1…8`), per-card outbound YouTube link, `youtube-nocookie.com` embeds
+- **Behaviour:** Starting a video calls `GlobalPlayer.pause()` so the persistent site music cannot play over it; only one episode plays at a time (opening a card tears down any other card's iframe)
+- **Behaviour:** An empty episode ID renders a `בקרוב` / `Coming soon` placeholder instead of a broken embed, so a partially-filled list degrades gracefully
+- **Episodes:** All 8 IDs wired from channel `UCIoM9Tdqb2VlHO76_ACjk4Q` — `Z71GCPsKcWc`, `ED14kbgNkNQ`, `aX0nLfNu59I`, `T-RxgOkyiUQ`, `qi6SSvWJg7o`, `GtKcssJTb4g`, `IwsJfXSJF8A` (סיום / Finale), `V2A7YQ6BhXE` (בונוס / Bonus)
+- **Files changed:** `docs/index.html`, `docs/en/index.html` (+113 each, pure additions)
+- **Also on branch:** `5c64017` — unrelated pre-existing Breakout fixes (brick-collision push-out, auto-pause on tab hide) committed separately so either change can be reverted alone
+- **Revert point:** tag `baseline-before-video-series` at `c9372cd`
+
+> **Known issue, not from this PR:** `global-player.js` and `social-strip.js` hardcode page-relative `assets/...` paths, which resolve to `docs/en/assets/...` on the English pages. Result: the global music player has no audio and the social icons 404 on all 6 English pages. Needs a separate fix.

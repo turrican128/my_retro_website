@@ -279,6 +279,119 @@
         </div>
       </div>
     </section>
+
+    <!-- ── Video series: cracking the Human Race cassette (8 episodes) ── -->
+    <section id="video-series" class="w-[min(1100px,96%)] mt-8">
+      <div class="mx-auto">
+        <h2 class="[font-family:'Press Start 2P',monospace] text-xl md:text-2xl text-cyan-200 mb-2 text-left">
+          From a C64 Analog Cassette to a Crack
+        </h2>
+        <p class="text-sm text-pink-100/85 mb-4 text-left">
+          Hacking with modern tools — an eight-part series on cracking the Human Race cassette, from digitising the audio all the way to a working crack.
+        </p>
+
+        <div id="episode-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+      </div>
+    </section>
+
+    <!-- Video series engine: lazy YouTube facades (thumbnail now, iframe only on click) -->
+    <script>
+    (function () {
+      // ── Episode list ─────────────────────────────────────────────────
+      // Paste the 11-character YouTube video ID for each episode below.
+      // An empty id renders a "Coming soon" placeholder instead of a broken card.
+      var EPISODES = [
+        { ep: 1, id: 'Z71GCPsKcWc' },
+        { ep: 2, id: 'ED14kbgNkNQ' },
+        { ep: 3, id: 'aX0nLfNu59I' },
+        { ep: 4, id: 'T-RxgOkyiUQ' },
+        { ep: 5, id: 'qi6SSvWJg7o' },
+        { ep: 6, id: 'GtKcssJTb4g' },
+        { ep: 7, id: 'IwsJfXSJF8A', note: 'Finale' },
+        { ep: 8, id: 'V2A7YQ6BhXE', note: 'Bonus' }
+      ];
+
+      var grid = document.getElementById('episode-grid');
+      if (!grid) return;
+
+      var SCANLINES = 'background:repeating-linear-gradient(to bottom, rgba(0,0,0,0.35) 0px, rgba(0,0,0,0.35) 1px, transparent 1px, transparent 3px);';
+      var VIGNETTE  = 'background:radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.7) 100%);';
+
+      // Silence the persistent site music so it does not play over a video.
+      function pauseSiteMusic() {
+        try {
+          if (window.GlobalPlayer && typeof window.GlobalPlayer.pause === 'function') {
+            window.GlobalPlayer.pause();
+          }
+        } catch (e) {}
+      }
+
+      // Swap a card back to its thumbnail, tearing the iframe down so it stops playing.
+      function closeCard(card) {
+        var frame = card.querySelector('iframe');
+        if (frame) frame.parentNode.removeChild(frame);
+        var facade = card.querySelector('.ep-facade');
+        if (facade) facade.classList.remove('hidden');
+        card.classList.remove('ep-open');
+      }
+
+      function openCard(card, ep) {
+        // Only one episode plays at a time.
+        var open = grid.querySelector('.ep-open');
+        if (open && open !== card) closeCard(open);
+        pauseSiteMusic();
+
+        var screen = card.querySelector('.ep-screen');
+        var frame = document.createElement('iframe');
+        frame.src = 'https://www.youtube-nocookie.com/embed/' + ep.id + '?autoplay=1&rel=0';
+        frame.className = 'absolute inset-0 w-full h-full z-20';
+        frame.title = 'Episode ' + ep.ep;
+        frame.setAttribute('frameborder', '0');
+        frame.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+        frame.setAttribute('allowfullscreen', '');
+        screen.appendChild(frame);
+
+        var facade = card.querySelector('.ep-facade');
+        if (facade) facade.classList.add('hidden');
+        card.classList.add('ep-open');
+      }
+
+      EPISODES.forEach(function (ep) {
+        var card = document.createElement('article');
+        card.className = 'relative rounded-2xl overflow-hidden bg-black/60 border border-cyan-400/30 shadow-[0_16px_50px_rgba(0,0,0,0.8)] text-left';
+
+        var facade = ep.id
+          ? '<button type="button" class="ep-facade absolute inset-0 z-10 w-full h-full flex items-center justify-center group" aria-label="Play episode ' + ep.ep + '">'
+            +   '<img src="https://img.youtube.com/vi/' + ep.id + '/hqdefault.jpg" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover opacity-85" />'
+            +   '<span class="pointer-events-none absolute inset-0" style="' + SCANLINES + '"></span>'
+            +   '<span class="pointer-events-none absolute inset-0" style="' + VIGNETTE + '"></span>'
+            +   '<span class="relative w-12 h-12 rounded-full border-2 border-cyan-300/70 bg-black/50 flex items-center justify-center shadow-[0_0_25px_rgba(0,255,243,0.5)] transition group-hover:scale-110 group-hover:border-pink-400/80">'
+            +     '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-cyan-200 group-hover:text-pink-300" aria-hidden="true"><polygon points="6,4 20,12 6,20"/></svg>'
+            +   '</span>'
+            + '</button>'
+          : '<div class="absolute inset-0 flex items-center justify-center text-[10px] text-cyan-300/60">Coming soon</div>';
+
+        card.innerHTML =
+            '<div class="ep-screen relative aspect-video bg-black overflow-hidden">'
+          +   facade
+          +   '<span class="pointer-events-none absolute top-2 left-2 z-30 [font-family:\'Press Start 2P\',monospace] text-[9px] px-2 py-1 rounded bg-black/70 border border-pink-400/40 text-pink-300">EP ' + ep.ep + (ep.note ? ' · ' + ep.note : '') + '</span>'
+          + '</div>'
+          + '<div class="p-3 flex items-center justify-between gap-2">'
+          +   '<span class="text-[11px] text-cyan-200/70">' + (ep.id ? 'Click to watch' : 'Coming soon') + '</span>'
+          +   (ep.id
+              ? '<a href="https://www.youtube.com/watch?v=' + ep.id + '" target="_blank" rel="noopener noreferrer" class="text-[11px] text-pink-300 hover:text-cyan-200 transition">YouTube ↗</a>'
+              : '')
+          + '</div>';
+
+        var btn = card.querySelector('.ep-facade');
+        if (btn) {
+          btn.addEventListener('click', function () { openCard(card, ep); });
+        }
+
+        grid.appendChild(card);
+      });
+    })();
+    </script>
   </main>
 
   <!-- decorative grid at the bottom -->
