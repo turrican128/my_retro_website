@@ -301,14 +301,14 @@
       // Paste the 11-character YouTube video ID for each episode below.
       // An empty id renders a "Coming soon" placeholder instead of a broken card.
       var EPISODES = [
-        { ep: 1, id: '' },
-        { ep: 2, id: '' },
-        { ep: 3, id: '' },
-        { ep: 4, id: '' },
-        { ep: 5, id: '' },
-        { ep: 6, id: '' },
-        { ep: 7, id: '' },
-        { ep: 8, id: '' }
+        { ep: 1, id: 'Z71GCPsKcWc' },
+        { ep: 2, id: 'ED14kbgNkNQ' },
+        { ep: 3, id: 'aX0nLfNu59I' },
+        { ep: 4, id: 'T-RxgOkyiUQ' },
+        { ep: 5, id: 'qi6SSvWJg7o' },
+        { ep: 6, id: 'GtKcssJTb4g' },
+        { ep: 7, id: 'IwsJfXSJF8A', note: 'Finale' },
+        { ep: 8, id: 'V2A7YQ6BhXE', note: 'Bonus' }
       ];
 
       var grid = document.getElementById('episode-grid');
@@ -374,7 +374,7 @@
         card.innerHTML =
             '<div class="ep-screen relative aspect-video bg-black overflow-hidden">'
           +   facade
-          +   '<span class="pointer-events-none absolute top-2 left-2 z-30 [font-family:\'Press Start 2P\',monospace] text-[9px] px-2 py-1 rounded bg-black/70 border border-pink-400/40 text-pink-300">EP ' + ep.ep + '</span>'
+          +   '<span class="pointer-events-none absolute top-2 left-2 z-30 [font-family:\'Press Start 2P\',monospace] text-[9px] px-2 py-1 rounded bg-black/70 border border-pink-400/40 text-pink-300">EP ' + ep.ep + (ep.note ? ' · ' + ep.note : '') + '</span>'
           + '</div>'
           + '<div class="p-3 flex items-center justify-between gap-2">'
           +   '<span class="text-[11px] text-cyan-200/70">' + (ep.id ? 'Click to watch' : 'Coming soon') + '</span>'

@@ -142,7 +142,7 @@ Ongoing log of all pull requests merged into this project.
 - **Feature:** Cards reuse the CRT scanline + vignette treatment from the Breakout canvas; episode badge (`פרק 1…8` / `EP 1…8`), per-card outbound YouTube link, `youtube-nocookie.com` embeds
 - **Behaviour:** Starting a video calls `GlobalPlayer.pause()` so the persistent site music cannot play over it; only one episode plays at a time (opening a card tears down any other card's iframe)
 - **Behaviour:** An empty episode ID renders a `בקרוב` / `Coming soon` placeholder instead of a broken embed, so a partially-filled list degrades gracefully
-- **Pending:** The 8 YouTube video IDs are not yet filled in — every card currently shows the placeholder
+- **Episodes:** All 8 IDs wired from channel `UCIoM9Tdqb2VlHO76_ACjk4Q` — `Z71GCPsKcWc`, `ED14kbgNkNQ`, `aX0nLfNu59I`, `T-RxgOkyiUQ`, `qi6SSvWJg7o`, `GtKcssJTb4g`, `IwsJfXSJF8A` (סיום / Finale), `V2A7YQ6BhXE` (בונוס / Bonus)
 - **Files changed:** `docs/index.html`, `docs/en/index.html` (+113 each, pure additions)
 - **Also on branch:** `5c64017` — unrelated pre-existing Breakout fixes (brick-collision push-out, auto-pause on tab hide) committed separately so either change can be reverted alone
 - **Revert point:** tag `baseline-before-video-series` at `c9372cd`
