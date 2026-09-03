@@ -10,19 +10,19 @@
   var STORAGE_KEY = '8bit_player_state';
 
   var PLAYLIST = [
-    { title: 'Remark Music',                       artist: 'Jeroen Tel — Chiptunes!',                src: 'assets/music/global/01-jeroen-tel-remark-music.mp3' },
-    { title: 'Rubicon V22 (wh00p wh00p)',          artist: 'Maniacs of Noise — Jeroen Tel',          src: 'assets/music/global/02-mon-jeroen-tel-rubicon-v22.mp3' },
-    { title: "The Human Race (Kleiner'82 Remix)",  artist: "Rob Hubbard — Kleiner'82",               src: 'assets/music/global/03-kleiner82-rob-hubbard-human-race.mp3' },
-    { title: "Timezone (Kleiner'82 Remix)",        artist: "Lords Of Sonics — Kleiner'82",           src: 'assets/music/global/04-kleiner82-lords-of-sonics-timezone.mp3' },
-    { title: "Kaos (Kleiner'82 Remix)",            artist: "Markus Schneider — Kleiner'82",          src: 'assets/music/global/05-kleiner82-markus-schneider-kaos.mp3' },
-    { title: "The Cat (Kleiner'82 Remix)",         artist: "Markus Müller — Kleiner'82",             src: 'assets/music/global/06-kleiner82-markus-muller-the-cat.mp3' },
-    { title: "Contest Demo p1 (Kleiner'82 Remix)", artist: "Rock — Kleiner'82",                      src: 'assets/music/global/07-kleiner82-rock-contest-demo.mp3' },
-    { title: "Checker Flag (Kleiner'82 Remix)",    artist: "Jeroen Tel — Kleiner'82",                src: 'assets/music/global/08-kleiner82-jeroen-tel-checker-flag.mp3' },
-    { title: "Robocop (Kleiner'82 Remix)",         artist: "Jonathan Dunn — Kleiner'82",             src: 'assets/music/global/09-kleiner82-jonathan-dunn-robocop.mp3' },
-    { title: "Afterburner Final Takeoff",          artist: "Adam Gilmore — Kleiner'82",              src: 'assets/music/global/10-kleiner82-adam-gilmore-afterburner.mp3' },
-    { title: "Double Dragon (Kleiner'82 Remix)",   artist: "Charles Deenen — Kleiner'82",            src: 'assets/music/global/11-kleiner82-charles-deenen-double-dragon.mp3' },
-    { title: "Flimbo's Quest intro",               artist: "Reyn Ouwehand — Kleiner'82",             src: 'assets/music/global/12-kleiner82-reyn-ouwehand-flimbos-quest.mp3' },
-    { title: "Outrun Splash Wave",                 artist: "Jason Brooke — Kleiner'82",              src: 'assets/music/global/13-kleiner82-jason-brooke-outrun-splash-wave.mp3' }
+    { title: 'Remark Music',                       artist: 'Jeroen Tel - Chiptunes!',                src: 'assets/music/global/01-jeroen-tel-remark-music.mp3' },
+    { title: 'Rubicon V22 (wh00p wh00p)',          artist: 'Maniacs of Noise - Jeroen Tel',          src: 'assets/music/global/02-mon-jeroen-tel-rubicon-v22.mp3' },
+    { title: "The Human Race (Kleiner'82 Remix)",  artist: "Rob Hubbard - Kleiner'82",               src: 'assets/music/global/03-kleiner82-rob-hubbard-human-race.mp3' },
+    { title: "Timezone (Kleiner'82 Remix)",        artist: "Lords Of Sonics - Kleiner'82",           src: 'assets/music/global/04-kleiner82-lords-of-sonics-timezone.mp3' },
+    { title: "Kaos (Kleiner'82 Remix)",            artist: "Markus Schneider - Kleiner'82",          src: 'assets/music/global/05-kleiner82-markus-schneider-kaos.mp3' },
+    { title: "The Cat (Kleiner'82 Remix)",         artist: "Markus Müller - Kleiner'82",             src: 'assets/music/global/06-kleiner82-markus-muller-the-cat.mp3' },
+    { title: "Contest Demo p1 (Kleiner'82 Remix)", artist: "Rock - Kleiner'82",                      src: 'assets/music/global/07-kleiner82-rock-contest-demo.mp3' },
+    { title: "Checker Flag (Kleiner'82 Remix)",    artist: "Jeroen Tel - Kleiner'82",                src: 'assets/music/global/08-kleiner82-jeroen-tel-checker-flag.mp3' },
+    { title: "Robocop (Kleiner'82 Remix)",         artist: "Jonathan Dunn - Kleiner'82",             src: 'assets/music/global/09-kleiner82-jonathan-dunn-robocop.mp3' },
+    { title: "Afterburner Final Takeoff",          artist: "Adam Gilmore - Kleiner'82",              src: 'assets/music/global/10-kleiner82-adam-gilmore-afterburner.mp3' },
+    { title: "Double Dragon (Kleiner'82 Remix)",   artist: "Charles Deenen - Kleiner'82",            src: 'assets/music/global/11-kleiner82-charles-deenen-double-dragon.mp3' },
+    { title: "Flimbo's Quest intro",               artist: "Reyn Ouwehand - Kleiner'82",             src: 'assets/music/global/12-kleiner82-reyn-ouwehand-flimbos-quest.mp3' },
+    { title: "Outrun Splash Wave",                 artist: "Jason Brooke - Kleiner'82",              src: 'assets/music/global/13-kleiner82-jason-brooke-outrun-splash-wave.mp3' }
   ];
 
   function loadState() {
