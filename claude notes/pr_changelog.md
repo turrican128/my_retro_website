@@ -189,3 +189,15 @@ Ongoing log of all pull requests merged into this project.
 - **Verified:** At 1280px on both languages — no nav overflow, no link off-screen, exactly one active link per page (all 12 checked), both new links navigate and self-highlight, 0 console errors
 - **Known limitation (pre-existing, worsened):** at ~390px the nav already overflowed because the in-nav music player (`#gp-root`) is 323px of a 360px bar with `flex-shrink:0`, squeezing the link strip to 0px. With two more links, Contact and the language toggle now fall off the left edge. Three mitigations were tried and rejected: nav wrapping (grew the bar to 180px and hid the page `h1` by 59px), a scrollable strip (strip still resolved to 0px because the player won't yield space), and shrinking the player below 768px (unverifiable — the browser kept serving a cached `global-player.js`). Real fix belongs in its own change against `global-player.js`
 - **Files changed:** all 6 Hebrew + all 6 English HTML pages (12 files, +130 / −10)
+
+## 2026-09-06
+
+### PR #51 - `claude/jud-memorial` - *Pending approval*
+- **Feature:** "About Kleiner'82" section on the Kleiner'82 page (Hebrew + English), directly under the hero and above the album player. Tells the story of the group from the Bandcamp bio (formed August 2016 in Herzliya by Alex and Jud, '80s new wave lovers, albums shaped by synth music and analog gear, the six albums) and, set apart under a thin pink rule, the loss of Jud (Yehuda Schpitz) on March 30, 2026, adapted from the Neon Dreams dedication
+- **Content:** Hebrew page is fully in Hebrew, English page in English. Written in the first-person voice of the site's About page
+- **Photo:** `docs/assets/images/jud.jpg` (new) - square crop of Alex and Jud, lightly graded (desaturation, teal shadows / warm highlights, vignette, grain), shown in the site's CRT frame with the caption "Alex and Jud, Herzliya"
+- **Design:** same card, border, pixel-font heading and body text style as the rest of the page. No new fonts, no animations, no extra buttons
+- **Fix:** the page used to auto-scroll to the expanded player on load, which would have scrolled straight past the new section. `openAlbum()` takes a `skipScroll` flag used only for the initial auto-open; clicking a cover still scrolls as before
+- **Not changed:** the Neon Dreams album description (dedication already lives on Bandcamp)
+- **Verified (Playwright, headless Chromium):** both pages at 1280px and 390px - section renders, photo loads, no horizontal overflow, 0 console errors, 0 failed requests, 0 em dashes in visible text, Hebrew text direction rtl. Inline scripts pass `node --check`
+- **Files changed:** `docs/kleiner82.html`, `docs/en/kleiner82.html`, `docs/assets/images/jud.jpg` (new), `claude notes/pr_changelog.md`

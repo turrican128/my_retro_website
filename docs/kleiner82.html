@@ -235,6 +235,31 @@
         </a>
       </div>
 
+      <!-- About Kleiner'82 -->
+      <section id="about-kleiner" class="rounded-2xl p-6 sm:p-8 bg-black/60 border border-cyan-400/25 shadow-[0_20px_60px_rgba(0,0,0,0.9)] backdrop-blur mb-8" dir="rtl" aria-labelledby="about-kleiner-title">
+        <h2 id="about-kleiner-title" class="[font-family:'Press Start 2P',monospace] text-sm sm:text-base text-cyan-200 text-center md:text-start leading-relaxed">
+          על Kleiner'82
+        </h2>
+        <div class="mt-6 flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8">
+          <figure class="shrink-0 text-center">
+            <div class="crt-frame rounded-xl w-[220px] h-[220px] sm:w-[260px] sm:h-[260px] border border-cyan-400/40 shadow-[0_12px_30px_rgba(0,0,0,0.85)]">
+              <img src="assets/images/jud.jpg" alt="אלכס וג'וד" class="w-full h-full object-cover rounded-xl crt-flicker" />
+            </div>
+            <figcaption class="mt-2 text-xs text-cyan-200/70">אלכס וג'וד, הרצליה</figcaption>
+          </figure>
+          <div class="flex-1 text-center md:text-right space-y-4 text-sm text-sky-100/85 leading-relaxed">
+            <p class="">Kleiner'82 נולד באוגוסט 2016 בהרצליה, כשאני וג'וד (יהודה שפיץ) החלטנו שהגיע הזמן להפסיק רק להתגעגע לסאונד של האייטיז ולהתחיל לייצר אותו בעצמנו. שנינו גדלנו על הניו-וייב של שנות השמונים, על סינתיסייזרים אנלוגיים ועל התחושה של נסיעה לילית בעיר ניאונית, ומשם יצא הרעיון הפשוט: להביא את הקול שלנו לאלבומים שמושפעים ממוזיקת סינת' ומציוד אנלוגי.</p>
+            <p class="">ככה הגיע Miami Gateway ב-2017, ואחריו עוד חמישה אלבומים: Lost In Space, Electro Chromosphere, שיתוף פעולה עם Synth Fellow Hawk ב-Arcadia Dreams, רמיקסים ללחנים שאהבנו על הקומודור 64 והאמיגה, ועד Neon Dreams שיצא באפריל 2026.</p>
+            <div class="mt-5 pt-5 border-t border-pink-400/20 space-y-4">
+              <p class="text-xs text-pink-300/80">לזכרו של ג'וד (יהודה שפיץ), 30.3.2026</p>
+            <p class="">ב-30 במרץ 2026 ג'וד הלך לעולמו. הוא היה חבר קרוב כבר יותר מעשרים שנה, הרבה לפני שהיה בכלל Kleiner'82, והוא מי שהקים איתי את הפרויקט הזה. קשה לי למצוא מילים לכמה הנוכחות שלו, התמיכה שלו והחברות שלו היו חלק ממני לאורך השנים. איבדתי מישהו שהיה ממש כמו משפחה. Neon Dreams מוקדש לו.</p>
+            <p class="">ג'וד, תודה על הכול. על המוזיקה, על הרגעים, ועל המסע הבלתי נשכח שעברנו יחד עם Kleiner'82 ומעבר לו.</p>
+            <p class="text-pink-200/90">יהי זכרו ברוך.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Expanded Album Player (hidden by default) -->
       <div id="album-expanded" class="hidden rounded-2xl p-6 sm:p-8 bg-black/70 border border-cyan-400/20 shadow-[0_0_40px_rgba(0,255,243,0.1)] mb-6 transition-all">
         <!-- Centered album art -->
@@ -491,7 +516,7 @@
     });
 
     // ── Open album ──
-    function openAlbum(index) {
+    function openAlbum(index, skipScroll) {
       currentAlbumIndex = index;
       var album = albums[index];
 
@@ -558,7 +583,9 @@
       expanded.classList.remove('hidden');
 
       // Scroll to expanded
-      expanded.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (!skipScroll) {
+        expanded.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
 
     // ── Play track ──
@@ -698,7 +725,7 @@
     }
 
     // ── Auto-open first album ──
-    openAlbum(0);
+    openAlbum(0, true);
   })();
   </script>
 
