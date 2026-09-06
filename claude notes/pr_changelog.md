@@ -208,3 +208,11 @@ Ongoing log of all pull requests merged into this project.
 - **Design decision:** the band name stays real HTML text over the image (pixel font + neon text-shadow) rather than model-rendered lettering, because Flux garbles strings like "Kleiner'82" and the band already has a logotype on its covers. Dark bottom-up gradient keeps the blurb and Bandcamp button legible; slow 24s Ken-Burns drift on the image, disabled under `prefers-reduced-motion`
 - **Verified (Playwright, headless Chromium):** both pages at 1280px and 390px - banner loads, hero 340px tall on desktop / 271px on phone, no horizontal overflow, 0 console errors, 0 failed requests. Inline scripts pass `node --check`
 - **Files changed:** `docs/kleiner82.html`, `docs/en/kleiner82.html`, `docs/assets/images/kleiner82-hero.jpg` (new), `claude notes/pr_changelog.md`
+
+### PR #53 - `claude/open-graph-tags` - *Pending approval*
+- **Fix:** Facebook / WhatsApp link previews showed no thumbnail because no page had Open Graph tags. Every one of the 12 pages now carries `og:type/site_name/locale/url/title/description/image (+secure_url, type, 1200x630, alt)`, Twitter `summary_large_image` tags, a `<meta name="description">`, and `hreflang` alternates linking the Hebrew and English versions
+- **Copy:** per-page titles and descriptions, Hebrew on Hebrew pages and English on English pages; `og:url` is the canonical absolute URL (`/` and `/en/` for the two home pages)
+- **Images:** 6 new 1200x630 share images in `docs/assets/images/og/` (home, about, projects, releases, contacts, kleiner82), 75-131 KB each. Five generated with fal.ai Flux dev (text-free prompt, same endpoint as the mixtape app): 80s bedroom with CRT, arcade hall, demoscene desk, C64 with datasette, walkman on a synthwave beach. Kleiner'82 is a crop of the hero banner
+- **After merge:** Facebook caches old scrapes; run each URL through the Sharing Debugger (developers.facebook.com/tools/debug) and press "Scrape Again"
+- **Verified:** all 12 pages load with 0 JS errors; script-validated that each page has exactly one `og:image`, absolute https URLs, and that every referenced image exists on disk
+- **Files changed:** all 12 HTML pages, 6 new images under `docs/assets/images/og/`, `claude notes/pr_changelog.md`
