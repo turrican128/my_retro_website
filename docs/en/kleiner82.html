@@ -233,6 +233,30 @@
         </a>
       </div>
 
+      <!-- About Kleiner'82 -->
+      <section id="about-kleiner" class="rounded-2xl p-6 sm:p-8 bg-black/60 border border-cyan-400/25 shadow-[0_20px_60px_rgba(0,0,0,0.9)] backdrop-blur mb-8" dir="ltr" aria-labelledby="about-kleiner-title">
+        <h2 id="about-kleiner-title" class="[font-family:'Press Start 2P',monospace] text-sm sm:text-base text-cyan-200 text-center md:text-start leading-relaxed">
+          About Kleiner'82
+        </h2>
+        <div class="mt-6 flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8">
+          <figure class="shrink-0 text-center">
+            <div class="crt-frame rounded-xl w-[220px] h-[220px] sm:w-[260px] sm:h-[260px] border border-cyan-400/40 shadow-[0_12px_30px_rgba(0,0,0,0.85)]">
+              <img src="../assets/images/jud.jpg" alt="Alex and Jud" class="w-full h-full object-cover rounded-xl crt-flicker" />
+            </div>
+            <figcaption class="mt-2 text-xs text-cyan-200/70">Alex and Jud, Herzliya</figcaption>
+          </figure>
+          <div class="flex-1 text-center md:text-left space-y-4 text-sm text-sky-100/85 leading-relaxed">
+            <p class="">Kleiner'82 was born in August 2016 in Herzliya, when Jud (Yehuda Schpitz) and I decided it was time to stop just missing the sound of the '80s and start making it ourselves. We both grew up on '80s new wave, on analog synthesizers and on that feeling of driving through a neon-lit city at night, and out of that came a simple idea: to bring our own voice to albums shaped by synth music and analog equipment.</p>
+            <p class="">That is how Miami Gateway arrived in 2017, followed by five more albums: Lost In Space, Electro Chromosphere, a collaboration with Synth Fellow Hawk on Arcadia Dreams, remixes of the C64 and Amiga tunes we loved, and finally Neon Dreams, released in April 2026.</p>
+            <div class="mt-5 pt-5 border-t border-pink-400/20 space-y-4">
+              <p class="text-xs text-pink-300/80">In memory of Jud (Yehuda Schpitz), March 30, 2026</p>
+            <p class="">On March 30, 2026, Jud passed away. He was a close friend for more than twenty years, long before there was a Kleiner'82, and he was the one who founded this project with me. It's hard to put into words how much his presence, his support and his friendship meant to me over the years. I lost someone who was truly like family. Neon Dreams is dedicated to him.</p>
+            <p class="">Jud, thank you for everything. For the music, for the moments, and for the unforgettable ride we had together with Kleiner'82 and much more.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Expanded Album Player (hidden by default) -->
       <div id="album-expanded" class="hidden rounded-2xl p-6 sm:p-8 bg-black/70 border border-cyan-400/20 shadow-[0_0_40px_rgba(0,255,243,0.1)] mb-6 transition-all">
         <!-- Centered album art -->
@@ -489,7 +513,7 @@
     });
 
     // ── Open album ──
-    function openAlbum(index) {
+    function openAlbum(index, skipScroll) {
       currentAlbumIndex = index;
       var album = albums[index];
 
@@ -556,7 +580,9 @@
       expanded.classList.remove('hidden');
 
       // Scroll to expanded
-      expanded.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (!skipScroll) {
+        expanded.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
 
     // ── Play track ──
@@ -696,7 +722,7 @@
     }
 
     // ── Auto-open first album ──
-    openAlbum(0);
+    openAlbum(0, true);
   })();
   </script>
 
