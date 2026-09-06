@@ -216,3 +216,8 @@ Ongoing log of all pull requests merged into this project.
 - **After merge:** Facebook caches old scrapes; run each URL through the Sharing Debugger (developers.facebook.com/tools/debug) and press "Scrape Again"
 - **Verified:** all 12 pages load with 0 JS errors; script-validated that each page has exactly one `og:image`, absolute https URLs, and that every referenced image exists on disk
 - **Files changed:** all 12 HTML pages, 6 new images under `docs/assets/images/og/`, `claude notes/pr_changelog.md`
+
+### PR #54 - `claude/og-home-portrait` - *Pending approval*
+- **Change:** the home-page share image (`docs/assets/images/og/home.jpg`, used by `/` and `/en/`) now shows Alex's portrait from the hero, blended over the synthwave bedroom scene, instead of the bedroom alone. Facebook's stale pre-#53 scrape of the English home page had shown the portrait and Alex wants that look on both languages
+- **Copy:** `og:image:alt` on both home pages updated to describe the portrait
+- **Files changed:** `docs/assets/images/og/home.jpg`, `docs/index.html`, `docs/en/index.html`, `claude notes/pr_changelog.md`
