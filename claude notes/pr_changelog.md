@@ -201,3 +201,10 @@ Ongoing log of all pull requests merged into this project.
 - **Not changed:** the Neon Dreams album description (dedication already lives on Bandcamp)
 - **Verified (Playwright, headless Chromium):** both pages at 1280px and 390px - section renders, photo loads, no horizontal overflow, 0 console errors, 0 failed requests, 0 em dashes in visible text, Hebrew text direction rtl. Inline scripts pass `node --check`
 - **Files changed:** `docs/kleiner82.html`, `docs/en/kleiner82.html`, `docs/assets/images/jud.jpg` (new), `claude notes/pr_changelog.md`
+
+### PR #52 - `claude/kleiner82-hero-banner` - *Pending approval* (stacked on #51)
+- **Feature:** synthwave hero banner on the Kleiner'82 page (Hebrew + English). The plain dark hero card is now a full-bleed image: striped retro sun over a neon city skyline, palm silhouettes, highway to the horizon, in the site's magenta/cyan palette
+- **Image:** `docs/assets/images/kleiner82-hero.jpg` (new, 1344x576, 122 KB) generated with fal.ai Flux dev via the same endpoint the Create-Mixtape app uses, with an explicit no-text instruction. Four variants were generated; #1 chosen, the other three kept outside the repo for a swap
+- **Design decision:** the band name stays real HTML text over the image (pixel font + neon text-shadow) rather than model-rendered lettering, because Flux garbles strings like "Kleiner'82" and the band already has a logotype on its covers. Dark bottom-up gradient keeps the blurb and Bandcamp button legible; slow 24s Ken-Burns drift on the image, disabled under `prefers-reduced-motion`
+- **Verified (Playwright, headless Chromium):** both pages at 1280px and 390px - banner loads, hero 340px tall on desktop / 271px on phone, no horizontal overflow, 0 console errors, 0 failed requests. Inline scripts pass `node --check`
+- **Files changed:** `docs/kleiner82.html`, `docs/en/kleiner82.html`, `docs/assets/images/kleiner82-hero.jpg` (new), `claude notes/pr_changelog.md`
