@@ -146,41 +146,46 @@
 
   <!-- ניווט עליון ניאון -->
   <header class="fixed inset-x-0 top-4 z-30 flex items-center justify-center">
-    <nav class="w-[min(1100px,96%)] flex items-center justify-between px-4 py-3 rounded-xl bg-black/40 backdrop-blur border border-white/10 shadow-[0_12px_50px_rgba(0,0,0,0.7)]">
+    <nav class="w-[min(1100px,96%)] flex flex-wrap items-center justify-between gap-y-2 px-4 py-3 rounded-xl bg-black/40 backdrop-blur border border-white/10 shadow-[0_12px_50px_rgba(0,0,0,0.7)]">
       <!-- NAV LINKS FIRST (renders on the right in RTL with justify-between) -->
-      <ul class="flex items-center gap-3 text-xs">
+      <ul class="flex items-center gap-2 text-xs">
         <li>
-          <a href="index.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+          <a href="index.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
             דף הבית
           </a>
         </li>
         <li>
-          <a href="about.html" class="px-3 py-2 rounded-md text-cyan-200 bg-white/10 shadow-[0_0_20px_rgba(0,255,243,0.4)] hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+          <a href="about.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 bg-white/10 shadow-[0_0_20px_rgba(0,255,243,0.4)] hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
             עליי
           </a>
         </li>
         <li>
-          <a href="projects.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+          <a href="projects.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
             פרויקטים
           </a>
         </li>
         <li>
-          <a href="releases.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+          <a href="releases.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
             ריליסים
           </a>
         </li>
         <li>
-          <a href="kleiner82.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+          <a href="tools.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            כלים
+          </a>
+        </li>
+        <li>
+          <a href="kleiner82.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
             Kleiner'82
           </a>
         </li>
         <li>
-          <a href="contacts.html" class="px-3 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+          <a href="contacts.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
             צור קשר
           </a>
         </li>
         <li>
-          <a href="en/about.html" title="English" aria-label="Switch to English" class="px-2 py-1 rounded-md hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-110 inline-flex items-center">
+          <a href="en/about.html" title="English" aria-label="Switch to English" class="shrink-0 px-2 py-1 rounded-md hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-110 inline-flex items-center">
             <svg width="26" height="15" viewBox="0 0 30 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="image-rendering: pixelated; filter: drop-shadow(0 0 4px rgba(0,255,243,0.45));">
               <rect width="30" height="18" fill="#012169"/>
               <path d="M0 0 L30 18 M30 0 L0 18" stroke="#fff" stroke-width="3"/>
@@ -195,7 +200,7 @@
       </ul>
 
       <!-- LOGO BLOCK SECOND (renders on the left in RTL with justify-between) -->
-      <a href="https://8bitretro.tech" class="flex items-center gap-4 no-underline cursor-pointer">
+      <a href="https://8bitretro.tech" class="flex shrink-0 items-center gap-4 no-underline cursor-pointer">
         <div class="w-16 h-12 flex items-center justify-center rounded-md bg-gradient-to-r from-pink-500/40 to-cyan-400/20 border border-white/30 shadow-[0_0_25px_rgba(255,45,210,0.6)]">
           <span class="[font-family:'Press Start 2P',monospace] text-pink-300 text-xs uppercase tracking-[0.2em]">
             RETRO
