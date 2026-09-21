@@ -9,7 +9,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Deployment
 
 - Hosted on **GitHub Pages** from the `docs/` directory with a custom domain (`CNAME` → `8bitretro.tech`).
-- To deploy: push to `master`. Changes to files in `docs/` go live automatically.
+- To deploy: push to `main`. Changes to files in `docs/` go live automatically.
 
 ## Architecture
 
@@ -40,10 +40,15 @@ All site text is in **Hebrew** and lives in `content/site_content.md`. This is a
 | `docs/projects.html` | פרויקטים | Portfolio showcase with CRT-frame styling |
 | `docs/contacts.html` | צור קשר | Contact form + social links |
 | `docs/releases.html` | ריליסים | C64 demo/software releases with CSDb links |
+| `docs/tools.html` | כלים | Open-source tools I released (txt2dirart), with GitHub download links |
 
 ## Conventions
 
 - No build commands. Open HTML files directly in a browser or push to GitHub Pages.
+- To preview locally: `python app.py` (or double-click `launch.bat`) serves `docs/` on
+  http://127.0.0.1:8000 and opens a browser tab. `--page tools` opens a specific page,
+  `--port` changes the port, `--no-browser` skips opening the tab. Standard library only,
+  and it sends no-cache headers so a refresh always shows your latest edit.
 - Prefer editing existing files over creating new ones.
 - New pages must replicate the nav/head/animation boilerplate from an existing page.
 - Images go in `docs/assets/images/`. Reference them as relative paths (`assets/images/filename.jpg`).
