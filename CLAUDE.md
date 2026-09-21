@@ -40,7 +40,7 @@ All site text is in **Hebrew** and lives in `content/site_content.md`. This is a
 | `docs/projects.html` | פרויקטים | Portfolio showcase with CRT-frame styling |
 | `docs/contacts.html` | צור קשר | Contact form + social links |
 | `docs/releases.html` | ריליסים | C64 demo/software releases with CSDb links |
-| `docs/tools.html` | כלים | Open-source tools I released (txt2dirart), with GitHub download links |
+| `docs/tools.html` | כלים | Open-source tools I released (txt2dirart, tap2pdf), with GitHub download links. One `<article>` per tool, add new ones as siblings |
 
 ## Conventions
 

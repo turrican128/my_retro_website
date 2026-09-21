@@ -304,6 +304,78 @@ LIST</pre>
              class="text-xs px-3 py-2 rounded-lg neon-btn text-cyan-300 hover:text-pink-300 transition">Full documentation</a>
         </div>
       </article>
+
+      <!-- tap2pdf -->
+      <article dir="ltr" class="text-left rounded-2xl p-6 bg-black/60 border border-cyan-400/20 shadow-[0_0_20px_rgba(0,255,243,0.06)] hover:shadow-[0_0_30px_rgba(255,45,210,0.12)] transition mb-8">
+        <div class="flex flex-wrap items-start justify-between gap-3">
+          <div class="flex flex-col">
+            <h2 class="[font-family:'Press Start 2P',monospace] text-base md:text-lg text-pink-300">tap2pdf</h2>
+            <p class="mt-2 text-xs text-cyan-200/80">One tape in, one honest dossier about what is on it out</p>
+          </div>
+          <div class="flex flex-col items-start gap-2">
+            <span class="text-xs px-2 py-1 rounded-full bg-black/30 border border-pink-400/10 text-pink-200">Version 1.0</span>
+            <span class="text-xs px-2 py-1 rounded-full bg-black/30 border border-cyan-400/10 text-cyan-200">Windows / Linux / Python</span>
+            <span class="text-xs px-2 py-1 rounded-full bg-black/30 border border-cyan-400/10 text-cyan-200">MIT</span>
+          </div>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+          <div class="w-full bg-black/70 rounded-xl border border-cyan-300/30 shadow-[0_0_22px_rgba(0,255,243,0.18)] crt-frame p-2">
+            <img src="../assets/images/tools/tap2pdf-dossier.png"
+                 alt="A tape dossier: verification report, verdict and tape map"
+                 class="w-full h-auto rounded-lg" loading="lazy" />
+          </div>
+
+          <div>
+            <p class="text-xs text-cyan-200/70 mb-2">And what it prints to the terminal with --nfo:</p>
+            <pre class="text-left overflow-x-auto text-[11px] leading-relaxed font-mono p-4 rounded-xl bg-black/70 border border-cyan-400/20 text-cyan-200/90">VERIFICATION
+------------
+TAP signature                  PASS
+Pulse stream integrity         PASS
+CBM block checksums            PASS
+First copy vs repeat           PASS
+Turbo region integrity         NOT CHECKED
+    the format is unidentified, so
+    there is no checksum model to
+    verify it against</pre>
+            <p class="mt-3 text-xs text-cyan-200/80 leading-relaxed">
+              A check that did not run never counts as a pass.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-6 space-y-4 text-sm text-sky-100/85 leading-relaxed max-w-3xl">
+          <h3 class="text-base text-cyan-100">What it does</h3>
+          <p>
+            A .tap file is a stream of pulses. You cannot look at one and tell what is stored on it, whether it is
+            intact, or whether it will load at all. tap2pdf reads the tape and writes a dossier: a verification
+            report, a tape map, a memory map, and the files with their load addresses. As HTML, and with
+            <code class="text-cyan-300">--pdf</code> as an A4 PDF.
+          </p>
+
+          <h3 class="text-base text-cyan-100 pt-2">The honesty rule</h3>
+          <p>
+            The dossier never names something it has not established. A turbo region it does not recognise is
+            written as an unidentified turbo loader, with its pulse count and duration, not as "probably Novaload".
+            A check that did not run is never rendered as a pass: NOT CHECKED is a result in its own right, and it
+            carries its reason. Even a flawless tape refuses a clean bill of health while anything is still
+            unchecked.
+          </p>
+          <p>
+            A dossier that confidently gives you the wrong name sends you hunting in the wrong place for two hours.
+            Better that it tells you it does not know.
+          </p>
+        </div>
+
+        <div class="mt-6 flex flex-wrap items-center gap-3">
+          <a href="https://github.com/turrican128/tap2pdf/releases/latest" target="_blank" rel="noopener noreferrer"
+             class="text-xs px-3 py-2 rounded-lg neon-btn text-cyan-300 hover:text-pink-300 transition">Download (1.0)</a>
+          <a href="https://github.com/turrican128/tap2pdf" target="_blank" rel="noopener noreferrer"
+             class="text-xs px-3 py-2 rounded-lg neon-btn text-cyan-300 hover:text-pink-300 transition">Code on GitHub</a>
+          <a href="https://github.com/turrican128/tap2pdf#readme" target="_blank" rel="noopener noreferrer"
+             class="text-xs px-3 py-2 rounded-lg neon-btn text-cyan-300 hover:text-pink-300 transition">Full documentation</a>
+        </div>
+      </article>
     </section>
   </main>
 
