@@ -49,10 +49,6 @@ All site text is in **Hebrew** and lives in `content/site_content.md`. This is a
   http://127.0.0.1:8000 and opens a browser tab. `--page tools` opens a specific page,
   `--port` changes the port, `--no-browser` skips opening the tab. Standard library only,
   and it sends no-cache headers so a refresh always shows your latest edit.
-- Shared add-ins live in `docs/assets/js/` and are loaded by one `<script defer>` line in every page's `<head>`
-  (HE pages `assets/js/...`, EN pages `../assets/js/...`): `global-player.js`, `social-strip.js`, `hit-counter.js`.
-  The hit counter stores its number in the free Abacus service (namespace `8bitretro.tech`, key `visits`),
-  counting once per browser session. When testing, route the Abacus URL to a fake response so the real count stays clean.
 - Prefer editing existing files over creating new ones.
 - New pages must replicate the nav/head/animation boilerplate from an existing page.
 - Images go in `docs/assets/images/`. Reference them as relative paths (`assets/images/filename.jpg`).
