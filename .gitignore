@@ -208,3 +208,6 @@ __marimo__/
 
 .idea/
 .mcp.json
+
+# Devlog editor: Claude API key lives here, never commit it
+devlog/.env
