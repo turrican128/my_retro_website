@@ -777,10 +777,10 @@ async function publish() {
   }
   const stale = $(intro ? 'introEn' : 'postEn').classList.contains('stale');
   const ok = await confirmBox(intro ? 'לפרסם את כותרת היומן?' : 'לפרסם את הפוסט?',
-    `${stale ? 'קודם Claude מתרגם לאנגלית את מה שהשתנה בעברית. ' : ''}אחר כך העורך שומר ובונה את הדפים, פותח branch בשם <code>devlog/${esc(intro ? 'index-header' : state.slug)}-…</code> מהמקום שבו אתם נמצאים, עושה commit רק לקובצי היומן, דוחף אותו ופותח PR אל <b>main</b>. שום דבר לא עולה לאוויר עד שממזגים את ה־PR ב־GitHub.`,
+    `${stale ? 'Claude יתרגם לאנגלית את מה שהשתנה בעברית, ו' : ''}העורך יבנה את הדפים ויעלה אותם לאתר. האתר מתעדכן תוך 2–3 דקות.`,
     'פרסום');
   if (!ok) return;
-  busy(stale ? 'מפרסם: תרגום לאנגלית, בנייה, commit, push ו־PR…' : 'מפרסם: בנייה, commit, push ו־PR…');
+  busy(stale ? 'מפרסם: מתרגם לאנגלית ומעלה לאתר…' : 'מפרסם: מעלה לאתר…');
   try {
     const res = await api(intro ? '/api/publish-intro' : '/api/publish/' + encodeURIComponent(state.slug), {});
     idle();
@@ -790,9 +790,15 @@ async function publish() {
         `<pre>${esc(res.blocked.join('\n'))}</pre>`);
       return;
     }
-    await infoBox('ה־PR פתוח ✦',
-      `הפרסום נמצא ב־branch <code>${esc(res.branch)}</code>, ואתם חזרה על <code>${esc(res.back_on)}</code>. כדי שזה יעלה לאתר ממזגים את ה־PR ב־GitHub. עד אז העורך מציג את העותק של היומן שב־<code>${esc(res.back_on)}</code>.`,
-      res.url ? `<p><a class="btn primary big" href="${esc(res.url)}" target="_blank" rel="noopener">לפתוח את ה־PR ↗</a></p><p class="sub"><bdi dir="ltr">${esc(res.url)}</bdi></p>` : '');
+    if (res.merged) {
+      await infoBox('פורסם ✦',
+        'האתר יתעדכן בעוד 2–3 דקות. אם הדף עדיין ישן, רעננו אותו עם Ctrl+F5.',
+        `<p><a class="btn primary big" href="${esc(res.live_url)}" target="_blank" rel="noopener">לפתוח באתר ↗</a></p>`);
+    } else {
+      await infoBox('כמעט: צריך עוד לחיצה אחת',
+        'השינויים נשמרו ב־GitHub, אבל המיזוג האוטומטי לא הצליח, אז האתר עוד לא התעדכן. פתחו את הקישור ולחצו Merge (או בקשו מ־Claude Code).',
+        `${res.url ? `<p><a class="btn primary big" href="${esc(res.url)}" target="_blank" rel="noopener">לפתוח ב־GitHub ↗</a></p>` : ''}<pre dir="auto">${esc(res.merge_error || '')}</pre>`);
+    }
     await refreshStatus();
     await loadList();
     if (intro) await openIntro(true);
