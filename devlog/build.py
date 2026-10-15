@@ -210,7 +210,8 @@ def post_page(i, post, lang, write=True):
 
 def index_page(lang):
     he = lang == "he"
-    intro = (HERE / f"intro.{lang}.html").read_text(encoding="utf-8")
+    intro = (HERE / f"intro.{lang}.html").read_text(encoding="utf-8").replace("{IMG}", img("", lang))
+    intro = re.sub(r"\{icon:(\w+)\}", lambda m: icon(m.group(1)), intro)
     cards = []
     for n, post in reversed(list(enumerate(POSTS, 1))):
         thumb = post.get("thumb") or post.get("banner")
