@@ -19,10 +19,11 @@ POSTS = []          # oldest first, filled by load()
 DATA = {}
 
 
-def load():
+def load(include=None):
+    """Read posts.json. Drafts are skipped, except the slug named in `include` (for previews)."""
     global POSTS, DATA
     DATA = json.loads((HERE / "posts.json").read_text(encoding="utf-8"))
-    POSTS[:] = sorted([p for p in DATA["posts"] if not p.get("draft")], key=lambda p: p["when"])
+    POSTS[:] = sorted([p for p in DATA["posts"] if not p.get("draft") or p["slug"] == include], key=lambda p: p["when"])
 
 HE_MONTHS = ["ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני", "יולי", "אוגוסט", "ספטמבר", "אוקטובר", "נובמבר", "דצמבר"]
 EN_MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -54,13 +55,39 @@ def icon(name, cls="text-pink-300"):
             f'shape-rendering="crispEdges" aria-hidden="true" style="filter:drop-shadow(0 0 4px rgba(255,45,210,.55))">{rects}</svg>')
 
 
+# Bodies written in the editor can hold plain <p>, <ul>, <a>, <h2> with no Tailwind classes.
+# They sit directly in .devlog-body; this gives them the same reading style as the hand-made posts.
+BODY_CSS = """    <style>
+      .devlog-body > p:not([class]), .devlog-body > ul:not([class]), .devlog-body > ol:not([class]),
+      .devlog-body > blockquote:not([class]), .devlog-body > h3:not([class]) {
+        margin-top: 1.25rem; font-size: 15px; line-height: 1.85; color: rgb(224 242 254 / .9);
+      }
+      @media (min-width: 768px) {
+        .devlog-body > p:not([class]), .devlog-body > ul:not([class]), .devlog-body > ol:not([class]),
+        .devlog-body > blockquote:not([class]) { font-size: 17px; }
+      }
+      .devlog-body > h2 { margin-top: 2rem; }
+      .devlog-body > h3:not([class]) { color: rgb(207 250 254); font-size: 1.125rem; margin-top: 1.75rem; }
+      .devlog-body ul:not([class]) { list-style: disc; padding-inline-start: 1.25rem; }
+      .devlog-body ol:not([class]) { list-style: decimal; padding-inline-start: 1.5rem; }
+      .devlog-body ul:not([class]) > li + li, .devlog-body ol:not([class]) > li + li { margin-top: .5rem; }
+      .devlog-body blockquote:not([class]) { border-inline-start: 3px solid rgb(244 114 182 / .6); padding-inline-start: 1rem; font-style: italic; }
+      .devlog-body a:not([class]) { color: rgb(103 232 249); text-decoration: underline; text-underline-offset: 3px; }
+      .devlog-body a:not([class]):hover { color: rgb(249 168 212); }
+      .devlog-body > p code:not([class]), .devlog-body > ul code:not([class]), .devlog-body > ol code:not([class]) { color: rgb(103 232 249); }
+      .devlog-body strong { color: #fff; }
+    </style>
+"""
+
+
 def dress(body):
     """Reading layout: icons, roomier text, section headings with their icon."""
     body = re.sub(r"\{icon:(\w+)\}", lambda m: icon(m.group(1)), body)
     body = body.replace('text-sm md:text-[15px] text-sky-100/85 leading-relaxed', 'text-[15px] md:text-[17px] text-sky-100/90 leading-[1.85]')
-    body = re.sub(r'<h2 class="text-lg text-cyan-100( pt-2)?">(<svg.*?</svg>)?',
+    # Hand-made headings carry "text-lg text-cyan-100"; editor-made ones are bare <h2>. Both get the same look.
+    body = re.sub(r'<h2(?: class="text-lg text-cyan-100( pt-2)?")?>\s*(<svg.*?</svg>)?\s*',
                   lambda m: '<h2 class="flex items-center gap-3 text-xl md:text-2xl text-cyan-100 pt-4">' + (m.group(2) or ""), body)
-    return body
+    return '        <div class="devlog-body">\n' + body + '        </div>\n'
 
 
 def reading_minutes(html):
@@ -81,7 +108,7 @@ def img(path, lang):
     return ("../" if lang == "en" else "") + "assets/images/devlog/" + path
 
 
-def page(lang, name, title, desc, main_html, og_image=None):
+def page(lang, name, title, desc, main_html, og_image=None, write=True):
     base = SITE / "en" if lang == "en" else SITE
     src = (base / "tools.html").read_text(encoding="utf-8")
     head, rest = src.split("</head>", 1)
@@ -107,7 +134,10 @@ def page(lang, name, title, desc, main_html, og_image=None):
             '    <div class="pointer-events-none absolute -z-10 inset-0 flex justify-center">\n'
             '      <div class="w-[30rem] h-[30rem] rounded-full bg-pink-500/20 blur-[120px] translate-y-10"></div>\n'
             '    </div>\n\n' + main_html + "  </main>")
-    (base / name).write_text(head + "</head>" + pre + main + after, encoding="utf-8", newline="")
+    html = head + "</head>" + pre + main + after
+    if write:
+        (base / name).write_text(html, encoding="utf-8", newline="")
+    return html
 
 
 def banner(post, lang):
@@ -126,7 +156,7 @@ def banner(post, lang):
 '''
 
 
-def post_page(i, post, lang):
+def post_page(i, post, lang, write=True):
     he = lang == "he"
     older = POSTS[i - 1] if i > 0 else None
     newer = POSTS[i + 1] if i + 1 < len(POSTS) else None
@@ -163,7 +193,7 @@ def post_page(i, post, lang):
         <h1 class="mt-4 {title_cls}">{post['title_' + lang]}</h1>
         <p class="mt-2 text-xs text-cyan-200/60">{meta}</p>
 {banner(post, lang)}
-{body}
+{BODY_CSS}{body}
         <div class="mt-10 pt-6 border-t border-white/10 flex flex-wrap gap-3 justify-between">
           {chr(10).join('          ' + l for l in nav_links).strip()}
         </div>
@@ -171,7 +201,7 @@ def post_page(i, post, lang):
     </section>
 '''
     title = post["title_" + lang] + " – " + back + " – 8bitretro.tech"
-    page(lang, f"devlog-{post['slug']}.html", title, post["teaser_" + lang], main_html)
+    return page(lang, f"devlog-{post['slug']}.html", title, post["teaser_" + lang], main_html, write=write)
 
 
 def index_page(lang):
@@ -206,6 +236,15 @@ def build_all():
     for lang in ("en", "he"):
         index_page(lang)
     return len(POSTS)
+
+
+def preview_html(slug, lang):
+    """The post page for `slug` (draft or not), rendered in memory; nothing is written to docs/."""
+    load(include=slug)
+    for i, post in enumerate(POSTS):
+        if post["slug"] == slug:
+            return post_page(i, post, lang, write=False)
+    raise KeyError(slug)
 
 
 if __name__ == "__main__":
