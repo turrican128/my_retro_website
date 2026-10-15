@@ -1,0 +1,114 @@
+        <p class="mt-6 text-base text-sky-100/95 leading-relaxed">
+          Before there was a remake, there was a tape. This is the game we're taking apart, and what we found in the
+          first evening with it.
+        </p>
+
+        <div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <h2 class="text-lg text-cyan-100">{icon:star}The original</h2>
+          <p>
+            <em>Fist II: The Legend Continues</em> came out in 1986 from Melbourne House, developed by Beam Software
+            in Australia, for the C64 and the ZX Spectrum. It followed <em>The Way of the Exploding Fist</em> (1985),
+            the one-on-one karate game, but it left the tournament mat behind: Fist II is a scrolling adventure with
+            one-on-one fights along the way.
+          </p>
+          <p>
+            The story, as Zzap!64 told it in December 1986: an evil, deformed Warlord in a volcano fortress has
+            overthrown the cult of the Exploding Fist and razed its temples. The eight scrolls that hold its
+            techniques, the Trigrams, are lost. You find each one, carry it to its shrine and meditate there to take
+            in its power, which also earns you an extra life. On the way: peasant soldiers, warriors, masked Shoguns
+            and assassins, mutated animals, pits and walls of fire. You fight with seventeen moves, on the joystick
+            system of the first game.
+          </p>
+          <p>
+            On the C64 the game is credited to Gregg Barnett (design and code), Greg Holland and Russel Comte
+            (graphics) and Neil Brennan (music). It cost &pound;9.95 on tape and &pound;14.95 on disk, and the other side
+            of the tape held a tournament version of the first game.
+          </p>
+        </div>
+
+        <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="rounded-xl p-3 bg-black/50 border border-pink-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[8px] tracking-widest text-pink-300">ZZAP!64 #20</p>
+            <p class="mt-2 text-2xl text-pink-200">39%</p>
+          </div>
+          <div class="rounded-xl p-3 bg-black/50 border border-cyan-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[8px] tracking-widest text-cyan-300">YOUR SINCLAIR</p>
+            <p class="mt-2 text-2xl text-cyan-200">9/10</p>
+          </div>
+          <div class="rounded-xl p-3 bg-black/50 border border-cyan-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[8px] tracking-widest text-cyan-300">SINCLAIR USER</p>
+            <p class="mt-2 text-2xl text-cyan-200">5/5</p>
+          </div>
+          <div class="rounded-xl p-3 bg-black/50 border border-cyan-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[8px] tracking-widest text-cyan-300">CRASH</p>
+            <p class="mt-2 text-2xl text-cyan-200">58%</p>
+          </div>
+        </div>
+
+        <div class="mt-6 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <h2 class="text-lg text-cyan-100">{icon:page}What the press said</h2>
+          <p>
+            Not much love on the C64. Zzap!64 gave it 39% and called it "disappointing and severely lacking in
+            content": slow, juddering scrolling, bugs, no title screen and no game-over screen. One reviewer even
+            claimed a tune was lifted from the disk version of <em>The Hobbit</em>. The Spectrum version did far
+            better, with 9/10 from Your Sinclair and 5/5 from Sinclair User.
+          </p>
+          <p>
+            Under the reviews sits an engine with a scrolling world, fighters built from sprite pieces, and a
+            joystick system worth keeping. That engine is what this project is about.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:tape}Day one: the tape</h2>
+          <p>
+            On 6 October I started with the tape image. TapClean read it clean: 302 of 302 blocks OK, a Super
+            Pavloda turbo loader, one bootable part called <code class="text-cyan-300">FIST-II</code>, no gaps. The
+            loader runs from the stack page (<code class="text-cyan-300">$0131</code>) and, even in VICE with warp on,
+            takes four to five minutes. It ends in the game itself, in the first jungle room.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:chip}Day one: the first dump</h2>
+          <p>
+            Then a snapshot of memory with the game running: the first room, the hero standing. The main loop sits at
+            <code class="text-cyan-300">$2204</code>, the game runs its own raster interrupt, and the VIC looks at
+            the top bank (<code class="text-cyan-300">$C000&ndash;$FFFF</code>): screen at
+            <code class="text-cyan-300">$CC00</code>, charset at <code class="text-cyan-300">$E800</code>,
+            multicolour. All eight sprites are on, and their positions are rewritten during the frame: the fighters
+            are built from pieces and multiplexed.
+          </p>
+        </div>
+
+        <figure class="mt-6">
+          <div class="bg-black/70 rounded-xl border border-cyan-300/30 crt-frame p-2">
+            <img src="{IMG}fist2-ram-c000.png" alt="The C000 memory bank drawn as graphics" class="w-full h-auto rounded-lg pixelated" loading="lazy" />
+          </div>
+          <figcaption class="mt-2 text-xs text-cyan-200/60">The <code>$C000</code> bank drawn as graphics: the charset, the sprite pieces, everything the VIC can see.</figcaption>
+        </figure>
+
+        <div class="mt-6 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <p>
+            The joystick code turned out to be neat. One routine at <code class="text-cyan-300">$3390</code> reads
+            the port, keeps fire and the four directions, swaps left and right when the fighter faces the other way,
+            and looks the result up in a 32-byte table at <code class="text-cyan-300">$33c2</code> that turns the stick
+            into a move. Each fighter keeps a requested move, a current move and a facing.
+          </p>
+          <p>
+            One small surprise: a SpritePad file of Fist moves I had turned out to be white-gi art from the first
+            game. Not one of its sprites appears byte for byte in Fist II.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:ruler}The rule from day one</h2>
+          <p>
+            The brief for the whole project was written that night: every claim is tied to an address and marked
+            verified or guess, and every asset we lift out must rebuild to identical bytes. That rule is what made the
+            next day possible.
+          </p>
+        </div>
+
+        <div class="mt-8 text-[11px] text-cyan-200/55 leading-relaxed">
+          <p class="mb-1">Sources for the original game:</p>
+          <ul class="list-disc ms-5 space-y-0.5 break-words">
+            <li><a class="underline hover:text-pink-300" href="https://archive.org/download/Zzap044Dec88/Zzap%2164%2FZzap020-Dec86_djvu.txt" target="_blank" rel="noopener noreferrer">Zzap!64 #20, December 1986 (archive.org)</a></li>
+            <li><a class="underline hover:text-pink-300" href="https://en.wikipedia.org/wiki/The_Way_of_the_Exploding_Fist" target="_blank" rel="noopener noreferrer">The Way of the Exploding Fist (Wikipedia)</a></li>
+            <li><a class="underline hover:text-pink-300" href="https://spectrumcomputing.co.uk/entry/0005644" target="_blank" rel="noopener noreferrer">Spectrum Computing</a> &middot; <a class="underline hover:text-pink-300" href="https://www.acmi.net.au/works/100083--fist-ii-the-legend-continues-computer-game-for-commodore-64-128" target="_blank" rel="noopener noreferrer">ACMI</a> &middot; <a class="underline hover:text-pink-300" href="http://frgcb.blogspot.com/2014/02/fist-ii-legend-continues-melbourne.html" target="_blank" rel="noopener noreferrer">FRGCB (C64 credits)</a> &middot; <a class="underline hover:text-pink-300" href="https://www.lemon64.com/game/fist-2" target="_blank" rel="noopener noreferrer">Lemon64</a></li>
+          </ul>
+        </div>

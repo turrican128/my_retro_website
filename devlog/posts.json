@@ -1,0 +1,97 @@
+{
+  "_readme": "Devlog source. Edit with the devlog editor (python devlog/editor.py) or by hand, then run python devlog/build.py. Times are Israel time.",
+  "index_description": {
+    "en": "The development log of a C64 beat'em-up built on the Fist II: The Legend Continues engine. Short posts from the road.",
+    "he": "יומן הפיתוח של beat'em-up ל־C64 על המנוע של Fist II: The Legend Continues. פוסטים קצרים מהדרך."
+  },
+  "image_sources": {
+    "fist2-original-first-room.png": "fist2-remake/dumps/loaded.png",
+    "fist2-ram-c000.png": "fist2-remake/dumps/ram_c000.png",
+    "fist2-three-fighters.png": "fist2-remake/out/stage6/h_game_three_fighters.png",
+    "fist2-mux3-prototype.png": "fist2-remake/proto/mux3/shots/3_street.png",
+    "fist2-player-colours.png": "fist2-remake/out/stage6/player_colours.png",
+    "fist2-level-game.png": "fist2-remake/docs/memory/shots/levels.png",
+    "fist2-temple-room.png": "fist2-remake/out/temple/t2_node64_room1e.png",
+    "fist2-desert-fight.png": "fist2-remake/out/depth/brutal_branch.png",
+    "fist2-three-fighters-oct7.gif": "fist2-remake/out/stage6/film_fight.gif",
+    "fist2-level-fight.gif": "VICE recording of the LEVELS build (fist2-remake), 2026-10-15"
+  },
+  "posts": [
+    {
+      "slug": "where-it-starts",
+      "when": "2026-10-06T23:47:00+03:00",
+      "kicker": "FIST II REMASTER &middot; THE ORIGINAL",
+      "kicker_short": "Fist II Remaster",
+      "title_en": "Where it starts: Fist II, 1986",
+      "title_he": "איפה זה מתחיל: Fist II, 1986",
+      "teaser_en": "The game we're taking apart: a 1986 karate adventure that the press didn't love, and the first evening with its tape, its memory and its joystick code.",
+      "teaser_he": "המשחק שאנחנו מפרקים: הרפתקת קראטה מ־1986 שהעיתונות לא אהבה, והערב הראשון עם הקלטת, הזיכרון וקוד הג'ויסטיק שלו.",
+      "banner": "fist2-original-first-room.png",
+      "banner_alt_en": "Fist II on the C64: the hero standing in the first jungle room",
+      "banner_alt_he": "Fist II על ה־C64: הגיבור עומד בחדר הג'ונגל הראשון",
+      "banner_caption_en": "The first jungle room of the original Fist II, as the game loaded from the tape on day one. Art: Beam Software / Melbourne House, 1986.",
+      "banner_caption_he": "חדר הג'ונגל הראשון של Fist II המקורי, כמו שהמשחק עלה מהקלטת ביום הראשון. גרפיקה: Beam Software / Melbourne House, 1986."
+    },
+    {
+      "slug": "the-giant-day",
+      "when": "2026-10-07T22:14:00+03:00",
+      "kicker": "FIST II REMASTER &middot; V1.0 &rarr; V3.1",
+      "kicker_short": "Fist II Remaster",
+      "title_en": "The giant day",
+      "title_he": "היום הגדול",
+      "teaser_en": "98 commits in one day: an exact rebuild of the original, a rewrite in my own style, and by night three fighters on screen at a clean 50 Hz.",
+      "teaser_he": "98 קומיטים ביום אחד: בנייה מחדש מדויקת של המקור, כתיבה מחדש בסגנון שלי, ובלילה שלושה לוחמים על המסך ב־50 Hz נקיים.",
+      "banner": "fist2-three-fighters.png",
+      "banner_alt_en": "Three fighters in the jungle room",
+      "banner_alt_he": "שלושה לוחמים בחדר הג'ונגל",
+      "banner_caption_en": "v3.0-alpha: the player and two enemies in the jungle room. Still the original 1986 art, as placeholders.",
+      "banner_caption_he": "v3.0-alpha: השחקן ושני אויבים בחדר הג'ונגל. עדיין הגרפיקה המקורית מ־1986, כממלאת מקום."
+    },
+    {
+      "slug": "from-demo-to-game",
+      "when": "2026-10-10T19:19:00+03:00",
+      "kicker": "FIST II REMASTER &middot; 8&ndash;10 OCT",
+      "kicker_short": "Fist II Remaster",
+      "title_en": "From demo to game",
+      "title_he": "מדמו למשחק",
+      "teaser_en": "Three days of turning a fight room into a game: 45 stale addresses, a temple that hung, sound effects on the SID, and levels that load as data.",
+      "teaser_he": "שלושה ימים של הפיכת חדר קרב למשחק: 45 כתובות ישנות, מקדש שנתקע, אפקטים על ה־SID, ושלבים שנטענים כמידע.",
+      "banner": "fist2-level-game.png",
+      "thumb": "fist2-temple-room.png",
+      "banner_alt_en": "The level game: fighters on level 1 with the LEVEL counter in the HUD",
+      "banner_alt_he": "משחק השלבים: לוחמים בשלב 1, עם מונה השלב בתצוגה",
+      "banner_caption_en": "The level game, level 1, with the LEVEL counter in the HUD.",
+      "banner_caption_he": "משחק השלבים, שלב 1, עם מונה ה־LEVEL בתצוגה."
+    },
+    {
+      "slug": "depth-and-v32",
+      "when": "2026-10-11T20:51:00+03:00",
+      "kicker": "FIST II REMASTER &middot; V3.2-ALPHA",
+      "kicker_short": "Fist II Remaster",
+      "title_en": "Depth, knock-downs and v3.2-alpha",
+      "title_he": "עומק, הפלות ו־v3.2-alpha",
+      "teaser_en": "The street got depth, a hidden bug came out (the enemies had been half frozen), a release went out at 19:31, and an hour later the fights got rougher.",
+      "teaser_he": "לרחוב נוסף עומק, באג נסתר יצא לאור (האויבים היו קפואים למחצה), ריליס יצא ב־19:31, ושעה אחר כך הקרבות נהיו קשוחים יותר.",
+      "banner": "fist2-level-fight.gif",
+      "banner_alt_en": "Three fighters brawling on level 1: a jump kick, then a knock-down",
+      "banner_alt_he": "שלושה לוחמים בקרב בשלב 1: בעיטה באוויר, ואז הפלה",
+      "banner_caption_en": "Recorded from the level game in VICE: walking in depth, a jump kick, a knock-down. Fist II's art, still as placeholders.",
+      "banner_caption_he": "הוקלט ממשחק השלבים ב־VICE: הליכה בעומק, בעיטה באוויר, הפלה. הגרפיקה של Fist II, עדיין כממלאת מקום."
+    },
+    {
+      "slug": "hit-without-touching",
+      "when": "2026-10-14T21:00:00+03:00",
+      "kicker": "FIST II REMASTER",
+      "kicker_short": "Fist II Remaster",
+      "title_en": "Hit without touching",
+      "title_he": "מכה בלי מגע",
+      "teaser_en": "A jump kick sails over the enemy's head and he goes down anyway. We measured every blow to the pixel, found the one move to blame, and paid a small price for the fix.",
+      "teaser_he": "בעיטה באוויר עוברת מעל הראש של האויב, והוא נופל בכל זאת. מדדנו כל מכה עד הפיקסל, מצאנו את המהלך האשם, ושילמנו מחיר קטן על התיקון.",
+      "banner": "fist2-three-fighters-oct7.gif",
+      "banner_alt_en": "Three fighters on screen in the temple room, one throwing a jump kick",
+      "banner_alt_he": "שלושה לוחמים על המסך בחדר המקדש, אחד מהם באמצע בעיטה באוויר",
+      "banner_caption_en": "Three fighters on screen at once, from the 7 October build. The graphics are still the original 1986 Fist II art (Beam Software / Melbourne House), standing in until our own art is ready.",
+      "banner_caption_he": "שלושה לוחמים על המסך בבת אחת, מה־build של 7 באוקטובר. הגרפיקה היא עדיין הארט המקורי של Fist II מ־1986 (Beam Software / Melbourne House), שמחזיק את המקום עד שהארט שלנו יהיה מוכן."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+        <p class="mt-6 text-base text-sky-100/95 leading-relaxed">
+          7 באוקטובר: 98 קומיטים, ארבעה תגים, ובלילה שלושה לוחמים על המסך ב־50 Hz נקיים.
+        </p>
+
+        <div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <h2 class="text-lg text-cyan-100">{icon:ruler}<bdi dir="ltr">12:12 &middot; v1.0-baseline</bdi></h2>
+          <p>
+            קודם, כל המשחק כקוד מקור עם שמות, ב־<bdi dir="ltr"><code class="text-cyan-300">fist2.asm</code></bdi>. אחרי
+            אסמבלר הוא זהה למקור לגמרי: 0 מתוך 64,512 בתים שונים. הלוחמים הפכו לקבצי SpritePad, העולם לקבצי CharPad
+            והמוזיקה לקובץ SID, וכל אחד מהם הוכח בבנייה חזרה.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:chip}<bdi dir="ltr">13:30 &middot; v2.0-inhouse</bdi></h2>
+          <p>
+            אחר כך הכתיבה מחדש בסגנון שלי, זה מהדמואים שלי. אותו משחק, נבדק בשלוש דרכים: זהה ב־10 צילומי מסך
+            מוקפאים, כל כתיבת רסטר באותה שורה ובאותו מחזור, ואותו זרם SID, כל 51,269 הכתיבות שלו.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:eye}<bdi dir="ltr">13:49</bdi> &middot; אב טיפוס מסוכן</h2>
+          <p>
+            Fist II מציג שני לוחמים על המסך. אנחנו רצינו שלושה. אב טיפוס נתן לכל לוחם נתיב משלו של ספרייטים
+            בחומרה, כשהנתיבים נבחרים לפי העומק.
+          </p>
+        </div>
+
+        <figure class="mt-6">
+          <div class="bg-black/70 rounded-xl border border-cyan-300/30 crt-frame p-2">
+            <img src="{IMG}fist2-mux3-prototype.png" alt="שלושה לוחמים על מסך דיבאג עם קריאת מצב" class="w-full h-auto rounded-lg pixelated" loading="lazy" />
+          </div>
+          <figcaption class="mt-2 text-xs text-cyan-200/60">אב הטיפוס של שלושת הלוחמים על מסך דיבאג, ומעליו הנתונים של המולטיפלקסר.</figcaption>
+        </figure>
+
+        <div class="mt-6 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <h2 class="text-lg text-cyan-100">{icon:map}<bdi dir="ltr">17:26</bdi> &middot; שלבים מ־CharPad</h2>
+          <p>
+            אחר הצהריים, צינור השלבים: שלבים שמצוירים ב־CharPad על אריחים של 4&times;4, לכל היותר 216 תווים, עד 984
+            עמודות רוחב, חתוכים לחדרים. שלב 1 יצא שלושה חדרים ושלוש נקודות הופעה ב־1,872 מתוך 4,559 בתים, והחדרים
+            שמפוענחים בחזרה מהבתים של המנוע זהים למפת ה־CharPad פיקסל אחר פיקסל.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:fist}<bdi dir="ltr">22:14 &middot; v3.0-alpha</bdi>, חדר הקרב</h2>
+          <p>
+            הדבר האמיתי: השחקן ושני אויבים בחדר הג'ונגל, ארוזים לפי סדר העומק על 8 הספרייטים של החומרה. 0 פריימים
+            מאחרים, 0 פריימים קרועים מתוך 500, 0 תנוחות שגויות מתוך 896. התנוחות שמופיעות על המסך תוך פריים אחד
+            עלו מ־15.4% ל־92.6%, והמקרה הגרוע ירד מ־19 פריימים ל־4. זה לקח 11 תיקונים. הלוחמים חושבים ב־2 מתוך 3
+            פריימים, והתמונה רצה ב־50 Hz.
+          </p>
+        </div>
+
+        <div dir="ltr" class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="rounded-xl p-4 bg-black/50 border border-pink-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300">BYTES DIFFERENT</p>
+            <p class="mt-3 text-2xl text-pink-200">0 / 64,512</p>
+          </div>
+          <div class="rounded-xl p-4 bg-black/50 border border-cyan-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-cyan-300">SID WRITES MATCHED</p>
+            <p class="mt-3 text-2xl text-cyan-200">51,269</p>
+          </div>
+          <div class="rounded-xl p-4 bg-black/50 border border-cyan-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-cyan-300">POSES ON TIME</p>
+            <p class="mt-3 text-2xl text-cyan-200">15% &rarr; 95%</p>
+          </div>
+        </div>
+
+        <div class="mt-6 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <h2 class="text-lg text-cyan-100">{icon:star}<bdi dir="ltr">00:33 &middot; v3.1-alpha</bdi>, אחרי חצות</h2>
+          <p>
+            עוד אחד לפני השינה: הראשים מצוירים בתוך 54 תנוחות הקרב, כך ששום דבר לא מודבק בזמן ריצה, השחקן בכחול,
+            והמוזיקה חזרה. תנוחות על המסך תוך פריים אחד: 95.0%.
+          </p>
+        </div>
+
+        <figure class="mt-6">
+          <div class="bg-black/70 rounded-xl border border-cyan-300/30 crt-frame p-2">
+            <img src="{IMG}fist2-player-colours.png" alt="הגיבור בכל 16 הצבעים של ה־C64" class="w-full h-auto rounded-lg pixelated" loading="lazy" />
+          </div>
+          <figcaption class="mt-2 text-xs text-cyan-200/60">הגיבור בכל 16 הצבעים של ה־C64. הכחול ניצח.</figcaption>
+        </figure>

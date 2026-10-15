@@ -1,0 +1,56 @@
+        <p class="mt-6 text-base text-sky-100/95 leading-relaxed">
+          A jump kick sails over the enemy's head, and he goes down anyway. That was item H on my list.
+          Before changing a line, we measured it.
+        </p>
+
+        <div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <h2 class="text-lg text-cyan-100">{icon:ruler}Measure first</h2>
+          <p>
+            On 11 October I wrote down what bothered me in the playable build. Item H: blows that land without
+            touching. Instead of guessing, we wrote a small tool, <code class="text-cyan-300">hit_gap.py</code>.
+            Every time a blow lands, it records the gap in pixels between the tip of the striking limb and the
+            victim, exactly as the screen shows them. Then we let the level game run for 20,000 frames with the
+            player kept alive.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:eye}What it found</h2>
+          <p>
+            The obvious suspect was a picture running late behind the game logic. It wasn't: in 54 of 56 blows the
+            hit pose was already on screen in the same frame the hit was decided.
+          </p>
+          <p>
+            The culprit was a single move: the jump kick, thrown from further up the street. Its hit pose is the
+            top of the jump, so the foot passed 3 to 18 pixels over the victim's head. That happened in 9 of 16
+            jump kicks. Every other move already touched; the worst was 1.8 pixels.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:tool}The fix</h2>
+          <p>
+            A jump kick now lands only on a victim at most one step further down the street. Two guards came with
+            it: no blow lands on a fighter who is already dead, and none on a pose outside the hitbox rows. It all
+            sits behind one build switch, <code class="text-cyan-300">HIT_CONTACT</code>, which is on in the level
+            game. The other 12 build variants came out byte-identical, so nothing else moved.
+          </p>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="rounded-xl p-4 bg-black/50 border border-pink-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300">BEFORE</p>
+            <p class="mt-3 text-2xl text-pink-200">9 / 16</p>
+            <p class="mt-1 text-xs text-sky-100/75 leading-relaxed">jump kicks passed 3&ndash;18 px over the head</p>
+          </div>
+          <div class="rounded-xl p-4 bg-black/50 border border-cyan-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-cyan-300">AFTER</p>
+            <p class="mt-3 text-2xl text-cyan-200">20 / 20</p>
+            <p class="mt-1 text-xs text-sky-100/75 leading-relaxed">jump kicks touch. 0 of 52 blows are 4 px or more off (worst: 3 px)</p>
+          </div>
+        </div>
+
+        <div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <h2 class="text-lg text-cyan-100">{icon:fist}The price</h2>
+          <p>
+            You now have to line up on the enemy's line, or below it, to land a jump kick. The enemies didn't get
+            the memo: from higher up the street they still try it, and now they miss. Teaching the AI to line up
+            first is on the list.
+          </p>
+        </div>

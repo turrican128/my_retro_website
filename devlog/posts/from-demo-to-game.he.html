@@ -1,0 +1,64 @@
+        <p class="mt-6 text-base text-sky-100/95 leading-relaxed">
+          חדר קרב זה עוד לא משחק. שלושה ימים של באגים בחוץ, סאונד בפנים, ושלבים ולוחמים שהפכו למידע.
+        </p>
+
+        <div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <h2 class="text-lg text-cyan-100">{icon:bug}8 באוקטובר &middot; ניקיון</h2>
+          <p>
+            הרצת רגרסיה מול v2.0 מצאה 45 כתובות ישנות. התיקון שלהן תיקן דברים אמיתיים: בעיטה מעופפת כבר לא פוגעת
+            פעמיים, והחסימה עובדת עכשיו מול כל אחד מהאויבים (3 בדיקות נכשלות ירדו ל־0). ההתקפות של האויבים עדיין
+            זהות ל־v2.0, ‏28 מתוך 28.
+          </p>
+          <p>
+            אחר כך המקדש, שנתקע. עכשיו כל 22 חדרי המקדש מצוירים במראה של המערה, כולל שישה שגלשו בעבר, אפשר לאסוף
+            את כל חמש המגילות, ו־3,000 פריימים של הליכה עוברים בלי שום תקיעה. התיקון עלה 0 בתים של קוד.
+          </p>
+        </div>
+
+        <figure class="mt-6">
+          <div class="bg-black/70 rounded-xl border border-cyan-300/30 crt-frame p-2">
+            <img src="{IMG}fist2-temple-room.png" alt="חדר מקדש מצויר במראה של המערה" class="w-full h-auto rounded-lg pixelated" loading="lazy" />
+          </div>
+          <figcaption class="mt-2 text-xs text-cyan-200/60">חדר מקדש במראה של המערה, אחד מ־22.</figcaption>
+        </figure>
+
+        <div class="mt-6 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <p>
+            באותו יום נכתב מדריך לארטיסט: אילו קבצים למסור (SpritePad ללוחמים, CharPad לעולם, ומנגינת SID שמתנגנת
+            ב־<bdi dir="ltr"><code class="text-cyan-300">$f400</code></bdi>).
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:note}9 באוקטובר &middot; סאונד</h2>
+          <p>
+            אפקטים קוליים על ה־SID: פרץ רעש קצר בערוץ 3, בלי פסיקה נוספת. בדיקה הפעילה 67 אפקטים עם 0 בעיות.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:map}10 באוקטובר &middot; שלבים כמידע</h2>
+          <p>
+            השלבים נפרסים עכשיו בזמן ריצה לתוך אזור קבוע אחד של 4 KB. המפענח שוקל 94 בתים, ונבדק על 325 דגימות
+            עם 0 טעויות. מסיימים שלב ו־"LEVEL n COMPLETE" מופיע לשתי שניות, ואז נטען השלב הבא. זה גם פינה 115 בתים
+            מקוד העולם.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:fist}10 באוקטובר &middot; לוחמים כמידע</h2>
+          <p>
+            הלוחמים מתוארים עכשיו בקובץ אחד, <bdi dir="ltr"><code class="text-cyan-300">fighters.json</code></bdi>: ‏73
+            תנוחות, עם בודק שספירת הבתים שלו זהה בדיוק לזו של האסמבלר, 454 = 454. חמש עשרה בדיקות מאכילות אותו
+            בכוונה בקבצים שבורים.
+          </p>
+        </div>
+
+        <div dir="ltr" class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="rounded-xl p-4 bg-black/50 border border-pink-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300">STALE ADDRESSES</p>
+            <p class="mt-3 text-2xl text-pink-200">45 &rarr; 0</p>
+          </div>
+          <div class="rounded-xl p-4 bg-black/50 border border-cyan-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-cyan-300">LEVEL DECODER</p>
+            <p class="mt-3 text-2xl text-cyan-200">94 bytes</p>
+          </div>
+          <div class="rounded-xl p-4 bg-black/50 border border-cyan-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-cyan-300">FIGHTER POSES</p>
+            <p class="mt-3 text-2xl text-cyan-200">73</p>
+          </div>
+        </div>

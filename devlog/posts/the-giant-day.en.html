@@ -1,0 +1,79 @@
+        <p class="mt-6 text-base text-sky-100/95 leading-relaxed">
+          7 October: 98 commits, four tags, and by night three fighters on screen at a clean 50 Hz.
+        </p>
+
+        <div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <h2 class="text-lg text-cyan-100">{icon:ruler}12:12 &middot; v1.0-baseline</h2>
+          <p>
+            First, the whole game as named source code in <code class="text-cyan-300">fist2.asm</code>. Assembled, it
+            matches the original exactly: 0 of 64,512 bytes differ. The fighters became SpritePad files, the world
+            CharPad files and the music a SID file, each one proven by building it back.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:chip}13:30 &middot; v2.0-inhouse</h2>
+          <p>
+            Then the rewrite in my own style, the one from my demos. The same game, checked three ways: identical in
+            10 frozen screenshots, every raster write on the same line and cycle, and the same SID stream, all 51,269
+            writes of it.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:eye}13:49 &middot; a risky prototype</h2>
+          <p>
+            Fist II puts two fighters on screen. We wanted three. A prototype gave each fighter its own lane of
+            hardware sprites, with the lanes chosen by depth.
+          </p>
+        </div>
+
+        <figure class="mt-6">
+          <div class="bg-black/70 rounded-xl border border-cyan-300/30 crt-frame p-2">
+            <img src="{IMG}fist2-mux3-prototype.png" alt="Three fighters on a debug screen with a status readout" class="w-full h-auto rounded-lg pixelated" loading="lazy" />
+          </div>
+          <figcaption class="mt-2 text-xs text-cyan-200/60">The three-fighter prototype on a debug screen, with the multiplexer's readout on top.</figcaption>
+        </figure>
+
+        <div class="mt-6 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <h2 class="text-lg text-cyan-100">{icon:map}17:26 &middot; levels from CharPad</h2>
+          <p>
+            In the afternoon, the level pipeline: levels drawn in CharPad on 4&times;4 tiles, at most 216 characters,
+            up to 984 columns wide, cut into rooms. Level 1 came out at three rooms and three spawn points in 1,872 of
+            4,559 bytes, and the rooms decoded back from the engine's bytes match the CharPad map pixel for pixel.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:fist}22:14 &middot; v3.0-alpha, the fight room</h2>
+          <p>
+            The real thing: the player and two enemies in the jungle room, packed in depth order onto the 8 hardware
+            sprites. 0 late frames, 0 torn frames in 500, 0 wrong poses in 896. Poses on screen within one frame went
+            from 15.4% to 92.6%, and the worst case from 19 frames to 4. It took 11 fixes. The fighters think on 2
+            frames out of 3; the picture runs at 50 Hz.
+          </p>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="rounded-xl p-4 bg-black/50 border border-pink-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300">BYTES DIFFERENT</p>
+            <p class="mt-3 text-2xl text-pink-200">0 / 64,512</p>
+          </div>
+          <div class="rounded-xl p-4 bg-black/50 border border-cyan-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-cyan-300">SID WRITES MATCHED</p>
+            <p class="mt-3 text-2xl text-cyan-200">51,269</p>
+          </div>
+          <div class="rounded-xl p-4 bg-black/50 border border-cyan-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-cyan-300">POSES ON TIME</p>
+            <p class="mt-3 text-2xl text-cyan-200">15% &rarr; 95%</p>
+          </div>
+        </div>
+
+        <div class="mt-6 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <h2 class="text-lg text-cyan-100">{icon:star}00:33 &middot; v3.1-alpha, after midnight</h2>
+          <p>
+            One more before bed: the heads drawn into the 54 fight poses, so nothing is pasted on at run time, the
+            player in blue, and the music back. Poses on screen within one frame: 95.0%.
+          </p>
+        </div>
+
+        <figure class="mt-6">
+          <div class="bg-black/70 rounded-xl border border-cyan-300/30 crt-frame p-2">
+            <img src="{IMG}fist2-player-colours.png" alt="The hero drawn in all 16 C64 colours" class="w-full h-auto rounded-lg pixelated" loading="lazy" />
+          </div>
+          <figcaption class="mt-2 text-xs text-cyan-200/60">The hero in all 16 C64 colours. Blue won.</figcaption>
+        </figure>

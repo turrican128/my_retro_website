@@ -12,7 +12,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
   <link rel="manifest" href="assets/favicon/site.webmanifest">
   <meta name="theme-color" content="#0b0014">
-  <meta name="description" content="בעיטה באוויר עוברת מעל הראש של האויב, והוא נופל בכל זאת. מדדנו כל מכה עד הפיקסל ומצאנו את המהלך האשם.">
+  <meta name="description" content="בעיטה באוויר עוברת מעל הראש של האויב, והוא נופל בכל זאת. מדדנו כל מכה עד הפיקסל, מצאנו את המהלך האשם, ושילמנו מחיר קטן על התיקון.">
   <!-- Open Graph / Facebook / WhatsApp -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="8bitretro.tech">
@@ -20,7 +20,7 @@
   <meta property="og:locale:alternate" content="en_US">
   <meta property="og:url" content="https://8bitretro.tech/devlog-hit-without-touching.html">
   <meta property="og:title" content="מכה בלי מגע – יומן פיתוח | 8bitretro.tech">
-  <meta property="og:description" content="בעיטה באוויר עוברת מעל הראש של האויב, והוא נופל בכל זאת. מדדנו כל מכה עד הפיקסל ומצאנו את המהלך האשם.">
+  <meta property="og:description" content="בעיטה באוויר עוברת מעל הראש של האויב, והוא נופל בכל זאת. מדדנו כל מכה עד הפיקסל, מצאנו את המהלך האשם, ושילמנו מחיר קטן על התיקון.">
   <meta property="og:image" content="https://8bitretro.tech/assets/images/og/projects.jpg">
   <meta property="og:image:secure_url" content="https://8bitretro.tech/assets/images/og/projects.jpg">
   <meta property="og:image:type" content="image/jpeg">
@@ -30,7 +30,7 @@
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="מכה בלי מגע – יומן פיתוח | 8bitretro.tech">
-  <meta name="twitter:description" content="בעיטה באוויר עוברת מעל הראש של האויב, והוא נופל בכל זאת. מדדנו כל מכה עד הפיקסל ומצאנו את המהלך האשם.">
+  <meta name="twitter:description" content="בעיטה באוויר עוברת מעל הראש של האויב, והוא נופל בכל זאת. מדדנו כל מכה עד הפיקסל, מצאנו את המהלך האשם, ושילמנו מחיר קטן על התיקון.">
   <meta name="twitter:image" content="https://8bitretro.tech/assets/images/og/projects.jpg">
   <link rel="alternate" hreflang="he" href="https://8bitretro.tech/devlog-hit-without-touching.html">
   <link rel="alternate" hreflang="en" href="https://8bitretro.tech/en/devlog-hit-without-touching.html">
@@ -197,33 +197,40 @@
       <div class="w-[30rem] h-[30rem] rounded-full bg-pink-500/20 blur-[120px] translate-y-10"></div>
     </div>
 
+    <div id="read-progress" aria-hidden="true" style="position:fixed;top:0;right:0;height:3px;width:0;z-index:60;background:linear-gradient(90deg,#00fff3,#ff2dd2);box-shadow:0 0 10px #ff2dd2"></div>
+    <script>
+      (function () {
+        var bar = document.getElementById('read-progress');
+        function upd() {
+          var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
+          bar.style.width = (max > 0 ? Math.min(100, h.scrollTop / max * 100) : 0) + '%';
+        }
+        window.addEventListener('scroll', upd, { passive: true }); upd();
+      })();
+    </script>
     <section class="w-[min(860px,94%)]" dir="rtl">
       <a href="devlog.html" class="inline-block mb-4 text-xs text-cyan-300 hover:text-pink-300 transition">&rarr; יומן פיתוח</a>
 
       <article class="text-right rounded-2xl p-6 md:p-8 bg-black/60 border border-cyan-400/20 shadow-[0_20px_60px_rgba(0,0,0,0.9)] backdrop-blur">
-        <p dir="ltr" class="text-right [font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300/90">DEVLOG &middot; FIST II REMASTER</p>
+        <p dir="ltr" class="text-right [font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300/90">DEVLOG #5 &middot; FIST II REMASTER</p>
         <h1 class="mt-4 text-2xl md:text-3xl text-cyan-200 font-bold">מכה בלי מגע</h1>
-        <p class="mt-2 text-xs text-cyan-200/60"><time datetime="2026-10-14">14 באוקטובר 2026</time></p>
+        <p class="mt-2 text-xs text-cyan-200/60"><time datetime="2026-10-14T21:00:00+03:00">14 באוקטובר 2026 &middot; 21:00</time> &middot; דקת קריאה</p>
+
+        <figure class="mt-8">
+          <div class="bg-black/70 rounded-xl border border-cyan-300/30 shadow-[0_0_22px_rgba(0,255,243,0.18)] crt-frame p-2">
+            <img src="assets/images/devlog/fist2-three-fighters-oct7.gif" alt="שלושה לוחמים על המסך בחדר המקדש, אחד מהם באמצע בעיטה באוויר"
+                 class="w-full h-auto rounded-lg pixelated" loading="eager" />
+          </div>
+          <figcaption class="mt-2 text-xs text-cyan-200/60 leading-relaxed">שלושה לוחמים על המסך בבת אחת, מה־build של 7 באוקטובר. הגרפיקה היא עדיין הארט המקורי של Fist II מ־1986 (Beam Software / Melbourne House), שמחזיק את המקום עד שהארט שלנו יהיה מוכן.</figcaption>
+        </figure>
 
         <p class="mt-6 text-base text-sky-100/95 leading-relaxed">
           בעיטה באוויר עוברת מעל הראש של האויב, והוא נופל בכל זאת. זה היה סעיף H ברשימה שלי.
           לפני ששינינו שורה אחת, מדדנו.
         </p>
 
-        <figure class="mt-8">
-          <div class="bg-black/70 rounded-xl border border-cyan-300/30 shadow-[0_0_22px_rgba(0,255,243,0.18)] crt-frame p-2">
-            <img src="assets/images/devlog/fist2-three-fighters-oct7.gif" width="720" height="480"
-                 alt="שלושה לוחמים על המסך בחדר המקדש, אחד מהם באמצע בעיטה באוויר"
-                 class="w-full h-auto rounded-lg pixelated" loading="lazy" />
-          </div>
-          <figcaption class="mt-2 text-xs text-cyan-200/60 leading-relaxed">
-            שלושה לוחמים על המסך בבת אחת, מה־build של 7 באוקטובר. הגרפיקה היא עדיין הארט המקורי של Fist II
-            מ־1986 (Beam Software / Melbourne House), שמחזיק את המקום עד שהארט שלנו יהיה מוכן.
-          </figcaption>
-        </figure>
-
-        <div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
-          <h2 class="text-lg text-cyan-100">קודם מודדים</h2>
+        <div class="mt-8 space-y-4 text-[15px] md:text-[17px] text-sky-100/90 leading-[1.85]">
+          <h2 class="flex items-center gap-3 text-xl md:text-2xl text-cyan-100 pt-4"><svg class="shrink-0 text-pink-300" width="18" height="18" viewBox="0 0 8 8" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true" style="filter:drop-shadow(0 0 4px rgba(255,45,210,.55))"><rect x="0" y="1" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="3" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="7" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="0" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/><rect x="3" y="5" width="1" height="1"/><rect x="4" y="5" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="7" y="5" width="1" height="1"/></svg>קודם מודדים</h2>
           <p>
             ב־11 באוקטובר רשמתי מה מפריע לי בגרסה שכבר אפשר לשחק בה. סעיף H: מכות שפוגעות בלי לגעת.
             במקום לנחש, כתבנו כלי קטן, <bdi dir="ltr"><code class="text-cyan-300">hit_gap.py</code></bdi>.
@@ -231,7 +238,7 @@
             נראים על המסך. אחר כך הרצנו את משחק השלבים 20,000 פריימים, עם שחקן שלא מת.
           </p>
 
-          <h2 class="text-lg text-cyan-100 pt-2">מה יצא</h2>
+          <h2 class="flex items-center gap-3 text-xl md:text-2xl text-cyan-100 pt-4"><svg class="shrink-0 text-pink-300" width="18" height="18" viewBox="0 0 8 8" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true" style="filter:drop-shadow(0 0 4px rgba(255,45,210,.55))"><rect x="2" y="1" width="1" height="1"/><rect x="3" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="0" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="3" y="6" width="1" height="1"/><rect x="4" y="6" width="1" height="1"/><rect x="5" y="6" width="1" height="1"/></svg>מה יצא</h2>
           <p>
             החשוד המתבקש היה תמונה שמפגרת אחרי הלוגיקה של המשחק. לא היא: ב־54 מתוך 56 מכות, תנוחת הפגיעה כבר
             הייתה על המסך באותו פריים שבו הוחלט על הפגיעה.
@@ -242,7 +249,7 @@
             כבר נגעו, והכי רחוק היה 1.8 פיקסלים.
           </p>
 
-          <h2 class="text-lg text-cyan-100 pt-2">התיקון</h2>
+          <h2 class="flex items-center gap-3 text-xl md:text-2xl text-cyan-100 pt-4"><svg class="shrink-0 text-pink-300" width="18" height="18" viewBox="0 0 8 8" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true" style="filter:drop-shadow(0 0 4px rgba(255,45,210,.55))"><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="7" y="1" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/><rect x="3" y="5" width="1" height="1"/><rect x="0" y="6" width="1" height="1"/><rect x="1" y="6" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="0" y="7" width="1" height="1"/><rect x="1" y="7" width="1" height="1"/></svg>התיקון</h2>
           <p>
             עכשיו בעיטה באוויר פוגעת רק בקורבן שנמצא לכל היותר צעד אחד נמוך יותר ברחוב. איתה נכנסו עוד שתי
             הגנות: שום מכה לא נוחתת על לוחם שכבר מת, ושום מכה לא נוחתת על תנוחה שמחוץ לשורות ה־hitbox. הכל יושב
@@ -264,12 +271,16 @@
           </div>
         </div>
 
-        <div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
-          <h2 class="text-lg text-cyan-100">המחיר</h2>
+        <div class="mt-8 space-y-4 text-[15px] md:text-[17px] text-sky-100/90 leading-[1.85]">
+          <h2 class="flex items-center gap-3 text-xl md:text-2xl text-cyan-100 pt-4"><svg class="shrink-0 text-pink-300" width="18" height="18" viewBox="0 0 8 8" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true" style="filter:drop-shadow(0 0 4px rgba(255,45,210,.55))"><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="0" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="0" y="3" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/><rect x="3" y="5" width="1" height="1"/><rect x="4" y="5" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="3" y="6" width="1" height="1"/><rect x="4" y="6" width="1" height="1"/><rect x="5" y="6" width="1" height="1"/></svg>המחיר</h2>
           <p>
             עכשיו צריך להתיישר על הקו של האויב, או מתחתיו, כדי שהבעיטה באוויר תפגע. האויבים עוד לא קיבלו את
             ההודעה: מגבוה יותר ברחוב הם עדיין מנסים, ועכשיו הם מפספסים. ללמד את ה־AI להתיישר קודם, זה כבר ברשימה.
           </p>
+        </div>
+
+        <div class="mt-10 pt-6 border-t border-white/10 flex flex-wrap gap-3 justify-between">
+          <a href="devlog-depth-and-v32.html" class="text-xs px-3 py-2 rounded-lg neon-btn text-cyan-300 hover:text-pink-300 transition">&rarr; הקודם: עומק, הפלות ו־v3.2-alpha</a>
         </div>
       </article>
     </section>

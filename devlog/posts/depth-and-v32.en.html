@@ -1,0 +1,64 @@
+        <p class="mt-6 text-base text-sky-100/95 leading-relaxed">
+          11 October: the street got depth, a hidden bug came out, a release went out at 19:31, and an hour later the
+          fights got rougher.
+        </p>
+
+        <div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <h2 class="text-lg text-cyan-100">{icon:joystick}07:42 &middot; walking in depth</h2>
+          <p>
+            Fighters now walk up and down the street, not only left and right, and fire on its own punches. A blow
+            lands only within 3 units of depth, 6 screen lines.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:bug}The frozen enemies</h2>
+          <p>
+            Depth exposed an old bug: the enemies had been half frozen. Once it was fixed, their pose changes went
+            from 1,328 to 2,679 per 10,000 frames. In other words, every fight measurement until then had been taken
+            against half-frozen enemies. Fights are about twice as busy now.
+          </p>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="rounded-xl p-4 bg-black/50 border border-pink-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300">BEFORE</p>
+            <p class="mt-3 text-2xl text-pink-200">1,328</p>
+            <p class="mt-1 text-xs text-sky-100/75">enemy pose changes per 10,000 frames</p>
+          </div>
+          <div class="rounded-xl p-4 bg-black/50 border border-cyan-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-cyan-300">AFTER</p>
+            <p class="mt-3 text-2xl text-cyan-200">2,679</p>
+            <p class="mt-1 text-xs text-sky-100/75">enemy pose changes per 10,000 frames</p>
+          </div>
+        </div>
+
+        <div class="mt-6 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <p>
+            Through the day, the clean-up after it: 44 addresses and 10 dead labels fixed with 0 bytes of the program
+            changed, and all nine findings of a code review fixed (climbs, ledges, the order enemies come in), with
+            the depth tests at 8 of 8.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:star}19:31 &middot; v3.2-alpha</h2>
+          <p>
+            The release: two levels in one game, depth, and the frozen-enemy fix. After the last level, the first one
+            comes again. The art is still Fist II's, as placeholders.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:fist}The same evening</h2>
+          <p>
+            Then four more, after the release:
+          </p>
+          <ul class="list-disc ms-5 space-y-2">
+            <li>Enemies line up on your line before they attack. One parked 12 units off the line made 0 attacks in 800 frames.</li>
+            <li>Knock-downs: a flying kick, a sweep, or a third hit within 50 frames puts a fighter down for about 2.5 seconds. Everyone gets up, and nobody gets juggled.</li>
+            <li>Four basic moves on the stick (punch, kick, jump kick, back kick), all 9 stick combinations checked.</li>
+            <li>CharPad 3.5+ maps, tested on all 214 of CharPad 3.80's example maps, plus the level rules for the artist.</li>
+          </ul>
+        </div>
+
+        <figure class="mt-6">
+          <div class="bg-black/70 rounded-xl border border-cyan-300/30 crt-frame p-2">
+            <img src="{IMG}fist2-desert-fight.png" alt="Two fighters in the desert room" class="w-full h-auto rounded-lg pixelated" loading="lazy" />
+          </div>
+          <figcaption class="mt-2 text-xs text-cyan-200/60">A fight in the desert room, from the depth tests.</figcaption>
+        </figure>

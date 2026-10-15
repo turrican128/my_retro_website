@@ -1,0 +1,54 @@
+        <p class="mt-6 text-base text-sky-100/95 leading-relaxed">
+          בעיטה באוויר עוברת מעל הראש של האויב, והוא נופל בכל זאת. זה היה סעיף H ברשימה שלי.
+          לפני ששינינו שורה אחת, מדדנו.
+        </p>
+
+        <div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <h2 class="text-lg text-cyan-100">{icon:ruler}קודם מודדים</h2>
+          <p>
+            ב־11 באוקטובר רשמתי מה מפריע לי בגרסה שכבר אפשר לשחק בה. סעיף H: מכות שפוגעות בלי לגעת.
+            במקום לנחש, כתבנו כלי קטן, <bdi dir="ltr"><code class="text-cyan-300">hit_gap.py</code></bdi>.
+            בכל פעם שמכה נוחתת, הוא רושם את המרחק בפיקסלים בין קצה האיבר המכה לבין הקורבן, בדיוק כמו שהם
+            נראים על המסך. אחר כך הרצנו את משחק השלבים 20,000 פריימים, עם שחקן שלא מת.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:eye}מה יצא</h2>
+          <p>
+            החשוד המתבקש היה תמונה שמפגרת אחרי הלוגיקה של המשחק. לא היא: ב־54 מתוך 56 מכות, תנוחת הפגיעה כבר
+            הייתה על המסך באותו פריים שבו הוחלט על הפגיעה.
+          </p>
+          <p>
+            האשם היה מהלך אחד: בעיטה באוויר (jump kick) מנתיב רחוק יותר ברחוב. תנוחת הפגיעה שלה היא שיא הקפיצה,
+            אז הרגל עברה 3 עד 18 פיקסלים מעל הראש של הקורבן. זה קרה ב־9 מתוך 16 בעיטות באוויר. כל שאר המהלכים
+            כבר נגעו, והכי רחוק היה 1.8 פיקסלים.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:tool}התיקון</h2>
+          <p>
+            עכשיו בעיטה באוויר פוגעת רק בקורבן שנמצא לכל היותר צעד אחד נמוך יותר ברחוב. איתה נכנסו עוד שתי
+            הגנות: שום מכה לא נוחתת על לוחם שכבר מת, ושום מכה לא נוחתת על תנוחה שמחוץ לשורות ה־hitbox. הכל יושב
+            מאחורי מתג build אחד, <bdi dir="ltr"><code class="text-cyan-300">HIT_CONTACT</code></bdi>, שפועל במשחק
+            השלבים. 12 גרסאות ה־build האחרות יצאו זהות בית אחר בית, כלומר שום דבר אחר לא זז.
+          </p>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="rounded-xl p-4 bg-black/50 border border-pink-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300">BEFORE</p>
+            <p dir="ltr" class="text-right mt-3 text-2xl text-pink-200">9 / 16</p>
+            <p class="mt-1 text-xs text-sky-100/75 leading-relaxed">בעיטות באוויר עברו 3–18 פיקסלים מעל הראש</p>
+          </div>
+          <div class="rounded-xl p-4 bg-black/50 border border-cyan-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-cyan-300">AFTER</p>
+            <p dir="ltr" class="text-right mt-3 text-2xl text-cyan-200">20 / 20</p>
+            <p class="mt-1 text-xs text-sky-100/75 leading-relaxed">בעיטות באוויר נוגעות. 0 מתוך 52 מכות רחוקות 4 פיקסלים או יותר (הכי רחוק: 3)</p>
+          </div>
+        </div>
+
+        <div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <h2 class="text-lg text-cyan-100">{icon:fist}המחיר</h2>
+          <p>
+            עכשיו צריך להתיישר על הקו של האויב, או מתחתיו, כדי שהבעיטה באוויר תפגע. האויבים עוד לא קיבלו את
+            ההודעה: מגבוה יותר ברחוב הם עדיין מנסים, ועכשיו הם מפספסים. ללמד את ה־AI להתיישר קודם, זה כבר ברשימה.
+          </p>
+        </div>
