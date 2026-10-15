@@ -23,6 +23,7 @@ import secrets
 import subprocess
 import sys
 import threading
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -600,8 +601,24 @@ def publish_plan(post, branch, prev):
         ["git", "commit", "-m", f"devlog: {title}"],
         ["git", "push", "-u", "origin", branch],
         ["gh", "pr", "create", "--base", "main", "--head", branch, "--title", f"devlog: {title}", "--body", body],
+        ["gh", "pr", "merge", branch, "--merge", "--delete-branch"],
         ["git", "checkout", prev],
     ]
+
+
+LIVE_SITE = "https://8bitretro.tech"
+
+
+def merge_pr(cmd):
+    """Merging right after creating can hit GitHub's "mergeability not computed yet": retry a few times."""
+    last = ""
+    for _ in range(8):
+        code, out, err = run(cmd, timeout=120)
+        if code == 0:
+            return True, ""
+        last = (err or out or "").strip()
+        time.sleep(4)
+    return False, last
 
 
 def api_publish(slug, req):
@@ -635,6 +652,9 @@ def api_publish(slug, req):
         prev = must(["git", "rev-parse", "--abbrev-ref", "HEAD"])
         if prev == "HEAD":
             raise UserError("git לא נמצא על branch (detached HEAD). עברו קודם ל־branch.")
+        if prev != "main" and not dry:
+            raise UserError(f"העורך רץ כרגע על ה־branch {prev} ולא על main, אז פרסום ישלח לאתר גם דברים "
+                            "שלא שלכם. עברו ל־main (או בקשו מ־Claude Code) והפעילו את העורך מחדש.")
         stamp = israel_now().strftime("%Y%m%d-%H%M")
         branch = f"devlog/{slug or 'index-header'}-{stamp}"
         plan = publish_plan(post, branch, prev)
@@ -644,16 +664,27 @@ def api_publish(slug, req):
             raise UserError("אין מה לפרסם: אין שינויים ב־devlog מאז ה־commit האחרון.")
         url = ""
         done = []
+        merged, merge_error = False, ""
         try:
             for cmd in plan[:-1]:
+                if cmd[:3] == ["gh", "pr", "merge"]:
+                    merged, merge_error = merge_pr(cmd)
+                    break
                 out = must(cmd, timeout=180)
                 done.append(cmd[:2])
-                if cmd[0] == "gh":
+                if cmd[:3] == ["gh", "pr", "create"]:
                     url = out.splitlines()[-1] if out else ""
         finally:
-            if done:                                  # always go back to where Alex was
+            if done:                                  # always go back to main
                 run(plan[-1])
-    return {"ok": True, "branch": branch, "url": url, "back_on": prev}
+        if merged:
+            # main now has the merge: bring it in, so the editor keeps showing what was just published
+            run(["git", "pull", "-q", "--ff-only"], timeout=120)
+            run(["git", "branch", "-D", branch])
+            run(["git", "fetch", "-q", "--prune"], timeout=60)
+    page = "devlog.html" if post is None else f"devlog-{post['slug']}.html"
+    return {"ok": True, "merged": merged, "merge_error": merge_error, "branch": branch, "url": url,
+            "live_url": f"{LIVE_SITE}/{page}", "back_on": prev}
 
 
 # ── Game repo: what changed since the last post ──────────────────────────────
