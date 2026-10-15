@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="he" dir="rtl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Devlog Editor – Fist II Remaster</title>
+  <title>עורך יומן הפיתוח – Fist II Remaster</title>
   <link rel="icon" href="/site/assets/favicon/favicon-32x32.png" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet" />
@@ -14,99 +14,102 @@
 <body>
   <header class="topbar">
     <div class="brand">
-      <span class="brand-title">DEVLOG EDITOR</span>
-      <span class="brand-sub">Fist II Remaster &middot; <span id="branch" title="git branch of the website repo"></span></span>
+      <span class="brand-title" dir="ltr">DEVLOG EDITOR</span>
+      <span class="brand-sub">עורך יומן הפיתוח &middot; <bdi dir="ltr">Fist II Remaster</bdi> &middot; <bdi dir="ltr" id="branch" title="ה־branch של ה־repo של האתר"></bdi></span>
     </div>
-    <div id="saveState" class="save-state clean" aria-live="polite"><span class="dot"></span><span class="txt">No post open</span></div>
+    <div id="saveState" class="save-state clean" aria-live="polite"><span class="dot"></span><span class="txt">אין פוסט פתוח</span></div>
     <nav class="actions" id="actions">
-      <button class="btn primary" id="saveBtn" title="Save (Ctrl+S)" disabled>Save</button>
+      <button class="btn primary" id="saveBtn" title="שמירה (Ctrl+S)" disabled>שמירה</button>
       <div class="split">
-        <button class="btn" id="previewEn" disabled title="Save, build and open the English page">Preview EN</button>
-        <button class="btn" id="previewHe" disabled title="Save, build and open the Hebrew page">Preview HE</button>
+        <button class="btn" id="previewHe" disabled title="שמירה, בנייה ופתיחת הדף כמו שהוא ייראה באתר">תצוגה מקדימה</button>
+        <button class="btn secondary" id="previewEn" disabled title="שמירה, תרגום לאנגלית אם העברית השתנתה, ופתיחת הדף באנגלית">באנגלית</button>
       </div>
-      <div class="split">
-        <button class="btn ai" id="trEnHe" disabled title="Fill the Hebrew side from the English side">EN &rarr; HE</button>
-        <button class="btn ai" id="trHeEn" disabled title="Fill the English side from the Hebrew side">HE &rarr; EN</button>
-      </div>
-      <button class="btn ai" id="draftBtn" title="Draft a post from what was merged in the game repo">Draft from game repo</button>
-      <button class="btn publish" id="publishBtn" disabled title="Save, build and open a pull request">Publish</button>
+      <button class="btn ai" id="draftBtn" title="טיוטה בעברית ממה שמוזג ב־repo של המשחק">טיוטה מהמשחק</button>
+      <button class="btn publish" id="publishBtn" disabled title="שמירה, תרגום לאנגלית, בנייה ופתיחת PR ב־GitHub">פרסום</button>
     </nav>
   </header>
 
   <div class="layout">
     <aside class="sidebar">
-      <button class="btn new-post" id="newBtn">+ New post</button>
-      <p class="side-label">POSTS</p>
+      <button class="btn new-post" id="newBtn">+ פוסט חדש</button>
+      <button class="intro-item" id="introBtn" type="button">
+        <span class="intro-ico" aria-hidden="true">✦</span>
+        <span><span class="t">כותרת היומן</span><span class="s">הכותרת והפתיח בראש דף היומן</span></span>
+      </button>
+      <p class="side-label">פוסטים</p>
       <ul id="postList" class="post-list"></ul>
     </aside>
 
     <main id="main">
       <section id="emptyView" class="empty">
         <div class="empty-card">
-          <p class="pixel pink">READY.</p>
-          <h1>Pick a post on the left, or start a new one.</h1>
-          <p>Write the English and the Hebrew side next to each other, preview the real page, and publish when it reads well.</p>
+          <p class="pixel pink" dir="ltr">READY.</p>
+          <h1>בחרו פוסט מהרשימה, או התחילו פוסט חדש.</h1>
+          <p>כותבים בעברית בלבד. הגרסה האנגלית מתורגמת אוטומטית כשמפרסמים, ואפשר לקרוא אותה קודם ב„תצוגה מקדימה באנגלית”.</p>
         </div>
       </section>
 
       <section id="postView" hidden>
         <div class="card meta">
           <div class="card-head">
-            <p class="pixel cyan" id="postNum">DEVLOG</p>
-            <label class="toggle" title="Drafts never show on the site">
+            <p class="pixel cyan" id="postNum" dir="ltr">DEVLOG</p>
+            <label class="toggle" title="טיוטה לא מופיעה באתר">
               <input type="checkbox" id="f-draft" />
               <span class="track"><span class="knob"></span></span>
-              <span class="toggle-txt">Draft</span>
+              <span class="toggle-txt">טיוטה</span>
             </label>
           </div>
-          <div class="grid-4">
-            <label class="field"><span>Date &amp; time <em>(Israel)</em></span><input type="datetime-local" id="f-when" /></label>
-            <label class="field wide"><span>Kicker <em>(small pink line above the title)</em></span><input id="f-kicker" placeholder="FIST II REMASTER · V3.3-ALPHA" /></label>
-            <label class="field"><span>Short kicker <em>(index cards)</em></span><input id="f-kicker_short" placeholder="Fist II Remaster" /></label>
-          </div>
-          <div class="langs">
-            <div class="lang" dir="ltr">
-              <p class="lang-tag"><span class="flag">EN</span> English</p>
-              <label class="field"><span>Title</span><input id="f-title_en" /></label>
-              <label class="field"><span>Teaser <em>(index card + search engines)</em></span><textarea id="f-teaser_en" rows="2"></textarea></label>
-              <label class="field"><span>Banner alt text</span><input id="f-banner_alt_en" /></label>
-              <label class="field"><span>Banner caption</span><input id="f-banner_caption_en" /></label>
-            </div>
-            <div class="lang" dir="rtl" lang="he">
-              <p class="lang-tag"><span class="flag">HE</span> עברית</p>
-              <label class="field"><span>כותרת</span><input id="f-title_he" /></label>
-              <label class="field"><span>תקציר <em>(כרטיס באינדקס)</em></span><textarea id="f-teaser_he" rows="2"></textarea></label>
-              <label class="field"><span>טקסט חלופי לבאנר</span><input id="f-banner_alt_he" /></label>
-              <label class="field"><span>כיתוב לבאנר</span><input id="f-banner_caption_he" /></label>
-            </div>
+          <div class="fields-he">
+            <label class="field span-2"><span>כותרת</span><input id="f-title_he" /></label>
+            <label class="field span-2"><span>תקציר <em>(בכרטיס באינדקס ובמנועי חיפוש)</em></span><textarea id="f-teaser_he" rows="2"></textarea></label>
+            <label class="field"><span>תאריך ושעה <em>(שעון ישראל)</em></span><input type="datetime-local" id="f-when" dir="ltr" /></label>
+            <label class="field"><span>Kicker <em>(השורה הוורודה מעל הכותרת, באנגלית)</em></span><input id="f-kicker" dir="ltr" placeholder="FIST II REMASTER · V3.3-ALPHA" /></label>
+            <label class="field"><span>Kicker קצר <em>(בכרטיסים באינדקס)</em></span><input id="f-kicker_short" dir="ltr" placeholder="Fist II Remaster" /></label>
           </div>
           <div class="pickers">
             <div class="picker">
-              <p class="picker-label">Banner <em>(top of the post)</em></p>
-              <button class="pick" id="pickBanner" type="button"><img id="bannerImg" alt="" /><span class="pick-empty">Choose image</span></button>
-              <div class="picker-actions"><button class="link" id="bannerChange" type="button">Change</button></div>
+              <p class="picker-label">באנר <em>(בראש הפוסט)</em></p>
+              <button class="pick" id="pickBanner" type="button"><img id="bannerImg" alt="" /><span class="pick-empty">בחירת תמונה</span></button>
+              <div class="picker-actions"><button class="link" id="bannerChange" type="button">החלפה</button></div>
+              <label class="field"><span>כיתוב לבאנר</span><input id="f-banner_caption_he" /></label>
+              <label class="field"><span>טקסט חלופי לבאנר <em>(לקוראי מסך)</em></span><input id="f-banner_alt_he" /></label>
             </div>
             <div class="picker">
-              <p class="picker-label">Index thumbnail <em>(optional, else the banner)</em></p>
-              <button class="pick" id="pickThumb" type="button"><img id="thumbImg" alt="" /><span class="pick-empty">Same as banner</span></button>
-              <div class="picker-actions"><button class="link" id="thumbChange" type="button">Change</button><button class="link" id="thumbClear" type="button">Use banner</button></div>
+              <p class="picker-label">תמונה ממוזערת לאינדקס <em>(לא חובה, אחרת הבאנר)</em></p>
+              <button class="pick" id="pickThumb" type="button"><img id="thumbImg" alt="" /><span class="pick-empty">כמו הבאנר</span></button>
+              <div class="picker-actions"><button class="link" id="thumbChange" type="button">החלפה</button><button class="link" id="thumbClear" type="button">להשתמש בבאנר</button></div>
             </div>
           </div>
+          <p class="en-status" id="postEn"><span class="flag en" dir="ltr">EN</span> <span class="txt"></span></p>
         </div>
 
         <div class="bodies">
-          <div class="body-panel" dir="ltr">
-            <p class="lang-tag"><span class="flag">EN</span> English body</p>
-            <textarea id="body-en"></textarea>
-          </div>
-          <div class="body-panel" dir="rtl" lang="he">
-            <p class="lang-tag"><span class="flag">HE</span> גוף הפוסט בעברית</p>
+          <div class="body-panel" lang="he">
+            <p class="lang-tag">גוף הפוסט</p>
             <textarea id="body-he"></textarea>
           </div>
         </div>
 
         <div class="danger">
-          <button class="btn danger-btn" id="deleteBtn">Delete this post…</button>
+          <button class="btn danger-btn" id="deleteBtn">מחיקת הפוסט…</button>
+        </div>
+      </section>
+
+      <section id="introView" hidden>
+        <div class="card meta">
+          <div class="card-head">
+            <p class="pixel cyan" dir="ltr">DEVLOG INDEX</p>
+          </div>
+          <p class="card-sub">הבלוק שבראש דף היומן (<bdi dir="ltr">docs/devlog.html</bdi>): הכותרת, השורה שמתחתיה והפתיח עם הקישורים. המסגרת של הכרטיס נשארת כמו שהיא, עורכים רק את מה שבתוכה.</p>
+          <label class="field"><span>תיאור הדף <em>(meta description: מנועי חיפוש ושיתוף ברשתות)</em></span><textarea id="f-desc_he" rows="2"></textarea></label>
+          <p class="en-status" id="introEn"><span class="flag en" dir="ltr">EN</span> <span class="txt"></span></p>
+        </div>
+
+        <div class="bodies">
+          <div class="body-panel" lang="he">
+            <p class="lang-tag">כותרת ופתיח</p>
+            <textarea id="intro-he"></textarea>
+          </div>
         </div>
       </section>
     </main>
@@ -114,6 +117,6 @@
 
   <div id="modalRoot"></div>
   <div id="toasts" aria-live="polite"></div>
-  <div id="busy" hidden><div class="busy-card"><div class="spinner"></div><p id="busyText">Working…</p></div></div>
+  <div id="busy" hidden><div class="busy-card"><div class="spinner"></div><p id="busyText">עובד…</p></div></div>
 </body>
 </html>

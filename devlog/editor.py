@@ -12,7 +12,9 @@ runs build.py for previews, and can ask Claude to translate a post or draft one 
 import argparse
 import base64
 import datetime
+import hashlib
 import hmac
+import html as htmllib
 import json
 import os
 import pathlib
@@ -57,7 +59,7 @@ PUBLISH_PATHS = ["devlog", "docs/devlog*.html", "docs/en/devlog*.html", "docs/as
 
 
 class UserError(Exception):
-    """An error with a message meant for Alex, shown as a toast."""
+    """An error with a message meant for Alex, shown as a toast (in Hebrew: the editor UI is Hebrew-first)."""
 
 
 # ── Israel time ──────────────────────────────────────────────────────────────
@@ -123,7 +125,7 @@ def save_data(data):
 
 def body_path(slug, lang):
     if not SLUG_RE.match(slug):
-        raise UserError("That slug isn't valid.")
+        raise UserError("ה־slug הזה לא תקין.")
     return POSTS_DIR / f"{slug}.{lang}.html"
 
 
@@ -131,7 +133,7 @@ def find_post(data, slug):
     for p in data["posts"]:
         if p["slug"] == slug:
             return p
-    raise UserError(f"No post called '{slug}'.")
+    raise UserError(f"אין פוסט עם ה־slug {slug}.")
 
 
 def published_sorted(data):
@@ -163,13 +165,27 @@ def api_get_post(slug):
     for lang in ("en", "he"):
         path = body_path(slug, lang)
         bodies[lang] = read_text(path)[0] if path.exists() else ""
-    return {"post": post, "body_en": bodies["en"], "body_he": bodies["he"]}
+    return {"post": post, "body_en": bodies["en"], "body_he": bodies["he"], "en_current": en_current(post)}
+
+
+# Attributes that browser extensions write into the page (and so into TinyMCE's iframe), e.g.
+# bis_size="{...}" with element measurements. They are never ours; strip them on every save.
+_JUNK_ATTR = re.compile(r'\s(?:bis_[\w-]+|data-bis[\w-]*|data-gramm[\w-]*|data-gr-[\w-]+|data-new-gr-[\w-]+|data-lt-[\w-]+)'
+                        r'(?:="[^"]*"|=\'[^\']*\')?', re.I)
+_EMPTY_P = re.compile(r'[ \t]*<p\b[^>]*>\s*</p>[ \t]*\n?', re.I)
+
+
+def clean_html(html):
+    """Editor HTML before it is written: no extension junk, no empty paragraphs."""
+    return _EMPTY_P.sub("", _JUNK_ATTR.sub("", html))
 
 
 def api_save_post(slug, req):
     with LOCK:
         data = load_data()
         post = find_post(data, slug)
+        he_before = he_hash(post)
+        en_was_current = en_current(post)
         meta = req.get("post") or {}
         if meta.get("when_local"):
             meta["when"] = israel_when(meta["when_local"])
@@ -187,16 +203,137 @@ def api_save_post(slug, req):
                 post[key] = val                     # keeps the key's place in the file
             else:
                 post[key] = val
-        save_data(data)
         for lang in ("en", "he"):
             key = "body_" + lang
             if key in req and req[key] is not None:
                 path = body_path(slug, lang)
-                new = req[key].replace("\r\n", "\n")
+                new = clean_html(req[key].replace("\r\n", "\n"))
                 if path.exists() and read_text(path)[0] == new:
                     continue                        # untouched: don't even rewrite it
                 write_text(path, new)
-    return {"ok": True, "post": post}
+        # The English side follows the Hebrew automatically (see ensure_english_post). A post with no
+        # en_source_hash yet whose English was current gets the hash of the Hebrew it was written from,
+        # but only now that the Hebrew really changed, so an untouched save stays byte-identical.
+        if "en_source_hash" not in post and en_was_current and he_hash(post) != he_before:
+            post["en_source_hash"] = he_before
+        save_data(data)
+    return {"ok": True, "post": post, "en_current": en_current(post)}
+
+
+# ── Automatic English: the English side is a translation of the Hebrew ───────
+# Alex edits only Hebrew. A post's English (title_en, teaser_en, banner texts, <slug>.en.html) is made by
+# Claude from the Hebrew on Publish, or on "Preview EN". en_source_hash (optional, per post) is the hash of the
+# Hebrew the English was translated from; posts.json key "index_en_source_hash" does the same for the index
+# header. No hash = English is current if there is English at all (the hand-written posts), else it's due.
+
+HE_FIELDS = ("title_he", "teaser_he", "banner_alt_he", "banner_caption_he")
+SRC_KEYS = ("title", "teaser", "banner_alt", "banner_caption")
+
+
+def _hash(parts):
+    return hashlib.sha256(json.dumps(parts, ensure_ascii=False).encode("utf-8")).hexdigest()[:16]
+
+
+def body_text(slug, lang):
+    path = body_path(slug, lang)
+    return read_text(path)[0] if path.exists() else ""
+
+
+def he_hash(post):
+    return _hash([post.get(k, "") for k in HE_FIELDS] + [body_text(post["slug"], "he")])
+
+
+def english_present(post):
+    return bool((post.get("title_en") or "").strip() and body_text(post["slug"], "en").strip())
+
+
+def en_current(post):
+    h = post.get("en_source_hash")
+    if h is None:
+        return english_present(post)
+    return h == he_hash(post)
+
+
+def encode_field(v):
+    """Plain-text fields are stored HTML-escaped in posts.json, like the editor stores them."""
+    v = htmllib.unescape(v or "")
+    return v.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
+
+
+def ensure_english_post(data, post):
+    """Translate the post's Hebrew to English if the English is stale. Caller holds LOCK. True = translated."""
+    if en_current(post):
+        return False
+    src = {k: post.get(k + "_he", "") for k in SRC_KEYS}
+    src["body"] = body_text(post["slug"], "he")
+    if not (src["title"].strip() and src["body"].strip()):
+        raise UserError("כדי ליצור את הגרסה האנגלית צריך כותרת וגוף בעברית.")
+    out = translate_fields("he2en", src)
+    for k in SRC_KEYS:
+        post[k + "_en"] = encode_field(out.get(k, "")) if src[k].strip() else ""
+    write_text(body_path(post["slug"], "en"), out.get("body", ""), eol=read_text(body_path(post["slug"], "he"))[1])
+    post["en_source_hash"] = he_hash(post)
+    save_data(data)
+    return True
+
+
+def intro_he_hash(data):
+    inner = split_intro(read_text(intro_path("he"))[0])[1]
+    return _hash([inner, data.get("index_description", {}).get("he", "")])
+
+
+def intro_en_current(data):
+    h = data.get("index_en_source_hash")
+    return True if h is None else h == intro_he_hash(data)
+
+
+EN_INTRO_H1 = '<h1 class="[font-family:\'Press Start 2P\',monospace] text-2xl md:text-3xl text-cyan-200">Devlog</h1>'
+
+
+def english_intro_heading(html):
+    """The English index keeps its own heading: "Devlog" in the pixel font. The Hebrew header has
+    "יומן פיתוח" plus a small DEVLOG line, which would otherwise come back as "Development log" + "DEVLOG"."""
+    html, n = re.subn(r'<h1\b[^>]*>.*?</h1>(\s*<p\b[^>]*>\s*DEVLOG\s*</p>)?', EN_INTRO_H1, html, count=1, flags=re.S | re.I)
+    return html if n else EN_INTRO_H1 + "\n" + html
+
+
+def ensure_english_intro(data):
+    """Same for the index header. Caller holds LOCK."""
+    if intro_en_current(data):
+        return False
+    inner = split_intro(read_text(intro_path("he"))[0])[1]
+    desc = data.get("index_description", {}).get("he", "")
+    out = translate_fields("he2en", {"title": "", "teaser": desc, "banner_alt": "", "banner_caption": "", "body": inner},
+                           kind="intro")
+    path = intro_path("en")
+    head, _, tail = split_intro(read_text(path)[0])
+    body = english_intro_heading(out.get("body", "").replace("\r\n", "\n").strip("\n"))
+    write_text(path, head + body + tail)
+    data.setdefault("index_description", {})["en"] = out.get("teaser", "") if desc.strip() else ""
+    data["index_en_source_hash"] = intro_he_hash(data)
+    save_data(data)
+    return True
+
+
+def ensure_english_all(data):
+    """Before publishing: every page that goes on the site gets current English. Caller holds LOCK."""
+    n = 0
+    for post in data["posts"]:
+        if not post.get("draft"):
+            n += ensure_english_post(data, post)
+    n += ensure_english_intro(data)
+    return n
+
+
+def api_preview_en(req):
+    with LOCK:
+        data = load_data()
+        if req.get("intro"):
+            done = ensure_english_intro(data)
+        else:
+            done = ensure_english_post(data, find_post(data, req.get("slug") or ""))
+        rebuild()
+    return {"ok": True, "translated": bool(done)}
 
 
 def slugify(title):
@@ -204,22 +341,42 @@ def slugify(title):
     return re.sub(r"-{2,}", "-", s)[:60].strip("-")
 
 
+def fallback_slug(now=None):
+    """An ASCII slug for a post that only has a Hebrew title (no transliteration): post-YYYYMMDD-HHMM."""
+    return "post-" + (now or israel_now()).strftime("%Y%m%d-%H%M")
+
+
 def api_new_post(req):
-    title = (req.get("title") or "").strip()
-    slug = slugify(req.get("slug") or title)
-    if not slug:
-        raise UserError("Give the post a title with some letters or numbers in it (English).")
+    """New draft. Hebrew-first: title_he is the main title. The slug (page address) must be ASCII, so it
+    comes from an explicit slug, else the optional English title, else post-YYYYMMDD-HHMM.
+    "title" (English) is still accepted from older callers."""
+    title_he = (req.get("title_he") or "").strip()
+    title_en = (req.get("title_en") or req.get("title") or "").strip()
+    if not (title_he or title_en):
+        raise UserError("צריך כותרת לפוסט.")
+    if (req.get("slug") or "").strip():
+        slug = slugify(req["slug"])
+        if not slug:
+            raise UserError("ה־slug יכול להכיל רק אותיות באנגלית, ספרות ומקפים.")
+    else:
+        slug = slugify(title_en) or fallback_slug()
     with LOCK:
         data = load_data()
-        if any(p["slug"] == slug for p in data["posts"]):
-            raise UserError(f"There is already a post called '{slug}'. Pick another title.")
+        taken = {p["slug"] for p in data["posts"]}
+        if slug in taken and req.get("dedupe"):          # a slug Claude suggested: just number it
+            base, n = slug[:56], 2
+            while f"{base}-{n}" in taken:
+                n += 1
+            slug = f"{base}-{n}"
+        if slug in taken:
+            raise UserError(f"כבר יש פוסט עם ה־slug {slug}. בחרו slug אחר.")
         post = {
             "slug": slug,
             "when": israel_when(israel_now().strftime("%Y-%m-%dT%H:%M")),
             "kicker": "FIST II REMASTER",
             "kicker_short": "Fist II Remaster",
-            "title_en": title,
-            "title_he": "",
+            "title_en": encode_field(title_en),
+            "title_he": encode_field(title_he),
             "teaser_en": "",
             "teaser_he": "",
             "banner": "",
@@ -256,6 +413,58 @@ def api_delete_post(slug):
     return {"ok": True}
 
 
+# ── Index header: devlog/intro.<lang>.html ───────────────────────────────────
+# The file is one outer card <div class=...> holding the heading, the DEVLOG line and the intro paragraphs.
+# The editor only edits what's inside the card; the wrapper line and the closing </div> are kept byte for byte.
+
+INTRO_RE = re.compile(r"\A(\s*<div\b[^>]*>\n?)(.*?)(\n?[ \t]*</div>\s*)\Z", re.S)
+
+
+def intro_path(lang):
+    return HERE / f"intro.{lang}.html"
+
+
+def split_intro(text):
+    m = INTRO_RE.match(text)
+    return m.groups() if m else ("", text, "")
+
+
+def api_get_intro():
+    data = load_data()
+    return {"he": split_intro(read_text(intro_path("he"))[0])[1],
+            "description_he": data.get("index_description", {}).get("he", ""),
+            "en_current": intro_en_current(data)}
+
+
+def api_save_intro(req):
+    """Saves the Hebrew index header (inner HTML of intro.he.html) and the Hebrew index description."""
+    with LOCK:
+        data = load_data()
+        before = intro_he_hash(data)
+        was_current = intro_en_current(data)
+        changed = False
+        desc = req.get("description_he")
+        cur = data.setdefault("index_description", {})
+        if desc is not None and desc != cur.get("he", ""):
+            cur["he"] = desc
+            changed = True
+        new = req.get("he")
+        if new is not None:
+            path = intro_path("he")
+            head, inner, tail = split_intro(read_text(path)[0])
+            new = clean_html(new.replace("\r\n", "\n")).strip("\n")
+            if new != inner:                        # untouched: don't even rewrite it
+                if not new.strip():
+                    raise UserError("הכותרת של היומן לא יכולה להיות ריקה.")
+                write_text(path, head + new + tail)
+        if "index_en_source_hash" not in data and was_current and intro_he_hash(data) != before:
+            data["index_en_source_hash"] = before
+            changed = True
+        if changed:
+            save_data(data)
+        return {"ok": True, "en_current": intro_en_current(data)}
+
+
 def api_images():
     files = [f for f in IMG_DIR.iterdir() if f.suffix.lower() in IMG_EXT]
     files.sort(key=lambda f: f.stat().st_mtime, reverse=True)
@@ -279,14 +488,14 @@ def api_upload(req):
     try:
         blob = base64.b64decode(req.get("data") or "", validate=False)
     except Exception:
-        raise UserError("That upload didn't arrive in one piece. Try again.")
+        raise UserError("ההעלאה לא הגיעה בשלמותה. נסו שוב.")
     if not blob:
-        raise UserError("The file is empty.")
+        raise UserError("הקובץ ריק.")
     if len(blob) > MAX_UPLOAD:
-        raise UserError(f"That image is {len(blob) / 1048576:.1f} MB; the limit is 5 MB.")
+        raise UserError(f"התמונה שוקלת {len(blob) / 1048576:.1f} MB, והמגבלה היא 5 MB.")
     kind = _sniff(blob)
     if not kind:
-        raise UserError("Only PNG, GIF, JPG and WEBP images can be added.")
+        raise UserError("אפשר להוסיף רק תמונות PNG, GIF, JPG או WEBP.")
     stem = pathlib.PurePath(name).stem.lower()
     stem = re.sub(r"[^a-z0-9._-]+", "-", stem).strip("-._") or "image"
     stem = stem[:60]
@@ -337,16 +546,16 @@ def run(cmd, cwd=REPO, timeout=120):
         r = subprocess.run(cmd, cwd=str(cwd), capture_output=True, text=True, encoding="utf-8",
                            errors="replace", timeout=timeout)
     except FileNotFoundError:
-        raise UserError(f"'{cmd[0]}' isn't installed or not on PATH.")
+        raise UserError(f"{cmd[0]} לא מותקן או לא נמצא ב־PATH.")
     except subprocess.TimeoutExpired:
-        raise UserError(f"'{' '.join(cmd[:3])}' took too long and was stopped.")
+        raise UserError(f"הפקודה {' '.join(cmd[:3])} לקחה יותר מדי זמן ונעצרה.")
     return r.returncode, r.stdout.rstrip(), r.stderr.strip()   # rstrip: porcelain lines start with a space
 
 
 def must(cmd, cwd=REPO, timeout=120):
     code, out, err = run(cmd, cwd, timeout)
     if code != 0:
-        raise UserError(f"{' '.join(cmd[:3])} failed:\n{err or out}")
+        raise UserError(f"הפקודה {' '.join(cmd[:3])} נכשלה:\n{err or out}")
     return out
 
 
@@ -371,12 +580,20 @@ def blocking_changes():
 
 
 def publish_plan(post, branch, prev):
-    title = post["title_en"] or post["slug"]
-    body = (f"New devlog post: **{title}**\n\n"
-            f"- Hebrew: {post.get('title_he') or '(no Hebrew title yet)'}\n"
-            f"- Date: {post['when']}\n"
-            f"- Pages: `docs/devlog-{post['slug']}.html`, `docs/en/devlog-{post['slug']}.html`\n\n"
-            "Published from the devlog editor.")
+    """post=None publishes the index header (devlog/intro.*.html + index_description)."""
+    if post is None:
+        title = "index header"
+        body = ("Updated the devlog index header: `devlog/intro.he.html`, `devlog/intro.en.html` "
+                "(and the index description in `devlog/posts.json`).\n\n"
+                "- Pages: `docs/devlog.html`, `docs/en/devlog.html`\n\n"
+                "Published from the devlog editor.")
+    else:
+        title = post["title_en"] or post.get("title_he") or post["slug"]
+        body = (f"New devlog post: **{title}**\n\n"
+                f"- Hebrew: {post.get('title_he') or '(no Hebrew title yet)'}\n"
+                f"- Date: {post['when']}\n"
+                f"- Pages: `docs/devlog-{post['slug']}.html`, `docs/en/devlog-{post['slug']}.html`\n\n"
+                "Published from the devlog editor.")
     return [
         ["git", "checkout", "-b", branch],
         ["git", "add", "-A", "--"] + PUBLISH_PATHS,
@@ -388,28 +605,43 @@ def publish_plan(post, branch, prev):
 
 
 def api_publish(slug, req):
+    """slug=None publishes the index header instead of a post."""
     dry = bool(req.get("dry_run"))
     with LOCK:
         data = load_data()
-        post = find_post(data, slug)
-        if post.get("draft"):
-            raise UserError("This post is still a draft. Switch off 'Draft' and save, then publish.")
-        if not (post.get("title_en") and post.get("title_he")):
-            raise UserError("Give the post both an English and a Hebrew title before publishing.")
+        post = None
+        if slug is not None:
+            post = find_post(data, slug)
+            if post.get("draft"):
+                raise UserError("הפוסט עדיין טיוטה. כבו את המתג 'טיוטה', שמרו ואז פרסמו.")
+            if not post.get("title_he"):
+                raise UserError("לפני פרסום צריך לפוסט כותרת.")
+        # Never publish a stale or empty English page: translate whatever Hebrew changed first.
+        if not api_key():
+            if not all(en_current(p) for p in data["posts"] if not p.get("draft")) or not intro_en_current(data):
+                raise UserError("הפרסום נעצר: העברית השתנתה והגרסה האנגלית צריכה תרגום, אבל אין מפתח API של Claude. "
+                                "הוסיפו את המפתח ל־devlog/.env, הפעילו את העורך מחדש ונסו שוב.")
+        try:
+            if not dry:
+                ensure_english_all(data)
+        except UserError as e:
+            raise UserError(f"הפרסום נעצר: לא הצלחתי ליצור את הגרסה האנגלית, אז לא פורסם כלום.\n{e}")
+        if post is not None and not post.get("title_en"):
+            raise UserError("הפרסום נעצר: לפוסט אין כותרת באנגלית אחרי התרגום.")
         rebuild()
         blocked = blocking_changes()
         if blocked:
             return {"ok": False, "blocked": blocked}
         prev = must(["git", "rev-parse", "--abbrev-ref", "HEAD"])
         if prev == "HEAD":
-            raise UserError("git is not on a branch (detached HEAD). Check out a branch first.")
+            raise UserError("git לא נמצא על branch (detached HEAD). עברו קודם ל־branch.")
         stamp = israel_now().strftime("%Y%m%d-%H%M")
-        branch = f"devlog/{slug}-{stamp}"
+        branch = f"devlog/{slug or 'index-header'}-{stamp}"
         plan = publish_plan(post, branch, prev)
         if dry:
             return {"ok": True, "dry_run": True, "commands": plan}
         if not must(["git", "status", "--porcelain", "--"] + PUBLISH_PATHS):
-            raise UserError("Nothing to publish: there are no changes in the devlog since the last commit.")
+            raise UserError("אין מה לפרסם: אין שינויים ב־devlog מאז ה־commit האחרון.")
         url = ""
         done = []
         try:
@@ -428,7 +660,7 @@ def api_publish(slug, req):
 
 def api_repo_changes():
     if not GAME_REPO.exists():
-        raise UserError(f"Can't find the game repo at {GAME_REPO}.")
+        raise UserError(f"לא מוצא את ה־repo של המשחק ב־{GAME_REPO}.")
     data = load_data()
     pub = published_sorted(data)
     since = pub[-1]["when"] if pub else "2026-01-01T00:00:00+03:00"
@@ -456,16 +688,17 @@ def api_repo_changes():
         if merged > since_dt:
             prs.append(pr)
     prs.sort(key=lambda p: p["mergedAt"])
-    return {"since": since, "since_title": pub[-1]["title_en"] if pub else "", "prs": prs, "commits": commits}
+    since_title = (pub[-1].get("title_he") or pub[-1].get("title_en") or "") if pub else ""
+    return {"since": since, "since_title": since_title, "prs": prs, "commits": commits}
 
 
 # ── Claude API (Messages API over urllib) ────────────────────────────────────
 
 MODEL = "claude-opus-5-5"
 API_URL = "https://api.anthropic.com/v1/messages"
-NO_KEY = ("No Claude API key yet. Create devlog/.env with one line:  ANTHROPIC_API_KEY=sk-ant-...  "
-          "(or set the ANTHROPIC_API_KEY environment variable), then restart the editor. "
-          "Everything else works without it.")
+NO_KEY = ("עדיין אין מפתח API של Claude. צרו את הקובץ devlog/.env עם השורה  ANTHROPIC_API_KEY=sk-ant-...  "
+          "(או הגדירו את משתנה הסביבה ANTHROPIC_API_KEY) והפעילו את העורך מחדש. "
+          "כל השאר עובד גם בלי מפתח.")
 
 
 def api_key():
@@ -511,21 +744,21 @@ def claude_json(system, user, schema, effort="medium"):
         except Exception:
             pass
         if e.code == 401:
-            raise UserError("Claude didn't accept the API key (401). Check the key in devlog/.env.")
+            raise UserError("Claude לא קיבל את מפתח ה־API (401). בדקו את המפתח ב־devlog/.env.")
         if e.code == 429:
-            raise UserError("Claude is rate-limiting us right now (429). Wait a minute and try again.")
-        raise UserError(f"Claude API error {e.code}: {detail or e.reason}")
+            raise UserError("Claude מגביל אותנו כרגע (429). חכו דקה ונסו שוב.")
+        raise UserError(f"שגיאה מה־API של Claude ({e.code}): {detail or e.reason}")
     except urllib.error.URLError as e:
-        raise UserError(f"Couldn't reach the Claude API: {e.reason}")
+        raise UserError(f"אין חיבור ל־API של Claude: {e.reason}")
     if resp.get("stop_reason") == "refusal":
-        raise UserError("Claude declined this request. Try again with different material.")
+        raise UserError("Claude סירב לבקשה. נסו שוב עם חומר אחר.")
     if resp.get("stop_reason") == "max_tokens":
-        raise UserError("Claude's answer was too long and got cut off. Try a shorter post.")
+        raise UserError("התשובה של Claude יצאה ארוכה מדי ונקטעה. נסו פוסט קצר יותר.")
     text = "".join(b.get("text", "") for b in resp.get("content", []) if b.get("type") == "text")
     try:
         return json.loads(text)
     except ValueError:
-        raise UserError("Claude's answer wasn't in the expected format. Try again.")
+        raise UserError("התשובה של Claude לא הגיעה בפורמט הצפוי. נסו שוב.")
 
 
 HOUSE_MARKUP = """The post body is an HTML fragment (no <html>/<body>) styled with Tailwind classes. Tokens:
@@ -579,8 +812,8 @@ TRANSLATE_SCHEMA = {
 
 DRAFT_SCHEMA = {
     "type": "object",
-    "properties": {k: {"type": "string"} for k in ("title_en", "teaser_en", "kicker", "body_en")},
-    "required": ["title_en", "teaser_en", "kicker", "body_en"],
+    "properties": {k: {"type": "string"} for k in ("title_he", "teaser_he", "kicker", "body_he", "slug")},
+    "required": ["title_he", "teaser_he", "kicker", "body_he", "slug"],
     "additionalProperties": False,
 }
 
@@ -595,49 +828,80 @@ def reference_pair():
     return ref, read_text(body_path(ref["slug"], "en"))[0], read_text(body_path(ref["slug"], "he"))[0]
 
 
-def api_translate(req):
-    direction = req.get("direction")
+TRANSLATE_EN_RULES = """English rules (Hebrew -> English):
+- The English must read as if a native English-speaking developer wrote it first, in the voice of the English
+  reference post: plain, concrete, short sentences, a little dry humour only where the Hebrew has it. Not a
+  word-for-word rendering: rebuild a sentence when Hebrew word order or an idiom would sound foreign in English,
+  but keep its facts, meaning and tone. Hebrew idioms and slang get the natural English equivalent.
+- Same facts, same order, same sections, nothing added, nothing dropped, no new adjectives or enthusiasm.
+- Hebrew prefix letters with a maqaf become proper English: "ב־C64" -> "on the C64", "ל־SpritePad" -> "to SpritePad".
+- <bdi dir="ltr"> exists only to fix Hebrew bidi order. In English drop the bdi tag and keep what is inside it; if the
+  bdi carries a class, keep the class on a <span> instead. Everything else in the markup stays exactly as it is.
+- Hebrew dates become English dates ("6 באוקטובר 2026" -> "6 October 2026"). Hebrew quotes and geresh marks become
+  English punctuation.
+- Use the English names the reference post uses for the game's people, places and things; English words that already
+  appear in Latin letters in the Hebrew stay exactly as written."""
+
+
+def translate_fields(direction, fields, kind="post"):
+    """One Claude call: the five fields of a post (or the index header) in the other language."""
     if direction not in ("en2he", "he2en"):
-        raise UserError("Unknown translation direction.")
+        raise UserError("כיוון תרגום לא מוכר.")
     src, dst = ("English", "Hebrew") if direction == "en2he" else ("Hebrew", "English")
-    fields = {k: (req.get("fields") or {}).get(k, "") for k in ("title", "teaser", "banner_alt", "banner_caption", "body")}
+    src_he = "אנגלית" if direction == "en2he" else "עברית"
+    fields = {k: (fields or {}).get(k, "") or "" for k in ("title", "teaser", "banner_alt", "banner_caption", "body")}
     if not any(v.strip() for v in fields.values()):
-        raise UserError(f"The {src} side is empty, so there is nothing to translate.")
+        raise UserError(f"הצד ב{src_he} ריק, אז אין מה לתרגם.")
     ref, ref_en, ref_he = reference_pair()
+    lang_rules = TRANSLATE_HE_RULES if dst == "Hebrew" else TRANSLATE_EN_RULES
     system = (f"You translate posts of Alex Goldblat's game devlog (a Commodore 64 beat'em-up, Fist II Remaster) "
               f"from {src} to {dst}. The site is bilingual; both versions must say the same thing.\n\n"
-              + TRANSLATE_COMMON + "\n\n" + TRANSLATE_HE_RULES + "\n\n" + HOUSE_MARKUP.replace("ICONS", ", ".join(build.ICONS)))
+              + TRANSLATE_COMMON + "\n\n" + lang_rules + "\n\n" + HOUSE_MARKUP.replace("ICONS", ", ".join(build.ICONS)))
     if ref:
-        system += ("\n\n<reference_post>\nA published post in both languages; match its Hebrew style and markup habits.\n"
+        system += ("\n\n<reference_post>\nA published post in both languages. Alex wrote both; match the " + dst
+                   + " side's voice, word choices and markup habits.\n"
                    f"<english title=\"{ref['title_en']}\">\n{ref_en}\n</english>\n"
                    f"<hebrew title=\"{ref['title_he']}\">\n{ref_he}\n</hebrew>\n</reference_post>")
-    user = (f"Translate these fields of a devlog post from {src} to {dst}. Return the same five fields.\n\n"
-            + "\n".join(f"<{k}>\n{v}\n</{k}>" for k, v in fields.items()))
-    return {"ok": True, "fields": claude_json(system, user, TRANSLATE_SCHEMA)}
+    what = ("the devlog index page header (body = the heading and intro HTML at the top of the index page, "
+            "teaser = the page's meta description; the other fields are empty)" if kind == "intro"
+            else "a devlog post")
+    user = (f"Translate these fields of {what} from {src} to {dst}. Return the same five fields; a field that is "
+            f"empty here stays empty.\n\n" + "\n".join(f"<{k}>\n{v}\n</{k}>" for k, v in fields.items()))
+    out = claude_json(system, user, TRANSLATE_SCHEMA, effort="high")
+    return {k: (out.get(k, "") if fields[k].strip() else "") for k in fields}
+
+
+def api_translate(req):
+    return {"ok": True, "fields": translate_fields(req.get("direction"), req.get("fields"), req.get("kind", "post"))}
 
 
 def api_draft(req):
     prs = req.get("prs") or []
     commits = req.get("commits") or []
     if not prs and not commits:
-        raise UserError("Tick at least one PR or commit to write about.")
+        raise UserError("סמנו לפחות PR או commit אחד לכתוב עליו.")
     parts = []
     for pr in prs:
         parts.append(f"<pr number=\"{pr.get('number')}\" merged=\"{pr.get('mergedAt', '')}\">\n<title>{pr.get('title', '')}</title>\n"
                      f"<body>\n{pr.get('body', '')}\n</body>\n</pr>")
     for c in commits:
         parts.append(f"<commit sha=\"{c.get('short', '')}\" when=\"{c.get('when', '')}\">\n{c.get('subject', '')}\n{c.get('body', '')}\n</commit>")
-    ref, ref_en, _ = reference_pair()
+    ref, _, ref_he = reference_pair()
     system = ("You draft posts for Alex Goldblat's game devlog: Fist II Remaster, a Commodore 64 beat'em-up built on the "
-              "1986 Fist II engine. Alex edits every draft before it goes out.\n\n" + FACT_RULES + "\n\n"
-              + HOUSE_MARKUP.replace("ICONS", ", ".join(build.ICONS)))
+              "1986 Fist II engine. Alex writes the devlog in Hebrew first, so you write the draft directly in Hebrew "
+              "(think and phrase it in Hebrew; do not write English and translate it). The English version is made "
+              "later from the Hebrew one. Alex edits every draft before it goes out.\n\n" + FACT_RULES + "\n\n"
+              + TRANSLATE_HE_RULES + "\n\n" + HOUSE_MARKUP.replace("ICONS", ", ".join(build.ICONS)))
     if ref:
-        system += f"\n\n<reference_post title=\"{ref['title_en']}\">\nA published post: match its tone, length per section and markup.\n{ref_en}\n</reference_post>"
+        system += (f"\n\n<reference_post title=\"{ref['title_he']}\">\nA published post (Hebrew version): match its "
+                   f"Hebrew tone, length per section and markup.\n{ref_he}\n</reference_post>")
     user = ("Here is everything that was merged into the game since the last devlog post. Draft a SHORT, interesting "
-            "English post about it: a lead paragraph, then 2-4 short sections with headings and icons; number tiles only "
+            "post about it IN HEBREW: a lead paragraph, then 2-4 short sections with headings and icons; number tiles only "
             "if the material has striking numbers. Pick what a C64 fan would find interesting; skip housekeeping.\n"
-            "Also give a short title (a few words), a one-sentence teaser for the index page, and a kicker in capitals "
-            "like \"FIST II REMASTER &middot; V3.3-ALPHA\" (just \"FIST II REMASTER\" if no version is in the material).\n\n"
+            "Also give a short Hebrew title (a few words), a one-sentence Hebrew teaser for the index page, a kicker in "
+            "English capitals like \"FIST II REMASTER &middot; V3.3-ALPHA\" (just \"FIST II REMASTER\" if no version is "
+            "in the material), and a slug: the page address, 2-5 English words in lowercase ASCII letters, digits and "
+            "hyphens only (like \"the-giant-day\"), describing the topic.\n\n"
             "<material>\n" + "\n\n".join(parts) + "\n</material>")
     return {"ok": True, "draft": claude_json(system, user, DRAFT_SCHEMA, effort="high")}
 
@@ -649,6 +913,13 @@ def api_status():
 
 
 # ── HTTP ─────────────────────────────────────────────────────────────────────
+
+# Shown on the English preview: Alex doesn't edit English; it's translated from the Hebrew.
+EN_NOTICE = ('<div dir="rtl" lang="he" style="position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:99;'
+             'font:500 13px Heebo,system-ui,sans-serif;background:rgba(8,2,20,.92);color:#e0f2fe;padding:8px 14px;'
+             'border:1px solid #00fff3;border-radius:10px;box-shadow:0 0 18px rgba(0,255,243,.35)">'
+             'האנגלית נוצרת אוטומטית מהעברית (תצוגה לקריאה בלבד)</div>')
+
 
 class Handler(SimpleHTTPRequestHandler):
     server_version = "DevlogEditor/1.0"
@@ -693,7 +964,7 @@ class Handler(SimpleHTTPRequestHandler):
     def _body(self):
         n = int(self.headers.get("Content-Length") or 0)
         if n > MAX_UPLOAD * 2:
-            raise UserError("That request is too big.")
+            raise UserError("הבקשה גדולה מדי.")
         raw = self.rfile.read(n) if n else b""
         return json.loads(raw.decode("utf-8")) if raw else {}
 
@@ -705,7 +976,7 @@ class Handler(SimpleHTTPRequestHandler):
         except Exception as e:                        # show it in the UI instead of a dead request
             import traceback
             traceback.print_exc()
-            return self._json({"ok": False, "error": f"Something went wrong: {type(e).__name__}: {e}"}, 500)
+            return self._json({"ok": False, "error": f"משהו השתבש: {type(e).__name__}: {e}"}, 500)
 
     def _local_only(self):
         host = (self.headers.get("Host") or "").lower()
@@ -717,18 +988,18 @@ class Handler(SimpleHTTPRequestHandler):
     def _token_ok(self):
         got = self.headers.get("X-Editor-Token") or ""
         if not hmac.compare_digest(got.encode(), TOKEN.encode()):
-            self._json({"ok": False, "error": "Forbidden: missing or wrong editor token. Reload the page."}, 403)
+            self._json({"ok": False, "error": "אין הרשאה: טוקן העורך חסר או שגוי. טענו את הדף מחדש."}, 403)
             return False
         return True
 
     def _post_ok(self):
         origin = self.headers.get("Origin")
         if origin is not None and origin not in (f"http://127.0.0.1:{PORT}", f"http://localhost:{PORT}"):
-            self._json({"ok": False, "error": "Forbidden origin."}, 403)
+            self._json({"ok": False, "error": "אין הרשאה: מקור (Origin) לא מוכר."}, 403)
             return False
         ctype = (self.headers.get("Content-Type") or "").split(";")[0].strip().lower()
         if ctype != "application/json":
-            self._json({"ok": False, "error": "Expected application/json."}, 403)
+            self._json({"ok": False, "error": "הבקשה חייבת להיות application/json."}, 403)
             return False
         return self._token_ok()
 
@@ -763,7 +1034,18 @@ class Handler(SimpleHTTPRequestHandler):
                 return self._bytes(b"no such post", "text/plain", 404)
             banner = ('<div style="position:fixed;bottom:12px;left:12px;z-index:99;font:10px \'Press Start 2P\',monospace;'
                       'background:#ff2dd2;color:#000;padding:8px 10px;border-radius:6px;box-shadow:0 0 18px #ff2dd2">PREVIEW</div>')
-            return self._bytes(html.replace("</body>", banner + "</body>", 1).encode("utf-8"), "text/html; charset=utf-8")
+            html = html.replace("</body>", banner + "</body>", 1)
+            if m.group(1):
+                html = html.replace("</body>", EN_NOTICE + "</body>", 1)
+            return self._bytes(html.encode("utf-8"), "text/html; charset=utf-8")
+        if path.startswith("/site/en/") and path.endswith(".html") and "en-notice" in url.query:
+            page = SITE / path[len("/site/"):]
+            try:
+                page.resolve().relative_to(SITE.resolve())
+                html = page.read_text(encoding="utf-8")
+            except (ValueError, OSError):
+                return self._bytes(b"not found", "text/plain", 404)
+            return self._bytes(html.replace("</body>", EN_NOTICE + "</body>", 1).encode("utf-8"), "text/html; charset=utf-8")
         if path.startswith("/site/"):
             return self._file(SITE / path[len("/site/"):], SITE)
         if path == "/api/status":
@@ -776,6 +1058,8 @@ class Handler(SimpleHTTPRequestHandler):
             return self._guard(api_images)
         if path == "/api/repo-changes":
             return self._guard(api_repo_changes)
+        if path == "/api/intro":
+            return self._guard(api_get_intro)
         return self._bytes(b"not found", "text/plain", 404)
 
     def do_POST(self):
@@ -794,6 +1078,12 @@ class Handler(SimpleHTTPRequestHandler):
             return self._guard(api_save_post, path[len("/api/post/"):], req)
         if path.startswith("/api/delete/"):
             return self._guard(api_delete_post, path[len("/api/delete/"):])
+        if path == "/api/intro":
+            return self._guard(api_save_intro, req)
+        if path == "/api/preview-en":
+            return self._guard(api_preview_en, req)
+        if path == "/api/publish-intro":
+            return self._guard(api_publish, None, req)
         if path == "/api/upload":
             return self._guard(api_upload, req)
         if path == "/api/build":
@@ -804,7 +1094,7 @@ class Handler(SimpleHTTPRequestHandler):
             return self._guard(api_draft, req)
         if path.startswith("/api/publish/"):
             return self._guard(api_publish, path[len("/api/publish/"):], req)
-        return self._json({"ok": False, "error": "unknown endpoint"}, 404)
+        return self._json({"ok": False, "error": "נקודת קצה לא מוכרת."}, 404)
 
 
 def main():

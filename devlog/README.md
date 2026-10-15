@@ -1,7 +1,23 @@
+<div dir="rtl" lang="he">
+
+## בקצרה (עברית)
+
+1. מפעילים: לחיצה כפולה על `devlog/editor.cmd` (או `python devlog/editor.py`), והעורך נפתח ב־<bdi dir="ltr">http://127.0.0.1:5120</bdi>.
+2. **+ פוסט חדש**: כותבים כותרת בעברית. ה־slug (כתובת הדף) הוא באנגלית בלבד, ואי אפשר לשנות אותו אחרי היצירה.
+3. כותבים רק בעברית: כותרת, תקציר, טקסטים לבאנר וגוף הפוסט. **שמירה** או Ctrl+S.
+4. **תצוגה מקדימה** פותחת את הדף בעברית בדיוק כמו באתר. **באנגלית** מתרגם קודם (אם העברית השתנתה) ופותח את הדף באנגלית.
+5. הגרסה האנגלית נוצרת אוטומטית: Claude מתרגם את העברית כשמפרסמים. לא עורכים אנגלית.
+6. **כותרת היומן** (בצד) עורכת את הבלוק שבראש דף היומן ואת תיאור הדף.
+7. **טיוטה מהמשחק**: Claude כותב טיוטה קצרה בעברית ממה שמוזג ב־repo של המשחק, רק מעובדות שכתובות שם.
+8. כשהפוסט מוכן: מכבים את **טיוטה**, שומרים ולוחצים **פרסום**. נפתח PR ב־GitHub, ושום דבר לא עולה לאוויר עד שממזגים אותו.
+
+</div>
+
 # Devlog editor
 
-A small local web app for writing the Fist II Remaster devlog: English and Hebrew side by side,
-the real page one click away, and a pull request when it's done.
+A small local web app for writing the Fist II Remaster devlog. The interface is Hebrew and right-to-left,
+and you write **only in Hebrew**: the English side is translated by Claude automatically. The real page
+is one click away, and Publish opens a pull request.
 
 ## Run it
 
@@ -17,37 +33,69 @@ Python standard library only, nothing to install. Close the window (or Ctrl+C) t
 
 ## Write a post
 
-1. **+ New post** on the left. Type a working title in English; it becomes the page address
-   (`docs/devlog-<slug>.html`) and can't change later, the title can.
-2. New posts are **drafts**: they never appear on the site until you switch off **Draft**.
-3. Fill in the date and time (Israel time; summer/winter offset is worked out for you), the kicker
-   (the small pink line above the title), titles, teasers and the banner texts for both languages.
-4. Write the body in the two editors. The toolbar has the site's own building blocks:
-   - **H2**: a section heading. **Icon**: a pixel icon, put at the start of the heading you're in.
-   - **Screenshot**: pick an image from the library (or upload one) and add a caption.
-   - **# Tile**: a number tile (label, value, pink or cyan). Put the cursor in an existing row of
-     tiles to add to it; up to 4 share a row.
-   - **Lead**: turns the paragraph you're in into the bigger opening line.
+1. **+ פוסט חדש** (new post) at the top of the sidebar. Type a working title in Hebrew. The page address
+   (slug, `docs/devlog-<slug>.html`) has to be ASCII: it's prefilled as `post-YYYYMMDD-HHMM` and you can
+   type English words instead. The slug can't change later; the title can.
+2. New posts are **drafts** (טיוטה): they never appear on the site until you switch off the draft toggle.
+3. Fill in the Hebrew title, teaser, banner caption and alt text, the date and time (Israel time;
+   summer/winter offset is worked out for you) and the kicker (the small pink line above the title,
+   kept in English capitals for both languages).
+4. Write the body in the Hebrew editor. The toolbar has the site's own building blocks:
+   - **H2**: a section heading. **אייקון** (icon): a pixel icon, put at the start of the heading you're in.
+   - **צילום מסך** (screenshot): pick an image from the library (or upload one) and add a caption.
+   - **# כרטיס** (number tile): label, value, pink or cyan. Put the cursor in an existing row of tiles to
+     add to it; up to 4 share a row.
+   - **פתיח** (lead): turns the paragraph you're in into the bigger opening line.
    - `<>` (the second one) shows the HTML if you want to fix something by hand.
-5. **Save** (or Ctrl+S). The dot next to the title turns pink while something isn't saved, and the
-   browser warns you before you close the tab with unsaved changes.
+5. **שמירה** (save) or Ctrl+S. The dot in the top bar turns pink while something isn't saved, and the
+   browser warns you before you close the tab with unsaved changes. Saving never calls the Claude API.
+
+## The English side is automatic
+
+English is never edited in the editor. Claude translates the Hebrew (title, teaser, banner texts, body)
+into `title_en`, `teaser_en`, `banner_*_en` and `posts/<slug>.en.html`:
+
+- on **Publish**, for every published post (and the index header) whose Hebrew changed since its last
+  translation. If there's no API key, or the translation fails, Publish stops and nothing is committed;
+  a stale or empty English page never goes out.
+- on **באנגלית** (preview in English), so you can read the English before publishing. The English
+  preview has a small notice saying it's generated.
+
+How "changed" is tracked: a post may carry `en_source_hash` in `posts.json` (the hash of the Hebrew the
+English was made from); the index header uses the top-level `index_en_source_hash`. Both are optional.
+With no hash, English that exists is treated as current, so the hand-written English of the older posts
+stays untouched until their Hebrew changes. The hash is written only when the Hebrew really changes (or
+after a translation), so saving an untouched post leaves `posts.json` byte-identical.
+
+The translation keeps the HTML, icons, images, code, numbers and names exactly, and is told to write
+natural English in the voice of the existing English posts (one published post is sent as a bilingual
+reference).
+
+## The index header
+
+**כותרת היומן** (index header) in the sidebar edits the block at the top of `docs/devlog.html`: the
+heading, the line under it and the intro paragraphs with their links (`devlog/intro.he.html`). Only
+what's inside the card is edited; the card's outer `<div>` with its classes is kept as it is. The same
+view edits the page's Hebrew meta description (`index_description.he` in `posts.json`). Preview, the
+English preview and Publish work there as they do for a post; its English (`intro.en.html`,
+`index_description.en`) is translated the same way.
 
 ## Images
 
 Everything lives in `docs/assets/images/devlog/`. Upload in the image picker, or just drag a
-screenshot into an editor (or paste it): it's uploaded and inserted as a captioned figure. PNG, GIF,
+screenshot into the editor (or paste it): it's uploaded and inserted as a captioned figure. PNG, GIF,
 JPG and WEBP, up to 5 MB. Names are cleaned up and start with `fist2-`; an existing file is never
 overwritten (a `-2` is added). Only publish our own art or screenshots of the game, never ripped
 third-party assets.
 
 ## Preview
 
-**Preview EN / Preview HE** saves, runs `build.py` and opens the page in a new tab, exactly as it
-will look on the site. A draft is rendered just for the preview and never written to `docs/`.
+**תצוגה מקדימה** (preview) saves, runs `build.py` and opens the Hebrew page in a new tab, exactly as
+it will look on the site. A draft is rendered just for the preview and never written to `docs/`.
 
-## Translate and draft (Claude)
+## Claude: translation and drafts
 
-These two need a Claude API key. Create `devlog/.env` with one line and restart the editor:
+Both need a Claude API key. Create `devlog/.env` with one line and restart the editor:
 
 ```
 ANTHROPIC_API_KEY=sk-ant-...
@@ -55,32 +103,35 @@ ANTHROPIC_API_KEY=sk-ant-...
 
 (or set the `ANTHROPIC_API_KEY` environment variable). `devlog/.env` is in `.gitignore`.
 
-- **EN → HE / HE → EN** fills the other language's title, teaser, banner texts and body. It keeps
-  the HTML, icons, images, code and addresses, and keeps names like C64, SpritePad or multicolor in
-  English, with a maqaf for prefixes (ב־C64). Read it through before saving.
-- **Draft from game repo** lists what was merged into the game repo
+- **Translation** is automatic (see above). The `/api/translate` endpoint still works both ways.
+- **טיוטה מהמשחק** (draft from the game repo) lists what was merged into the game repo
   (`C:\ClaudeSandbox\C64 first demo\Fist II Remaster`) since the newest published post. Tick the PRs
-  and commits to write about; Claude writes a short English draft (title, teaser, kicker, body) into
-  the open post, or a new draft post. It may only use facts from those PRs and commits, nothing
-  invented, so it can be thin: add your own story, screenshots, then translate.
+  and commits to write about; Claude writes a short **Hebrew** draft (title, teaser, kicker, body, and a
+  slug suggestion for a new post) into the open post, or a new draft post. It follows the Hebrew rules
+  (English names stay in English letters, maqaf for prefixes like ב־C64, natural Israeli Hebrew) and may
+  only use facts from those PRs and commits, nothing invented, so it can be thin: add your own story
+  and screenshots. The English comes later, from the translation.
 
 ## Publish
 
-Switch off **Draft**, save, then **Publish**. The editor:
+Switch off the draft toggle, save, then **פרסום** (publish). The editor:
 
-1. builds the pages,
-2. checks that nothing outside the devlog has uncommitted changes (if something does, it lists the
+1. translates to English whatever Hebrew changed (stops here if there's no key or it fails),
+2. builds the pages,
+3. checks that nothing outside the devlog has uncommitted changes (if something does, it lists the
    files and stops),
-3. makes a branch `devlog/<slug>-<date>-<time>` from where you are, commits only the devlog files
-   (`devlog/`, `docs/devlog*.html`, `docs/en/devlog*.html`, `docs/assets/images/devlog/`),
-   pushes it and opens a pull request into `main`,
-4. switches back to the branch you were on and shows the PR link.
+4. makes a branch `devlog/<slug>-<date>-<time>` (or `devlog/index-header-…`) from where you are,
+   commits only the devlog files (`devlog/` including `intro.*.html`, `docs/devlog*.html`,
+   `docs/en/devlog*.html`, `docs/assets/images/devlog/`), pushes it and opens a pull request into `main`,
+5. switches back to the branch you were on and shows the PR link.
 
 Nothing goes live until you merge the PR on GitHub. Until then the editor shows your current
 branch's copy of the devlog, without the new post.
 
 ## Without the editor
 
-The source is `posts.json` + `posts/<slug>.en.html` / `posts/<slug>.he.html`.
-In a body, `{IMG}` is the image folder and `{icon:name}` a pixel icon (names in `build.py`, `ICONS`).
-After editing by hand run `python devlog/build.py`.
+The source is `posts.json` + `posts/<slug>.he.html` / `posts/<slug>.en.html`, and `intro.he.html` /
+`intro.en.html` for the index header. In a body, `{IMG}` is the image folder and `{icon:name}` a pixel
+icon (names in `build.py`, `ICONS`). After editing by hand run `python devlog/build.py`. If you change
+the Hebrew by hand, the English is re-translated on the next Publish only if the post already has an
+`en_source_hash`; otherwise translate it yourself or delete the English title to force it.
