@@ -168,6 +168,18 @@ def api_get_post(slug):
     return {"post": post, "body_en": bodies["en"], "body_he": bodies["he"], "en_current": en_current(post)}
 
 
+# Attributes that browser extensions write into the page (and so into TinyMCE's iframe), e.g.
+# bis_size="{...}" with element measurements. They are never ours; strip them on every save.
+_JUNK_ATTR = re.compile(r'\s(?:bis_[\w-]+|data-bis[\w-]*|data-gramm[\w-]*|data-gr-[\w-]+|data-new-gr-[\w-]+|data-lt-[\w-]+)'
+                        r'(?:="[^"]*"|=\'[^\']*\')?', re.I)
+_EMPTY_P = re.compile(r'[ \t]*<p\b[^>]*>\s*</p>[ \t]*\n?', re.I)
+
+
+def clean_html(html):
+    """Editor HTML before it is written: no extension junk, no empty paragraphs."""
+    return _EMPTY_P.sub("", _JUNK_ATTR.sub("", html))
+
+
 def api_save_post(slug, req):
     with LOCK:
         data = load_data()
@@ -195,7 +207,7 @@ def api_save_post(slug, req):
             key = "body_" + lang
             if key in req and req[key] is not None:
                 path = body_path(slug, lang)
-                new = req[key].replace("\r\n", "\n")
+                new = clean_html(req[key].replace("\r\n", "\n"))
                 if path.exists() and read_text(path)[0] == new:
                     continue                        # untouched: don't even rewrite it
                 write_text(path, new)
@@ -440,7 +452,7 @@ def api_save_intro(req):
         if new is not None:
             path = intro_path("he")
             head, inner, tail = split_intro(read_text(path)[0])
-            new = new.replace("\r\n", "\n").strip("\n")
+            new = clean_html(new.replace("\r\n", "\n")).strip("\n")
             if new != inner:                        # untouched: don't even rewrite it
                 if not new.strip():
                     raise UserError("הכותרת של היומן לא יכולה להיות ריקה.")
