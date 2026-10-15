@@ -41,6 +41,7 @@ All site text is in **Hebrew** and lives in `content/site_content.md`. This is a
 | `docs/contacts.html` | צור קשר | Contact form + social links |
 | `docs/releases.html` | ריליסים | C64 demo/software releases with CSDb links |
 | `docs/tools.html` | כלים | Open-source tools I released (txt2dirart, tap2pdf, c64lint), with GitHub download links. One `<article>` per tool, add new ones as siblings |
+| `docs/devlog.html` | Devlog | Fist II Remaster / sequel dev log: intro + post cards, newest first. Each post is a flat page `docs/devlog-<slug>.html` + `docs/en/devlog-<slug>.html` (flat, not a subfolder, so the shared JS asset paths resolve). Images in `docs/assets/images/devlog/`; never publish ripped third-party assets from the game repo (see its .gitignore) |
 
 ## Conventions
 
