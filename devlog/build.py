@@ -134,9 +134,13 @@ def page(lang, name, title, desc, main_html, og_image=None, write=True):
             '    <div class="pointer-events-none absolute -z-10 inset-0 flex justify-center">\n'
             '      <div class="w-[30rem] h-[30rem] rounded-full bg-pink-500/20 blur-[120px] translate-y-10"></div>\n'
             '    </div>\n\n' + main_html + "  </main>")
-    html = head + "</head>" + pre + main + after
+    html = (head + "</head>" + pre + main + after).replace("\r\n", "\n")
     if write:
-        (base / name).write_text(html, encoding="utf-8", newline="")
+        # Keep the line endings the checkout already has (CRLF on Windows with core.autocrlf), so a
+        # rebuild with no content change leaves git status clean.
+        out = base / name
+        nl = "\r\n" if out.exists() and b"\r\n" in out.read_bytes() else "\n"
+        out.write_text(html, encoding="utf-8", newline=nl)
     return html
 
 

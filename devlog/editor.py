@@ -275,6 +275,16 @@ def intro_en_current(data):
     return True if h is None else h == intro_he_hash(data)
 
 
+EN_INTRO_H1 = '<h1 class="[font-family:\'Press Start 2P\',monospace] text-2xl md:text-3xl text-cyan-200">Devlog</h1>'
+
+
+def english_intro_heading(html):
+    """The English index keeps its own heading: "Devlog" in the pixel font. The Hebrew header has
+    "יומן פיתוח" plus a small DEVLOG line, which would otherwise come back as "Development log" + "DEVLOG"."""
+    html, n = re.subn(r'<h1\b[^>]*>.*?</h1>(\s*<p\b[^>]*>\s*DEVLOG\s*</p>)?', EN_INTRO_H1, html, count=1, flags=re.S | re.I)
+    return html if n else EN_INTRO_H1 + "\n" + html
+
+
 def ensure_english_intro(data):
     """Same for the index header. Caller holds LOCK."""
     if intro_en_current(data):
@@ -285,7 +295,8 @@ def ensure_english_intro(data):
                            kind="intro")
     path = intro_path("en")
     head, _, tail = split_intro(read_text(path)[0])
-    write_text(path, head + out.get("body", "").replace("\r\n", "\n").strip("\n") + tail)
+    body = english_intro_heading(out.get("body", "").replace("\r\n", "\n").strip("\n"))
+    write_text(path, head + body + tail)
     data.setdefault("index_description", {})["en"] = out.get("teaser", "") if desc.strip() else ""
     data["index_en_source_hash"] = intro_he_hash(data)
     save_data(data)
