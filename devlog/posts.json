@@ -1,7 +1,7 @@
 {
   "_readme": "Devlog source. Edit with the devlog editor (python devlog/editor.py) or by hand, then run python devlog/build.py. Times are Israel time.",
   "index_description": {
-    "en": "The development log of a C64 beat'em-up built on the Fist II: The Legend Continues engine. Short posts from the road.",
+    "en": "The devlog of a C64 beat'em-up built on the engine of Fist II: The Legend Continues. Short posts from along the way.",
     "he": "יומן הפיתוח של beat'em-up ל־C64 על המנוע של Fist II: The Legend Continues. פוסטים קצרים מהדרך."
   },
   "image_sources": {
@@ -93,5 +93,6 @@
       "banner_caption_en": "Three fighters on screen at once, from the 7 October build. The graphics are still the original 1986 Fist II art (Beam Software / Melbourne House), standing in until our own art is ready.",
       "banner_caption_he": "שלושה לוחמים על המסך בבת אחת, מה־build של 7 באוקטובר. הגרפיקה היא עדיין הארט המקורי של Fist II מ־1986 (Beam Software / Melbourne House), שמחזיק את המקום עד שהארט שלנו יהיה מוכן."
     }
-  ]
+  ],
+  "index_en_source_hash": "18efb8c651723125"
 }
