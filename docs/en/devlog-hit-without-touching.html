@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hit without touching – Devlog – 8bitretro.tech</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
+  <link rel="manifest" href="../assets/favicon/site.webmanifest">
+  <meta name="theme-color" content="#0b0014">
+  <meta name="description" content="A jump kick sails over the enemy's head and he goes down anyway. We measured every blow to the pixel and found the move to blame.">
+  <!-- Open Graph / Facebook / WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="8bitretro.tech">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="he_IL">
+  <meta property="og:url" content="https://8bitretro.tech/en/devlog-hit-without-touching.html">
+  <meta property="og:title" content="Hit without touching – Devlog | 8bitretro.tech">
+  <meta property="og:description" content="A jump kick sails over the enemy's head and he goes down anyway. We measured every blow to the pixel and found the move to blame.">
+  <meta property="og:image" content="https://8bitretro.tech/assets/images/og/projects.jpg">
+  <meta property="og:image:secure_url" content="https://8bitretro.tech/assets/images/og/projects.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Fist II Remaster devlog">
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Hit without touching – Devlog | 8bitretro.tech">
+  <meta name="twitter:description" content="A jump kick sails over the enemy's head and he goes down anyway. We measured every blow to the pixel and found the move to blame.">
+  <meta name="twitter:image" content="https://8bitretro.tech/assets/images/og/projects.jpg">
+  <link rel="alternate" hreflang="en" href="https://8bitretro.tech/en/devlog-hit-without-touching.html">
+  <link rel="alternate" hreflang="he" href="https://8bitretro.tech/devlog-hit-without-touching.html">
+
+  <!-- Tailwind CDN (site already uses this) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Retro pixel font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <style>
+    @keyframes neonGradient {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .bg-animated {
+      background-size: 320% 320%;
+      animation: neonGradient 22s ease-in-out infinite;
+    }
+
+    .scanline-overlay::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.35),
+        rgba(0, 0, 0, 0.35) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      mix-blend-mode: soft-light;
+      opacity: 0.45;
+      z-index: 0;
+    }
+
+    /* small helper for neon buttons */
+    .neon-btn {
+      background: linear-gradient(90deg, rgba(0,255,243,0.06), rgba(255,45,210,0.04));
+      border: 1px solid rgba(0,255,243,0.12);
+      box-shadow: 0 0 18px rgba(0,255,243,0.06);
+    }
+    .neon-btn:hover {
+      box-shadow: 0 0 26px rgba(255,45,210,0.12);
+      border-color: rgba(255,45,210,0.14);
+    }
+
+    .crt-frame {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .crt-frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.28),
+        rgba(0,0,0,0.28) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      mix-blend-mode: soft-light;
+      opacity: 0.35;
+      z-index: 2;
+    }
+
+    .crt-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at center,
+        rgba(0,255,243,0.08),
+        transparent 60%
+      );
+      z-index: 1;
+    }
+
+    .pixelated { image-rendering: pixelated; }
+  </style>
+
+  <script src="../assets/js/global-player.js" defer></script>
+  <script src="../assets/js/social-strip.js" defer></script>
+</head>
+<body class="min-h-screen text-sky-100 antialiased bg-animated bg-gradient-to-b from-purple-900 via-pink-700 to-black scanline-overlay text-left">
+  <!-- Neon top navigation -->
+  <header class="fixed inset-x-0 top-4 z-30 flex items-center justify-center">
+    <nav class="w-[min(1100px,96%)] flex flex-wrap items-center justify-between gap-y-2 px-4 py-3 rounded-xl bg-black/40 backdrop-blur border border-white/10 shadow-[0_12px_50px_rgba(0,0,0,0.7)]">
+      <!-- NAV LINKS FIRST (renders on the left in LTR with justify-between) -->
+      <ul class="flex items-center gap-2 text-xs">
+        <li>
+          <a href="index.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            Home
+          </a>
+        </li>
+        <li>
+          <a href="about.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            About
+          </a>
+        </li>
+        <li>
+          <a href="projects.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            Projects
+          </a>
+        </li>
+        <li>
+          <a href="releases.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            Releases
+          </a>
+        </li>
+        <li>
+          <a href="tools.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            Tools
+          </a>
+        </li>
+        <li>
+          <a href="devlog.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 bg-white/10 shadow-[0_0_20px_rgba(0,255,243,0.4)] hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            Devlog
+          </a>
+        </li>
+        <li>
+          <a href="kleiner82.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            Kleiner&#39;82
+          </a>
+        </li>
+        <li>
+          <a href="contacts.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            Contact
+          </a>
+        </li>
+        <li>
+          <a href="../devlog-hit-without-touching.html" title="עברית" aria-label="Switch to Hebrew" class="shrink-0 px-2 py-1 rounded-md hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-110 inline-flex items-center">
+            <svg width="22" height="16" viewBox="0 0 33 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="image-rendering: pixelated; filter: drop-shadow(0 0 4px rgba(0,255,243,0.45));">
+              <rect width="33" height="24" fill="#fff"/>
+              <rect y="4" width="33" height="2.5" fill="#0038b8"/>
+              <rect y="17.5" width="33" height="2.5" fill="#0038b8"/>
+              <polygon points="16.5,8 20.4,14.5 12.6,14.5" fill="none" stroke="#0038b8" stroke-width="1.1"/>
+              <polygon points="16.5,16 12.6,9.5 20.4,9.5" fill="none" stroke="#0038b8" stroke-width="1.1"/>
+            </svg>
+          </a>
+        </li>
+      </ul>
+
+      <!-- LOGO BLOCK SECOND (renders on the right in LTR with justify-between) -->
+      <a href="https://8bitretro.tech" class="flex shrink-0 items-center gap-4 no-underline cursor-pointer">
+        <div class="w-16 h-12 flex items-center justify-center rounded-md bg-gradient-to-r from-pink-500/40 to-cyan-400/20 border border-white/30 shadow-[0_0_25px_rgba(255,45,210,0.6)]">
+          <span class="[font-family:'Press Start 2P',monospace] text-pink-300 text-xs uppercase tracking-[0.2em]">
+            RETRO
+          </span>
+        </div>
+        <div class="[font-family:'Press Start 2P',monospace] text-cyan-100 text-sm">
+          8bitretro.tech
+        </div>
+      </a>
+    </nav>
+  </header>
+
+  <main class="min-h-screen flex flex-col items-center pt-36 md:pt-28 pb-16">
+    <div class="pointer-events-none absolute -z-10 inset-0 flex justify-center">
+      <div class="w-[30rem] h-[30rem] rounded-full bg-pink-500/20 blur-[120px] translate-y-10"></div>
+    </div>
+
+    <section class="w-[min(860px,94%)]">
+      <a href="devlog.html" class="inline-block mb-4 text-xs text-cyan-300 hover:text-pink-300 transition">&larr; Devlog</a>
+
+      <article class="rounded-2xl p-6 md:p-8 bg-black/60 border border-cyan-400/20 shadow-[0_20px_60px_rgba(0,0,0,0.9)] backdrop-blur">
+        <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300/90">DEVLOG &middot; FIST II REMASTER</p>
+        <h1 class="mt-4 [font-family:'Press Start 2P',monospace] text-xl md:text-2xl text-cyan-200 leading-relaxed">Hit without touching</h1>
+        <p class="mt-2 text-xs text-cyan-200/60"><time datetime="2026-10-14">14 October 2026</time></p>
+
+        <p class="mt-6 text-base text-sky-100/95 leading-relaxed">
+          A jump kick sails over the enemy's head, and he goes down anyway. That was item H on my list.
+          Before changing a line, we measured it.
+        </p>
+
+        <figure class="mt-8">
+          <div class="bg-black/70 rounded-xl border border-cyan-300/30 shadow-[0_0_22px_rgba(0,255,243,0.18)] crt-frame p-2">
+            <img src="../assets/images/devlog/fist2-three-fighters-oct7.gif" width="720" height="480"
+                 alt="Three fighters on screen in the temple room, one throwing a jump kick"
+                 class="w-full h-auto rounded-lg pixelated" loading="lazy" />
+          </div>
+          <figcaption class="mt-2 text-xs text-cyan-200/60 leading-relaxed">
+            Three fighters on screen at once, from the 7 October build. The graphics are still the original 1986
+            Fist II art (Beam Software / Melbourne House), standing in until our own art is ready.
+          </figcaption>
+        </figure>
+
+        <div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <h2 class="text-lg text-cyan-100">Measure first</h2>
+          <p>
+            On 11 October I wrote down what bothered me in the playable build. Item H: blows that land without
+            touching. Instead of guessing, we wrote a small tool, <code class="text-cyan-300">hit_gap.py</code>.
+            Every time a blow lands, it records the gap in pixels between the tip of the striking limb and the
+            victim, exactly as the screen shows them. Then we let the level game run for 20,000 frames with the
+            player kept alive.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">What it found</h2>
+          <p>
+            The obvious suspect was a picture running late behind the game logic. It wasn't: in 54 of 56 blows the
+            hit pose was already on screen in the same frame the hit was decided.
+          </p>
+          <p>
+            The culprit was a single move: the jump kick, thrown from further up the street. Its hit pose is the
+            top of the jump, so the foot passed 3 to 18 pixels over the victim's head. That happened in 9 of 16
+            jump kicks. Every other move already touched; the worst was 1.8 pixels.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">The fix</h2>
+          <p>
+            A jump kick now lands only on a victim at most one step further down the street. Two guards came with
+            it: no blow lands on a fighter who is already dead, and none on a pose outside the hitbox rows. It all
+            sits behind one build switch, <code class="text-cyan-300">HIT_CONTACT</code>, which is on in the level
+            game. The other 12 build variants came out byte-identical, so nothing else moved.
+          </p>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="rounded-xl p-4 bg-black/50 border border-pink-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300">BEFORE</p>
+            <p class="mt-3 text-2xl text-pink-200">9 / 16</p>
+            <p class="mt-1 text-xs text-sky-100/75 leading-relaxed">jump kicks passed 3&ndash;18 px over the head</p>
+          </div>
+          <div class="rounded-xl p-4 bg-black/50 border border-cyan-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-cyan-300">AFTER</p>
+            <p class="mt-3 text-2xl text-cyan-200">20 / 20</p>
+            <p class="mt-1 text-xs text-sky-100/75 leading-relaxed">jump kicks touch. 0 of 52 blows are 4 px or more off (worst: 3 px)</p>
+          </div>
+        </div>
+
+        <div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <h2 class="text-lg text-cyan-100">The price</h2>
+          <p>
+            You now have to line up on the enemy's line, or below it, to land a jump kick. The enemies didn't get
+            the memo: from higher up the street they still try it, and now they miss. Teaching the AI to line up
+            first is on the list.
+          </p>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <div class="pointer-events-none fixed inset-x-0 bottom-0 h-36 opacity-70">
+    <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="g1" x1="0" x2="1">
+          <stop offset="0" stop-color="#ff2dd2" stop-opacity="0.15"/>
+          <stop offset="1" stop-color="#00fff3" stop-opacity="0.15"/>
+        </linearGradient>
+      </defs>
+      <rect width="1440" height="120" fill="url(#g1)" />
+      <g stroke="#00fff3" stroke-opacity="0.25" stroke-width="1">
+        <path d="M0 90 C200 60 400 52 720 52 C1040 52 1240 60 1440 90" fill="none"/>
+      </g>
+    </svg>
+  </div>
+</body>
+</html>
