@@ -1,0 +1,212 @@
+"""Devlog builder: devlog/posts.json + devlog/posts/<slug>.<lang>.html -> docs/ pages.
+
+    python devlog/build.py
+
+Run it after editing a post by hand; the devlog editor (devlog/editor.py) runs it for you.
+
+Builds every post page (HE + EN), and both index pages, from the Tools page
+template of each language. Posts are listed newest first; each post links to
+its older and newer neighbour.
+"""
+import re, json, pathlib, datetime
+
+HERE = pathlib.Path(__file__).resolve().parent          # devlog/
+SITE = HERE.parent / "docs"
+IMG_DIR = SITE / "assets" / "images" / "devlog"
+ACTIVE = " bg-white/10 shadow-[0_0_20px_rgba(0,255,243,0.4)]"
+
+POSTS = []          # oldest first, filled by load()
+DATA = {}
+
+
+def load():
+    global POSTS, DATA
+    DATA = json.loads((HERE / "posts.json").read_text(encoding="utf-8"))
+    POSTS[:] = sorted([p for p in DATA["posts"] if not p.get("draft")], key=lambda p: p["when"])
+
+HE_MONTHS = ["ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני", "יולי", "אוגוסט", "ספטמבר", "אוקטובר", "נובמבר", "דצמבר"]
+EN_MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+
+# 8x8 pixel icons, drawn as SVG squares in the current text colour. Use {icon:name} in a body.
+ICONS = {
+    "tape":     ["########", "#......#", "#.#..#.#", "#......#", "#.####.#", "#.#..#.#", "########", "........"],
+    "chip":     ["..#.#.#.", ".######.", "##....##", ".#.##.#.", "##.##.##", ".#....#.", ".######.", "..#.#.#."],
+    "joystick": ["...##...", "...##...", "....#...", "....#...", "..####..", ".######.", ".######.", "........"],
+    "bug":      ["#..##..#", ".######.", "##.##.##", ".######.", "##.##.##", ".######.", "#.####.#", "........"],
+    "note":     ["..#####.", "..#...#.", "..#...#.", "..#...#.", "###.###.", "###.###.", "........", "........"],
+    "map":      ["########", "#.#..#.#", "########", "#..#.#.#", "########", "#.#..#.#", "########", "........"],
+    "fist":     [".####...", "#.#.##..", "######..", "######..", "#######.", ".######.", "..####..", "........"],
+    "star":     ["...#....", "...#....", "#######.", ".#####..", "..###...", ".##.##..", "##...##.", "........"],
+    "eye":      ["........", "..####..", ".#....#.", "#..##..#", "#..##..#", ".#....#.", "..####..", "........"],
+    "ruler":    ["........", "########", "#.#.#.##", "#.#.#.##", "#......#", "########", "........", "........"],
+    "page":     ["#######.", "#.....##", "#.###..#", "#......#", "#.####.#", "#......#", "#.###..#", "########"],
+    "tool":     [".....##.", "....#..#", "....#.#.", "...###..", "..###...", ".###....", "###.....", "##......"],
+    "clock":    ["..####..", ".#....#.", "#...#..#", "#...#..#", "#..##..#", "#......#", ".#....#.", "..####.."],
+}
+
+
+def icon(name, cls="text-pink-300"):
+    rows = ICONS[name]
+    rects = "".join(f'<rect x="{x}" y="{y}" width="1" height="1"/>'
+                    for y, row in enumerate(rows) for x, c in enumerate(row) if c == "#")
+    return (f'<svg class="shrink-0 {cls}" width="18" height="18" viewBox="0 0 8 8" fill="currentColor" '
+            f'shape-rendering="crispEdges" aria-hidden="true" style="filter:drop-shadow(0 0 4px rgba(255,45,210,.55))">{rects}</svg>')
+
+
+def dress(body):
+    """Reading layout: icons, roomier text, section headings with their icon."""
+    body = re.sub(r"\{icon:(\w+)\}", lambda m: icon(m.group(1)), body)
+    body = body.replace('text-sm md:text-[15px] text-sky-100/85 leading-relaxed', 'text-[15px] md:text-[17px] text-sky-100/90 leading-[1.85]')
+    body = re.sub(r'<h2 class="text-lg text-cyan-100( pt-2)?">(<svg.*?</svg>)?',
+                  lambda m: '<h2 class="flex items-center gap-3 text-xl md:text-2xl text-cyan-100 pt-4">' + (m.group(2) or ""), body)
+    return body
+
+
+def reading_minutes(html):
+    words = len(re.sub(r"<[^>]+>", " ", html).split())
+    return max(1, round(words / 200))
+
+
+def stamp(when, lang):
+    d = datetime.datetime.fromisoformat(when)
+    if lang == "he":
+        text = f"{d.day} ב{HE_MONTHS[d.month - 1]} {d.year} &middot; {d:%H:%M}"
+    else:
+        text = f"{d.day} {EN_MONTHS[d.month - 1]} {d.year} &middot; {d:%H:%M}"
+    return f'<time datetime="{when}">{text}</time>'
+
+
+def img(path, lang):
+    return ("../" if lang == "en" else "") + "assets/images/devlog/" + path
+
+
+def page(lang, name, title, desc, main_html, og_image=None):
+    base = SITE / "en" if lang == "en" else SITE
+    src = (base / "tools.html").read_text(encoding="utf-8")
+    head, rest = src.split("</head>", 1)
+    old_desc = re.search(r'<meta name="description" content="([^"]*)"', head).group(1)
+    head = head.replace(old_desc, desc)
+    head = re.sub(r"<title>.*?</title>", "<title>" + title + "</title>", head)
+    short = title.replace(" – 8bitretro.tech", " | 8bitretro.tech")
+    head = re.sub(r'(og:title" content=")[^"]*', lambda m: m.group(1) + short, head)
+    head = re.sub(r'(twitter:title" content=")[^"]*', lambda m: m.group(1) + short, head)
+    head = head.replace("tools.html", name)
+    head = re.sub(r"[ \t]*<!-- TODO: replace with a dedicated[^\n]*\n", "", head)
+    head = re.sub(r'(og:image:alt" content=")[^"]*', lambda m: m.group(1) + "Fist II Remaster devlog", head)
+    body = rest.replace('href="tools.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200' + ACTIVE,
+                        'href="tools.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200', 1)
+    body = body.replace('href="devlog.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200',
+                        'href="devlog.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200' + ACTIVE, 1)
+    flag_from, flag_to = ('href="../tools.html"', 'href="../' + name + '"') if lang == "en" else ('href="en/tools.html"', 'href="en/' + name + '"')
+    assert body.count(flag_from) == 1, flag_from
+    body = body.replace(flag_from, flag_to)
+    pre, main_and_after = body.split("<main", 1)
+    _, after = main_and_after.split("</main>", 1)
+    main = ('<main class="min-h-screen flex flex-col items-center pt-36 md:pt-28 pb-16">\n'
+            '    <div class="pointer-events-none absolute -z-10 inset-0 flex justify-center">\n'
+            '      <div class="w-[30rem] h-[30rem] rounded-full bg-pink-500/20 blur-[120px] translate-y-10"></div>\n'
+            '    </div>\n\n' + main_html + "  </main>")
+    (base / name).write_text(head + "</head>" + pre + main + after, encoding="utf-8", newline="")
+
+
+def banner(post, lang):
+    b = post.get("banner")
+    if not b:
+        return ""
+    cap = post["banner_caption_" + lang]
+    return f'''
+        <figure class="mt-8">
+          <div class="bg-black/70 rounded-xl border border-cyan-300/30 shadow-[0_0_22px_rgba(0,255,243,0.18)] crt-frame p-2">
+            <img src="{img(b, lang)}" alt="{post['banner_alt_' + lang]}"
+                 class="w-full h-auto rounded-lg pixelated" loading="eager" />
+          </div>
+          <figcaption class="mt-2 text-xs text-cyan-200/60 leading-relaxed">{cap}</figcaption>
+        </figure>
+'''
+
+
+def post_page(i, post, lang):
+    he = lang == "he"
+    older = POSTS[i - 1] if i > 0 else None
+    newer = POSTS[i + 1] if i + 1 < len(POSTS) else None
+    back = "יומן פיתוח" if he else "Devlog"
+    arrow_back = "&rarr;" if he else "&larr;"
+    nav_links = []
+    if older:
+        label = ("&rarr; הקודם: " if he else "&larr; Previous: ") + older["title_" + lang]
+        nav_links.append(f'<a href="devlog-{older["slug"]}.html" class="text-xs px-3 py-2 rounded-lg neon-btn text-cyan-300 hover:text-pink-300 transition">{label}</a>')
+    if newer:
+        label = ("הבא: " + newer["title_he"] + " &larr;") if he else ("Next: " + newer["title_en"] + " &rarr;")
+        nav_links.append(f'<a href="devlog-{newer["slug"]}.html" class="text-xs px-3 py-2 rounded-lg neon-btn text-cyan-300 hover:text-pink-300 transition">{label}</a>')
+    body = (HERE / "posts" / f"{post['slug']}.{lang}.html").read_text(encoding="utf-8").replace("{IMG}", img("", lang))
+    body = dress(body)
+    mins = reading_minutes(body)
+    meta = f"{stamp(post['when'], lang)} &middot; " + (f"{mins} דקות קריאה" if he and mins > 1 else "דקת קריאה" if he else f"{mins} min read")
+    title_cls = "text-2xl md:text-3xl text-cyan-200 font-bold" if he else "[font-family:'Press Start 2P',monospace] text-xl md:text-2xl text-cyan-200 leading-relaxed"
+    main_html = f'''    <div id="read-progress" aria-hidden="true" style="position:fixed;top:0;{'right' if he else 'left'}:0;height:3px;width:0;z-index:60;background:linear-gradient(90deg,#00fff3,#ff2dd2);box-shadow:0 0 10px #ff2dd2"></div>
+    <script>
+      (function () {{
+        var bar = document.getElementById('read-progress');
+        function upd() {{
+          var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
+          bar.style.width = (max > 0 ? Math.min(100, h.scrollTop / max * 100) : 0) + '%';
+        }}
+        window.addEventListener('scroll', upd, {{ passive: true }}); upd();
+      }})();
+    </script>
+    <section class="w-[min(860px,94%)]"{' dir="rtl"' if he else ''}>
+      <a href="devlog.html" class="inline-block mb-4 text-xs text-cyan-300 hover:text-pink-300 transition">{arrow_back} {back}</a>
+
+      <article class="{'text-right ' if he else ''}rounded-2xl p-6 md:p-8 bg-black/60 border border-cyan-400/20 shadow-[0_20px_60px_rgba(0,0,0,0.9)] backdrop-blur">
+        <p dir="ltr" class="{'text-right ' if he else ''}[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300/90">DEVLOG #{i + 1} &middot; {post['kicker']}</p>
+        <h1 class="mt-4 {title_cls}">{post['title_' + lang]}</h1>
+        <p class="mt-2 text-xs text-cyan-200/60">{meta}</p>
+{banner(post, lang)}
+{body}
+        <div class="mt-10 pt-6 border-t border-white/10 flex flex-wrap gap-3 justify-between">
+          {chr(10).join('          ' + l for l in nav_links).strip()}
+        </div>
+      </article>
+    </section>
+'''
+    title = post["title_" + lang] + " – " + back + " – 8bitretro.tech"
+    page(lang, f"devlog-{post['slug']}.html", title, post["teaser_" + lang], main_html)
+
+
+def index_page(lang):
+    he = lang == "he"
+    intro = (HERE / f"intro.{lang}.html").read_text(encoding="utf-8")
+    cards = []
+    for n, post in reversed(list(enumerate(POSTS, 1))):
+        thumb = post.get("thumb") or post.get("banner")
+        cards.append(f'''      <a href="devlog-{post['slug']}.html"
+         class="group grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-5 items-start {'text-right ' if he else ''}rounded-2xl p-5 bg-black/60 border border-cyan-400/20 shadow-[0_0_20px_rgba(0,255,243,0.06)] hover:shadow-[0_0_30px_rgba(255,45,210,0.18)] hover:border-pink-400/30 transition mb-6">
+        <div class="bg-black/70 rounded-lg border border-cyan-300/25 crt-frame p-1">
+          <img src="{img(thumb, lang)}" alt="" class="w-full h-auto rounded pixelated" loading="lazy" />
+        </div>
+        <div>
+          <p class="text-xs text-cyan-200/60"><span dir="ltr" class="[font-family:'Press Start 2P',monospace] text-[9px] text-pink-300/90">#{n}</span> &middot; {stamp(post['when'], lang)} &middot; {post['kicker_short']}</p>
+          <h2 class="mt-2 {'text-lg md:text-xl font-bold' if he else "[font-family:'Press Start 2P',monospace] text-sm md:text-base leading-relaxed"} text-pink-300">{post['title_' + lang]}</h2>
+          <p class="mt-2 text-sm text-sky-100/85 leading-relaxed">{post['teaser_' + lang]}</p>
+          <span class="mt-3 inline-block text-xs text-cyan-300 group-hover:text-pink-300">{'לקריאה &larr;' if he else 'Read &rarr;'}</span>
+        </div>
+      </a>''')
+    main_html = (f'    <section class="w-[min(860px,94%)]"{" dir=\"rtl\"" if he else ""}>\n' + intro +
+                 "\n      <!-- Generated by the devlog generator: posts newest first -->\n" + "\n\n".join(cards) + "\n    </section>\n")
+    title = ("יומן פיתוח" if he else "Devlog") + " – 8bitretro.tech"
+    page(lang, "devlog.html", title, DATA["index_description"][lang], main_html)
+
+
+def build_all():
+    load()
+    for i, post in enumerate(POSTS):
+        for lang in ("en", "he"):
+            post_page(i, post, lang)
+    for lang in ("en", "he"):
+        index_page(lang)
+    return len(POSTS)
+
+
+if __name__ == "__main__":
+    print("built", build_all(), "posts x 2 languages + 2 index pages")

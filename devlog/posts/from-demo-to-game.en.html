@@ -1,0 +1,66 @@
+        <p class="mt-6 text-base text-sky-100/95 leading-relaxed">
+          A fight room is not a game. Three days of bugs out, sound in, and levels and fighters turned into data.
+        </p>
+
+        <div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <h2 class="text-lg text-cyan-100">{icon:bug}8 October &middot; clean-up</h2>
+          <p>
+            A regression run against v2.0 found 45 stale addresses. Fixing them fixed real things: a flying kick no
+            longer hits twice, and blocking now works against either enemy (3 failing tests down to 0). The enemies'
+            attacks still match v2.0, 28 of 28.
+          </p>
+          <p>
+            Then the temple, which hung. Now all 22 temple rooms draw with the cave look, including six that used to
+            overflow, all five scrolls can be picked up, and 3,000 frames of walking pass with no hang. The fix cost 0
+            bytes of code.
+          </p>
+        </div>
+
+        <figure class="mt-6">
+          <div class="bg-black/70 rounded-xl border border-cyan-300/30 crt-frame p-2">
+            <img src="{IMG}fist2-temple-room.png" alt="A temple room drawn with the cave look" class="w-full h-auto rounded-lg pixelated" loading="lazy" />
+          </div>
+          <figcaption class="mt-2 text-xs text-cyan-200/60">A temple room with the cave look, one of the 22.</figcaption>
+        </figure>
+
+        <div class="mt-6 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <p>
+            The same day, a guide for the artist: which files to deliver (SpritePad for the fighters, CharPad for the
+            world, and a SID tune that plays at <code class="text-cyan-300">$f400</code>).
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:note}9 October &middot; sound</h2>
+          <p>
+            Sound effects on the SID: a short noise burst on voice 3, with no extra interrupt. A probe fired 67 of
+            them with 0 problems.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:map}10 October &middot; levels as data</h2>
+          <p>
+            Levels now unpack at run time into one fixed 4 KB area. The decoder is 94 bytes, checked on 325 samples
+            with 0 wrong. Finish a level and "LEVEL n COMPLETE" shows for two seconds, then the next one loads. It
+            also freed 115 bytes of world code.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:fist}10 October &middot; fighters as data</h2>
+          <p>
+            The fighters are now described in one <code class="text-cyan-300">fighters.json</code>: 73 poses, with
+            a checker whose byte count matches the assembler's exactly, 454 = 454. Fifteen tests feed it broken files
+            on purpose.
+          </p>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="rounded-xl p-4 bg-black/50 border border-pink-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300">STALE ADDRESSES</p>
+            <p class="mt-3 text-2xl text-pink-200">45 &rarr; 0</p>
+          </div>
+          <div class="rounded-xl p-4 bg-black/50 border border-cyan-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-cyan-300">LEVEL DECODER</p>
+            <p class="mt-3 text-2xl text-cyan-200">94 bytes</p>
+          </div>
+          <div class="rounded-xl p-4 bg-black/50 border border-cyan-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-cyan-300">FIGHTER POSES</p>
+            <p class="mt-3 text-2xl text-cyan-200">73</p>
+          </div>
+        </div>
