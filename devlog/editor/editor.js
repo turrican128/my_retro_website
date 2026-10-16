@@ -246,6 +246,7 @@ async function openPost(slug, force = false) {
   TEXT_FIELDS.forEach((f) => { $('f-' + f).value = decode(data.post[f] || ''); });
   $('f-when').value = (data.post.when || '').slice(0, 16);
   $('f-draft').checked = !!data.post.draft;
+  $('draftBadge').hidden = !data.post.draft;
   state.banner = data.post.banner || '';
   state.thumb = data.post.thumb || '';
   showPickers();
@@ -662,7 +663,7 @@ async function newPost() {
     const res = await api('/api/new', req);
     await loadList();
     await openPost(res.slug, true);
-    toast('הטיוטה נוצרה. היא לא תופיע באתר עד שתכבו את המתג „טיוטה”.');
+    toast('הטיוטה נוצרה. היא תעלה לאתר כשתלחצו „פרסום”.');
     return res.slug;
   } catch (e) { toast(e.message, 'err'); return null; }
 }
@@ -771,10 +772,6 @@ async function publish() {
   if (!state.view) return;
   if (state.dirty && !(await save(true))) return;
   const intro = state.view === 'intro';
-  if (!intro && $('f-draft').checked) {
-    infoBox('זו עדיין טיוטה', 'כבו את המתג <b>טיוטה</b> (בראש הפוסט) ושמרו. אחר כך מפרסמים.');
-    return;
-  }
   const stale = $(intro ? 'introEn' : 'postEn').classList.contains('stale');
   const ok = await confirmBox(intro ? 'לפרסם את כותרת היומן?' : 'לפרסם את הפוסט?',
     `${stale ? 'Claude יתרגם לאנגלית את מה שהשתנה בעברית, ו' : ''}העורך יבנה את הדפים ויעלה אותם לאתר. האתר מתעדכן תוך 2–3 דקות.`,

@@ -629,10 +629,32 @@ def api_publish(slug, req):
         post = None
         if slug is not None:
             post = find_post(data, slug)
-            if post.get("draft"):
-                raise UserError("הפוסט עדיין טיוטה. כבו את המתג 'טיוטה', שמרו ואז פרסמו.")
             if not post.get("title_he"):
                 raise UserError("לפני פרסום צריך לפוסט כותרת.")
+            # Publishing is what turns a draft into a real post (Alex: no separate "draft" switch).
+            if post.get("draft") and not dry:
+                post.pop("draft")
+                save_data(data)
+
+                def still_a_draft():                  # not published after all: it stays a draft
+                    d = load_data()
+                    find_post(d, slug)["draft"] = True
+                    save_data(d)
+                    rebuild()
+                try:
+                    res = _publish(data, slug, post, dry)
+                except BaseException:
+                    still_a_draft()
+                    raise
+                if not res.get("ok"):
+                    still_a_draft()
+                return res
+        return _publish(data, slug, post, dry)
+
+
+def _publish(data, slug, post, dry):
+    """The publish itself; api_publish holds LOCK."""
+    if True:
         # Never publish a stale or empty English page: translate whatever Hebrew changed first.
         if not api_key():
             if not all(en_current(p) for p in data["posts"] if not p.get("draft")) or not intro_en_current(data):
