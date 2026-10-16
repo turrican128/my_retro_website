@@ -96,18 +96,18 @@
     {
       "slug": "the-boss",
       "when": "2026-10-15T23:55:00+03:00",
-      "draft": true,
       "kicker": "FIST II REMASTER",
       "kicker_short": "Fist II Remaster",
       "title_en": "The boss",
       "title_he": "הבוס",
-      "teaser_en": "Level 1 got an ending: a boss who comes alone, in white, with three energy bars. My graphics for him aren't drawn yet. It didn't matter.",
+      "teaser_en": "Level 1 has an ending: a boss who comes alone, in white, with three energy bars. My graphics for him aren't drawn yet. It didn't matter.",
       "teaser_he": "לשלב 1 יש סוף: בוס שבא לבד, בלבן, עם שלושה מדי אנרגיה. הגרפיקה שלי בשבילו עוד לא מצוירת. זה לא שינה כלום.",
       "banner": "fist2-boss-arrives.png",
-      "banner_alt_en": "The player, in blue, facing the white boss in the last room of level 1",
+      "banner_alt_en": "The player in blue facing the white boss in the last room of level 1",
       "banner_alt_he": "השחקן בכחול מול הבוס הלבן בחדר האחרון של שלב 1",
-      "banner_caption_en": "The boss arrives at the end of level 1. The graphics are still the original 1986 Fist II art (Beam Software / Melbourne House), standing in until our own art is ready.",
-      "banner_caption_he": "הבוס מגיע בסוף שלב 1. הגרפיקה היא עדיין הארט המקורי של Fist II מ־1986 (Beam Software / Melbourne House), שמחזיק את המקום עד שהארט שלנו יהיה מוכן."
+      "banner_caption_en": "The boss arrives at the end of level 1. The graphics are still the original Fist II art from 1986 (Beam Software / Melbourne House), holding the spot until our ART is ready.",
+      "banner_caption_he": "הבוס מגיע בסוף שלב 1. הגרפיקה היא עדיין הארט המקורי של Fist II מ־1986 (Beam Software / Melbourne House), שמחזיק את המקום עד ש ART שלנו יהיה מוכן.",
+      "en_source_hash": "dd2d439446678c5f"
     },
     {
       "slug": "a-game-around-the-levels",

@@ -1,64 +1,31 @@
-        <p class="mt-6 text-base text-sky-100/95 leading-relaxed">
-          Level 1 has an ending now: a boss. My graphics for him aren't drawn yet, and it didn't matter.
-          A boss is mostly rules, so we built the rules first.
-        </p>
-
-        <div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
-          <h2 class="text-lg text-cyan-100">{icon:map}One line in the level file</h2>
-          <p>
-            A level's enemies come from its spawn list, written in the level's json file. One new word turns an
-            entry into a boss: <bdi dir="ltr"><code class="text-cyan-300">"boss": true</code></bdi>. In level 1 he
-            waits in the last room, at map column 640, a few steps before the exit. And until he is beaten, the
-            exit stays shut. No "LEVEL COMPLETE" while he is standing.
-          </p>
-
-          <h2 class="text-lg text-cyan-100 pt-2">{icon:fist}Who he is</h2>
-          <p>
-            Ordinary enemies come in pairs. The boss comes alone, at AI level 9, the top one a level can ask for:
-            he blocks a lot and he answers back. He is white. The first try was purple, and on the C64's palette
-            purple sat right next to my blue player; on screen you couldn't tell who was who.
-          </p>
-          <p>
-            Then the energy. A fighter's energy is one byte, so it tops out at $7f. Rather than rewrite the energy
-            code and the HUD, the boss gets three full bars. Empty one, and he goes down, gets up, and the bar fills
-            up again. Old arcade trick. A single jump kick or sweep won't floor him either, only a three-hit combo will.
-          </p>
-        </div>
-
-        <figure class="mt-6">
-          <div class="bg-black/70 rounded-xl border border-cyan-300/30 crt-frame p-2">
-            <img src="{IMG}fist2-boss-arrives.png" alt="The player, in blue, facing the white boss in the last room of level 1" class="w-full h-auto rounded-lg pixelated" loading="lazy" />
-          </div>
-          <figcaption class="mt-2 text-xs text-cyan-200/60">The boss arrives (right, in white). Still the original Fist II art, standing in for mine.</figcaption>
-        </figure>
-
-        <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div class="rounded-xl p-4 bg-black/50 border border-pink-400/30">
-            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300">BARS</p>
-            <p class="mt-3 text-2xl text-pink-200">2 &rarr; 1 &rarr; 0</p>
-            <p class="mt-1 text-xs text-sky-100/75 leading-relaxed">in the test: a knock-down at every emptied bar, then he's beaten and the exit opens</p>
-          </div>
-          <div class="rounded-xl p-4 bg-black/50 border border-cyan-400/30">
-            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-cyan-300">JUMP KICKS</p>
-            <p class="mt-3 text-2xl text-cyan-200">1</p>
-            <p class="mt-1 text-xs text-sky-100/75 leading-relaxed">landed on him in about 8,000 test frames. He may be too hard. My hands will tell.</p>
-          </div>
-        </div>
-
-        <div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
-          <h2 class="text-lg text-cyan-100">{icon:chip}Behind the scenes</h2>
-          <p>
-            The same days had quieter work. I asked whether the game's source is written in my style, and we compared
-            it with three of my own intros. Mostly yes, closest to my Blazon intro; the leftovers of the 1986 code got
-            cleaned up, and every build came out byte-identical, so nothing in the game moved. Four small bugs from the
-            code review got fixed too. The best one: a pause of about five seconds between blows could still count them
-            as a three-hit combo and knock someone down out of nowhere. A test showed it on the old code, 3 times out of 3,
-            and never after the fix.
-          </p>
-
-          <h2 class="text-lg text-cyan-100 pt-2">{icon:joystick}Next</h2>
-          <p>
-            His own body, when I draw it. And the game around the levels: a title screen, game over, "game complete"
-            after the last level, and a quick transition between levels.
-          </p>
-        </div>
+<p class="mt-6 text-base text-sky-100/95 leading-relaxed">Level 1 now has an ending: a boss! Like a lot of classic arcade games from the '80s. My graphics for him aren't drawn yet, and that didn't matter. A boss is mostly rules, so we built the rules first.</p>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:map}One line in the level file</h2>
+<p>Every level's enemies come from its spawn list, written in the level's json file. One new word turns an entry into a boss: <code class="text-cyan-300">"boss": true</code>. In level 1 he waits in the last room,</p>
+<p>at column 640 of the map, a few steps before the exit. Until you beat him, the exit stays shut. No "LEVEL COMPLETE" while he's still standing.</p>
+<h2 class="text-lg text-cyan-100 pt-2">{icon:fist}Who he is (who is this "boss" anyway??) </h2>
+<p>Regular enemies come in pairs. The boss comes alone, with high-level AI, the highest a level can ask for: he defends himself very well and... he hits back too. For now he's white. On the first try he was purple,<br>and in the C64 palette that purple sat right next to my player's blue. On screen you just couldn't tell who was who.</p>
+<p>Then the energy. A fighter's energy is one byte, so the ceiling is $7f. Instead of rewriting the energy code and the HUD (the block that shows the player's score and energy), the boss got three full bars. Empty one and he falls, gets up, and the bar fills again. An old arcade machine trick. A single jump kick or a sweep won't knock him down either. Only a three-hit combo will.</p>
+</div>
+<figure class="mt-6">
+<div class="bg-black/70 rounded-xl border border-cyan-300/30 crt-frame p-2"><img src="{IMG}fist2-boss-arrives.png" alt="The player in blue facing the white boss in the last room of level 1" class="w-full h-auto rounded-lg pixelated" loading="lazy"></div>
+<figcaption class="mt-2 text-xs text-cyan-200/60">The boss arrives (on the right, in white). Still the original Fist II art, holding the spot until my art is ready.</figcaption>
+</figure>
+<div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="rounded-xl p-4 bg-black/50 border border-pink-400/30">
+<p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300">BARS</p>
+<p class="text-right mt-3 text-2xl text-pink-200">2 → 1 → 0</p>
+<p class="mt-1 text-xs text-sky-100/75 leading-relaxed">In testing: a knockdown on every bar that emptied, and after the last one he's beaten and the exit opens</p>
+</div>
+<div class="rounded-xl p-4 bg-black/50 border border-cyan-400/30">
+<p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-cyan-300">JUMP KICKS</p>
+<p class="text-right mt-3 text-2xl text-cyan-200">1</p>
+<p class="mt-1 text-xs text-sky-100/75 leading-relaxed">One jump kick hit him in about 8,000 frames of testing. Maybe he's too hard. My hands will tell.</p>
+</div>
+</div>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:chip}Behind the scenes</h2>
+<p>Those days also had some quieter work. I asked whether the game's code is written in my style, and we compared it with three of my Crack intros. Mostly it is, closest to the Blazon intro. The leftovers from the 1986 code were cleaned out, and every build came out identical byte for byte, so nothing in the game moved. Four small bugs from the code review got fixed too. The nicest one: a pause of about five seconds between hits could still count as a three-hit combo and knock someone down out of nowhere. A test showed it in the old code, 3 times out of 3, and never after the fix.</p>
+<h2 class="text-lg text-cyan-100 pt-2">{icon:joystick}What's next</h2>
+<p>A body of his own, once I draw it. And the game around the levels: a title screen, game over, "game complete" after the last level, and a quick transition between levels. We'll see how it goes... </p>
+</div>
