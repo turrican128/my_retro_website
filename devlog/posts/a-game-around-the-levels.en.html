@@ -1,70 +1,35 @@
-        <p class="mt-6 text-base text-sky-100/95 leading-relaxed">
-          Until now the game had levels, but no game around them. You booted straight into a fight, and when you
-          died a new game started on the spot. Stage 4 put the frame around it.
-        </p>
-
-        <div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
-          <h2 class="text-lg text-cyan-100">{icon:star}A title screen</h2>
-          <p>
-            The game now opens on FIST III, my working title for the sequel, in big block letters with a drop shadow.
-            PRESS FIRE, and the first level fades in. The trick: the title is a level. It's a CharPad map in the same
-            level bank, loaded the same way, just never played. So when I draw a real logo, I redraw that one map in
-            CharPad and the game takes it. No code.
-          </p>
-
-          <h2 class="text-lg text-cyan-100 pt-2">{icon:joystick}Game over, continue?</h2>
-          <p>
-            Die, and you get GAME OVER, then CONTINUE with a digit counting down from 9, one a second. Fire, and the
-            same level starts again with the score back to 0. Let it run out and you're back at the title. Beat the
-            last level and the game says GAME COMPLETE, then the title again.
-          </p>
-        </div>
-
-        <figure class="mt-6">
-          <div class="bg-black/70 rounded-xl border border-cyan-300/30 crt-frame p-2">
-            <img src="{IMG}fist2-game-over.png" alt="GAME OVER on the HUD, the player lying in the street" class="w-full h-auto rounded-lg pixelated" loading="lazy" />
-          </div>
-          <figcaption class="mt-2 text-xs text-cyan-200/60">GAME OVER. The letters are new: the level game's HUD font had only 8, enough for LEVEL and COMPLETE.</figcaption>
-        </figure>
-
-        <div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
-          <h2 class="text-lg text-cyan-100">{icon:clock}A fade between levels</h2>
-          <p>
-            The level change used to be a cut, and for one frame it showed the new level's graphics in the old
-            level's colours. Ugly. Now the street darkens to black in 8 steps, following the C64's own brightness
-            order, the next level loads in the dark, and it fades back in. About a third of a second each way, and the
-            broken frame is gone. The HUD stays lit through it, so you can still read COMPLETE.
-          </p>
-        </div>
-
-        <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div class="rounded-xl p-4 bg-black/50 border border-pink-400/30">
-            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300">LETTERS</p>
-            <p class="mt-3 text-2xl text-pink-200">8 &rarr; 16</p>
-            <p class="mt-1 text-xs text-sky-100/75 leading-relaxed">the 8 new ones went into empty characters of the HUD font</p>
-          </div>
-          <div class="rounded-xl p-4 bg-black/50 border border-cyan-400/30">
-            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-cyan-300">FADE</p>
-            <p class="mt-3 text-2xl text-cyan-200">8 steps</p>
-            <p class="mt-1 text-xs text-sky-100/75 leading-relaxed">a step every 2 frames, to black and back</p>
-          </div>
-        </div>
-
-        <div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
-          <h2 class="text-lg text-cyan-100">{icon:chip}Behind the scenes</h2>
-          <p>
-            A title screen broke every automated test of the level game: they all start the game and wait for a fight,
-            and now the game waits for fire. So the test harness learned to press fire on the title by itself. A new
-            test walks the whole loop: game over, the count, continue, the fade, game complete, the title. 12 checks, all
-            green. Everything outside the level game came out byte-identical.
-          </p>
-          <p>
-            One honest note: my second level is painted in very dark colours, and on the C64's brightness scale those
-            stay black until the last step. So that level comes in almost as a cut. A brighter level shows the whole fade.
-          </p>
-
-          <h2 class="text-lg text-cyan-100 pt-2">{icon:page}Next</h2>
-          <p>
-            My own logo on that title map. And probably more than one life, with a counter on the HUD.
-          </p>
-        </div>
+<p class="mt-6 text-base text-sky-100/95 leading-relaxed">Until now the game had levels, but no game around them. You started playing... and went straight into a fight. You died, and a new game started that same moment. Step 4 puts a frame around it.</p>
+<p class="mt-6 text-base text-sky-100/95 leading-relaxed">There was no frame at all. No "level complete", no "Game Over", no start of the game with some nice music. In other words, none of that had been built yet... </p>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:star}Title screen</h2>
+<p>The game now opens on FIST III, my working title for the sequel, in big shadowed block letters. Press PRESS FIRE, and the first level comes up out of the black. The trick: the title screen is a level. It is a CharPad map in the same level bank, loaded the same way, just never played. So when I draw a real logo, I redraw this map in CharPad and the game picks it up. No code.</p>
+<h2 class="text-lg text-cyan-100 pt-2">{icon:joystick}Game over: when the game ends, back to the main menu? Or a closing chord? </h2>
+<p>Die, and you get GAME OVER, then CONTINUE with a digit counting down from 9, one per second. Press fire, and the same level starts again with the score back at 0. Let the count run out, and you are back on the title screen. Beat the last level, and the game writes GAME COMPLETE, then the title screen again.</p>
+</div>
+<figure class="mt-6">
+<div class="bg-black/70 rounded-xl border border-cyan-300/30 crt-frame p-2"><img src="{IMG}fist2-game-over.png" alt="GAME OVER in the HUD, with the player lying in the street" class="w-full h-auto rounded-lg pixelated" loading="lazy"></div>
+<figcaption class="mt-2 text-xs text-cyan-200/60">GAME OVER. The letters are new: the HUD font in the level game only had 8, enough for LEVEL and COMPLETE.</figcaption>
+</figure>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:clock}Fade between levels </h2>
+<p>The change between levels was a hard cut, and for one frame it showed the new level's graphics in the old level's colours. Ugly. Now the street darkens to black in 8 steps, following the C64's own brightness order, the next level loads in the dark, and it comes back up slowly. About a third of a second each way, and the broken frame is gone. The HUD stays lit the whole time, so you can still read COMPLETE.</p>
+</div>
+<div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="rounded-xl p-4 bg-black/50 border border-pink-400/30">
+<p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300">LETTERS</p>
+<p dir="ltr" class="text-right mt-3 text-2xl text-pink-200">8 → 16</p>
+<p class="mt-1 text-xs text-sky-100/75 leading-relaxed">The 8 new letters went into empty characters in the HUD font</p>
+</div>
+<div class="rounded-xl p-4 bg-black/50 border border-cyan-400/30">
+<p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-cyan-300">FADE</p>
+<p dir="ltr" class="text-right mt-3 text-2xl text-cyan-200">8</p>
+<p class="mt-1 text-xs text-sky-100/75 leading-relaxed">steps, one every 2 frames, to black and back</p>
+</div>
+</div>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:chip}Behind the scenes</h2>
+<p>A title screen broke every automated test of the level game: they all switch the game on and wait for a fight, and now the game waits for fire. So the test harness learned to press fire on the title screen by itself. A new test runs through the whole loop: game over, the countdown, continue, the fade, game complete, the title screen. 12 tests, all green. Everything outside the level game came out identical, byte for byte.</p>
+<p>One honest note: my second level is painted in very dark colours, and on the C64's brightness scale they stay black until the last step. So that level comes in almost like a cut. A brighter level shows the whole fade.</p>
+<h2 class="text-lg text-cyan-100 pt-2">{icon:page}What's next</h2>
+<p>My own logo on the title screen map. And probably more than one life, with a counter in the HUD (that's the bottom block that shows game data such as credits and energy). </p>
+</div>
