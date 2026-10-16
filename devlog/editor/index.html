@@ -53,11 +53,9 @@
         <div class="card meta">
           <div class="card-head">
             <p class="pixel cyan" id="postNum" dir="ltr">DEVLOG</p>
-            <label class="toggle" title="טיוטה לא מופיעה באתר">
-              <input type="checkbox" id="f-draft" />
-              <span class="track"><span class="knob"></span></span>
-              <span class="toggle-txt">טיוטה</span>
-            </label>
+            <!-- No draft switch: a new post is a draft until "פרסום" publishes it. -->
+            <input type="checkbox" id="f-draft" hidden />
+            <span class="badge" id="draftBadge" hidden title="הפוסט יעלה לאתר כשתלחצו פרסום">טיוטה · עוד לא פורסם</span>
           </div>
           <div class="fields-he">
             <label class="field span-2"><span>כותרת</span><input id="f-title_he" /></label>
