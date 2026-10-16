@@ -1,0 +1,63 @@
+        <p class="mt-6 text-base text-sky-100/95 leading-relaxed">
+          לשלב 1 יש עכשיו סוף: בוס. הגרפיקה שלי בשבילו עוד לא מצוירת, וזה לא שינה כלום.
+          בוס זה בעיקר חוקים, אז בנינו קודם את החוקים.
+        </p>
+
+        <div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <h2 class="text-lg text-cyan-100">{icon:map}שורה אחת בקובץ השלב</h2>
+          <p>
+            האויבים של כל שלב מגיעים מרשימת ה־spawn שלו, שכתובה בקובץ ה־json של השלב. מילה אחת חדשה הופכת רשומה
+            לבוס: <bdi dir="ltr"><code class="text-cyan-300">"boss": true</code></bdi>. בשלב 1 הוא מחכה בחדר
+            האחרון, בעמודה 640 של המפה, כמה צעדים לפני היציאה. ועד שמנצחים אותו, היציאה סגורה. אין
+            "LEVEL COMPLETE" כל עוד הוא עומד.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:fist}מי הוא</h2>
+          <p>
+            אויבים רגילים מגיעים בזוגות. הבוס בא לבד, עם AI ברמה 9, הכי גבוהה ששלב יכול לבקש: חוסם הרבה ומחזיר.
+            הוא לבן. בניסיון הראשון הוא היה סגול, ובפלטה של ה־C64 הסגול ישב צמוד לכחול של השחקן שלי. על המסך פשוט
+            לא היה אפשר להבדיל מי זה מי.
+          </p>
+          <p>
+            ואז האנרגיה. אנרגיה של לוחם היא בית אחד, אז התקרה היא $7f. במקום לשכתב את קוד האנרגיה ואת ה־HUD,
+            הבוס קיבל שלושה מדים מלאים. מרוקנים אחד, והוא נופל, קם, והמד מתמלא מחדש. טריק ישן של מכונות ארקייד.
+            גם בעיטה באוויר בודדת או טאטוא לא יפילו אותו. רק קומבו של שלוש מכות.
+          </p>
+        </div>
+
+        <figure class="mt-6">
+          <div class="bg-black/70 rounded-xl border border-cyan-300/30 crt-frame p-2">
+            <img src="{IMG}fist2-boss-arrives.png" alt="השחקן בכחול מול הבוס הלבן בחדר האחרון של שלב 1" class="w-full h-auto rounded-lg pixelated" loading="lazy" />
+          </div>
+          <figcaption class="mt-2 text-xs text-cyan-200/60">הבוס מגיע (מימין, בלבן). עדיין הארט המקורי של Fist II, שמחזיק את המקום עד שהארט שלי יהיה מוכן.</figcaption>
+        </figure>
+
+        <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="rounded-xl p-4 bg-black/50 border border-pink-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300">BARS</p>
+            <p dir="ltr" class="text-right mt-3 text-2xl text-pink-200">2 &rarr; 1 &rarr; 0</p>
+            <p class="mt-1 text-xs text-sky-100/75 leading-relaxed">בבדיקה: נפילה בכל מד שהתרוקן, ואחרי האחרון הוא מובס והיציאה נפתחת</p>
+          </div>
+          <div class="rounded-xl p-4 bg-black/50 border border-cyan-400/30">
+            <p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-cyan-300">JUMP KICKS</p>
+            <p dir="ltr" class="text-right mt-3 text-2xl text-cyan-200">1</p>
+            <p class="mt-1 text-xs text-sky-100/75 leading-relaxed">בעיטה באוויר אחת פגעה בו בערך ב־8,000 פריימים של בדיקה. אולי הוא קשה מדי. הידיים שלי יגידו.</p>
+          </div>
+        </div>
+
+        <div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+          <h2 class="text-lg text-cyan-100">{icon:chip}מאחורי הקלעים</h2>
+          <p>
+            באותם ימים היה גם עבודה שקטה יותר. שאלתי אם הקוד של המשחק כתוב בסגנון שלי, והשווינו אותו לשלושה אינטרואים
+            שלי. ברובו כן, הכי קרוב לאינטרו של Blazon. השאריות מהקוד של 1986 נוקו, וכל ה־builds יצאו זהים בית אחר בית,
+            כך ששום דבר במשחק לא זז. גם ארבעה באגים קטנים מסקירת הקוד תוקנו. הכי יפה מהם: הפסקה של בערך חמש שניות בין
+            מכות עדיין יכלה להיספר כקומבו של שלוש ולהפיל מישהו משום מקום. בדיקה הראתה את זה בקוד הישן, 3 פעמים מתוך 3,
+            ואף פעם לא אחרי התיקון.
+          </p>
+
+          <h2 class="text-lg text-cyan-100 pt-2">{icon:joystick}מה הלאה</h2>
+          <p>
+            גוף משלו, כשאצייר אותו. והמשחק שמסביב לשלבים: מסך פתיחה, game over, "game complete" אחרי השלב האחרון,
+            ומעבר מהיר בין שלבים.
+          </p>
+        </div>
