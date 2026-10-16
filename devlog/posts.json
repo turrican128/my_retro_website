@@ -108,6 +108,22 @@
       "banner_alt_he": "השחקן בכחול מול הבוס הלבן בחדר האחרון של שלב 1",
       "banner_caption_en": "The boss arrives at the end of level 1. The graphics are still the original 1986 Fist II art (Beam Software / Melbourne House), standing in until our own art is ready.",
       "banner_caption_he": "הבוס מגיע בסוף שלב 1. הגרפיקה היא עדיין הארט המקורי של Fist II מ־1986 (Beam Software / Melbourne House), שמחזיק את המקום עד שהארט שלנו יהיה מוכן."
+    },
+    {
+      "slug": "a-game-around-the-levels",
+      "when": "2026-10-16T08:20:00+03:00",
+      "draft": true,
+      "kicker": "FIST II REMASTER",
+      "kicker_short": "Fist II Remaster",
+      "title_en": "A game around the levels",
+      "title_he": "משחק מסביב לשלבים",
+      "teaser_en": "A title screen, game over with a continue count, game complete, and a fade between levels. The title is a level nobody plays.",
+      "teaser_he": "מסך פתיחה, game over עם ספירה ל־continue, game complete, ודעיכה בין שלבים. מסך הפתיחה הוא שלב שאף אחד לא משחק בו.",
+      "banner": "fist2-title-fist3.png",
+      "banner_alt_en": "The title screen: FIST III in big block letters, PRESS FIRE above",
+      "banner_alt_he": "מסך הפתיחה: FIST III באותיות בלוקים גדולות, ו־PRESS FIRE מעליהן",
+      "banner_caption_en": "The new title screen. FIST III is a placeholder logo, built as a CharPad map so it can be redrawn without touching the code.",
+      "banner_caption_he": "מסך הפתיחה החדש. FIST III הוא לוגו זמני, שבנוי כמפת CharPad כדי שאפשר יהיה לצייר אותו מחדש בלי לגעת בקוד."
     }
   ],
   "index_en_source_hash": "c2324c62c4e4a8f0"
