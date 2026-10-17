@@ -10,6 +10,7 @@
 6. **כותרת היומן** (בצד) עורכת את הבלוק שבראש דף היומן ואת תיאור הדף.
 7. **טיוטה מהמשחק**: Claude כותב טיוטה קצרה בעברית ממה שמוזג ב־repo של המשחק, רק מעובדות שכתובות שם.
 8. כשהפוסט מוכן: מכבים את **טיוטה**, שומרים ולוחצים **פרסום**. נפתח PR ב־GitHub, ושום דבר לא עולה לאוויר עד שממזגים אותו.
+9. **📦 הורדה**: מעלים קובץ <bdi dir="ltr">.prg</bdi> או <bdi dir="ltr">.d64</bdi> (עד 2 MB), כותבים גרסה (ברירת המחדל beta), ונכנס לפוסט כרטיס הורדה. הקובץ עולה לאתר רק כשהפוסט מתפרסם. גרסאות עם „tr”, „heli” או „preview” בשם נחסמות: יש בהן חומרים ממשחקים אחרים.
 
 </div>
 
@@ -88,6 +89,34 @@ JPG and WEBP, up to 5 MB. Names are cleaned up and start with `fist2-`; an exist
 overwritten (a `-2` is added). Only publish our own art or screenshots of the game, never ripped
 third-party assets.
 
+## Downloads (betas)
+
+**📦 הורדה** (download) in the toolbar adds a download card for a C64 file: pick an uploaded file or
+upload one (or drag a `.prg`/`.d64` straight into the editor), type a version label (default `beta`,
+English letters, digits, `.`, `-`), and the card goes in as its own paragraph. In the editor it's a
+small chip, `📦 <file> · <version>`; in the post file it's the token
+
+```
+<p>{download:fist2-beta.prg|beta}</p>
+```
+
+On the page it becomes a neon card: disk icon, file name, version, a pink BETA tag, size and the
+post's date, a big **הורדה ⬇** / **Download ⬇** button and "Runs in VICE or on a real C64". The devlog
+index gets a **הורדות** / **Downloads** box listing every download of the published posts (no box when
+there are none).
+
+- Allowed: `.prg`, `.d64`, `.d71`, `.d81`, `.crt`, up to 2 MB. A `.d64` must have a real disk size
+  (174848, 175531, 196608 or 197376 bytes), a `.prg` at least 3 bytes. Names are cleaned up (lowercase
+  ASCII, no spaces); an existing file is never overwritten (a `-2` is added).
+- **Never published:** any file with `tr`, `heli` or `preview` as a separate word in its name
+  (`fist2-tr.prg`, `fist2-levels-preview-packed.prg`, `heli-test.d64`). Those game builds contain ripped
+  third-party assets (Target Renegade graphics, the Heli Rescue tune). The upload refuses them, and
+  `build.py` refuses to build a page that links one.
+- Uploads are stored in `devlog/downloads/` (tracked in git, not served). `build.py` copies a file to
+  `docs/downloads/fist2/` only while a **published** post links it, and deletes every file there that no
+  published post links, so a draft's beta never reaches the site. Publish commits both folders.
+- The English translation copies the token unchanged; if it ever doesn't, Publish stops.
+
 ## Preview
 
 **תצוגה מקדימה** (preview) saves, runs `build.py` and opens the Hebrew page in a new tab, exactly as
@@ -121,8 +150,9 @@ Switch off the draft toggle, save, then **פרסום** (publish). The editor:
 3. checks that nothing outside the devlog has uncommitted changes (if something does, it lists the
    files and stops),
 4. makes a branch `devlog/<slug>-<date>-<time>` (or `devlog/index-header-…`) from where you are,
-   commits only the devlog files (`devlog/` including `intro.*.html`, `docs/devlog*.html`,
-   `docs/en/devlog*.html`, `docs/assets/images/devlog/`), pushes it and opens a pull request into `main`,
+   commits only the devlog files (`devlog/` including `intro.*.html` and `downloads/`, `docs/devlog*.html`,
+   `docs/en/devlog*.html`, `docs/assets/images/devlog/`, `docs/downloads/fist2/`), pushes it and opens a
+   pull request into `main`,
 5. switches back to the branch you were on and shows the PR link.
 
 Nothing goes live until you merge the PR on GitHub. Until then the editor shows your current
@@ -131,7 +161,8 @@ branch's copy of the devlog, without the new post.
 ## Without the editor
 
 The source is `posts.json` + `posts/<slug>.he.html` / `posts/<slug>.en.html`, and `intro.he.html` /
-`intro.en.html` for the index header. In a body, `{IMG}` is the image folder and `{icon:name}` a pixel
-icon (names in `build.py`, `ICONS`). After editing by hand run `python devlog/build.py`. If you change
+`intro.en.html` for the index header. In a body, `{IMG}` is the image folder, `{icon:name}` a pixel
+icon (names in `build.py`, `ICONS`) and `<p>{download:file|version}</p>` a download card for a file in
+`devlog/downloads/`. After editing by hand run `python devlog/build.py`. If you change
 the Hebrew by hand, the English is re-translated on the next Publish only if the post already has an
 `en_source_hash`; otherwise translate it yourself or delete the English title to force it.

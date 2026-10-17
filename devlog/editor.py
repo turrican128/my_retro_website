@@ -56,7 +56,12 @@ LOCK = threading.Lock()          # one writer at a time for posts.json / git
 IMG_EXT = {".png": "image/png", ".gif": "image/gif", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp"}
 MAX_UPLOAD = 5 * 1024 * 1024
 SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
-PUBLISH_PATHS = ["devlog", "docs/devlog*.html", "docs/en/devlog*.html", "docs/assets/images/devlog"]
+PUBLISH_PATHS = ["devlog", "docs/devlog*.html", "docs/en/devlog*.html", "docs/assets/images/devlog", "docs/downloads/fist2"]
+DL_DIR = build.DL_SRC                     # devlog/downloads/: uploaded betas; build.py copies the linked ones to docs/
+MAX_DOWNLOAD = 2 * 1024 * 1024
+# Sizes of real disk images (with and without the error-info bytes; 35 and 40 tracks for a D64).
+DISK_SIZES = {".d64": (174848, 175531, 196608, 197376), ".d71": (349696, 351062), ".d81": (819200, 822400)}
+VERSION_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9 ._+-]{0,23}$")
 
 
 class UserError(Exception):
@@ -270,6 +275,9 @@ def ensure_english_post(data, post):
     if not (src["title"].strip() and src["body"].strip()):
         raise UserError("כדי ליצור את הגרסה האנגלית צריך כותרת וגוף בעברית.")
     out = translate_fields("he2en", src)
+    tokens = lambda html: [m.group(0) for m in build.DL_TOKEN.finditer(html or "")]
+    if tokens(out.get("body")) != tokens(src["body"]):
+        raise UserError("התרגום לאנגלית שינה כרטיס הורדה ({download:...}), אז הוא לא נשמר. נסו שוב.")
     for k in SRC_KEYS:
         post[k + "_en"] = encode_field(out.get(k, "")) if src[k].strip() else ""
     write_text(body_path(post["slug"], "en"), out.get("body", ""), eol=read_text(body_path(post["slug"], "he"))[1])
@@ -511,6 +519,68 @@ def api_upload(req):
     return {"ok": True, "name": target.name}
 
 
+RIPPED_BUILD = ("אי אפשר להעלות את {name}: יש בשם שלו „tr”, „heli” או „preview”. הגרסאות האלה של המשחק "
+                "מכילות חומרים שנלקחו ממשחקים אחרים (הגרפיקה של Target Renegade, המוזיקה של Heli Rescue), "
+                "ואסור לפרסם אותן. מעלים רק גרסה שכל האמנות והמוזיקה בה שלנו, עם שם בלי המילים האלה.")
+
+
+def api_downloads():
+    files = [f for f in DL_DIR.iterdir() if f.suffix.lower() in build.DL_EXT] if DL_DIR.exists() else []
+    files.sort(key=lambda f: f.stat().st_mtime, reverse=True)
+    return {"downloads": [{"name": f.name, "size": f.stat().st_size} for f in files]}
+
+
+def api_upload_download(req):
+    """A C64 file (.prg/.d64/.d71/.d81/.crt) for a download card, stored in devlog/downloads/."""
+    name = (req.get("name") or "").strip()
+    if forbidden_name(name):
+        raise UserError(RIPPED_BUILD.format(name=name))
+    ext = pathlib.PurePath(name).suffix.lower()
+    if ext not in build.DL_EXT:
+        raise UserError("אפשר להעלות להורדה רק קובצי C64: PRG, D64, D71, D81 או CRT.")
+    try:
+        blob = base64.b64decode(req.get("data") or "", validate=False)
+    except Exception:
+        raise UserError("ההעלאה לא הגיעה בשלמותה. נסו שוב.")
+    if not blob:
+        raise UserError("הקובץ ריק.")
+    if len(blob) > MAX_DOWNLOAD:
+        raise UserError(f"הקובץ שוקל {-(-len(blob) // 1024)} KB, והמגבלה להורדות היא 2048 KB (2 MB).")
+    if ext in DISK_SIZES and len(blob) not in DISK_SIZES[ext]:
+        sizes = ", ".join(str(n) for n in DISK_SIZES[ext])
+        raise UserError(f"{name} לא נראה כמו דיסק {ext[1:].upper()} תקין: הוא {len(blob)} בתים, "
+                        f"ודיסק כזה הוא בדיוק אחד מהגדלים {sizes}.")
+    if ext == ".prg" and len(blob) < 3:
+        raise UserError("קובץ PRG צריך לפחות 3 בתים: כתובת טעינה ולפחות בית אחד של תוכן.")
+    if ext == ".crt" and not blob.startswith(b"C64 CARTRIDGE   "):
+        raise UserError(f"{name} לא נראה כמו קובץ CRT של C64 (חסרה הכותרת C64 CARTRIDGE).")
+    stem = re.sub(r"[^a-z0-9._-]+", "-", pathlib.PurePath(name).stem.lower()).strip("-._")[:60].strip("-._") or "download"
+    if forbidden_name(stem + ext):
+        raise UserError(RIPPED_BUILD.format(name=name))
+    DL_DIR.mkdir(exist_ok=True)
+    target = DL_DIR / (stem + ext)
+    n = 2
+    while target.exists():
+        target = DL_DIR / f"{stem}-{n}{ext}"
+        n += 1
+    target.write_bytes(blob)
+    return {"ok": True, "name": target.name, "size": len(blob)}
+
+
+def forbidden_name(name):
+    """Also catches what sanitising would hide: 'Fist2 TR.prg', 'fist2_heli.d64'."""
+    return build.forbidden_download(name) or build.forbidden_download(re.sub(r"[^a-z0-9]+", "-", name.lower()))
+
+
+def download_chip_svg(name, version):
+    """The chip the editor shows in place of {download:...}: a small pink-bordered label."""
+    text = htmllib.escape(f"📦 {name} · {version}")
+    w = 34 + round(7.6 * (len(name) + len(version) + 3))
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="26" viewBox="0 0 {w} 26">'
+            f'<rect x="0.5" y="0.5" width="{w - 1}" height="25" rx="7" fill="#1a0430" stroke="#ff2dd2"/>'
+            f'<text x="10" y="17.5" font-family="Consolas, ui-monospace, monospace" font-size="12" fill="#f9a8d4">{text}</text></svg>')
+
+
 def api_icons():
     return {"icons": list(build.ICONS)}
 
@@ -525,7 +595,10 @@ def icon_svg(name, colour="#f9a8d4"):
 
 def rebuild():
     """build.py, plus: a post switched back to draft must not leave its old pages behind."""
-    n = build.build_all()
+    try:
+        n = build.build_all()
+    except ValueError as e:                       # a download card whose file is missing or a ripped build
+        raise UserError(f"הבנייה נעצרה בגלל כרטיס הורדה: {e}")
     for post in load_data()["posts"]:
         if post.get("draft"):
             for page in (SITE / f"devlog-{post['slug']}.html", SITE / "en" / f"devlog-{post['slug']}.html"):
@@ -562,7 +635,7 @@ def must(cmd, cwd=REPO, timeout=120):
 
 def publish_allowed(path):
     path = path.replace("\\", "/")
-    if path.startswith("devlog/") or path.startswith("docs/assets/images/devlog/"):
+    if path.startswith(("devlog/", "docs/assets/images/devlog/", "docs/downloads/fist2/")):
         return True
     return bool(re.fullmatch(r"docs/(en/)?devlog[^/]*\.html", path))
 
@@ -578,6 +651,16 @@ def blocking_changes():
         if not publish_allowed(path):
             blocked.append(line)
     return blocked
+
+
+def publish_pathspecs():
+    """PUBLISH_PATHS minus docs/downloads/fist2 when it neither exists nor is tracked: git add fails on a
+    pathspec that matches nothing, and with no published download build.py leaves no such folder."""
+    out = []
+    for p in PUBLISH_PATHS:
+        if "*" in p or (REPO / p).exists() or run(["git", "ls-files", "--", p])[1]:
+            out.append(p)
+    return out
 
 
 def publish_plan(post, branch, prev):
@@ -597,7 +680,7 @@ def publish_plan(post, branch, prev):
                 "Published from the devlog editor.")
     return [
         ["git", "checkout", "-b", branch],
-        ["git", "add", "-A", "--"] + PUBLISH_PATHS,
+        ["git", "add", "-A", "--"] + publish_pathspecs(),
         ["git", "commit", "-m", f"devlog: {title}"],
         ["git", "push", "-u", "origin", branch],
         ["gh", "pr", "create", "--base", "main", "--head", branch, "--title", f"devlog: {title}", "--body", body],
@@ -816,7 +899,8 @@ def claude_json(system, user, schema, effort="medium"):
 
 HOUSE_MARKUP = """The post body is an HTML fragment (no <html>/<body>) styled with Tailwind classes. Tokens:
 {IMG} is the image folder prefix (e.g. <img src="{IMG}fist2-x.png">), {icon:NAME} is an 8x8 pixel icon placed
-at the start of a section heading. Available icons: ICONS.
+at the start of a section heading. Available icons: ICONS. A paragraph holding only a token like
+<p>{download:fist2-v33.prg|beta}</p> is a download card for a C64 file (file name | version label); never add one.
 Building blocks, exactly as the existing posts use them:
 - Lead paragraph (once, at the top): <p class="mt-6 text-base text-sky-100/95 leading-relaxed">...</p>
 - Text sections: <div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed"> with
@@ -836,7 +920,7 @@ FACT_RULES = """Hard rules:
 - Write like a developer telling friends what happened: plain, concrete, short sentences, a little dry humour
   only when the material itself is funny. No hype, no marketing words, no "In this post we will".
 - "We" is Alex and Claude working together on the game; it's Alex's devlog.
-- Do not add images (Alex adds screenshots himself)."""
+- Do not add images or download cards (Alex adds screenshots and downloads himself)."""
 
 TRANSLATE_HE_RULES = """Hebrew rules:
 - Natural, spoken-but-tidy Israeli Hebrew, the way a developer writes a blog post. Not a word-for-word translation.
@@ -852,7 +936,9 @@ TRANSLATE_HE_RULES = """Hebrew rules:
 TRANSLATE_COMMON = """Translation rules:
 - Translate the meaning, keep every fact, number, name and the order of sections. Add nothing, drop nothing.
 - The body is HTML: keep every tag, attribute, class and the structure exactly. Translate only human-readable text,
-  plus the alt text of images. Keep the tokens {IMG}... and {icon:NAME} exactly where they are.
+  plus the alt text of images. Keep the tokens {IMG}... and {icon:NAME} exactly where they are, and copy every
+  {download:FILE|VERSION} token character for character (do not translate, respell or reformat the file name or
+  the version, keep the "|"), alone in its own <p> exactly where it is.
 - Keep code, addresses, file names, URLs and HTML entities (&middot; &rarr; ...) unchanged.
 - Fields that are empty in the source stay empty."""
 
@@ -1085,6 +1171,8 @@ class Handler(SimpleHTTPRequestHandler):
                 html = build.preview_html(m.group(2), "en" if m.group(1) else "he")
             except KeyError:
                 return self._bytes(b"no such post", "text/plain", 404)
+            except ValueError as e:                    # a download card whose file is missing or a ripped build
+                return self._bytes(str(e).encode("utf-8"), "text/plain; charset=utf-8", 400)
             banner = ('<div style="position:fixed;bottom:12px;left:12px;z-index:99;font:10px \'Press Start 2P\',monospace;'
                       'background:#ff2dd2;color:#000;padding:8px 10px;border-radius:6px;box-shadow:0 0 18px #ff2dd2">PREVIEW</div>')
             html = html.replace("</body>", banner + "</body>", 1)
@@ -1099,8 +1187,15 @@ class Handler(SimpleHTTPRequestHandler):
             except (ValueError, OSError):
                 return self._bytes(b"not found", "text/plain", 404)
             return self._bytes(html.replace("</body>", EN_NOTICE + "</body>", 1).encode("utf-8"), "text/html; charset=utf-8")
+        if path.startswith("/site/downloads/fist2/") and not (SITE / path[len("/site/"):]).is_file():
+            # a draft's preview links a beta that build.py doesn't copy to docs/ yet: serve the source
+            return self._file(DL_DIR / path[len("/site/downloads/fist2/"):], DL_DIR)
         if path.startswith("/site/"):
             return self._file(SITE / path[len("/site/"):], SITE)
+        if path.startswith("/chip/download.svg"):
+            q = urllib.parse.parse_qs(url.query)
+            name, version = (q.get("f") or [""])[0], (q.get("v") or [""])[0]
+            return self._bytes(download_chip_svg(name[:80], version[:40]).encode("utf-8"), "image/svg+xml")
         if path == "/api/status":
             return self._guard(api_status)
         if path == "/api/posts":
@@ -1109,6 +1204,8 @@ class Handler(SimpleHTTPRequestHandler):
             return self._guard(api_get_post, path[len("/api/post/"):])
         if path == "/api/images":
             return self._guard(api_images)
+        if path == "/api/downloads":
+            return self._guard(api_downloads)
         if path == "/api/repo-changes":
             return self._guard(api_repo_changes)
         if path == "/api/intro":
@@ -1139,6 +1236,8 @@ class Handler(SimpleHTTPRequestHandler):
             return self._guard(api_publish, None, req)
         if path == "/api/upload":
             return self._guard(api_upload, req)
+        if path == "/api/upload-download":
+            return self._guard(api_upload_download, req)
         if path == "/api/build":
             return self._guard(api_build)
         if path == "/api/translate":
