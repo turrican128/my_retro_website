@@ -14,7 +14,9 @@
     "fist2-temple-room.png": "fist2-remake/out/temple/t2_node64_room1e.png",
     "fist2-desert-fight.png": "fist2-remake/out/depth/brutal_branch.png",
     "fist2-three-fighters-oct7.gif": "fist2-remake/out/stage6/film_fight.gif",
-    "fist2-level-fight.gif": "VICE recording of the LEVELS build (fist2-remake), 2026-10-15"
+    "fist2-level-fight.gif": "VICE recording of the LEVELS build (fist2-remake), 2026-10-15",
+    "fist2-high-kick.png": "VICE capture of the moves room (fist2-remake run moves), 2026-10-18",
+    "fist2-low-kick.png": "VICE capture of the moves room (fist2-remake run moves), 2026-10-18"
   },
   "posts": [
     {
@@ -140,6 +142,22 @@
       "banner_caption_en": "The first screen of the new intro. The handwriting under it comes from Double Dragon II; the fighters are our own game's sprites, turned into characters.",
       "banner_caption_he": "המסך הראשון של ה־intro החדש. , כתב היד מתחתיו מ־Double Dragon II; הלוחמים הם הספרייטים של המשחק שלנו, שהפכו לתווים.",
       "en_source_hash": "52f835a867f28cc3"
+    },
+    {
+      "slug": "the-kicks-come-back",
+      "when": "2026-10-18T01:00:00+03:00",
+      "draft": true,
+      "kicker": "FIST II REMASTER",
+      "kicker_short": "Fist II Remaster",
+      "title_en": "The kicks come back",
+      "title_he": "הבעיטות חוזרות",
+      "teaser_en": "A room with no enemies to test the moves, a move map for a one-button joystick, and the original's low and high kicks back: eight attacks again.",
+      "teaser_he": "חדר בלי אויבים לבדיקת המהלכים, מפת מהלכים לג'ויסטיק עם כפתור אחד, והבעיטות הנמוכות והגבוהות של המקורי חוזרות: שוב שמונה מכות.",
+      "banner": "fist2-high-kick.png",
+      "banner_alt_en": "The player throwing a high kick in the moves room, alone in the room",
+      "banner_alt_he": "השחקן בועט בעיטה גבוהה בחדר המהלכים, לבד בחדר",
+      "banner_caption_en": "The high kick is back: forward and up with fire.",
+      "banner_caption_he": "הבעיטה הגבוהה חזרה: קדימה ולמעלה עם fire."
     }
   ],
   "index_en_source_hash": "c2324c62c4e4a8f0"
