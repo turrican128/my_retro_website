@@ -211,3 +211,7 @@ __marimo__/
 
 # Devlog editor: Claude API key lives here, never commit it
 devlog/.env
+
+# Devlog beta downloads are tracked (the generic downloads/ rule above would hide them)
+!/devlog/downloads/
+!/docs/downloads/

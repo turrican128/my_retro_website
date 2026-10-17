@@ -125,13 +125,21 @@ function noKeyBox(what = 'התרגום לאנגלית והטיוטה מהמשח�
 }
 
 // ── body conversion: file tokens <-> editor HTML ─────────────────────────
+// {download:<file>|<version>} (a C64 file for the download card) shows as a small chip image.
+const DL_TOKEN = /\{download:([a-z0-9][a-z0-9._-]*)\|([^{}|<>"]{1,40})\}/g;
+function downloadChip(name, version) {
+  const q = `f=${encodeURIComponent(name)}&v=${encodeURIComponent(version)}`;
+  return `<img class="dl-download" data-download="${esc(name)}|${esc(version)}" src="/chip/download.svg?${q}" alt="📦 ${esc(name)} · ${esc(version)}" />`;
+}
 function toEditor(raw) {
   return (raw || '')
     .replace(/\{IMG\}/g, '/img/')
-    .replace(/\{icon:(\w+)\}/g, (m, n) => `<img class="dl-icon" data-icon="${n}" src="/icon/${n}.svg" alt="" />`);
+    .replace(/\{icon:(\w+)\}/g, (m, n) => `<img class="dl-icon" data-icon="${n}" src="/icon/${n}.svg" alt="" />`)
+    .replace(DL_TOKEN, (m, f, v) => downloadChip(f, v));
 }
 function fromEditor(html) {
   let out = html
+    .replace(/<img\b[^>]*\bdata-download="([^"]+)"[^>]*>/g, (m, d) => `{download:${decode(d)}}`)
     .replace(/<img\b[^>]*\bdata-icon="(\w+)"[^>]*>/g, '{icon:$1}')
     .replace(/(\b(?:src|href)=")\/img\//g, '$1{IMG}');
   if (out && !out.endsWith('\n')) out += '\n';
@@ -441,6 +449,80 @@ async function insertDroppedImages(ed, files) {
   markDirty();
 }
 
+// ── downloads: a C64 file (.prg/.d64/...) as a download card ─────────────
+const DL_EXT = /\.(prg|d64|d71|d81|crt)$/i;
+const VERSION_OK = /^[A-Za-z0-9][A-Za-z0-9 ._+-]{0,23}$/;
+async function uploadDownload(file) {
+  if (!DL_EXT.test(file.name)) throw new Error(`${file.name}: אפשר להעלות להורדה רק קובצי C64: PRG, D64, D71, D81 או CRT.`);
+  if (file.size > 2 * 1024 * 1024) throw new Error(`${file.name} שוקל ${Math.ceil(file.size / 1024)} KB, והמגבלה להורדות היא 2048 KB (2 MB).`);
+  const res = await api('/api/upload-download', { name: file.name, data: await readAsBase64(file) });
+  toast('הקובץ נוסף: ' + res.name);
+  return res.name;
+}
+const kb = (n) => `${Math.max(1, Math.ceil(n / 1024))} KB`;
+
+/** Pick or upload a C64 file, ask the version label, insert the card token in its own paragraph. */
+async function downloadDialog(ed, files) {
+  let chosen = null;
+  let version = 'beta';
+  if (files && files.length) {
+    try { chosen = await uploadDownload(files[0]); } catch (e) { toast(e.message, 'err'); return; }
+  }
+  const r = await modal({
+    title: 'כרטיס הורדה', wide: !chosen,
+    sub: 'קובץ C64 שהקוראים יכולים להוריד (PRG, D64, D71, D81 או CRT, עד 2 MB). הקובץ נשמר ב־<code>devlog/downloads/</code> ועולה לאתר רק כשפוסט שפורסם מקשר אליו. '
+      + 'אף פעם לא מעלים גרסה עם חומרים ממשחקים אחרים: קבצים עם „tr”, „heli” או „preview” בשם נחסמים.',
+    html: `${chosen ? '' : `<div class="lib-tools"><label class="btn">העלאת קובץ…<input type="file" accept=".prg,.d64,.d71,.d81,.crt" hidden /></label>
+             <div class="drop">…או לגרור לכאן קובץ <bdi dir="ltr">.prg</bdi> / <bdi dir="ltr">.d64</bdi></div></div><ul class="dl-list"></ul>`}
+           <p class="dl-chosen">${chosen ? `<bdi dir="ltr">${esc(chosen)}</bdi>` : ''}</p>
+           <label class="field"><span>גרסה <em class="hint">באנגלית: אותיות, ספרות, נקודה, מקף (למשל beta או v3.3-beta)</em></span>
+             <input id="m-version" dir="ltr" lang="en" value="beta" spellcheck="false" /></label>`,
+    buttons: [{ text: 'ביטול', value: null }, { text: 'הוספה', cls: 'primary', value: 'ok',
+      validate: (back) => {
+        version = back.querySelector('#m-version').value.trim();
+        if (!chosen) { toast('קודם בוחרים או מעלים קובץ.', 'err'); return false; }
+        if (!VERSION_OK.test(version)) { toast('הגרסה צריכה להיות באנגלית: אותיות, ספרות, נקודה, מקף או רווח, עד 24 תווים.', 'err'); return false; }
+        return true;
+      } }],
+    onOpen: (back) => {
+      const list = back.querySelector('.dl-list');
+      if (!list) return;
+      const shown = back.querySelector('.dl-chosen');
+      const pick = (name) => { chosen = name; shown.innerHTML = `<bdi dir="ltr">${esc(name)}</bdi>`; list.querySelectorAll('li').forEach((li) => li.classList.toggle('sel', li.dataset.name === name)); };
+      const render = async (select) => {
+        const { downloads } = await api('/api/downloads');
+        list.innerHTML = downloads.length ? downloads.map((d) => `<li data-name="${esc(d.name)}"><bdi dir="ltr">${esc(d.name)}</bdi><span>${kb(d.size)}</span></li>`).join('')
+          : '<li class="empty">עדיין אין קבצים. מעלים את הראשון.</li>';
+        if (select) pick(select);
+      };
+      list.addEventListener('click', (e) => { const li = e.target.closest('li[data-name]'); if (li) pick(li.dataset.name); });
+      const doUpload = async (fs) => { if (!fs.length) return; try { await render(await uploadDownload(fs[0])); } catch (err) { toast(err.message, 'err'); } };
+      back.querySelector('input[type=file]').addEventListener('change', (e) => doUpload([...e.target.files]));
+      const drop = back.querySelector('.drop');
+      drop.addEventListener('dragover', (e) => { e.preventDefault(); drop.classList.add('over'); });
+      drop.addEventListener('dragleave', () => drop.classList.remove('over'));
+      drop.addEventListener('drop', (e) => { e.preventDefault(); drop.classList.remove('over'); doUpload([...e.dataTransfer.files]); });
+      render().catch((e) => toast(e.message, 'err'));
+    },
+  });
+  if (r !== 'ok') return;
+  insertDownload(ed, chosen, version);
+}
+
+function insertDownload(ed, name, version) {
+  ed.focus();
+  const p = ed.dom.create('p', {}, downloadChip(name, version));
+  const blk = ed.dom.getParent(ed.selection.getNode(), 'p,h2,h3,figure,blockquote,ul,ol');
+  ed.undoManager.transact(() => {
+    if (blk && blk.nodeName === 'P' && !blk.textContent.trim() && !blk.querySelector('img')) blk.replaceWith(p);
+    else if (blk) ed.dom.insertAfter(p, blk);       // its own paragraph, after the one the cursor is in
+    else ed.getBody().appendChild(p);
+  });
+  ed.selection.select(p.firstChild);
+  ed.nodeChanged();
+  markDirty();
+}
+
 function insertIcon(ed, name) {
   ed.focus();
   const node = ed.selection.getNode();
@@ -533,6 +615,7 @@ const CONTENT_STYLE = `
   code:not([class]) { color: #67e8f9; }
   strong { color: #fff; }
   img.dl-icon { width: 16px; height: 16px; image-rendering: pixelated; vertical-align: -2px; filter: drop-shadow(0 0 4px rgba(255,45,210,.55)); cursor: default; }
+  img.dl-download { height: 26px; vertical-align: middle; cursor: default; filter: drop-shadow(0 0 6px rgba(255,45,210,.45)); }
   .crt-frame { position: relative; overflow: hidden; }
   .pixelated { image-rendering: pixelated; }
   figure { margin-inline: 0; }
@@ -564,7 +647,7 @@ function initEditor(key) {
     elementpath: false,
     plugins: 'lists link autolink code',
     toolbar: intro ? 'undo redo | bold italic dlcode | link | code'
-      : 'undo redo | dlh2 bold italic dlcode | link bullist | dlshot dlicon dltile dllead | code',
+      : 'undo redo | dlh2 bold italic dlcode | link bullist | dlshot dlicon dltile dllead dldownload | code',
     toolbar_mode: 'wrap',
     // keep the hand-written markup exactly: every attribute, every Tailwind class
     extended_valid_elements: '*[*]',
@@ -596,6 +679,7 @@ function initEditor(key) {
       });
       ed.ui.registry.addButton('dltile', { text: '# כרטיס', tooltip: 'כרטיס מספר', onAction: () => tileDialog(ed) });
       ed.ui.registry.addButton('dllead', { text: 'פתיח', tooltip: 'להפוך את הפסקה לפתיח (שורת פתיחה גדולה יותר)', onAction: () => toggleLead(ed) });
+      ed.ui.registry.addButton('dldownload', { text: '📦 הורדה', tooltip: 'כרטיס הורדה לקובץ C64 (PRG / D64)', onAction: () => downloadDialog(ed) });
       Object.keys(state.status.icons).forEach((n) => ed.ui.registry.addIcon('dl-' + n, iconSvg(n, 'currentColor', 18)));
 
       ed.on('init', () => {
@@ -610,7 +694,10 @@ function initEditor(key) {
       ed.on('input change undo redo ExecCommand KeyUp SetContent', markDirty);
       ed.addShortcut('meta+s', 'שמירה', () => save());
       ed.on('drop', (e) => {
-        const files = [...(e.dataTransfer?.files || [])].filter((f) => f.type.startsWith('image/'));
+        const all = [...(e.dataTransfer?.files || [])];
+        const c64 = intro ? [] : all.filter((f) => DL_EXT.test(f.name));
+        if (c64.length) { e.preventDefault(); downloadDialog(ed, c64); return; }
+        const files = all.filter((f) => f.type.startsWith('image/'));
         if (!files.length) return;
         e.preventDefault();
         insertDroppedImages(ed, files);
