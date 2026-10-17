@@ -128,18 +128,18 @@
     {
       "slug": "two-screens-and-a-tune",
       "when": "2026-10-17T22:55:00+03:00",
-      "draft": true,
       "kicker": "FIST II REMASTER",
       "kicker_short": "Fist II Remaster",
       "title_en": "Two screens and a tune",
       "title_he": "שני מסכים ומנגינה",
-      "teaser_en": "A new intro in the spirit of Double Dragon II: a logo and two fighters, then the credits, taking turns while the music plays on.",
+      "teaser_en": "A new intro in the spirit of Double Dragon II: a logo and two fighters, then the credits, swapping while the music keeps playing.",
       "teaser_he": "intro חדש ברוח Double Dragon II: לוגו ושני לוחמים, ואחריהם הקרדיטים, מתחלפים בזמן שהמוזיקה ממשיכה לנגן.",
       "banner": "fist2-intro-screen1.png",
-      "banner_alt_en": "The intro's first screen: FIST III in blue and light blue, \"The Revenge\" in red script under it, two fighters, PLAYER 1 USES JOYSTICK PORT 2",
+      "banner_alt_en": "The first screen of the intro: FIST III in blue and light blue, The Revenge in red handwriting below it, two fighters, and PLAYER 1 USES JOYSTICK PORT 2",
       "banner_alt_he": "המסך הראשון של ה־intro: FIST III בכחול ותכלת, מתחתיו The Revenge בכתב יד אדום, שני לוחמים, ו־PLAYER 1 USES JOYSTICK PORT 2",
-      "banner_caption_en": "Screen one of the new intro. The logo font is from X-Rated intro #7, the script under it from Double Dragon II; the fighters are our own game's sprites, turned into chars.",
-      "banner_caption_he": "המסך הראשון של ה־intro החדש. פונט הלוגו מה־intro מספר 7 של X-Rated, כתב היד מתחתיו מ־Double Dragon II; הלוחמים הם הספרייטים של המשחק שלנו, שהפכו לתווים."
+      "banner_caption_en": "The first screen of the new intro. The handwriting under it comes from Double Dragon II; the fighters are our own game's sprites, turned into characters.",
+      "banner_caption_he": "המסך הראשון של ה־intro החדש. , כתב היד מתחתיו מ־Double Dragon II; הלוחמים הם הספרייטים של המשחק שלנו, שהפכו לתווים.",
+      "en_source_hash": "52f835a867f28cc3"
     }
   ],
   "index_en_source_hash": "c2324c62c4e4a8f0"
