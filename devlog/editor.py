@@ -1249,6 +1249,18 @@ class Handler(SimpleHTTPRequestHandler):
         return self._json({"ok": False, "error": "נקודת קצה לא מוכרת."}, 404)
 
 
+class SingleEditorServer(ThreadingHTTPServer):
+    """Refuses to share its port. Python's HTTPServer sets SO_REUSEADDR, and on Windows that lets a
+    second process bind the same port silently; SO_EXCLUSIVEADDRUSE makes the second bind fail."""
+    allow_reuse_address = False
+
+    def server_bind(self):
+        import socket
+        if hasattr(socket, "SO_EXCLUSIVEADDRUSE"):
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_EXCLUSIVEADDRUSE, 1)
+        super().server_bind()
+
+
 def main():
     ap = argparse.ArgumentParser(description="Local editor for the Fist II Remaster devlog.")
     ap.add_argument("--port", type=int, default=5120)
@@ -1256,12 +1268,15 @@ def main():
     args = ap.parse_args()
     global PORT
     PORT = args.port
-    try:
-        httpd = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
-    except OSError:
-        print(f"Port {args.port} is busy. Is the editor already running? Try --port {args.port + 1}.")
-        sys.exit(1)
     url = f"http://127.0.0.1:{args.port}/"
+    try:
+        httpd = SingleEditorServer(("127.0.0.1", args.port), Handler)
+    except OSError:
+        # Only one editor at a time: two on the same port answered requests at random (2026-10-16/17).
+        print(f"The devlog editor is already running on {url} - opening it instead of starting a second one.")
+        if not args.no_browser:
+            webbrowser.open(url)
+        sys.exit(0)
     print(f"Devlog editor on {url}  (Ctrl+C to stop)")
     if not args.no_browser:
         threading.Timer(0.6, lambda: webbrowser.open(url)).start()
