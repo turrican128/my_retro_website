@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Two screens and a tune – Devlog – 8bitretro.tech</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
+  <link rel="manifest" href="../assets/favicon/site.webmanifest">
+  <meta name="theme-color" content="#0b0014">
+  <meta name="description" content="A new intro in the spirit of Double Dragon II: a logo and two fighters, then the credits, swapping while the music keeps playing.">
+  <!-- Open Graph / Facebook / WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="8bitretro.tech">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="he_IL">
+  <meta property="og:url" content="https://8bitretro.tech/en/devlog-two-screens-and-a-tune.html">
+  <meta property="og:title" content="Two screens and a tune – Devlog | 8bitretro.tech">
+  <meta property="og:description" content="A new intro in the spirit of Double Dragon II: a logo and two fighters, then the credits, swapping while the music keeps playing.">
+  <meta property="og:image" content="https://8bitretro.tech/assets/images/og/projects.jpg">
+  <meta property="og:image:secure_url" content="https://8bitretro.tech/assets/images/og/projects.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Fist II Remaster devlog">
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Two screens and a tune – Devlog | 8bitretro.tech">
+  <meta name="twitter:description" content="A new intro in the spirit of Double Dragon II: a logo and two fighters, then the credits, swapping while the music keeps playing.">
+  <meta name="twitter:image" content="https://8bitretro.tech/assets/images/og/projects.jpg">
+  <link rel="alternate" hreflang="en" href="https://8bitretro.tech/en/devlog-two-screens-and-a-tune.html">
+  <link rel="alternate" hreflang="he" href="https://8bitretro.tech/devlog-two-screens-and-a-tune.html">
+
+  <!-- Tailwind CDN (site already uses this) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Retro pixel font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <style>
+    @keyframes neonGradient {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .bg-animated {
+      background-size: 320% 320%;
+      animation: neonGradient 22s ease-in-out infinite;
+    }
+
+    .scanline-overlay::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.35),
+        rgba(0, 0, 0, 0.35) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      mix-blend-mode: soft-light;
+      opacity: 0.45;
+      z-index: 0;
+    }
+
+    /* small helper for neon buttons */
+    .neon-btn {
+      background: linear-gradient(90deg, rgba(0,255,243,0.06), rgba(255,45,210,0.04));
+      border: 1px solid rgba(0,255,243,0.12);
+      box-shadow: 0 0 18px rgba(0,255,243,0.06);
+    }
+    .neon-btn:hover {
+      box-shadow: 0 0 26px rgba(255,45,210,0.12);
+      border-color: rgba(255,45,210,0.14);
+    }
+
+    .crt-frame {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .crt-frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.28),
+        rgba(0,0,0,0.28) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      mix-blend-mode: soft-light;
+      opacity: 0.35;
+      z-index: 2;
+    }
+
+    .crt-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at center,
+        rgba(0,255,243,0.08),
+        transparent 60%
+      );
+      z-index: 1;
+    }
+
+    .pixelated { image-rendering: pixelated; }
+  </style>
+
+  <script src="../assets/js/global-player.js" defer></script>
+  <script src="../assets/js/social-strip.js" defer></script>
+</head>
+<body class="min-h-screen text-sky-100 antialiased bg-animated bg-gradient-to-b from-purple-900 via-pink-700 to-black scanline-overlay text-left">
+  <!-- Neon top navigation -->
+  <header class="fixed inset-x-0 top-4 z-30 flex items-center justify-center">
+    <nav class="w-[min(1100px,96%)] flex flex-wrap items-center justify-between gap-y-2 px-4 py-3 rounded-xl bg-black/40 backdrop-blur border border-white/10 shadow-[0_12px_50px_rgba(0,0,0,0.7)]">
+      <!-- NAV LINKS FIRST (renders on the left in LTR with justify-between) -->
+      <ul class="flex items-center gap-2 text-xs">
+        <li>
+          <a href="index.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            Home
+          </a>
+        </li>
+        <li>
+          <a href="about.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            About
+          </a>
+        </li>
+        <li>
+          <a href="projects.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            Projects
+          </a>
+        </li>
+        <li>
+          <a href="releases.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            Releases
+          </a>
+        </li>
+        <li>
+          <a href="tools.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            Tools
+          </a>
+        </li>
+        <li>
+          <a href="kleiner82.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            Kleiner&#39;82
+          </a>
+        </li>
+        <li>
+          <a href="contacts.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            Contact
+          </a>
+        </li>
+        <li>
+          <a href="../devlog-two-screens-and-a-tune.html" title="עברית" aria-label="Switch to Hebrew" class="shrink-0 px-2 py-1 rounded-md hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-110 inline-flex items-center">
+            <svg width="22" height="16" viewBox="0 0 33 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="image-rendering: pixelated; filter: drop-shadow(0 0 4px rgba(0,255,243,0.45));">
+              <rect width="33" height="24" fill="#fff"/>
+              <rect y="4" width="33" height="2.5" fill="#0038b8"/>
+              <rect y="17.5" width="33" height="2.5" fill="#0038b8"/>
+              <polygon points="16.5,8 20.4,14.5 12.6,14.5" fill="none" stroke="#0038b8" stroke-width="1.1"/>
+              <polygon points="16.5,16 12.6,9.5 20.4,9.5" fill="none" stroke="#0038b8" stroke-width="1.1"/>
+            </svg>
+          </a>
+        </li>
+      </ul>
+
+      <!-- LOGO BLOCK SECOND (renders on the right in LTR with justify-between) -->
+      <a href="https://8bitretro.tech" class="flex shrink-0 items-center gap-4 no-underline cursor-pointer">
+        <div class="w-16 h-12 flex items-center justify-center rounded-md bg-gradient-to-r from-pink-500/40 to-cyan-400/20 border border-white/30 shadow-[0_0_25px_rgba(255,45,210,0.6)]">
+          <span class="[font-family:'Press Start 2P',monospace] text-pink-300 text-xs uppercase tracking-[0.2em]">
+            RETRO
+          </span>
+        </div>
+        <div class="[font-family:'Press Start 2P',monospace] text-cyan-100 text-sm">
+          8bitretro.tech
+        </div>
+      </a>
+    </nav>
+  </header>
+
+  <main class="min-h-screen flex flex-col items-center pt-36 md:pt-28 pb-16">
+    <div class="pointer-events-none absolute -z-10 inset-0 flex justify-center">
+      <div class="w-[30rem] h-[30rem] rounded-full bg-pink-500/20 blur-[120px] translate-y-10"></div>
+    </div>
+
+    <div id="read-progress" aria-hidden="true" style="position:fixed;top:0;left:0;height:3px;width:0;z-index:60;background:linear-gradient(90deg,#00fff3,#ff2dd2);box-shadow:0 0 10px #ff2dd2"></div>
+    <script>
+      (function () {
+        var bar = document.getElementById('read-progress');
+        function upd() {
+          var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
+          bar.style.width = (max > 0 ? Math.min(100, h.scrollTop / max * 100) : 0) + '%';
+        }
+        window.addEventListener('scroll', upd, { passive: true }); upd();
+      })();
+    </script>
+    <section class="w-[min(860px,94%)]">
+      <a href="devlog.html" class="inline-block mb-4 text-xs text-cyan-300 hover:text-pink-300 transition">&larr; Devlog</a>
+
+      <article class="rounded-2xl p-6 md:p-8 bg-black/60 border border-cyan-400/20 shadow-[0_20px_60px_rgba(0,0,0,0.9)] backdrop-blur">
+        <p dir="ltr" class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300/90">DEVLOG #8 &middot; FIST II REMASTER</p>
+        <h1 class="mt-4 [font-family:'Press Start 2P',monospace] text-xl md:text-2xl text-cyan-200 leading-relaxed">Two screens and a tune</h1>
+        <p class="mt-2 text-xs text-cyan-200/60"><time datetime="2026-10-17T22:55:00+03:00">17 October 2026 &middot; 22:55</time> &middot; 2 min read</p>
+
+        <figure class="mt-8">
+          <div class="bg-black/70 rounded-xl border border-cyan-300/30 shadow-[0_0_22px_rgba(0,255,243,0.18)] crt-frame p-2">
+            <img src="../assets/images/devlog/fist2-intro-screen1.png" alt="The first screen of the intro: FIST III in blue and light blue, The Revenge in red handwriting below it, two fighters, and PLAYER 1 USES JOYSTICK PORT 2"
+                 class="w-full h-auto rounded-lg pixelated" loading="eager" />
+          </div>
+          <figcaption class="mt-2 text-xs text-cyan-200/60 leading-relaxed">The first screen of the new intro. The handwriting under it comes from Double Dragon II; the fighters are our own game's sprites, turned into characters.</figcaption>
+        </figure>
+
+    <style>
+      .devlog-body > p:not([class]), .devlog-body > ul:not([class]), .devlog-body > ol:not([class]),
+      .devlog-body > blockquote:not([class]), .devlog-body > h3:not([class]) {
+        margin-top: 1.25rem; font-size: 15px; line-height: 1.85; color: rgb(224 242 254 / .9);
+      }
+      @media (min-width: 768px) {
+        .devlog-body > p:not([class]), .devlog-body > ul:not([class]), .devlog-body > ol:not([class]),
+        .devlog-body > blockquote:not([class]) { font-size: 17px; }
+      }
+      .devlog-body > h2 { margin-top: 2rem; }
+      .devlog-body > h3:not([class]) { color: rgb(207 250 254); font-size: 1.125rem; margin-top: 1.75rem; }
+      .devlog-body ul:not([class]) { list-style: disc; padding-inline-start: 1.25rem; }
+      .devlog-body ol:not([class]) { list-style: decimal; padding-inline-start: 1.5rem; }
+      .devlog-body ul:not([class]) > li + li, .devlog-body ol:not([class]) > li + li { margin-top: .5rem; }
+      .devlog-body blockquote:not([class]) { border-inline-start: 3px solid rgb(244 114 182 / .6); padding-inline-start: 1rem; font-style: italic; }
+      .devlog-body a:not([class]) { color: rgb(103 232 249); text-decoration: underline; text-underline-offset: 3px; }
+      .devlog-body a:not([class]):hover { color: rgb(249 168 212); }
+      .devlog-body > p code:not([class]), .devlog-body > ul code:not([class]), .devlog-body > ol code:not([class]) { color: rgb(103 232 249); }
+      .devlog-body strong { color: #fff; }
+    </style>
+        <div class="devlog-body">
+<p class="mt-6 text-base text-sky-100/95 leading-relaxed">The first title screen wasn't to my taste, so we started over from a screen I love: Double Dragon II!! Yeah... Two screens that swap, a logo and then the credits, and the music never stops for a moment.</p>
+<div class="mt-8 space-y-4 text-[15px] md:text-[17px] text-sky-100/90 leading-[1.85]">
+<h2 class="flex items-center gap-3 text-xl md:text-2xl text-cyan-100 pt-4"><svg class="shrink-0 text-pink-300" width="18" height="18" viewBox="0 0 8 8" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true" style="filter:drop-shadow(0 0 4px rgba(255,45,210,.55))"><rect x="3" y="0" width="1" height="1"/><rect x="3" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/><rect x="4" y="5" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="0" y="6" width="1" height="1"/><rect x="1" y="6" width="1" height="1"/><rect x="5" y="6" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/></svg>First screen</h2>
+<p>FIST III, in the 4x4 font: each letter is four characters wide and four tall, and the letters share characters, so the whole logo costs very little. I picked the colours from six palettes drawn exactly the way the C64 displays them.</p>
+<p>I went with an "ice" style: blue and light blue, with highlights in white and Cyan.</p>
+<p>Under the logo, The Revenge in red handwriting, a nod to the title screen of Double Dragon II on the C64 (remember that?), where the lettering is taken from pixel for pixel. Its four character rows are hires, not multicolour, so the thin pixel lines of the handwriting stay sharp. The whole logo moved up one row to make room for it, and the fighters didn't move.</p>
+<p>Below the logo, two fighters. These are our game's sprites, turned into characters by a small tool, so the picture is exactly the fighters you play with. And at the bottom, PLAYER 1 USES JOYSTICK PORT 2, with the joystick words glowing and fading along the C64's brightness steps, one step every 3 frames.</p>
+</div>
+<figure class="mt-6">
+<div class="bg-black/70 rounded-xl border border-cyan-300/30 crt-frame p-2"><img src="../assets/images/devlog/fist2-intro-credits.png" alt="The second screen of the intro: the credits, each line in its own colour" class="w-full h-auto rounded-lg pixelated" loading="lazy"></div>
+<figcaption class="mt-2 text-xs text-cyan-200/60">The second screen, the credits. Still placeholder lines: the real ones come when the game is finished.</figcaption>
+</figure>
+<div class="mt-8 space-y-4 text-[15px] md:text-[17px] text-sky-100/90 leading-[1.85]">
+<h2 class="flex items-center gap-3 text-xl md:text-2xl text-cyan-100 pt-4"><svg class="shrink-0 text-pink-300" width="18" height="18" viewBox="0 0 8 8" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true" style="filter:drop-shadow(0 0 4px rgba(255,45,210,.55))"><rect x="0" y="0" width="1" height="1"/><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="7" y="0" width="1" height="1"/><rect x="0" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="7" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="0" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="7" y="5" width="1" height="1"/><rect x="0" y="6" width="1" height="1"/><rect x="1" y="6" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="3" y="6" width="1" height="1"/><rect x="4" y="6" width="1" height="1"/><rect x="5" y="6" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="7" y="6" width="1" height="1"/></svg>Two screens, one map</h2>
+<p>Both screens sit in one map, 80 columns wide. The second screen starts at column 40, so switching is just a 40-column jump, with our fade in between. Nothing gets loaded, so the music doesn't stutter. The first screen stays up for about 10 seconds, the credits for 6. Pressing fire starts the game at any moment.</p>
+<h2 class="flex items-center gap-3 text-xl md:text-2xl text-cyan-100 pt-4"><svg class="shrink-0 text-pink-300" width="18" height="18" viewBox="0 0 8 8" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true" style="filter:drop-shadow(0 0 4px rgba(255,45,210,.55))"><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/><rect x="4" y="5" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/></svg>A tune for now</h2>
+<p>Until we have music of our own, the intro plays Hi-t. Soul by the musician Link, from 1990. It was moved to the game's music address, $F400, with our relocation tool, which plays the original and the copy side by side and compares every SID write: 6000 frames, not one different.</p>
+</div>
+<div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="rounded-xl p-4 bg-black/50 border border-pink-400/30">
+<p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300">CHARS</p>
+<p dir="ltr" class="text-right mt-3 text-2xl text-pink-200">155 / 216</p>
+<p class="mt-1 text-xs text-sky-100/75 leading-relaxed">The logo, the handwriting, the fighters and the text font together</p>
+</div>
+<div class="rounded-xl p-4 bg-black/50 border border-cyan-400/30">
+<p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-cyan-300">SID WRITES</p>
+<p dir="ltr" class="text-right mt-3 text-2xl text-cyan-200">0</p>
+<p class="mt-1 text-xs text-sky-100/75 leading-relaxed">Writes that differ between the relocated tune and the original, over 6000 frames</p>
+</div>
+</div>
+<div class="mt-8 space-y-4 text-[15px] md:text-[17px] text-sky-100/90 leading-[1.85]">
+<h2 class="flex items-center gap-3 text-xl md:text-2xl text-cyan-100 pt-4"><svg class="shrink-0 text-pink-300" width="18" height="18" viewBox="0 0 8 8" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true" style="filter:drop-shadow(0 0 4px rgba(255,45,210,.55))"><rect x="2" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="3" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="1" y="6" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="3" y="6" width="1" height="1"/><rect x="4" y="6" width="1" height="1"/><rect x="5" y="6" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="2" y="7" width="1" height="1"/><rect x="4" y="7" width="1" height="1"/><rect x="6" y="7" width="1" height="1"/></svg>Behind the scenes</h2>
+<p>And when I opened the Title screen in CharPad, everything was in one colour. One wrong number in the file: the character colour was 1, meaning hires. Multicolour needs 8 to 15. Now it's 9.</p>
+<h2 class="flex items-center gap-3 text-xl md:text-2xl text-cyan-100 pt-4"><svg class="shrink-0 text-pink-300" width="18" height="18" viewBox="0 0 8 8" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true" style="filter:drop-shadow(0 0 4px rgba(255,45,210,.55))"><rect x="0" y="0" width="1" height="1"/><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="0" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="7" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="0" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="7" y="5" width="1" height="1"/><rect x="0" y="6" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="3" y="6" width="1" height="1"/><rect x="4" y="6" width="1" height="1"/><rect x="7" y="6" width="1" height="1"/><rect x="0" y="7" width="1" height="1"/><rect x="1" y="7" width="1" height="1"/><rect x="2" y="7" width="1" height="1"/><rect x="3" y="7" width="1" height="1"/><rect x="4" y="7" width="1" height="1"/><rect x="5" y="7" width="1" height="1"/><rect x="6" y="7" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/></svg>What's next</h2>
+<p>The real credits, when the game is finished. And music of our own instead of the placeholder tune!!</p>
+</div>
+        </div>
+
+        <div class="mt-10 pt-6 border-t border-white/10 flex flex-wrap gap-3 justify-between">
+          <a href="devlog-a-game-around-the-levels.html" class="text-xs px-3 py-2 rounded-lg neon-btn text-cyan-300 hover:text-pink-300 transition">&larr; Previous: A game around the levels</a>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <div class="pointer-events-none fixed inset-x-0 bottom-0 h-36 opacity-70">
+    <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="g1" x1="0" x2="1">
+          <stop offset="0" stop-color="#ff2dd2" stop-opacity="0.15"/>
+          <stop offset="1" stop-color="#00fff3" stop-opacity="0.15"/>
+        </linearGradient>
+      </defs>
+      <rect width="1440" height="120" fill="url(#g1)" />
+      <g stroke="#00fff3" stroke-opacity="0.25" stroke-width="1">
+        <path d="M0 90 C200 60 400 52 720 52 C1040 52 1240 60 1440 90" fill="none"/>
+      </g>
+    </svg>
+  </div>
+</body>
+</html>
