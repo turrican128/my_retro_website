@@ -146,18 +146,18 @@
     {
       "slug": "the-kicks-come-back",
       "when": "2026-10-18T01:00:00+03:00",
-      "draft": true,
       "kicker": "FIST II REMASTER",
       "kicker_short": "Fist II Remaster",
-      "title_en": "The kicks come back",
+      "title_en": "The kicks are back",
       "title_he": "הבעיטות חוזרות",
-      "teaser_en": "A room with no enemies to test the moves, a move map for a one-button joystick, and the original's low and high kicks back: eight attacks again.",
+      "teaser_en": "A room with no enemies for testing moves, a move map for a one-button joystick, and the original's low and high kicks are back: eight attacks again.",
       "teaser_he": "חדר בלי אויבים לבדיקת המהלכים, מפת מהלכים לג'ויסטיק עם כפתור אחד, והבעיטות הנמוכות והגבוהות של המקורי חוזרות: שוב שמונה מכות.",
       "banner": "fist2-high-kick.png",
-      "banner_alt_en": "The player throwing a high kick in the moves room, alone in the room",
+      "banner_alt_en": "The player doing a high kick in the moves room, alone in the room",
       "banner_alt_he": "השחקן בועט בעיטה גבוהה בחדר המהלכים, לבד בחדר",
       "banner_caption_en": "The high kick is back: forward and up with fire.",
-      "banner_caption_he": "הבעיטה הגבוהה חזרה: קדימה ולמעלה עם fire."
+      "banner_caption_he": "הבעיטה הגבוהה חזרה: קדימה ולמעלה עם לחיצה על fire.",
+      "en_source_hash": "649a30a2f64b848e"
     }
   ],
   "index_en_source_hash": "c2324c62c4e4a8f0"
