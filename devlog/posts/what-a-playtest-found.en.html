@@ -1,0 +1,39 @@
+<p class="mt-6 text-base text-sky-100/95 leading-relaxed">I sat down to play a test level just to hunt for bugs, and came out with five notes. Four became fixes the same evening, and one is still being hunted.</p>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:star}Numbers you can read</h2>
+<p>The numbers on the HUD were almost unreadable: the score, the LEVEL and the CONTINUE countdown. They were still the original Fist II's thin, slanted digits, next to the bold letters we had already swapped in. Now the digits are bold too, in the same style as the letters.</p>
+<p>And one small thing from the same spot: LEVEL 1 sat right under the score, and with a score of 0 it read "LEVEL 0 1". It moved to the middle of the row, next to where GAME OVER goes.</p>
+<h2 class="text-lg text-cyan-100 pt-2">{icon:chip}A high kick, no jump</h2>
+<p>The jump kick clashed with the high kick for me, and it wasn't clear what came out when. So we took it off the stick: up with fire is now the high kick, like forward and up. Seven attacks, and simpler. The enemies still jump; only the player doesn't.</p>
+</div>
+<figure class="mt-6">
+<div class="bg-black/70 rounded-xl border border-cyan-300/30 crt-frame p-2">
+<img src="{IMG}fist2-two-enemies-press.png" alt="Two enemies pressing the player from both sides" class="w-full h-auto rounded-lg pixelated" loading="lazy" />
+</div>
+<figcaption class="mt-2 text-xs text-cyan-200/60">Two enemies, from both sides, at the same moment.</figcaption>
+</figure>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:map}Two enemies, not one plus one</h2>
+<p>With two enemies on screen, I felt only one of them was really fighting. We measured it, and both do attack, but each one alone: Fist II's AI was written for a one-on-one fight. Each enemy stands and waits a long time before a blow, unaware there is another, and half the time the second one simply waited behind the first, on the same side.</p>
+<p>We cut the waits in half. Now both press harder, and more of them come at you from both sides.</p>
+</div>
+<div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="rounded-xl p-4 bg-black/50 border border-pink-400/30">
+<p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300">BOTH ATTACKING</p>
+<p class="mt-3 text-2xl text-pink-200">237 → 372</p>
+<p class="mt-1 text-xs text-sky-100/75 leading-relaxed">frames with both enemies attacking together, of 1500</p>
+</div>
+<div class="rounded-xl p-4 bg-black/50 border border-cyan-400/30">
+<p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-cyan-300">BOTH SIDES</p>
+<p class="mt-3 text-2xl text-cyan-200">840 → 1231</p>
+<p class="mt-1 text-xs text-sky-100/75 leading-relaxed">frames with the enemies on both sides of you, of 1500</p>
+</div>
+</div>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:note}A shake before GAME OVER</h2>
+<p>I wanted the end to feel like a blow, so before GAME OVER the street shakes sideways for a second and settles. At first it came with red flashes too, arcade style. I tried it, it wasn't to my taste, and an hour later the flashes were out. The shake stayed.</p>
+<h2 class="text-lg text-cyan-100 pt-2">{icon:chip}Behind the scenes</h2>
+<p>The fifth note was a glitch when the player turns around. We filmed every frame of the turn and of the back kick, and it's all clean, so it probably only happens in a fight, with more fighters on screen. Still hunting. Alongside, a page for the artist was added: what a level is for us, CharPad's limits, and where the street goes on the screen.</p>
+<h2 class="text-lg text-cyan-100 pt-2">{icon:page}Next</h2>
+<p>Finding the turn glitch, and maybe teaching the second enemy to walk round and hit you from behind, like in Double Dragon.</p>
+</div>
