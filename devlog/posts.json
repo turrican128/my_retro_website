@@ -176,6 +176,22 @@
       "banner_caption_en": "The top BAR after the fix: thick digits, and LEVEL 1 no longer jammed against the score.",
       "banner_caption_he": "ה־BAR העליון אחרי התיקון: ספרות עבות, וה־LEVEL 1 כבר לא צמוד לניקוד.",
       "en_source_hash": "9b894273c1043b48"
+    },
+    {
+      "slug": "a-hit-you-can-feel",
+      "when": "2026-10-24T19:00:00+03:00",
+      "kicker": "FIST II REMASTER",
+      "kicker_short": "Fist II Remaster",
+      "title_en": "A hit you can feel",
+      "title_he": "מכה שמרגישים",
+      "teaser_en": "Six changes to the fight and the game around it: a second to get up, recoiling from a hit, a little stop on every blow, falling the right way, three lives, and a game that plays itself.",
+      "teaser_he": "שישה שינויים בקרב ובמשחק שמסביב: שנייה לקום, נרתעים מהמכה, עצירה קטנה על כל פגיעה, נופלים לכיוון הנכון, שלושה חיים, ומשחק שמשחק את עצמו.",
+      "banner": "fist2-attract-press-fire.png",
+      "banner_alt_en": "The game playing itself in level 1, PRESS FIRE in the HUD and the lives count next to the score",
+      "banner_alt_he": "המשחק משחק את עצמו בשלב 1, PRESS FIRE ב־HUD ומספר החיים ליד הניקוד",
+      "banner_caption_en": "Leave the title alone for 15 seconds and the game plays itself.",
+      "banner_caption_he": "משאירים את מסך הפתיחה 15 שניות, והמשחק משחק את עצמו.",
+      "draft": true
     }
   ],
   "index_en_source_hash": "c2324c62c4e4a8f0"

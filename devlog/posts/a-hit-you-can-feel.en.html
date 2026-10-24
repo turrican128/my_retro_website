@@ -1,0 +1,39 @@
+<p class="mt-6 text-base text-sky-100/95 leading-relaxed">After the last test evening we sat down with the list of what was still missing for the fight to feel like an arcade game, and I picked six things: four about the hit itself, and two about the game around it. Six PRs, and they're all in the game now.</p>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:star}A second to get up</h2>
+<p>Until now, whoever got knocked down and stood up took a hit the very moment he was back on his feet. Two enemies could keep you on the floor round after round. Now, after you get up, there's about a second (0.9, to be exact) where nobody can hit you. You can already move and hit back. And it works both ways: an enemy who gets up gets that second too.</p>
+</div>
+<div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="rounded-xl p-4 bg-black/50 border border-pink-400/30">
+<p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300">HIT ON GET-UP</p>
+<p dir="ltr" class="text-right mt-3 text-2xl text-pink-200">14 → 0</p>
+<p class="mt-1 text-xs text-sky-100/75 leading-relaxed">Hits that landed less than a second after you stood up, in 4000 frames</p>
+</div>
+<div class="rounded-xl p-4 bg-black/50 border border-cyan-400/30">
+<p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-cyan-300">NO REACTION</p>
+<p dir="ltr" class="text-right mt-3 text-2xl text-cyan-200">29 → 0</p>
+<p class="mt-1 text-xs text-sky-100/75 leading-relaxed">Hits the fighter who took them didn't react to at all, in 4000 frames</p>
+</div>
+</div>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:fist}Recoiling from the hit</h2>
+<p>In the original Fist II, a hit that doesn't knock you down only takes energy. The fighter doesn't react at all, as if nothing happened. Now he recoils: he leans back for a third of a second, gets pushed a little away from whoever hit him, and the move he was in the middle of is cut. You can keep hitting him meanwhile, so the three-hit combo still knocks down. The boss doesn't recoil. He's the boss.</p>
+</div>
+<figure class="mt-6">
+<div class="bg-black/70 rounded-xl border border-cyan-300/30 crt-frame p-2"><img src="{IMG}fist2-flinch.png" alt="The player lands a low kick and the enemy behind recoils backwards" class="w-full h-auto rounded-lg pixelated" loading="lazy"></div>
+<figcaption class="mt-2 text-xs text-cyan-200/60">A low kick lands, and the enemy behind recoils. Next to the score: a little head and 3.</figcaption>
+</figure>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:clock}A little stop on every hit</h2>
+<p>An old arcade trick: when a hit lands, the whole fight freezes for 80 milliseconds. Four frames. The music keeps going, only the fighters hold their pose. Too short to notice it happened, long enough to feel the hit.</p>
+<h2 class="text-lg text-cyan-100 pt-2">{icon:map}Falling the right way</h2>
+<p>A combo that ended from behind used to throw its victim towards the one who hit him, of all directions. Now, the moment someone goes down, he first turns to whoever floored him and then flies backwards, away from him, and gets up facing him. That's how it is in Double Dragon, and now it's how it is here too. In the test: 13 knock-downs, four of them from a hit from behind, and every one went away from the attacker.</p>
+<h2 class="text-lg text-cyan-100 pt-2">{icon:joystick}Three lives, and a game that plays itself</h2>
+<p>Until today you had one life. Now you have three, with a little head and a number next to the score. When your energy runs out in the middle of a fight, you don't go back to the start of the level: your energy refills, you fall, get up, and the fight goes on from the same spot. The third life is GAME OVER, and CONTINUE gives you three again.</p>
+<p>And if you leave the title screen alone for 15 seconds, the game starts playing itself: 40 seconds of level 1 with PRESS FIRE blinking, like an arcade machine waiting for a coin. Pressing fire takes you back to the title, and the HI-SCORE doesn't change.</p>
+<h2 class="text-lg text-cyan-100 pt-2">{icon:chip}Behind the scenes</h2>
+<p>Each of the six got its own switch and a live test in VICE. The fight tests also have a control version that turns the change off, to make sure the test can really fail. And something we found on the way, while building the demo's automatic player: the enemies block every punch and every kick from a player who stands still. Only a low kick from up close gets through, about one in five. Worth checking at the next play evening.</p>
+<p>And the memory is almost full. In the gap where all the new code lives, 83 bytes are left.</p>
+<h2 class="text-lg text-cyan-100 pt-2">{icon:page}What's next</h2>
+<p>Making room: there's still a lot of Fist II code in the game that our levels don't use (temples, scrolls, rivers). And waiting for the new graphics and music. And the turn glitch from the last episode? Still being tracked down...</p>
+</div>
