@@ -184,14 +184,14 @@
       "kicker_short": "Fist II Remaster",
       "title_en": "A hit you can feel",
       "title_he": "מכה שמרגישים",
-      "teaser_en": "Six changes to the fight and the game around it: a second to get up, recoiling from a hit, a little stop on every blow, falling the right way, three lives, and a game that plays itself.",
+      "teaser_en": "Six changes to the fighting and the game around it: a second to get up, flinching from a hit, a short pause on every hit, falling the right way, three lives, and a game that plays itself.",
       "teaser_he": "שישה שינויים בקרב ובמשחק שמסביב: שנייה לקום, נרתעים מהמכה, עצירה קטנה על כל פגיעה, נופלים לכיוון הנכון, שלושה חיים, ומשחק שמשחק את עצמו.",
       "banner": "fist2-attract-press-fire.png",
-      "banner_alt_en": "The game playing itself in level 1, PRESS FIRE in the HUD and the lives count next to the score",
+      "banner_alt_en": "The game playing itself on level 1, PRESS FIRE in the HUD and the number of lives next to the score",
       "banner_alt_he": "המשחק משחק את עצמו בשלב 1, PRESS FIRE ב־HUD ומספר החיים ליד הניקוד",
-      "banner_caption_en": "Leave the title alone for 15 seconds and the game plays itself.",
+      "banner_caption_en": "Leave the title screen for 15 seconds and the game plays itself.",
       "banner_caption_he": "משאירים את מסך הפתיחה 15 שניות, והמשחק משחק את עצמו.",
-      "draft": true
+      "en_source_hash": "3e2649ee6c9945dd"
     }
   ],
   "index_en_source_hash": "c2324c62c4e4a8f0"
