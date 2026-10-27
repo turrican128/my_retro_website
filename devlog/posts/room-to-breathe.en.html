@@ -1,0 +1,30 @@
+<p class="mt-6 text-base text-sky-100/95 leading-relaxed">The last post ended with a problem: memory was almost gone. After the six fight changes, the whole game had 433 bytes left for code, and the part that checks the hits had one byte left. One. You can't add anything like that, so this time we didn't add. This time we made room.</p>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:map}The code that never runs</h2>
+<p>Fist II is really an adventure on foot: temples and scrolls, rivers to wade through, ladders, ledges and pits, gates to break, panthers, a figure that rises from the ground and throws a star, and a THE END screen. Here, a level is a street of up to four rooms, with doors and a level end. That's it.</p>
+<p>The trouble is that our game still carried that whole adventure inside it. Code that can never run, because the tool that builds the levels simply can't make a temple, a river or a ladder. So we switched it off, only in the level game. Every other build, including the original Fist II inside the project, comes out exactly the same, byte for byte.</p>
+</div>
+<div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="rounded-xl p-4 bg-black/50 border border-pink-400/30">
+<p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300">FREE CODE BYTES</p>
+<p dir="ltr" class="text-right mt-3 text-2xl text-pink-200">433 → 2802</p>
+<p class="mt-1 text-xs text-sky-100/75 leading-relaxed">Free room for new code in the level game, six and a half times as much</p>
+</div>
+<div class="rounded-xl p-4 bg-black/50 border border-cyan-400/30">
+<p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-cyan-300">PACKED .PRG</p>
+<p dir="ltr" class="text-right mt-3 text-2xl text-cyan-200">32,096 → 30,552</p>
+<p class="mt-1 text-xs text-sky-100/75 leading-relaxed">The packed file in bytes: the game also got more than 1.5KB smaller</p>
+</div>
+</div>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:chip}Three stages, and a test after each one</h2>
+<p>We did it in three steps. First the world's objects: the temples, the scrolls, the panthers, the star and THE END. Then the adventure's moves: climbing, dropping, falling off a ledge, wading a river, meditating. And last the room exits we don't have: ledges, pits, ladders and rivers. The game-flow part went from 90 free bytes to 1358, and the hit check went from one byte to 24.</p>
+<p>The best test turned out to be the demo. The game that plays itself in front of the title screen is deterministic: same input, same game, exactly. After every stage it walked 931 pixels again, attacked 23 times and landed 8 hits, exactly as before. If anything in the behaviour had shifted, even by one frame, it would have shown there.</p>
+</div>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:chip}Behind the scenes</h2>
+<p>The demo now waits 90 seconds on the title screen before it starts, not 15. I wanted people to have time to see the title screen. And we built ourselves a small tool that shows all the project's PRs as an easy-to-read HTML page, to keep track of what went into each one.</p>
+<p>And something we found along the way: if a level ever sets its enemies to come in a wave or at random, a scroll icon would blink over the LEVEL n letters in the HUD. None of our levels do that today, but it's written down, and we'll deal with it before it happens.</p>
+<h2 class="text-lg text-cyan-100 pt-2">{icon:page}What's next</h2>
+<p>There's about 1.2KB more of this kind of code: gates, water, loading the cave and temple rooms. It's only dead because of what the level tool makes today, so first we'll teach the tool to refuse those things, and only then switch them off. Meanwhile, a brief for the musician: where the music sits in memory, how much room it has, and a small checker for the .sid file he sends, so we know right away whether it fits.</p>
+</div>
