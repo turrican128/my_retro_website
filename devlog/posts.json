@@ -18,7 +18,8 @@
     "fist2-high-kick.png": "VICE capture of the moves room (fist2-remake run moves), 2026-10-18",
     "fist2-low-kick.png": "VICE capture of the moves room (fist2-remake run moves), 2026-10-18",
     "fist2-hud-bold-digits.png": "VICE capture of the level game (fist2-remake main 3f9acb1), 2026-10-20",
-    "fist2-two-enemies-press.png": "VICE capture of the level game (fist2-remake main 3f9acb1), 2026-10-20"
+    "fist2-two-enemies-press.png": "VICE capture of the level game (fist2-remake main 3f9acb1), 2026-10-20",
+    "fist2-room-to-breathe.png": "VICE capture of the level game (fist2-remake main 3b5acb0), 2026-10-27"
   },
   "posts": [
     {
@@ -192,6 +193,22 @@
       "banner_caption_en": "Leave the title screen for 15 seconds and the game plays itself.",
       "banner_caption_he": "משאירים את מסך הפתיחה 15 שניות, והמשחק משחק את עצמו.",
       "en_source_hash": "3e2649ee6c9945dd"
+    },
+    {
+      "slug": "room-to-breathe",
+      "when": "2026-10-27T12:00:00+02:00",
+      "kicker": "FIST II REMASTER",
+      "kicker_short": "Fist II Remaster",
+      "title_en": "Room to breathe",
+      "title_he": "מקום לנשום",
+      "teaser_en": "Memory was almost gone: one free byte in the hit check. We switched off the Fist II adventure code our levels can never run, and the game went from 433 free bytes to 2802.",
+      "teaser_he": "הזיכרון כמעט נגמר: בית פנוי אחד בבדיקת המכות. כיבינו את קוד ההרפתקה של Fist II שהשלבים שלנו לא יכולים להריץ, והמשחק עבר מ־433 בתים פנויים ל־2802.",
+      "banner": "fist2-room-to-breathe.png",
+      "banner_alt_en": "Level 1: the player between two enemies on the street, lives and LEVEL 1 in the HUD",
+      "banner_alt_he": "שלב 1: השחקן בין שני אויבים ברחוב, החיים ו־LEVEL 1 ב־HUD",
+      "banner_caption_en": "The same street and the same fight, with six and a half times the free memory.",
+      "banner_caption_he": "אותו רחוב ואותו קרב, עם פי שש וחצי זיכרון פנוי.",
+      "draft": true
     }
   ],
   "index_en_source_hash": "c2324c62c4e4a8f0"
