@@ -438,15 +438,42 @@ def split_intro(text):
     return m.groups() if m else ("", text, "")
 
 
+def support_of(data):
+    """The three support links, "" for each one not set ("support" may be absent from posts.json)."""
+    cur = data.get("support") or {}
+    return {key: cur.get(key) or "" for key, _, _ in build.SUPPORT}
+
+
+def clean_support(req):
+    """Checks the support links Alex typed: https only, on the service's own site. Raises a Hebrew UserError."""
+    if not isinstance(req, dict):
+        raise UserError("קישורי התמיכה לא תקינים.")
+    out = {}
+    for key, _, _ in build.SUPPORT:
+        url = req.get(key) or ""
+        if not isinstance(url, str):
+            raise UserError("קישורי התמיכה לא תקינים.")
+        url = url.strip()
+        if url:
+            err = build.support_url_error(key, url)
+            if err:
+                raise UserError(err)
+        out[key] = url
+    return out
+
+
 def api_get_intro():
     data = load_data()
     return {"he": split_intro(read_text(intro_path("he"))[0])[1],
             "description_he": data.get("index_description", {}).get("he", ""),
+            "support": support_of(data),
             "en_current": intro_en_current(data)}
 
 
 def api_save_intro(req):
-    """Saves the Hebrew index header (inner HTML of intro.he.html) and the Hebrew index description."""
+    """Saves the Hebrew index header (inner HTML of intro.he.html), the Hebrew index description and the
+    support links. The links aren't translated (the box text is fixed in build.py), so they're not hashed."""
+    support = clean_support(req["support"]) if req.get("support") is not None else None   # before any write
     with LOCK:
         data = load_data()
         before = intro_he_hash(data)
@@ -469,9 +496,15 @@ def api_save_intro(req):
         if "index_en_source_hash" not in data and was_current and intro_he_hash(data) != before:
             data["index_en_source_hash"] = before
             changed = True
+        if support is not None and support != support_of(data):
+            if any(support.values()):
+                data["support"] = support
+            else:                                   # all empty: no key at all, as before there were links
+                data.pop("support", None)
+            changed = True
         if changed:
             save_data(data)
-        return {"ok": True, "en_current": intro_en_current(data)}
+        return {"ok": True, "en_current": intro_en_current(data), "support": support_of(data)}
 
 
 def api_images():
@@ -597,6 +630,8 @@ def rebuild():
     """build.py, plus: a post switched back to draft must not leave its old pages behind."""
     try:
         n = build.build_all()
+    except build.SupportError as e:               # a support link in posts.json edited by hand
+        raise UserError(f"הבנייה נעצרה בגלל קישור תמיכה: {e}")
     except ValueError as e:                       # a download card whose file is missing or a ripped build
         raise UserError(f"הבנייה נעצרה בגלל כרטיס הורדה: {e}")
     for post in load_data()["posts"]:
@@ -668,8 +703,9 @@ def publish_plan(post, branch, prev):
     if post is None:
         title = "index header"
         body = ("Updated the devlog index header: `devlog/intro.he.html`, `devlog/intro.en.html` "
-                "(and the index description in `devlog/posts.json`).\n\n"
-                "- Pages: `docs/devlog.html`, `docs/en/devlog.html`\n\n"
+                "(and the index description and support links in `devlog/posts.json`).\n\n"
+                "- Pages: `docs/devlog.html`, `docs/en/devlog.html` (and every post page if the support links "
+                "changed: each post ends with the support line)\n\n"
                 "Published from the devlog editor.")
     else:
         title = post["title_en"] or post.get("title_he") or post["slug"]

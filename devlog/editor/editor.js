@@ -8,6 +8,7 @@ const TOKEN = document.querySelector('meta[name="editor-token"]')?.content || ''
 
 const TEXT_FIELDS = ['kicker', 'kicker_short', 'title_he', 'teaser_he', 'banner_alt_he', 'banner_caption_he'];
 const ACTION_IDS = ['previewEn', 'previewHe', 'publishBtn'];
+const SUPPORT_KEYS = ['kofi', 'buymeacoffee', 'paypal'];   // posts.json "support": shown on the site once one is set
 
 const state = {
   status: { has_key: false, icons: {} },
@@ -18,7 +19,7 @@ const state = {
   banner: '', thumb: '',
   raw: { he: '', intro: '' },      // HTML as stored (tokens, original formatting)
   baseline: { he: '', intro: '' }, // editor.getContent() right after loading/saving
-  intro: null,                 // { description_he }
+  intro: null,                 // { description_he, support: { kofi, buymeacoffee, paypal } }
   editors: {},
   loading: false,
   dirty: false,
@@ -177,6 +178,7 @@ function recomputeDirty() {
     d = d || state.editors.he.getContent() !== state.baseline.he;
   } else if (state.view === 'intro' && state.intro) {
     d = fieldValue('desc_he') !== state.intro.description_he || state.editors.intro.getContent() !== state.baseline.intro;
+    d = d || SUPPORT_KEYS.some((k) => fieldValue('sup_' + k).trim() !== state.intro.support[k]);
   }
   setDirty(d);
 }
@@ -271,11 +273,12 @@ async function openPost(slug, force = false) {
 async function openIntro(force = false) {
   if (!force && state.view !== 'intro' && !(await leaveOk())) return;
   const data = await api('/api/intro');
-  state.intro = { description_he: data.description_he };
+  state.intro = { description_he: data.description_he, support: data.support };
   state.raw.intro = data.he;
   state.slug = null; state.post = null;
   state.loading = true;
   $('f-desc_he').value = data.description_he;
+  SUPPORT_KEYS.forEach((k) => { $('f-sup_' + k).value = data.support[k]; });
   showView('intro');
   setBody('intro', data.he);
   state.loading = false;
@@ -324,11 +327,15 @@ async function save(quiet = false) {
   saving = (async () => {
     try {
       if (state.view === 'intro') {
-        const payload = { he: bodyForSave('intro').replace(/\n+$/, ''), description_he: fieldValue('desc_he') };
+        const support = {};
+        SUPPORT_KEYS.forEach((k) => { support[k] = fieldValue('sup_' + k).trim(); });
+        const payload = { he: bodyForSave('intro').replace(/\n+$/, ''), description_he: fieldValue('desc_he'), support };
         const res = await api('/api/intro', payload);
         state.raw.intro = payload.he;
         state.baseline.intro = state.editors.intro.getContent();
         state.intro.description_he = payload.description_he;
+        state.intro.support = res.support;
+        SUPPORT_KEYS.forEach((k) => { $('f-sup_' + k).value = res.support[k]; });
         showEnStatus('introEn', res.en_current);
       } else {
         const payload = collect();
@@ -905,7 +912,7 @@ async function refreshStatus() {
 async function main() {
   try { await refreshStatus(); } catch (e) { toast(e.message, 'err'); return; }
   await Promise.all(['he', 'intro'].map(initEditor));
-  TEXT_FIELDS.concat(['when', 'draft', 'desc_he']).forEach((f) => $('f-' + f).addEventListener('input', markDirty));
+  TEXT_FIELDS.concat(['when', 'draft', 'desc_he'], SUPPORT_KEYS.map((k) => 'sup_' + k)).forEach((f) => $('f-' + f).addEventListener('input', markDirty));
   $('f-draft').addEventListener('change', markDirty);
   $('saveBtn').addEventListener('click', () => save());
   $('previewHe').addEventListener('click', () => preview('he'));
