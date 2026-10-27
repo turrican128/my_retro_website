@@ -6,10 +6,12 @@ Run it after editing a post by hand; the devlog editor (devlog/editor.py) runs i
 
 Builds every post page (HE + EN), and both index pages, from the Tools page
 template of each language. Posts are listed newest first; each post links to
-its older and newer neighbour. {download:<file>|<version>} cards link betas from devlog/downloads/,
+its older and newer neighbour. Optional "support" links (Ko-fi, Buy Me a Coffee, PayPal.me) add a
+small support card to the index and a slim line at the end of every post; none set = no change at all.
+{download:<file>|<version>} cards link betas from devlog/downloads/,
 copied to docs/downloads/fist2/ only while a published post links them.
 """
-import re, json, pathlib, datetime, shutil
+import re, json, pathlib, datetime, shutil, urllib.parse
 
 HERE = pathlib.Path(__file__).resolve().parent          # devlog/
 SITE = HERE.parent / "docs"
@@ -188,6 +190,92 @@ def downloads_box(lang):
             '        <ul class="mt-4 space-y-3">\n' + "\n".join(rows) + "\n        </ul>\n      </div>\n")
 
 
+# ── Support the development: optional "support" in posts.json ────────────────
+# {"support": {"kofi": "", "buymeacoffee": "", "paypal": ""}}; absent or all empty = nothing is shown, and
+# the pages stay exactly as they were. Payments happen on those services; the site only links out.
+SUPPORT = (("kofi", "Ko-fi", "ko-fi.com"), ("buymeacoffee", "Buy Me a Coffee", "buymeacoffee.com"),
+           ("paypal", "PayPal.me", "paypal.me"))
+SUPPORT_PATH = re.compile(r"/[A-Za-z0-9][A-Za-z0-9._-]{0,63}/?")
+
+
+class SupportError(ValueError):
+    """A support link that isn't an https link to its own service. The message is Hebrew (shown in the editor)."""
+
+
+def support_url_error(key, url):
+    """None if `url` is a plausible https link to the service `key`, else a Hebrew error message."""
+    label, host = next((s[1], s[2]) for s in SUPPORT if s[0] == key)
+    example = f"https://{host}/<שם>"
+    bad = f"הקישור ל־{label} לא תקין. צריך להיות קישור https לדף שלכם ב־{host}, למשל {example}"
+    if not isinstance(url, str) or len(url) > 200 or any(c.isspace() or ord(c) < 32 for c in url):
+        return bad
+    try:
+        u = urllib.parse.urlsplit(url)
+        port = u.port
+    except ValueError:
+        return bad
+    if u.scheme != "https" or u.username or u.password or port is not None or u.query or u.fragment:
+        return bad
+    if (u.hostname or "") not in (host, "www." + host) or u.netloc.lower() != u.hostname:
+        return bad
+    if not SUPPORT_PATH.fullmatch(u.path):
+        return bad
+    return None
+
+
+def support_links():
+    """[(label, url)] of the configured services, in a fixed order; [] when none is set."""
+    data = DATA.get("support") or {}
+    links = []
+    for key, label, _ in SUPPORT:
+        url = (data.get(key) or "").strip()
+        if url:
+            err = support_url_error(key, url)
+            if err:
+                raise SupportError(err)
+            links.append((label, url))
+    return links
+
+
+def support_buttons(links, lang, small=False):
+    pad = "px-3 py-2 text-xs" if small else "px-4 py-2.5 text-sm"
+    name = (lambda s: f'<bdi dir="ltr">{s}</bdi>') if lang == "he" else (lambda s: s)
+    return "\n".join(f'<a href="{htmlesc(url)}" target="_blank" rel="noopener noreferrer" class="{pad} rounded-lg neon-btn '
+                     f'text-cyan-300 hover:text-pink-300 font-bold transition">{name(label)}</a>' for label, url in links)
+
+
+def support_card(lang):
+    """Index card under the header card. "" when no link is set."""
+    links = support_links()
+    if not links:
+        return ""
+    he = lang == "he"
+    title = "☕ תמכו בפיתוח" if he else "☕ Support the development"
+    title_cls = "text-lg font-bold" if he else "[font-family:'Press Start 2P',monospace] text-xs leading-relaxed"
+    text = ("המשחק חינמי ויישאר חינמי. אם בא לכם לעזור לי להמשיך לפתח אותו, אפשר לקנות לי קפה." if he else
+            "The game is free and will stay free. If you'd like to help me keep developing it, you can buy me a coffee.")
+    buttons = support_buttons(links, lang).replace("\n", "\n          ")
+    return (f'      <div class="{"text-right " if he else ""}rounded-2xl p-5 md:p-6 bg-black/60 border border-cyan-400/25 shadow-[0_0_26px_rgba(0,255,243,0.10)] mb-8">\n'
+            f'        <h2 class="{title_cls} text-pink-300">{title}</h2>\n'
+            f'        <p class="mt-3 text-sm text-sky-100/85 leading-relaxed">{text}</p>\n'
+            f'        <div class="mt-4 flex flex-wrap gap-3">\n          {buttons}\n        </div>\n'
+            '      </div>\n')
+
+
+def support_line(lang):
+    """One slim line at the end of a post, before the previous/next links. "" when no link is set."""
+    links = support_links()
+    if not links:
+        return ""
+    text = ("☕ המשחק חינמי. אם בא לכם לעזור לי להמשיך, אפשר לקנות לי קפה:" if lang == "he" else
+            "☕ The game is free. If you'd like to help me keep going, you can buy me a coffee:")
+    buttons = support_buttons(links, lang, small=True).replace("\n", "\n            ")
+    return ('        <div class="support-line mt-10 flex flex-wrap items-center gap-3 rounded-xl p-3 md:p-4 bg-black/40 border border-pink-400/20">\n'
+            f'          <p class="flex-1 min-w-[12rem] text-xs md:text-sm text-sky-100/80 leading-relaxed">{text}</p>\n'
+            f'          <div class="flex flex-wrap gap-2">\n            {buttons}\n          </div>\n'
+            '        </div>\n')
+
+
 # Bodies written in the editor can hold plain <p>, <ul>, <a>, <h2> with no Tailwind classes.
 # They sit directly in .devlog-body; this gives them the same reading style as the hand-made posts.
 BODY_CSS = """    <style>
@@ -309,6 +397,8 @@ def post_page(i, post, lang, write=True):
     body = (HERE / "posts" / f"{post['slug']}.{lang}.html").read_text(encoding="utf-8").replace("{IMG}", img("", lang))
     body = dress(render_downloads(body, post["when"], lang))
     mins = reading_minutes(body)
+    support = support_line(lang)                 # "" (and the page unchanged) when no support link is set
+    nav_gap = "mt-6" if support else "mt-10"
     meta = f"{stamp(post['when'], lang)} &middot; " + (f"{mins} דקות קריאה" if he and mins > 1 else "דקת קריאה" if he else f"{mins} min read")
     title_cls = "text-2xl md:text-3xl text-cyan-200 font-bold" if he else "[font-family:'Press Start 2P',monospace] text-xl md:text-2xl text-cyan-200 leading-relaxed"
     main_html = f'''    <div id="read-progress" aria-hidden="true" style="position:fixed;top:0;{'right' if he else 'left'}:0;height:3px;width:0;z-index:60;background:linear-gradient(90deg,#00fff3,#ff2dd2);box-shadow:0 0 10px #ff2dd2"></div>
@@ -330,8 +420,8 @@ def post_page(i, post, lang, write=True):
         <h1 class="mt-4 {title_cls}">{post['title_' + lang]}</h1>
         <p class="mt-2 text-xs text-cyan-200/60">{meta}</p>
 {banner(post, lang)}
-{BODY_CSS}{body}
-        <div class="mt-10 pt-6 border-t border-white/10 flex flex-wrap gap-3 justify-between">
+{BODY_CSS}{body}{support}
+        <div class="{nav_gap} pt-6 border-t border-white/10 flex flex-wrap gap-3 justify-between">
           {chr(10).join('          ' + l for l in nav_links).strip()}
         </div>
       </article>
@@ -361,7 +451,9 @@ def index_page(lang):
         </div>
       </a>''')
     box = downloads_box(lang)                  # nothing at all when no published post has a download
+    support = support_card(lang)               # nothing at all when no support link is set
     main_html = (f'    <section class="w-[min(860px,94%)]"{" dir=\"rtl\"" if he else ""}>\n' + intro +
+                 ("\n" + support if support else "") +
                  ("\n" + box if box else "") +
                  "\n      <!-- Generated by the devlog generator: posts newest first -->\n" + "\n\n".join(cards) + "\n    </section>\n")
     title = ("יומן פיתוח" if he else "Devlog") + " – 8bitretro.tech"

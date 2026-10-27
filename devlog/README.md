@@ -11,6 +11,7 @@
 7. **טיוטה מהמשחק**: Claude כותב טיוטה קצרה בעברית ממה שמוזג ב־repo של המשחק, רק מעובדות שכתובות שם.
 8. כשהפוסט מוכן: מכבים את **טיוטה**, שומרים ולוחצים **פרסום**. נפתח PR ב־GitHub, ושום דבר לא עולה לאוויר עד שממזגים אותו.
 9. **📦 הורדה**: מעלים קובץ <bdi dir="ltr">.prg</bdi> או <bdi dir="ltr">.d64</bdi> (עד 2 MB), כותבים גרסה (ברירת המחדל beta), ונכנס לפוסט כרטיס הורדה. הקובץ עולה לאתר רק כשהפוסט מתפרסם. גרסאות עם „tr”, „heli” או „preview” בשם נחסמות: יש בהן חומרים ממשחקים אחרים.
+10. **תמיכה בפיתוח** (בתוך **כותרת היומן**): קישורים ל־<bdi dir="ltr">Ko-fi</bdi>, <bdi dir="ltr">Buy Me a Coffee</bdi> ו־<bdi dir="ltr">PayPal.me</bdi>. כל עוד כל השדות ריקים לא מופיע כלום באתר. כשיש קישור, מופיע כרטיס „☕ תמכו בפיתוח” בדף היומן ושורה קטנה בסוף כל פוסט. שומרים ומפרסמים את כותרת היומן.
 
 </div>
 
@@ -80,6 +81,20 @@ what's inside the card is edited; the card's outer `<div>` with its classes is k
 view edits the page's Hebrew meta description (`index_description.he` in `posts.json`). Preview, the
 English preview and Publish work there as they do for a post; its English (`intro.en.html`,
 `index_description.en`) is translated the same way.
+
+## Support the development (Ko-fi, Buy Me a Coffee, PayPal.me)
+
+The **תמיכה בפיתוח** section of the same view holds three links, stored in `posts.json` as
+`"support": {"kofi": "", "buymeacoffee": "", "paypal": ""}` (absent = all empty). **Nothing shows on the
+site until at least one link is set**, and with none set the pages are byte for byte what they were.
+With a link, the devlog index gets a small "☕ תמכו בפיתוח" / "☕ Support the development" card under the
+header card, and every post ends with a slim line with the same buttons (one per service that has a
+link; they open the service in a new tab, payments happen there). The texts are fixed in `build.py`
+(`support_card`, `support_line`), so nothing is translated. Save refuses anything but an `https://` link
+to the service's own site with one name after it (`https://ko-fi.com/<name>`,
+`https://buymeacoffee.com/<name>`, `https://paypal.me/<name>`, `www.` allowed); `build.py` refuses a bad
+one typed into `posts.json` by hand. Publishing the header rebuilds and commits every devlog page. To take
+the buttons down, empty the three fields and publish.
 
 ## Images
 
