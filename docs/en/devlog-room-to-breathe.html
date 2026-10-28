@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Breathing room in memory – Devlog – 8bitretro.tech</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
+  <link rel="manifest" href="../assets/favicon/site.webmanifest">
+  <meta name="theme-color" content="#0b0014">
+  <meta name="description" content="Memory was almost gone: one free byte in the hit check. We switched off the Fist II adventure code our levels can't run, and the game went from 433 free bytes to 2802.">
+  <!-- Open Graph / Facebook / WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="8bitretro.tech">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="he_IL">
+  <meta property="og:url" content="https://8bitretro.tech/en/devlog-room-to-breathe.html">
+  <meta property="og:title" content="Breathing room in memory – Devlog | 8bitretro.tech">
+  <meta property="og:description" content="Memory was almost gone: one free byte in the hit check. We switched off the Fist II adventure code our levels can't run, and the game went from 433 free bytes to 2802.">
+  <meta property="og:image" content="https://8bitretro.tech/assets/images/og/projects.jpg">
+  <meta property="og:image:secure_url" content="https://8bitretro.tech/assets/images/og/projects.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Fist II Remaster devlog">
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Breathing room in memory – Devlog | 8bitretro.tech">
+  <meta name="twitter:description" content="Memory was almost gone: one free byte in the hit check. We switched off the Fist II adventure code our levels can't run, and the game went from 433 free bytes to 2802.">
+  <meta name="twitter:image" content="https://8bitretro.tech/assets/images/og/projects.jpg">
+  <link rel="alternate" hreflang="en" href="https://8bitretro.tech/en/devlog-room-to-breathe.html">
+  <link rel="alternate" hreflang="he" href="https://8bitretro.tech/devlog-room-to-breathe.html">
+
+  <!-- Tailwind CDN (site already uses this) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Retro pixel font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <style>
+    @keyframes neonGradient {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .bg-animated {
+      background-size: 320% 320%;
+      animation: neonGradient 22s ease-in-out infinite;
+    }
+
+    .scanline-overlay::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.35),
+        rgba(0, 0, 0, 0.35) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      mix-blend-mode: soft-light;
+      opacity: 0.45;
+      z-index: 0;
+    }
+
+    /* small helper for neon buttons */
+    .neon-btn {
+      background: linear-gradient(90deg, rgba(0,255,243,0.06), rgba(255,45,210,0.04));
+      border: 1px solid rgba(0,255,243,0.12);
+      box-shadow: 0 0 18px rgba(0,255,243,0.06);
+    }
+    .neon-btn:hover {
+      box-shadow: 0 0 26px rgba(255,45,210,0.12);
+      border-color: rgba(255,45,210,0.14);
+    }
+
+    .crt-frame {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .crt-frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.28),
+        rgba(0,0,0,0.28) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      mix-blend-mode: soft-light;
+      opacity: 0.35;
+      z-index: 2;
+    }
+
+    .crt-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at center,
+        rgba(0,255,243,0.08),
+        transparent 60%
+      );
+      z-index: 1;
+    }
+
+    .pixelated { image-rendering: pixelated; }
+  </style>
+
+  <script src="../assets/js/global-player.js" defer></script>
+  <script src="../assets/js/social-strip.js" defer></script>
+</head>
+<body class="min-h-screen text-sky-100 antialiased bg-animated bg-gradient-to-b from-purple-900 via-pink-700 to-black scanline-overlay text-left">
+  <!-- Neon top navigation -->
+  <header class="fixed inset-x-0 top-4 z-30 flex items-center justify-center">
+    <nav class="w-[min(1100px,96%)] flex flex-wrap items-center justify-between gap-y-2 px-4 py-3 rounded-xl bg-black/40 backdrop-blur border border-white/10 shadow-[0_12px_50px_rgba(0,0,0,0.7)]">
+      <!-- NAV LINKS FIRST (renders on the left in LTR with justify-between) -->
+      <ul class="flex items-center gap-2 text-xs">
+        <li>
+          <a href="index.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            Home
+          </a>
+        </li>
+        <li>
+          <a href="about.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            About
+          </a>
+        </li>
+        <li>
+          <a href="projects.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            Projects
+          </a>
+        </li>
+        <li>
+          <a href="releases.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            Releases
+          </a>
+        </li>
+        <li>
+          <a href="tools.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            Tools
+          </a>
+        </li>
+        <li>
+          <a href="kleiner82.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            Kleiner&#39;82
+          </a>
+        </li>
+        <li>
+          <a href="contacts.html" class="whitespace-nowrap px-2 py-2 rounded-md text-cyan-200 hover:text-pink-300 hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-105">
+            Contact
+          </a>
+        </li>
+        <li>
+          <a href="../devlog-room-to-breathe.html" title="עברית" aria-label="Switch to Hebrew" class="shrink-0 px-2 py-1 rounded-md hover:bg-white/10 transition transform hover:-translate-y-0.5 hover:scale-110 inline-flex items-center">
+            <svg width="22" height="16" viewBox="0 0 33 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="image-rendering: pixelated; filter: drop-shadow(0 0 4px rgba(0,255,243,0.45));">
+              <rect width="33" height="24" fill="#fff"/>
+              <rect y="4" width="33" height="2.5" fill="#0038b8"/>
+              <rect y="17.5" width="33" height="2.5" fill="#0038b8"/>
+              <polygon points="16.5,8 20.4,14.5 12.6,14.5" fill="none" stroke="#0038b8" stroke-width="1.1"/>
+              <polygon points="16.5,16 12.6,9.5 20.4,9.5" fill="none" stroke="#0038b8" stroke-width="1.1"/>
+            </svg>
+          </a>
+        </li>
+      </ul>
+
+      <!-- LOGO BLOCK SECOND (renders on the right in LTR with justify-between) -->
+      <a href="https://8bitretro.tech" class="flex shrink-0 items-center gap-4 no-underline cursor-pointer">
+        <div class="w-16 h-12 flex items-center justify-center rounded-md bg-gradient-to-r from-pink-500/40 to-cyan-400/20 border border-white/30 shadow-[0_0_25px_rgba(255,45,210,0.6)]">
+          <span class="[font-family:'Press Start 2P',monospace] text-pink-300 text-xs uppercase tracking-[0.2em]">
+            RETRO
+          </span>
+        </div>
+        <div class="[font-family:'Press Start 2P',monospace] text-cyan-100 text-sm">
+          8bitretro.tech
+        </div>
+      </a>
+    </nav>
+  </header>
+
+  <main class="min-h-screen flex flex-col items-center pt-36 md:pt-28 pb-16">
+    <div class="pointer-events-none absolute -z-10 inset-0 flex justify-center">
+      <div class="w-[30rem] h-[30rem] rounded-full bg-pink-500/20 blur-[120px] translate-y-10"></div>
+    </div>
+
+    <div id="read-progress" aria-hidden="true" style="position:fixed;top:0;left:0;height:3px;width:0;z-index:60;background:linear-gradient(90deg,#00fff3,#ff2dd2);box-shadow:0 0 10px #ff2dd2"></div>
+    <script>
+      (function () {
+        var bar = document.getElementById('read-progress');
+        function upd() {
+          var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
+          bar.style.width = (max > 0 ? Math.min(100, h.scrollTop / max * 100) : 0) + '%';
+        }
+        window.addEventListener('scroll', upd, { passive: true }); upd();
+      })();
+    </script>
+    <section class="w-[min(860px,94%)]">
+      <a href="devlog.html" class="inline-block mb-4 text-xs text-cyan-300 hover:text-pink-300 transition">&larr; Devlog</a>
+
+      <article class="rounded-2xl p-6 md:p-8 bg-black/60 border border-cyan-400/20 shadow-[0_20px_60px_rgba(0,0,0,0.9)] backdrop-blur">
+        <p dir="ltr" class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300/90">DEVLOG #12 &middot; FIST II REMASTER</p>
+        <h1 class="mt-4 [font-family:'Press Start 2P',monospace] text-xl md:text-2xl text-cyan-200 leading-relaxed">Breathing room in memory</h1>
+        <p class="mt-2 text-xs text-cyan-200/60"><time datetime="2026-10-27T12:00:00+02:00">27 October 2026 &middot; 12:00</time> &middot; 3 min read</p>
+
+        <figure class="mt-8">
+          <div class="bg-black/70 rounded-xl border border-cyan-300/30 shadow-[0_0_22px_rgba(0,255,243,0.18)] crt-frame p-2">
+            <img src="../assets/images/devlog/fist2-room-to-breathe.png" alt="Level 1: the player between two enemies in the street, with the health and LEVEL 1 in the HUD"
+                 class="w-full h-auto rounded-lg pixelated" loading="eager" />
+          </div>
+          <figcaption class="mt-2 text-xs text-cyan-200/60 leading-relaxed">Same street, same fight, six and a half times the free memory.</figcaption>
+        </figure>
+
+    <style>
+      .devlog-body > p:not([class]), .devlog-body > ul:not([class]), .devlog-body > ol:not([class]),
+      .devlog-body > blockquote:not([class]), .devlog-body > h3:not([class]) {
+        margin-top: 1.25rem; font-size: 15px; line-height: 1.85; color: rgb(224 242 254 / .9);
+      }
+      @media (min-width: 768px) {
+        .devlog-body > p:not([class]), .devlog-body > ul:not([class]), .devlog-body > ol:not([class]),
+        .devlog-body > blockquote:not([class]) { font-size: 17px; }
+      }
+      .devlog-body > h2 { margin-top: 2rem; }
+      .devlog-body > h3:not([class]) { color: rgb(207 250 254); font-size: 1.125rem; margin-top: 1.75rem; }
+      .devlog-body ul:not([class]) { list-style: disc; padding-inline-start: 1.25rem; }
+      .devlog-body ol:not([class]) { list-style: decimal; padding-inline-start: 1.5rem; }
+      .devlog-body ul:not([class]) > li + li, .devlog-body ol:not([class]) > li + li { margin-top: .5rem; }
+      .devlog-body blockquote:not([class]) { border-inline-start: 3px solid rgb(244 114 182 / .6); padding-inline-start: 1rem; font-style: italic; }
+      .devlog-body a:not([class]) { color: rgb(103 232 249); text-decoration: underline; text-underline-offset: 3px; }
+      .devlog-body a:not([class]):hover { color: rgb(249 168 212); }
+      .devlog-body > p code:not([class]), .devlog-body > ul code:not([class]), .devlog-body > ol code:not([class]) { color: rgb(103 232 249); }
+      .devlog-body strong { color: #fff; }
+    </style>
+        <div class="devlog-body">
+<p class="mt-6 text-base text-sky-100/95 leading-relaxed">The last post ended with a problem: memory was almost gone. After the six fight changes, the whole game had 433 bytes left for code, which is next to nothing<br>, and the part that checks hits had one byte left. One byte. You can't add anything like that, so this time we didn't. This time we cleared space.</p>
+<div class="mt-8 space-y-4 text-[15px] md:text-[17px] text-sky-100/90 leading-[1.85]">
+<h2 class="flex items-center gap-3 text-xl md:text-2xl text-cyan-100 pt-4"><svg class="shrink-0 text-pink-300" width="18" height="18" viewBox="0 0 8 8" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true" style="filter:drop-shadow(0 0 4px rgba(255,45,210,.55))"><rect x="0" y="0" width="1" height="1"/><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="7" y="0" width="1" height="1"/><rect x="0" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="7" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="0" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="7" y="5" width="1" height="1"/><rect x="0" y="6" width="1" height="1"/><rect x="1" y="6" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="3" y="6" width="1" height="1"/><rect x="4" y="6" width="1" height="1"/><rect x="5" y="6" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="7" y="6" width="1" height="1"/></svg>The code that never ran</h2>
+<p>Fist II is really an adventure on foot: temples and scrolls, rivers you wade through, ladders, ledges and pits, gates you have to break, panthers, a figure that rises out of the ground and throws a star, and a THE END screen. <br>For us a level is a street of up to four rooms, with doors and a level end. That's it.</p>
+<p>The problem is that our game still carried all of that adventure inside it. Code that can never run, because the tool that builds the levels simply can't make a temple, a river or a ladder<br>. So we switched it off, only in the level game. Every other build, including the original Fist II inside the project, comes out exactly the same, byte for byte.</p>
+</div>
+<div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="rounded-xl p-4 bg-black/50 border border-pink-400/30">
+<p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-pink-300">FREE CODE BYTES</p>
+<p dir="ltr" class="text-right mt-3 text-2xl text-pink-200">433 → 2802</p>
+<p class="mt-1 text-xs text-sky-100/75 leading-relaxed">Free space for new code in the level game, six and a half times as much</p>
+</div>
+<div class="rounded-xl p-4 bg-black/50 border border-cyan-400/30">
+<p class="[font-family:'Press Start 2P',monospace] text-[9px] tracking-widest text-cyan-300">PACKED .PRG</p>
+<p dir="ltr" class="text-right mt-3 text-2xl text-cyan-200">32,096 → 30,552</p>
+<p class="mt-1 text-xs text-sky-100/75 leading-relaxed">Size of the packed file, in bytes: the game also got more than 1.5KB smaller</p>
+</div>
+</div>
+<div class="mt-8 space-y-4 text-[15px] md:text-[17px] text-sky-100/90 leading-[1.85]">
+<h2 class="flex items-center gap-3 text-xl md:text-2xl text-cyan-100 pt-4"><svg class="shrink-0 text-pink-300" width="18" height="18" viewBox="0 0 8 8" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true" style="filter:drop-shadow(0 0 4px rgba(255,45,210,.55))"><rect x="2" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="3" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="1" y="6" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="3" y="6" width="1" height="1"/><rect x="4" y="6" width="1" height="1"/><rect x="5" y="6" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="2" y="7" width="1" height="1"/><rect x="4" y="7" width="1" height="1"/><rect x="6" y="7" width="1" height="1"/></svg>Three steps, and a check after each</h2>
+<p>We did it in three steps. First the world objects: the temples, the scrolls, the panthers, the star and THE END. <br>Then the adventure moves: climbing, going down, falling off a ledge, walking in the river and meditating. And last, the room exits we don't have: ledges, pits, ladders and rivers. The part that runs the game flow went from 90 free bytes to 1358<br>, and the hit check went from one byte to 24.</p>
+<p>The best test turned out to be the demo. The game that plays itself in front of the title screen is deterministic: same input, same game, exactly. After each step it again walked 931 pixels, attacked 23 times and landed 8 hits, exactly as before. If anything in the behaviour had shifted, even by one frame, it would have shown up there.</p>
+</div>
+<div class="mt-8 space-y-4 text-[15px] md:text-[17px] text-sky-100/90 leading-[1.85]">
+<h2 class="flex items-center gap-3 text-xl md:text-2xl text-cyan-100 pt-4"><svg class="shrink-0 text-pink-300" width="18" height="18" viewBox="0 0 8 8" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true" style="filter:drop-shadow(0 0 4px rgba(255,45,210,.55))"><rect x="2" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="3" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="1" y="6" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="3" y="6" width="1" height="1"/><rect x="4" y="6" width="1" height="1"/><rect x="5" y="6" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="2" y="7" width="1" height="1"/><rect x="4" y="7" width="1" height="1"/><rect x="6" y="7" width="1" height="1"/></svg>Behind the scenes</h2>
+<p>The demo now waits 90 seconds on the title screen before it starts, not 15. I wanted people to have time to see the title screen. And we built ourselves a small tool that shows all the project's PRs as an easy-to-read HTML page, <br>to keep track of what was done in each one.</p>
+<p>And something we found along the way: if a level ever sets up enemies in a wave or at random, a scroll icon will flash above the words LEVEL n in the HUD. The levels we have today don't do that, but it's in the code, and we'll fix it before it happens.</p>
+<h2 class="flex items-center gap-3 text-xl md:text-2xl text-cyan-100 pt-4"><svg class="shrink-0 text-pink-300" width="18" height="18" viewBox="0 0 8 8" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true" style="filter:drop-shadow(0 0 4px rgba(255,45,210,.55))"><rect x="0" y="0" width="1" height="1"/><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="0" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="7" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="0" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="7" y="5" width="1" height="1"/><rect x="0" y="6" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="3" y="6" width="1" height="1"/><rect x="4" y="6" width="1" height="1"/><rect x="7" y="6" width="1" height="1"/><rect x="0" y="7" width="1" height="1"/><rect x="1" y="7" width="1" height="1"/><rect x="2" y="7" width="1" height="1"/><rect x="3" y="7" width="1" height="1"/><rect x="4" y="7" width="1" height="1"/><rect x="5" y="7" width="1" height="1"/><rect x="6" y="7" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/></svg>What's next</h2>
+<p>There's about 1.2KB more code like this: gates, water, loading cave and temple rooms. It's dead only because of what the level tool produces today, so first we'll teach the tool to refuse these things, and only then switch them off<br>. Meanwhile, a page for the musician: where the music sits in memory, how much room it has, and a small checker for the .sid file he sends, so we know right away whether it fits!! See you in the next post</p>
+</div>
+        </div>
+
+        <div class="mt-10 pt-6 border-t border-white/10 flex flex-wrap gap-3 justify-between">
+          <a href="devlog-a-hit-you-can-feel.html" class="text-xs px-3 py-2 rounded-lg neon-btn text-cyan-300 hover:text-pink-300 transition">&larr; Previous: A hit you can feel</a>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <div class="pointer-events-none fixed inset-x-0 bottom-0 h-36 opacity-70">
+    <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="g1" x1="0" x2="1">
+          <stop offset="0" stop-color="#ff2dd2" stop-opacity="0.15"/>
+          <stop offset="1" stop-color="#00fff3" stop-opacity="0.15"/>
+        </linearGradient>
+      </defs>
+      <rect width="1440" height="120" fill="url(#g1)" />
+      <g stroke="#00fff3" stroke-opacity="0.25" stroke-width="1">
+        <path d="M0 90 C200 60 400 52 720 52 C1040 52 1240 60 1440 90" fill="none"/>
+      </g>
+    </svg>
+  </div>
+</body>
+</html>
