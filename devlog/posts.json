@@ -19,7 +19,8 @@
     "fist2-low-kick.png": "VICE capture of the moves room (fist2-remake run moves), 2026-10-18",
     "fist2-hud-bold-digits.png": "VICE capture of the level game (fist2-remake main 3f9acb1), 2026-10-20",
     "fist2-two-enemies-press.png": "VICE capture of the level game (fist2-remake main 3f9acb1), 2026-10-20",
-    "fist2-room-to-breathe.png": "VICE capture of the level game (fist2-remake main 3b5acb0), 2026-10-27"
+    "fist2-room-to-breathe.png": "VICE capture of the level game (fist2-remake main 3b5acb0), 2026-10-27",
+    "fist2-clean-title.png": "VICE capture of the level game's title (fist2-remake PR #54, fix/small-fixes), 2026-11-06"
   },
   "posts": [
     {
@@ -209,6 +210,22 @@
       "banner_caption_en": "Same street, same fight, six and a half times the free memory.",
       "banner_caption_he": "אותו רחוב ואותו קרב, עם פי שש וחצי זיכרון פנוי.",
       "en_source_hash": "7bce7f45f29e0229"
+    },
+    {
+      "slug": "a-clean-start",
+      "when": "2026-11-06T22:30:00+02:00",
+      "kicker": "FIST II REMASTER",
+      "kicker_short": "Fist II Remaster",
+      "title_en": "A clean start",
+      "title_he": "התחלה נקייה",
+      "teaser_en": "Two small fixes while we wait for the art: a title screen with no stray score in the corner, and a boss test that was failing for no reason.",
+      "teaser_he": "שני תיקונים קטנים בזמן שמחכים לגרפיקה: מסך פתיחה בלי ניקוד תועה בפינה, ובדיקת בוס שנכשלה בלי סיבה.",
+      "banner": "fist2-clean-title.png",
+      "banner_alt_en": "The FIST III title screen: the logo, The Revenge, two fighters, PUSH FIRE BUTTON, and an empty top-left corner",
+      "banner_alt_he": "מסך הפתיחה של FIST III: הלוגו, The Revenge, שני לוחמים, PUSH FIRE BUTTON, והפינה השמאלית העליונה ריקה",
+      "banner_caption_en": "The title screen, with nothing in the corner above the logo.",
+      "banner_caption_he": "מסך הפתיחה, בלי כלום בפינה מעל הלוגו.",
+      "draft": true
     }
   ],
   "index_en_source_hash": "c2324c62c4e4a8f0"
