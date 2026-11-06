@@ -218,14 +218,14 @@
       "kicker_short": "Fist II Remaster",
       "title_en": "A clean start",
       "title_he": "התחלה נקייה",
-      "teaser_en": "Two small fixes while we wait for the art: a title screen with no stray score in the corner, and a boss test that was failing for no reason.",
-      "teaser_he": "שני תיקונים קטנים בזמן שמחכים לגרפיקה: מסך פתיחה בלי ניקוד תועה בפינה, ובדיקת בוס שנכשלה בלי סיבה.",
+      "teaser_en": "Two small fixes while we wait for the graphics: a title screen without a stray score in the corner, and a boss test that failed for no clear reason",
+      "teaser_he": "שני תיקונים קטנים בזמן שמחכים לגרפיקה: מסך פתיחה בלי ניקוד שגוי בפינה, ובדיקת בוס שנכשלה בלי סיבה ברורה",
       "banner": "fist2-clean-title.png",
       "banner_alt_en": "The FIST III title screen: the logo, The Revenge, two fighters, PUSH FIRE BUTTON, and an empty top-left corner",
       "banner_alt_he": "מסך הפתיחה של FIST III: הלוגו, The Revenge, שני לוחמים, PUSH FIRE BUTTON, והפינה השמאלית העליונה ריקה",
       "banner_caption_en": "The title screen, with nothing in the corner above the logo.",
       "banner_caption_he": "מסך הפתיחה, בלי כלום בפינה מעל הלוגו.",
-      "draft": true
+      "en_source_hash": "b55ca7b8ed0f0c25"
     }
   ],
   "index_en_source_hash": "c2324c62c4e4a8f0"
