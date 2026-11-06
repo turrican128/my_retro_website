@@ -868,7 +868,7 @@ async function publish() {
   const intro = state.view === 'intro';
   const stale = $(intro ? 'introEn' : 'postEn').classList.contains('stale');
   const ok = await confirmBox(intro ? 'לפרסם את כותרת היומן?' : 'לפרסם את הפוסט?',
-    `${stale ? 'Claude יתרגם לאנגלית את מה שהשתנה בעברית, ו' : ''}העורך יבנה את הדפים ויעלה אותם לאתר. האתר מתעדכן תוך 2–3 דקות.`,
+    `${stale ? 'Claude יתרגם לאנגלית את מה שהשתנה בעברית, ו' : ''}העורך יבנה את הדפים ויעלה אותם לאתר. האתר מתעדכן בדרך כלל תוך כמה דקות (לפעמים עד 10).`,
     'פרסום');
   if (!ok) return;
   busy(stale ? 'מפרסם: מתרגם לאנגלית ומעלה לאתר…' : 'מפרסם: מעלה לאתר…');
@@ -883,7 +883,7 @@ async function publish() {
     }
     if (res.merged) {
       await infoBox('פורסם ✦',
-        'האתר יתעדכן בעוד 2–3 דקות. אם הדף עדיין ישן, רעננו אותו עם Ctrl+F5.',
+        'האתר יתעדכן בדרך כלל תוך כמה דקות, לפעמים עד 10. אם הדף עדיין ישן, רעננו אותו עם Ctrl+F5 (הדפדפן שומר עותק של הדף עד 10 דקות).',
         `<p><a class="btn primary big" href="${esc(res.live_url)}" target="_blank" rel="noopener">לפתוח באתר ↗</a></p>`);
     } else {
       await infoBox('כמעט: צריך עוד לחיצה אחת',
