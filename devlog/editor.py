@@ -37,7 +37,7 @@ IMG_DIR = SITE / "assets" / "images" / "devlog"
 STATIC = HERE / "editor"
 POSTS_JSON = HERE / "posts.json"
 POSTS_DIR = HERE / "posts"
-GAME_REPO = pathlib.Path(r"C:\ClaudeSandbox\C64 first demo\Fist II Remaster")
+GAME_REPO = pathlib.Path(r"C:\ClaudeSandbox\C64 projects\Fist II Remaster")
 
 sys.path.insert(0, str(HERE))
 import build  # noqa: E402  (devlog/build.py)
