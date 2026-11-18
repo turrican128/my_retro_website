@@ -1,0 +1,11 @@
+<p class="mt-6 text-base text-sky-100/95 leading-relaxed">Our first music arrived today! Mythus, the game's composer, sent the title theme, Fist III Theme. Until now the title screen played a placeholder tune (Hi-t Soul by Link / Vibrants), and before that Fist II's own tunes. From today it plays ours.</p>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:note}From the file to the game</h2>
+<p>The tune came as an ordinary .sid file, the kind any SID player can play. It's built for address $1000 in memory, but in our game the music lives at the end of memory, from $f400, where it has 3,018 bytes. So we moved it with our own tool, sid_reloc: it runs the tune's player in a 6502 emulator, finds every byte the player really uses, and moves it all to the new place.</p>
+<p>Then it proves nothing broke: it plays the original and the moved copy side by side for 15,000 frames, five minutes of music. 344,998 writes to the SID, and every one matches the original. Inside the game we also checked in VICE that the player is called exactly once a frame on the title screen.</p>
+<h2 class="text-lg text-cyan-100 pt-2">{icon:chip}Small and thrifty</h2>
+<p>The whole tune, player and notes together, takes 1,378 bytes. That's less than half the placeholder, and the packed game is now 2.5 KB smaller. It plays on all three SID voices, and for now in the levels too, because the game has room for just one tune.</p>
+<h2 class="text-lg text-cyan-100 pt-2">{icon:page}What's next</h2>
+<p>We agreed with Mythus how the in-game songs will work: the music plays on voices 1 and 2, and voice 3 stays free for the sound effects, a hit, a fall, the whoosh of a kick. The effects will be part of his player, like tiny tunes the game starts at the right moment. The title screen keeps all three voices.</p>
+<p>That's it for this time.. thanks Mythus, the game finally sounds like FIST III!!</p>
+</div>

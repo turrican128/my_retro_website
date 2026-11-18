@@ -20,7 +20,8 @@
     "fist2-hud-bold-digits.png": "VICE capture of the level game (fist2-remake main 3f9acb1), 2026-10-20",
     "fist2-two-enemies-press.png": "VICE capture of the level game (fist2-remake main 3f9acb1), 2026-10-20",
     "fist2-room-to-breathe.png": "VICE capture of the level game (fist2-remake main 3b5acb0), 2026-10-27",
-    "fist2-clean-title.png": "VICE capture of the level game's title (fist2-remake PR #54, fix/small-fixes), 2026-11-06"
+    "fist2-clean-title.png": "VICE capture of the level game's title (fist2-remake PR #54, fix/small-fixes), 2026-11-06",
+    "fist2-fist3-theme.png": "Piano roll of Mythus's Fist III Theme (assets/music/fist3/mts_fist3_v20.sid, fist2-remake PR #56): its player run in py65, the first 32 s, 2026-11-18"
   },
   "posts": [
     {
@@ -226,6 +227,22 @@
       "banner_caption_en": "The title screen, with nothing in the corner above the logo.",
       "banner_caption_he": "מסך הפתיחה, בלי כלום בפינה מעל הלוגו.",
       "en_source_hash": "b55ca7b8ed0f0c25"
+    },
+    {
+      "slug": "our-first-tune",
+      "when": "2026-11-18T12:00:00+02:00",
+      "draft": true,
+      "kicker": "FIST II REMASTER",
+      "kicker_short": "Fist II Remaster",
+      "title_en": "Our first tune",
+      "title_he": "המנגינה הראשונה שלנו",
+      "teaser_en": "Mythus sent the game's title theme. It's the first piece of our own music in the game, and it already plays on the title screen",
+      "teaser_he": "Mythus שלח את מנגינת הפתיחה של המשחק. זו המוזיקה הראשונה שלנו במשחק, והיא כבר מתנגנת במסך הפתיחה",
+      "banner": "fist2-fist3-theme.png",
+      "banner_alt_en": "A piano roll of the Fist III Theme: the notes of the three SID voices over the first 32 seconds, in C64 colours, with the drums in a lane at the bottom",
+      "banner_alt_he": "תרשים התווים של Fist III Theme: התווים של שלושת הקולות של ה־SID ב־32 השניות הראשונות, בצבעי C64, והתופים בפס למטה",
+      "banner_caption_en": "The first 32 seconds of the theme, note by note, as its player plays them.",
+      "banner_caption_he": "32 השניות הראשונות של המנגינה, תו אחרי תו, כמו שהנגן שלה מנגן אותן."
     }
   ],
   "index_en_source_hash": "c2324c62c4e4a8f0"
