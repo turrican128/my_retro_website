@@ -232,7 +232,6 @@
     {
       "slug": "our-first-tune",
       "when": "2026-11-18T12:00:00+02:00",
-      "draft": true,
       "kicker": "FIST II REMASTER",
       "kicker_short": "Fist II Remaster",
       "title_en": "Our first tune",
@@ -252,14 +251,15 @@
       "kicker": "FIST II REMASTER",
       "kicker_short": "Fist II Remaster",
       "title_en": "Iron Quay",
-      "title_he": "Iron Quay: שלב ראשון חדש",
+      "title_he": "Iron Quay: שלב ראשון חדש!!! ",
       "teaser_en": "A new first level drawn by a good friend, a boss at the harbour, ladders up to a roof, and two bugs we found on the way",
       "teaser_he": "שלב ראשון חדש שצייר חבר טוב, בוס בקצה הנמל, סולמות לגג, ושני באגים שמצאנו בדרך",
       "banner": "fist2-iron-quay-fight.png",
       "banner_alt_en": "FIST III on the C64: the player kicks between two enemies on Iron Quay, a night street with a loading bay and a fire escape behind them",
       "banner_alt_he": "FIST III על ה־C64: השחקן בועט בין שני אויבים ב־Iron Quay, רחוב לילי עם רציף טעינה ומדרגות חירום מאחוריהם",
       "banner_caption_en": "The first fight on Iron Quay: three fighters at the loading bay.",
-      "banner_caption_he": "הקרב הראשון ב־Iron Quay: שלושה לוחמים ליד רציף הטעינה."
+      "banner_caption_he": "הקרב הראשון ב־Iron Quay: שלושה לוחמים ליד רציף הטעינה.",
+      "en_source_hash": "df48aeab41770e7b"
     }
   ],
   "index_en_source_hash": "c2324c62c4e4a8f0"
