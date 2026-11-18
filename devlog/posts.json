@@ -21,7 +21,8 @@
     "fist2-two-enemies-press.png": "VICE capture of the level game (fist2-remake main 3f9acb1), 2026-10-20",
     "fist2-room-to-breathe.png": "VICE capture of the level game (fist2-remake main 3b5acb0), 2026-10-27",
     "fist2-clean-title.png": "VICE capture of the level game's title (fist2-remake PR #54, fix/small-fixes), 2026-11-06",
-    "fist2-fist3-theme.png": "Piano roll of Mythus's Fist III Theme (assets/music/fist3/mts_fist3_v20.sid, fist2-remake PR #56): its player run in py65, the first 32 s, 2026-11-18"
+    "fist2-fist3-theme.png": "Piano roll of Mythus's Fist III Theme (assets/music/fist3/mts_fist3_v20.sid, fist2-remake PR #56): its player run in py65, the first 32 s, 2026-11-18",
+    "fist2-iron-quay-fight.png": "VICE capture of the level game: Iron Quay, the first fight (fist2-remake main f9447b9, PR #60), 2026-11-18"
   },
   "posts": [
     {
@@ -243,6 +244,22 @@
       "banner_alt_he": "תרשים התווים של Fist III Theme: התווים של שלושת הקולות של ה־SID ב־32 השניות הראשונות, בצבעי C64, והתופים בפס למטה",
       "banner_caption_en": "The first 32 seconds of the theme, note by note, as its player plays them.",
       "banner_caption_he": "32 השניות הראשונות של המנגינה, תו אחרי תו, כמו שהנגן שלה מנגן אותן."
+    },
+    {
+      "slug": "iron-quay",
+      "when": "2026-11-18T22:00:00+02:00",
+      "draft": true,
+      "kicker": "FIST II REMASTER",
+      "kicker_short": "Fist II Remaster",
+      "title_en": "Iron Quay",
+      "title_he": "Iron Quay: שלב ראשון חדש",
+      "teaser_en": "A new first level drawn by a good friend, a boss at the harbour, ladders up to a roof, and two bugs we found on the way",
+      "teaser_he": "שלב ראשון חדש שצייר חבר טוב, בוס בקצה הנמל, סולמות לגג, ושני באגים שמצאנו בדרך",
+      "banner": "fist2-iron-quay-fight.png",
+      "banner_alt_en": "FIST III on the C64: the player kicks between two enemies on Iron Quay, a night street with a loading bay and a fire escape behind them",
+      "banner_alt_he": "FIST III על ה־C64: השחקן בועט בין שני אויבים ב־Iron Quay, רחוב לילי עם רציף טעינה ומדרגות חירום מאחוריהם",
+      "banner_caption_en": "The first fight on Iron Quay: three fighters at the loading bay.",
+      "banner_caption_he": "הקרב הראשון ב־Iron Quay: שלושה לוחמים ליד רציף הטעינה."
     }
   ],
   "index_en_source_hash": "c2324c62c4e4a8f0"
