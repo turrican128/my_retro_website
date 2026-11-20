@@ -22,7 +22,9 @@
     "fist2-room-to-breathe.png": "VICE capture of the level game (fist2-remake main 3b5acb0), 2026-10-27",
     "fist2-clean-title.png": "VICE capture of the level game's title (fist2-remake PR #54, fix/small-fixes), 2026-11-06",
     "fist2-fist3-theme.png": "Piano roll of Mythus's Fist III Theme (assets/music/fist3/mts_fist3_v20.sid, fist2-remake PR #56): its player run in py65, the first 32 s, 2026-11-18",
-    "fist2-iron-quay-fight.png": "VICE capture of the level game: Iron Quay, the first fight (fist2-remake main f9447b9, PR #60), 2026-11-18"
+    "fist2-iron-quay-fight.png": "VICE capture of the level game: Iron Quay, the first fight (fist2-remake main f9447b9, PR #60), 2026-11-18",
+    "fist2-three-stages-train.png": "VICE capture of the level game (fist2-remake main 8be83d5), 2026-11-20",
+    "fist2-walking-band.png": "VICE captures of the level game (fist2-remake, docs/walking-area/in-game-back-and-front.png), 2026-11-20"
   },
   "posts": [
     {
@@ -259,6 +261,22 @@
       "banner_caption_en": "The first fight in Iron Quay: three fighters by the loading dock.",
       "banner_caption_he": "הקרב הראשון ב־Iron Quay: שלושה לוחמים ליד רציף הטעינה.",
       "en_source_hash": "312fb59247758cd0"
+    },
+    {
+      "slug": "three-stages",
+      "when": "2026-11-20T21:00:00+02:00",
+      "kicker": "FIST II REMASTER",
+      "kicker_short": "Fist II Remaster",
+      "title_en": "Three stages, and you can hear the hits",
+      "title_he": "שלושה שלבים, והמכות נשמעות",
+      "teaser_en": "Iron Quay, a night train and a freight depot, all original art and redrawn to the exact line the fighters walk on, the first sound effects, and two bugs fixed.",
+      "teaser_he": "Iron Quay, רכבת לילה ומחסן משא, כולם ציור מקורי שצויר מחדש לפי הקו המדויק שהלוחמים הולכים עליו, האפקטים הראשונים, ושני באגים שתוקנו.",
+      "banner": "fist2-three-stages-train.png",
+      "banner_alt_en": "Last Service: the player fights two enemies, in yellow and cyan, in front of the night train",
+      "banner_alt_he": "Last Service: השחקן נלחם בשני אויבים, בצהוב ובטורקיז, מול רכבת הלילה",
+      "banner_caption_en": "Last Service, the night train, with the enemies' new colours.",
+      "banner_caption_he": "Last Service, רכבת הלילה, עם הצבעים החדשים של האויבים.",
+      "draft": true
     }
   ],
   "index_en_source_hash": "c2324c62c4e4a8f0"
