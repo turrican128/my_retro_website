@@ -1,0 +1,24 @@
+<p class="mt-6 text-base text-sky-100/95 leading-relaxed">Another big day. The game now has three stages, all of them original art, and the two Fist II maps are off the list. And for the first time, the punches make a sound.</p>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:map}Three stages</h2>
+<p>My good friend sent two more stages and went over the first one. Iron Quay got a new street: asphalt, drains and road paint. Last Service is a night train: silver carriages, blue windows and a red stripe along the side. And Cinder Yard is a brick freight depot. Both new stages have a ladder up to a roof, and another fight waits up there.</p>
+<p>From the CharPad files, our tool built exactly the same bytes he sent, and every one of the 13 rooms comes out in the game just like in CharPad, pixel for pixel. We also checked that no character is taken from another game.</p>
+</div>
+<figure class="mt-6">
+<div class="bg-black/70 rounded-xl border border-cyan-300/30 crt-frame p-2"><img src="{IMG}fist2-walking-band.png" alt="The player at the back and at the front of the street in each of the three stages" class="w-full h-auto rounded-lg pixelated" loading="lazy"></div>
+<figcaption class="mt-2 text-xs text-cyan-200/60">The three stages: the player at the back of the street (left) and at the front (right).</figcaption>
+</figure>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:ruler}Exactly where you walk</h2>
+<p>In the first version of the stages I saw that something didn't add up: the fighters walked through crates, stood on the train's wheels, and the road went all the way to the bottom of the screen, where nobody ever gets. We measured the exact line in the game: the player's feet move between line 99 and line 143 of the map, and the enemies 6 lines more each way. We turned that into a guide for the artist, with the stages and the band drawn on them, and he redrew all three. Now the walls, crates and wheels end above the band, and inside it there's only street.</p>
+<p>And a bonus: the simpler art packs smaller, and the level memory went from 15 free bytes to 236.</p>
+<h2 class="text-lg text-cyan-100 pt-2">{icon:note}You can hear the hits</h2>
+<p>Until now the game had no sound effects at all. Now it has 16, sent by my friend: a punch swishing through the air, a punch, a kick, a heavy hit for the boss, a body falling, a knockout, the player getting hurt, and more. The SID has only three voices, and Mythus's tune uses all three, so each effect "borrows" the third voice only for as long as it sounds, then hands it back to the tune, right on the beat.</p>
+<h2 class="text-lg text-cyan-100 pt-2">{icon:bug}Two bugs</h2>
+<p>A small piece flickered in the bottom right corner of the game. The instruction that colours the background of the energy row was written a few CPU cycles too early, and landed on the last line of the game itself. We moved it by one instruction, and in a test with enemies on screen, in all three stages, it never shows up (in 450 screens, against 124 before).</p>
+<p>And the second bug: you could hardly see the enemies. All the streets are dark grey, one enemy was dark grey himself, and the red and the brown were barely different. Now they're green, cyan, yellow and light green. We picked colours that are far from the street and from the player's blue too, because light blue looked almost like the player himself.</p>
+<h2 class="text-lg text-cyan-100 pt-2">{icon:chip}Behind the scenes</h2>
+<p>The test version now has an L key that skips to the next stage. The release won't have it. There's also a version with no enemies at all, just to walk around the stages and look at the art. And the original Fist II music is now also a GoatTracker song, with the same notes and the same instruments, for anyone who wants to remix it.</p>
+<h2 class="text-lg text-cyan-100 pt-2">{icon:page}What's next</h2>
+<p>Getting the new stage music in. It's written for two voices only, exactly so the effects don't cut into it, but right now it's bigger than the space it has. And a bug we found on the way: after GAME COMPLETE the title screen stays for only a few seconds, and the game starts by itself.</p>
+</div>
