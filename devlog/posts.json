@@ -267,16 +267,16 @@
       "when": "2026-11-20T21:00:00+02:00",
       "kicker": "FIST II REMASTER",
       "kicker_short": "Fist II Remaster",
-      "title_en": "Three stages, and you can hear the hits",
-      "title_he": "שלושה שלבים, והמכות נשמעות",
-      "teaser_en": "Iron Quay, a night train and a freight depot, all original art and redrawn to the exact line the fighters walk on, the first sound effects, and two bugs fixed.",
+      "title_en": "Three temporary levels! And the hits come with sound",
+      "title_he": "שלושה שלבים זמניים!  והמכות נשמעות עם סאונד",
+      "teaser_en": "Iron Quay, a night train and a freight depot, all original art redrawn around the exact line the fighters walk on, the first sound effects, and two bugs fixed.",
       "teaser_he": "Iron Quay, רכבת לילה ומחסן משא, כולם ציור מקורי שצויר מחדש לפי הקו המדויק שהלוחמים הולכים עליו, האפקטים הראשונים, ושני באגים שתוקנו.",
       "banner": "fist2-three-stages-train.png",
-      "banner_alt_en": "Last Service: the player fights two enemies, in yellow and cyan, in front of the night train",
+      "banner_alt_en": "Last Service: the player fights two enemies, in yellow and turquoise, in front of the night train",
       "banner_alt_he": "Last Service: השחקן נלחם בשני אויבים, בצהוב ובטורקיז, מול רכבת הלילה",
       "banner_caption_en": "Last Service, the night train, with the enemies' new colours.",
       "banner_caption_he": "Last Service, רכבת הלילה, עם הצבעים החדשים של האויבים.",
-      "draft": true
+      "en_source_hash": "eab134f461c2cdb8"
     }
   ],
   "index_en_source_hash": "c2324c62c4e4a8f0"
