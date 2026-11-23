@@ -24,7 +24,11 @@
     "fist2-fist3-theme.png": "Piano roll of Mythus's Fist III Theme (assets/music/fist3/mts_fist3_v20.sid, fist2-remake PR #56): its player run in py65, the first 32 s, 2026-11-18",
     "fist2-iron-quay-fight.png": "VICE capture of the level game: Iron Quay, the first fight (fist2-remake main f9447b9, PR #60), 2026-11-18",
     "fist2-three-stages-train.png": "VICE capture of the level game (fist2-remake main 8be83d5), 2026-11-20",
-    "fist2-walking-band.png": "VICE captures of the level game (fist2-remake, docs/walking-area/in-game-back-and-front.png), 2026-11-20"
+    "fist2-walking-band.png": "VICE captures of the level game (fist2-remake, docs/walking-area/in-game-back-and-front.png), 2026-11-20",
+    "fist2-taste3-victory.png": "fist2-remake/FIST3-taste3-2026-11-23/shots/5-victory.png",
+    "fist2-taste3-credits.png": "fist2-remake/FIST3-taste3-2026-11-23/shots/6-credits.png",
+    "fist2-taste3-boss.png": "fist2-remake/FIST3-taste3-2026-11-23/shots/2-the-boss.png",
+    "fist2-taste3-roof.png": "fist2-remake/FIST3-taste3-2026-11-23/shots/3-the-roof.png"
   },
   "posts": [
     {
@@ -277,6 +281,22 @@
       "banner_caption_en": "Last Service, the night train, with the enemies' new colours.",
       "banner_caption_he": "Last Service, רכבת הלילה, עם הצבעים החדשים של האויבים.",
       "en_source_hash": "eab134f461c2cdb8"
+    },
+    {
+      "slug": "taste-three",
+      "when": "2026-11-23T23:30:00+02:00",
+      "kicker": "FIST II REMASTER",
+      "kicker_short": "Fist II Remaster",
+      "draft": true,
+      "title_en": "Taste #3: a boss song, a real ending",
+      "title_he": "טעימה 3: שיר לבוס וסוף אמיתי",
+      "teaser_en": "Taste #3 is on itch.io: new music by Mythus with a boss song, fireworks and a credits walk at the end, a fairer boss, a hint on the roofs, and the bug that made level 1 repeat itself.",
+      "teaser_he": "טעימה 3 עלתה ל־itch.io: מוזיקה חדשה של Mythus עם שיר לבוס, זיקוקים וקרדיטים בסוף, בוס הוגן יותר, רמז על הגגות, והבאג שגרם לשלב הראשון לחזור על עצמו.",
+      "banner": "fist2-taste3-victory.png",
+      "banner_alt_en": "CONGRATULATIONS in rainbow colours on the top line, over Cinder Yard, after the last boss",
+      "banner_alt_he": "CONGRATULATIONS בצבעי קשת בשורה העליונה, מעל Cinder Yard, אחרי הבוס האחרון",
+      "banner_caption_en": "The end of the game: fireworks, and CONGRATULATIONS in rainbow colours.",
+      "banner_caption_he": "סוף המשחק: זיקוקים, ו־CONGRATULATIONS בצבעי קשת."
     }
   ],
   "index_en_source_hash": "c2324c62c4e4a8f0"

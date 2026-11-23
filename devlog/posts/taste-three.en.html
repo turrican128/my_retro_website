@@ -1,0 +1,39 @@
+<p class="mt-6 text-base text-sky-100/95 leading-relaxed">Taste #3 is up on itch.io. New music by Mythus with a song for the boss, a real ending, and a boss you can actually beat. And on the way we found a bug that made the first level repeat itself.</p>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:note}Three songs</h2>
+<p>In the last post I wrote that the next thing was the level music. Well, it's here, and then some. Mythus sent a version with three songs: one for the title screen, one for the levels, and one for the boss. The moment the boss comes on screen the music changes, and when he goes down it's back to the level song.</p>
+<p>The level song and the boss song use only two channels. That leaves the SID's third channel to the sound effects alone, so the hits no longer cut into the tune.</p>
+<p>About the effects: last time I wrote that there were some sounds I really didn't like. So we built a page that plays every effect, and I picked what stays and what goes. Seven stayed, five went. Now every blow that lands has one sound, and the boss has a heavy one of his own.</p>
+</div>
+<figure class="mt-6">
+<div class="bg-black/70 rounded-xl border border-cyan-300/30 crt-frame p-2"><img src="{IMG}fist2-taste3-boss.png" alt="The player facing the boss, in white, at the end of Iron Quay" class="w-full h-auto rounded-lg pixelated" loading="lazy"></div>
+<figcaption class="mt-2 text-xs text-cyan-200/60">The Iron Quay boss. The moment he appears, the boss song starts.</figcaption>
+</figure>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:star}A real ending</h2>
+<p>Until now, finishing the third level got you GAME COMPLETE on one line and back to the title screen. Pretty sad after three bosses. Now there are fireworks in the sky, CONGRATULATIONS in rainbow colours, and then the fighter walks on his own through all three levels, with no enemies, while the credits are typed letter by letter on the top line. At the end comes THANKS FOR PLAYING.</p>
+<p>The credits needed letters the top line's font didn't have, like J and Y. We drew them in the characters of Fist II's old HUD, which our game no longer shows.</p>
+</div>
+<figure class="mt-6">
+<div class="bg-black/70 rounded-xl border border-cyan-300/30 crt-frame p-2"><img src="{IMG}fist2-taste3-credits.png" alt="The fighter walks through Iron Quay, and the top line reads CODE DR J in rainbow colours" class="w-full h-auto rounded-lg pixelated" loading="lazy"></div>
+<figcaption class="mt-2 text-xs text-cyan-200/60">The credits, while the fighter walks through Iron Quay again.</figcaption>
+</figure>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:fist}A boss you can beat</h2>
+<p>The boss was simply too strong. He had three full energy bars, about eight times a normal enemy, and he blocks almost every blow. We cut him to two shorter bars, about half of what he had. He's still tough, but now it's a fight, not a punishment.</p>
+<h2 class="text-lg text-cyan-100 pt-2">{icon:map}Back to the ladder</h2>
+<p>The train and the depot have a ladder up to the roof. But whoever reached the right end of the roof was stuck facing a wall, with no hint at all. Now, as you get near the end, the top line says GO BACK TO THE LADDER.</p>
+</div>
+<figure class="mt-6">
+<div class="bg-black/70 rounded-xl border border-cyan-300/30 crt-frame p-2"><img src="{IMG}fist2-taste3-roof.png" alt="The fighter on the train roof, and the top line reads GO BACK TO THE LADDER" class="w-full h-auto rounded-lg pixelated" loading="lazy"></div>
+<figcaption class="mt-2 text-xs text-cyan-200/60">At the end of the roof: the hint that sends you back to the ladder.</figcaption>
+</figure>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:bug}The level that repeated itself</h2>
+<p>In the tour build (the one without enemies) I reached the end of the first level, and it started again. It took a while to see why. I play in VICE with a joystick on the keyboard: the arrow keys and Right Ctrl. And on the C64 the joystick and the keyboard share the same lines. So walking right with the arrow keys reads exactly like pressing L, the key that skips to the next level in the test build. The game skipped levels by itself, and after the last one it went back to the start.</p>
+<p>Now L isn't read while the joystick moves, and in the released game it doesn't exist at all. And another bug I wrote about last time, the title screen starting a game by itself after GAME COMPLETE? It was never in the game. It was in our test tool.</p>
+<h2 class="text-lg text-cyan-100 pt-2">{icon:joystick}Download and play</h2>
+<p>Taste #3 is on the game's page on <a class="underline hover:text-pink-300" href="https://alexgoldblat.itch.io/fist-iii-the-revenge" target="_blank" rel="noopener noreferrer">itch.io</a>: a d64 disk with dir art and a prg file, joystick in port 2, a PAL machine. The fighters are still Fist II's original sprites until our artist's sprites go in. The levels are already ours.</p>
+<h2 class="text-lg text-cyan-100 pt-2">{icon:page}What's next</h2>
+<p>The fighters' new sprites. And for testing there's now also a build with unlimited lives, so every level can be played to the end and the fights checked without a GAME OVER.</p>
+</div>
