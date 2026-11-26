@@ -302,18 +302,18 @@
     {
       "slug": "sweep-and-sounds",
       "when": "2026-11-26T21:00:00+02:00",
-      "draft": true,
       "kicker": "FIST II REMASTER",
       "kicker_short": "Fist II Remaster",
-      "title_en": "Taste #4: the sweep is back, and the hits have new sounds",
-      "title_he": "טעימה 4: הסוויפ חזר, ולמכות יש צלילים חדשים",
-      "teaser_en": "Taste #4 is on itch.io: new sound effects from our musician, Fist II's sweep back in the player's hands, and a bug hunt: fighters who never got up, a boss who could vanish, a score that got lost.",
+      "title_en": "Taster 4: the sweep is back, and the hits have new sounds!!",
+      "title_he": "טעימה 4: מכת הסוויפ חזר, ולמכות יש צלילים חדשים!! ",
+      "teaser_en": "Taster 4 is up on itch.io: new effects from our musician, Fist II's sweep back in the player's hands, and a bug hunt: fighters that didn't get up, a boss that could vanish, and a score that went missing.",
       "teaser_he": "טעימה 4 עלתה ל־itch.io: אפקטים חדשים מהמוזיקאי שלנו, הסוויפ של Fist II חוזר לידיים של השחקן, וציד באגים: לוחמים שלא קמו, בוס שיכול היה להיעלם, וניקוד שהלך לאיבוד.",
       "banner": "fist2-sweep-dodge.png",
-      "banner_alt_en": "The player sweeps low on Iron Quay while an enemy jumps right over his leg",
+      "banner_alt_en": "The player does a low sweep on Iron Quay and an enemy jumps right over his leg",
       "banner_alt_he": "השחקן עושה סוויפ נמוך ב־Iron Quay ואויב קופץ ממש מעל הרגל שלו",
       "banner_caption_en": "The sweep is back, and the enemies know it: this one jumps right over it.",
-      "banner_caption_he": "הסוויפ חזר, והאויבים מכירים אותו: זה קופץ ממש מעליו."
+      "banner_caption_he": "הסוויפ חזר, והאויבים מכירים אותו: זה קופץ ממש מעליו.",
+      "en_source_hash": "32b67994fa8f7f78"
     }
   ],
   "index_en_source_hash": "c2324c62c4e4a8f0"
