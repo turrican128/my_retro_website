@@ -28,7 +28,9 @@
     "fist2-taste3-victory.png": "fist2-remake/FIST3-taste3-2026-11-23/shots/5-victory.png",
     "fist2-taste3-credits.png": "fist2-remake/FIST3-taste3-2026-11-23/shots/6-credits.png",
     "fist2-taste3-boss.png": "fist2-remake/FIST3-taste3-2026-11-23/shots/2-the-boss.png",
-    "fist2-taste3-roof.png": "fist2-remake/FIST3-taste3-2026-11-23/shots/3-the-roof.png"
+    "fist2-taste3-roof.png": "fist2-remake/FIST3-taste3-2026-11-23/shots/3-the-roof.png",
+    "fist2-sweep-dodge.png": "VICE capture of the level game (fist2-remake feat/sweep a41666a, scripted sweep test), 2026-11-25",
+    "fist2-sweep-room.png": "VICE capture of the moves room (fist2-remake feat/sweep a41666a), 2026-11-26"
   },
   "posts": [
     {
@@ -296,6 +298,22 @@
       "banner_alt_he": "CONGRATULATIONS בצבעי קשת בשורה העליונה, מעל Cinder Yard, אחרי הבוס האחרון",
       "banner_caption_en": "The end of the game: fireworks, and CONGRATULATIONS in rainbow colours.",
       "banner_caption_he": "סוף המשחק: זיקוקים, ו־CONGRATULATIONS בצבעי קשת."
+    },
+    {
+      "slug": "sweep-and-sounds",
+      "when": "2026-11-26T21:00:00+02:00",
+      "draft": true,
+      "kicker": "FIST II REMASTER",
+      "kicker_short": "Fist II Remaster",
+      "title_en": "The sweep is back, and the hits have new sounds",
+      "title_he": "הסוויפ חזר, ולמכות יש צלילים חדשים",
+      "teaser_en": "New sound effects from our musician, Fist II's sweep back in the player's hands, and a bug hunt: fighters who never got up, a boss who could vanish, a score that got lost.",
+      "teaser_he": "אפקטים חדשים מהמוזיקאי שלנו, הסוויפ של Fist II חוזר לידיים של השחקן, וציד באגים: לוחמים שלא קמו, בוס שיכול היה להיעלם, וניקוד שהלך לאיבוד.",
+      "banner": "fist2-sweep-dodge.png",
+      "banner_alt_en": "The player sweeps low on Iron Quay while an enemy jumps right over his leg",
+      "banner_alt_he": "השחקן עושה סוויפ נמוך ב־Iron Quay ואויב קופץ ממש מעל הרגל שלו",
+      "banner_caption_en": "The sweep is back, and the enemies know it: this one jumps right over it.",
+      "banner_caption_he": "הסוויפ חזר, והאויבים מכירים אותו: זה קופץ ממש מעליו."
     }
   ],
   "index_en_source_hash": "c2324c62c4e4a8f0"
