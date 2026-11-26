@@ -1,0 +1,28 @@
+<p class="mt-6 text-base text-sky-100/95 leading-relaxed">Taste #4 is up on itch.io. A week of small things you can hear and feel: new sounds for the hits, an old Fist II move back in the player's hands, and a hunt for the bugs that were hiding in the game.</p>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:note}New sounds for the hits</h2>
+<p>Our musician sent a new set of sound effects, each one in its own SID file: a punch, a kick, a longer punch for the boss, a KO when an enemy goes down, and a body falling to the floor. A SID file has its own little player inside, and that player can't live in the game next to the music. So we play each file in an emulator, write down what it does to the SID chip frame by frame, and turn that into data for the effects player the game already has. The sound comes out the same, now on the SID's third channel.</p>
+<p>A small lesson on the way: reading the numbers, I said the kick was the same sound as the punch. Only one bit was different. But that one bit decides whether the note in the middle of the sound pops out or stays buried in the fade, and to the ear the two are clearly different. The ear won. Then a second kick came, with a bit of vibrato, and that's the one in the game now.</p>
+</div>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:fist}The sweep is back</h2>
+<p>In Fist II, down and fire was the sweep: the fighter drops low and spins a kick along the floor. When we made the controls simpler a few weeks ago, down and fire became a second punch. Now the sweep is back. The move never really left the game, because the enemies kept using it, so bringing it back cost nothing in memory.</p>
+<p>As in the original, the fighter crouches first and only then sweeps, so you hold down and fire until the leg comes out. A sweep that lands knocks the enemy down in one blow. But the enemies know it too: they see the crouch coming and jump right over it. You have to pick your moment.</p>
+</div>
+<figure class="mt-6">
+<div class="bg-black/70 rounded-xl border border-cyan-300/30 crt-frame p-2"><img src="{IMG}fist2-sweep-room.png" alt="The fighter low on the floor in a cave, one leg stretched out in a sweep" class="w-full h-auto rounded-lg pixelated" loading="lazy"></div>
+<figcaption class="mt-2 text-xs text-cyan-200/60">The sweep, in the moves room (one of Fist II's caves), with nobody around.</figcaption>
+</figure>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:bug}Bug hunt</h2>
+<p>A month ago we wrote down every problem we could find in the code. This week we went back to that list and fixed the ones a player would meet:</p>
+<p><strong>Getting up.</strong> A fighter who was knocked down was supposed to get up by playing his fall backwards. He never did. The fall played on to the end and then he simply snapped to standing. Now he really gets up.</p>
+<p><strong>The boss who never came.</strong> The boss appears when the screen reaches his place in the level. If the screen scrolled past that place while another enemy was still out, he never came, and the level can't end without him. You were stuck. Now he comes as soon as the screen is at his place or past it.</p>
+<p><strong>And a few more:</strong> CONTINUE threw your score away before it could count for the hi-score. RESTORE (the pause key) pressed on the title screen froze the next level. And the title screen, which has no enemies, could sometimes bring two phantom ones.</p>
+</div>
+<div class="mt-8 space-y-4 text-sm md:text-[15px] text-sky-100/85 leading-relaxed">
+<h2 class="text-lg text-cyan-100">{icon:joystick}Download and play</h2>
+<p>Taste #4 is on the game's page on <a class="underline hover:text-pink-300" href="https://alexgoldblat.itch.io/fist-iii-the-revenge" target="_blank" rel="noopener noreferrer">itch.io</a>: a d64 disk with dir art and a prg file, joystick in port 2, a PAL machine. Down and fire is the sweep: hold it until the leg comes out. The fighters are still Fist II's original sprites until our artist's sprites go in.</p>
+<h2 class="text-lg text-cyan-100 pt-2">{icon:page}What's next</h2>
+<p>A real sound for when the player gets hit (for now he borrows the boss's punch), and enemies that aren't all the same: other colours, other styles of fighting, more or less energy.</p>
+</div>
